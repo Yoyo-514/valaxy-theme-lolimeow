@@ -97,11 +97,3 @@ Starter theme ref theme:
 
 - [vuejs/blog](https://github.com/vuejs/blog)
 - [tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)
-
-### [Sponsors](https://sponsors.yunyoujun.cn)
-
-<p align="center">
-  <a href="https://sponsors.yunyoujun.cn">
-    <img src='https://fastly.jsdelivr.net/gh/YunYouJun/sponsors/public/sponsors.svg'/>
-  </a>
-</p>
