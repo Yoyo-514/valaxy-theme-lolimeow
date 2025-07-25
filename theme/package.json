@@ -1,22 +1,22 @@
 {
-  "name": "valaxy-theme-starter",
+  "name": "valaxy-theme-lolimeow",
   "type": "module",
-  "version": "0.3.2",
-  "packageManager": "pnpm@10.12.1",
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.13.1",
   "author": {
-    "email": "me@yunyoujun.cn",
-    "name": "YunYouJun",
+    "email": "Andreas99514@outlook.com",
+    "name": "Yoyo514",
     "url": "https://www.yunyoujun.cn"
   },
-  "homepage": "https://starter.valaxy.site",
+  "homepage": "https://github.com/iLaimiK/valaxy-theme-lolimeow",
   "repository": {
     "type": "git",
-    "url": "https://github.com/YunYouJun/valaxy-theme-starter"
+    "url": "https://github.com/iLaimiK/valaxy-theme-lolimeow"
   },
   "keywords": [
     "valaxy",
     "theme",
-    "starter",
+    "lolimeow",
     "vue"
   ],
   "main": "client/index.ts",
@@ -26,6 +26,6 @@
     "@iconify-json/simple-icons": "^1.2.44"
   },
   "devDependencies": {
-    "valaxy": "^0.25.10"
+    "valaxy": "catalog:"
   }
 }

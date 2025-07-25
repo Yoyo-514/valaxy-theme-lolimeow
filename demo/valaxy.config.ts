@@ -1,4 +1,4 @@
-import type { ThemeConfig } from 'valaxy-theme-starter'
+import type { ThemeConfig } from 'valaxy-theme-lolimeow'
 import { defineConfig } from 'valaxy'
 
 /**
@@ -6,7 +6,7 @@ import { defineConfig } from 'valaxy'
  * do not use export const config to avoid defu conflict
  */
 export default defineConfig<ThemeConfig>({
-  theme: 'starter',
+  theme: 'lolimeow',
 
   themeConfig: {
     // colors: {
@@ -16,7 +16,7 @@ export default defineConfig<ThemeConfig>({
     nav: [
       {
         text: 'GitHub',
-        link: 'https://github.com/YunYouJun/valaxy-theme-starter',
+        link: 'https://github.com/iLaimiK/valaxy-theme-lolimeow',
       },
       {
         text: 'RSS',

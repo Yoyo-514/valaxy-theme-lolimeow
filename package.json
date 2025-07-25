@@ -19,9 +19,9 @@
     "bumpp": "^10.2.0",
     "eslint": "^9.32.0",
     "eslint-plugin-format": "^1.0.1",
-    "typescript": "^5.8.3",
-    "valaxy-theme-starter": "workspace:*",
+    "typescript": "catalog:",
+    "valaxy-theme-lolimeow": "workspace:*",
     "vitest": "^3.2.4",
-    "vue-tsc": "^3.0.4"
+    "vue-tsc": "catalog:"
   }
 }
