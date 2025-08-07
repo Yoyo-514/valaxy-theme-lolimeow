@@ -1,7 +1,8 @@
 packages:
   - theme
   - demo
+
 catalog:
-  typescript: ^5.8.3
-  valaxy: ^0.25.10
-  vue-tsc: ^3.0.4
+  typescript: ^5.9.2
+  valaxy: ^0.26.1
+  vue-tsc: ^3.0.5
