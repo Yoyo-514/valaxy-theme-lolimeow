@@ -1,7 +1,7 @@
 {
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748",
+  "packageManager": "pnpm@10.15.0",
   "homepage": "https://valaxy.site",
   "scripts": {
     "build": "npm run build:demo",
@@ -14,10 +14,10 @@
     "typecheck": "vue-tsc --noEmit --skipLibCheck"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^5.2.0",
-    "@unocss/eslint-plugin": "^66.4.1",
-    "bumpp": "^10.2.2",
-    "eslint": "^9.32.0",
+    "@antfu/eslint-config": "^5.2.2",
+    "@unocss/eslint-plugin": "^66.5.0",
+    "bumpp": "^10.2.3",
+    "eslint": "^9.35.0",
     "eslint-plugin-format": "^1.0.1",
     "typescript": "catalog:",
     "valaxy-theme-lolimeow": "workspace:*",
