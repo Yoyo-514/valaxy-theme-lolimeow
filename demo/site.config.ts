@@ -2,13 +2,13 @@ import { defineSiteConfig } from 'valaxy'
 
 export default defineSiteConfig({
   lang: 'zh-CN',
-  title: 'Valaxy Theme Starter',
+  title: 'Valaxy Theme Lolimeow',
   url: 'https://starter.valaxy.site/',
   author: {
     avatar: 'https://www.yunyoujun.cn/images/avatar.jpg',
     name: '云游君',
   },
-  description: 'Valaxy Theme Starter Preview.',
+  description: 'Valaxy Theme Lolimeow.',
   social: [
     {
       name: 'RSS',

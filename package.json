@@ -14,11 +14,11 @@
     "typecheck": "vue-tsc --noEmit --skipLibCheck"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^5.2.2",
-    "@unocss/eslint-plugin": "^66.5.0",
+    "@antfu/eslint-config": "^5.4.1",
+    "@unocss/eslint-plugin": "^66.5.2",
     "bumpp": "^10.2.3",
-    "eslint": "^9.35.0",
-    "eslint-plugin-format": "^1.0.1",
+    "eslint": "^9.36.0",
+    "eslint-plugin-format": "^1.0.2",
     "typescript": "catalog:",
     "valaxy-theme-lolimeow": "workspace:*",
     "vitest": "^3.2.4",
