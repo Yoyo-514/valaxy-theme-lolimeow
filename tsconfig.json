@@ -5,9 +5,10 @@
     "lib": ["DOM", "ESNext"],
     "baseUrl": ".",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "types": [
+      "valaxy/client",
       "vitest",
       "vite/client",
       "vite-plugin-vue-layouts/client"
@@ -20,7 +21,11 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["./*.ts"],
+  "include": [
+    "./*.ts",
+    "**/*.vue",
+    "**/.valaxy/**/*.d.ts"
+  ],
   "exclude": [
     "**/dist/**",
     "node_modules"
