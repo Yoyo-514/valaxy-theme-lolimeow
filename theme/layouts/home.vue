@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <div class="divide-y divide-gray-200 dark:divide-gray-700">
+    <div class="divide-gray-200 divide-y dark:divide-gray-700">
       <StarterHeader />
 
       <slot>

@@ -18,27 +18,27 @@ const prevPost = computed(() => posts.value[findCurrentIndex() + 1])
 </script>
 
 <template>
-  <article class="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
+  <article class="xl:divide-gray-200 xl:divide-y xl:dark:divide-gray-700">
     <header class="pt-6 text-center space-y-1 xl:pb-10">
       <StarterDate :date="frontmatter.date" />
       <h1
-        class="st-text text-3xl font-extrabold leading-9 tracking-tight md:text-5xl sm:text-4xl md:leading-14 sm:leading-10"
+        class="st-text text-3xl leading-9 tracking-tight font-extrabold md:text-5xl sm:text-4xl md:leading-14 sm:leading-10"
       >
         {{ frontmatter.title }}
       </h1>
     </header>
 
     <div
-      class="pb-16 xl:grid xl:grid-cols-4 xl:gap-x-10 divide-y divide-gray-200 xl:pb-20 xl:divide-y-0 dark:divide-gray-700"
+      class="pb-16 divide-gray-200 divide-y xl:pb-20 xl:gap-x-10 xl:grid xl:grid-cols-4 dark:divide-gray-700 xl:divide-y-0"
       style="grid-template-rows: auto 1fr"
     >
       <StarterAuthor v-if="frontmatter.author" :frontmatter="frontmatter" />
-      <div class="xl:col-span-3 xl:row-span-2 divide-y divide-gray-200 xl:pb-0 dark:divide-gray-700">
+      <div class="divide-gray-200 divide-y xl:pb-0 xl:col-span-3 xl:row-span-2 dark:divide-gray-700">
         <slot />
       </div>
 
       <footer
-        class="text-sm font-medium leading-5 xl:col-start-1 xl:row-start-2 divide-y divide-gray-200 dark:divide-gray-700"
+        class="text-sm leading-5 font-medium divide-gray-200 divide-y xl:col-start-1 xl:row-start-2 dark:divide-gray-700"
       >
         <div v-if="nextPost && nextPost.path" class="py-8">
           <h2 class="text-xs text-gray-500 tracking-wide uppercase">

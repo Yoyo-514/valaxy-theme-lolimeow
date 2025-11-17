@@ -1,10 +1,12 @@
 <template>
   <div class="antialiased">
-    <div class="mx-auto max-w-3xl px-4 xl:max-w-5xl sm:px-6 xl:px-0">
+    <!-- 固定在顶部的导航栏 -->
+    <div class="mx-auto px-4 max-w-3xl sm:px-6 xl:px-0 xl:max-w-5xl">
       <StarterNav />
     </div>
 
-    <main class="mx-auto max-w-3xl px-4 xl:max-w-5xl sm:px-6 xl:px-0">
+    <!-- 主内容区域，添加顶部 padding 避免被导航栏遮挡 -->
+    <main class="mx-auto px-4 max-w-3xl sm:px-6 xl:px-0 xl:max-w-5xl">
       <slot>
         <RouterView v-slot="{ Component }">
           <component :is="Component">

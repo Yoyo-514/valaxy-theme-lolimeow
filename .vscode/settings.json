@@ -18,6 +18,10 @@
   },
   "svg.preview.background": "editor",
 
+  // CSS
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+
   // Disable the default formatter, use eslint instead
   "prettier.enable": false,
   "editor.formatOnSave": false,

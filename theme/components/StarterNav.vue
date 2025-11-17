@@ -26,14 +26,14 @@ const themeConfig = useThemeConfig()
       <span class="hidden md:inline">{{ siteConfig.title }}</span>
     </RouterLink>
     <div class="text-sm text-gray-500 leading-5">
-      <template v-for="(item, i) in themeConfig.nav" :key="i">
+      <template v-for="(item, i) in themeConfig.navbar" :key="i">
         <AppLink
           :to="item.link"
           rel="noopener"
         >
           {{ item.text }}
         </AppLink>
-        <span v-if="i !== themeConfig.nav.length - 1" class="ml-2 mr-2">·</span>
+        <span v-if="i !== themeConfig.navbar.length - 1" class="ml-2 mr-2">·</span>
       </template>
     </div>
 

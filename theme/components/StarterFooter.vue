@@ -24,9 +24,9 @@ const footerIcon = computed(() => themeConfig.value.footer.icon!)
 
 <template>
   <footer class="va-footer p-4" text="center sm" style="color:var(--va-c-text-light)">
-    <div v-if="themeConfig.footer.beian?.enable && themeConfig.footer.beian.icp" class="beian" m="y-2">
+    <div v-if="themeConfig.footer.icp" class="beian" m="y-2">
       <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">
-        {{ themeConfig.footer.beian.icp }}
+        {{ themeConfig.footer.icp }}
       </a>
     </div>
 
