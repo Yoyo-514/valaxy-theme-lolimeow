@@ -7,22 +7,22 @@ defineProps<{
 </script>
 
 <template>
-  <article class="xl:grid xl:grid-cols-4 xl:items-baseline space-y-2 xl:space-y-0">
+  <article class="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
     <StarterDate :date="post.date" />
-    <div class="xl:col-span-3 space-y-5">
+    <div class="space-y-5 xl:col-span-3">
       <div class="space-y-6">
-        <h2 class="text-2xl font-bold leading-8 tracking-tight">
+        <h2 class="text-2xl leading-8 tracking-tight font-bold">
           <RouterLink class="st-text" :to="post.path || ''">
             {{ post.title }}
           </RouterLink>
         </h2>
         <div
           v-if="post.excerpt"
-          class="max-w-none text-gray-500 prose"
+          class="text-gray-500 max-w-none prose dark:prose-invert"
           v-html="post.excerpt"
         />
       </div>
-      <div class="text-base font-medium leading-6">
+      <div class="text-base leading-6 font-medium">
         <RouterLink class="link" aria-label="read more" :to="post.path || ''">
           Read more →
         </RouterLink>

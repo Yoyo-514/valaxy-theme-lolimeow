@@ -15,7 +15,7 @@ const themeConfig = useThemeConfig()
 </script>
 
 <template>
-  <nav w="full" class="flex items-center justify-between py-10 font-bold">
+  <nav w="full" class="font-bold py-10 flex items-center justify-between">
     <RouterLink class="text-xl" to="/" :aria-label="siteConfig.title">
       <img
         class="mr-2 inline-block"
