@@ -2,7 +2,6 @@
   "name": "valaxy-theme-lolimeow",
   "type": "module",
   "version": "0.0.1",
-  "packageManager": "pnpm@10.22.0",
   "author": {
     "email": "Andreas99514@outlook.com",
     "name": "Yoyo514",
@@ -22,8 +21,8 @@
   "main": "client/index.ts",
   "types": "types/index.d.ts",
   "dependencies": {
-    "@iconify-json/ant-design": "^1.2.5",
-    "@iconify-json/simple-icons": "^1.2.58"
+    "@iconify-json/ant-design": "catalog:",
+    "@iconify-json/simple-icons": "catalog:"
   },
   "devDependencies": {
     "valaxy": "catalog:"
