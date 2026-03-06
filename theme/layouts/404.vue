@@ -8,18 +8,16 @@ const { t } = useI18n()
 
 <template>
   <Layout>
-    <template #content>
-      <div text="center">
-        <div text-4xl>
-          <div i-ri-alarm-warning-line inline-block />
-        </div>
-        <RouterView />
-        <div>
-          <button btn text-sm m="3 t8" @click="router.back()">
-            {{ t('button.back') }}
-          </button>
-        </div>
+    <div text="center">
+      <div text-4xl>
+        <div i-ri-alarm-warning-line inline-block />
       </div>
-    </template>
+      <RouterView />
+      <div>
+        <button btn text-sm m="3 t8" @click="router.back()">
+          {{ t('button.back') }}
+        </button>
+      </div>
+    </div>
   </Layout>
 </template>

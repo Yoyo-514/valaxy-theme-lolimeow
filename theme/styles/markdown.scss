@@ -9,12 +9,12 @@
 @use 'valaxy/client/styles/components/custom-block.scss' as *;
 
 .markdown-body {
-  --c-toc-link: var(--va-c-text-light);
+  --c-toc-link: var(--lm-c-text-secondary);
 }
 
 html.dark {
   .markdown-body {
-    --c-toc-link: var(--va-c-text-dark);
+    --c-toc-link: var(--lm-c-text-secondary);
   }
 }
 
@@ -40,19 +40,21 @@ html.dark {
 
   blockquote {
     margin: 16px 0;
-    border-left: 4px solid var(--va-c-divider);
+    border-left: 4px solid var(--lm-c-divider);
     padding-left: 12px;
-    transition: border-color 0.5s p {
+    transition: border-color 0.5s;
+
+    p {
       margin: 0;
       font-size: 16px;
-      color: var(--vp-c-text-2);
+      color: var(--lm-c-text-secondary);
       transition: color 0.5s;
     }
   }
 
   code:not(pre > code) {
-    color: var(--va-c-text-code);
-    background-color: var(--va-c-bg-mute);
+    color: var(--lm-c-brand-strong);
+    background-color: rgba(102, 204, 255, 0.16);
     padding: 3px 6px;
     border-radius: 4px;
     font-weight: 500;

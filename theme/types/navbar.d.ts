@@ -29,8 +29,8 @@ export interface NavbarOptions {
   /**
    * The title of the navbar
    */
-  title: string | string[]
-  subTitle: string
+  title?: string | string[]
+  subTitle?: string
   /**
    * Tool buttons to include in the navbar
    * @default ['toggleDark', 'search']
@@ -43,4 +43,10 @@ export interface NavbarOptions {
    * @default 'uneven'
    */
   hamburgerStyle?: 'uneven' | 'classic'
+
+  /**
+   * 导航栏是否随滚动自动隐藏/显示
+   * @default true
+   */
+  autoHide?: boolean
 }

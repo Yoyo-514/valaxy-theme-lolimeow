@@ -8,24 +8,131 @@ export const defaultThemeConfig: ThemeUserConfig = {
     circleTransition: false,
   },
 
+  layout: {
+    general: {
+      layout: 'double-columns',
+      sidebar: {
+        left: [],
+        right: [],
+      },
+    },
+    home: {
+      layout: 'single-column',
+    },
+    post: {
+      layout: 'double-columns',
+      sidebar: {
+        left: [],
+        right: ['LmToc'],
+      },
+    },
+  },
+
   ui: {
-    primary: '#0078E7',
+    primary: '#66CCFF',
+  },
+
+  background: {
+    type: 'none',
+    image: {
+      light: '',
+      dark: '',
+      urls: [],
+      apiUrls: [],
+      random: false,
+      position: 'center center',
+      size: 'cover',
+      fixed: true,
+      overlayOpacity: 0.3,
+    },
+    gradient: {
+      light: '',
+      dark: '',
+    },
+  },
+
+  hero: {
+    enable: true,
+    cover: {
+      urls: [],
+      apiUrls: [],
+      random: false,
+      desktop: '',
+      mobile: '',
+      fixed: false,
+      overlayOpacity: 0.3,
+    },
+    motto: '',
+    mottoInterval: 4000,
+    typewriter: true,
+    typingSpeed: 100,
+    showSocialIcons: true,
+    showScrollDown: true,
+    height: '100vh',
+    textAlign: 'center',
+  },
+
+  navbar: [],
+  navbarOptions: {
+    showFavicon: true,
+    tools: ['toggleDark', 'search'],
+    hamburgerStyle: 'uneven',
+    autoHide: true,
+  },
+
+  notice: {
+    enable: false,
+    message: '',
+    closable: true,
+    scope: 'home',
+  },
+
+  pinned: {
+    enable: false,
+    title: 'Pinned',
+    entries: [],
+  },
+
+  postList: {
+    title: 'Discovery',
+    imageReversed: false,
+    coverFallback: [],
+    coverApiUrls: [],
+    coverRandom: false,
+    showExcerpt: true,
+    excerptLength: 140,
+    columns: {
+      'sm': 1,
+      'md': 1,
+      'lg': 2,
+      'xl': 2,
+      '2xl': 3,
+    },
   },
 
   footer: {
-    since: 2022,
+    since: 2023,
     icon: {
-      name: 'i-ri-cloud-line',
+      enable: true,
+      name: 'i-ri-heart-fill',
       animated: true,
-      color: 'var(--va-c-primary)',
-      url: 'https://sponsors.yunyoujun.cn',
-      title: 'Sponsor YunYouJun',
+      color: 'var(--lm-c-brand)',
+      url: '',
+      title: '',
     },
 
     powered: true,
   },
 
-  navbar: [],
+  pagination: {
+    type: 'standard',
+    animation: true,
+    itemsPerPage: 10,
+    infiniteScrollOptions: {
+      preload: true,
+      threshold: 200,
+    },
+  },
 }
 
 /**

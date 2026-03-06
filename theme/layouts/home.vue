@@ -1,11 +1,9 @@
 <template>
   <Layout>
-    <div class="divide-gray-200 divide-y dark:divide-gray-700">
-      <StarterHeader />
+    <div class="home">
+      <LmHero />
 
-      <slot>
-        <RouterView />
-      </slot>
+      <RouterView />
     </div>
   </Layout>
 </template>

@@ -1,7 +1,7 @@
 export interface UI {
   /**
    * primary color
-   * @default '#0078E7'
+   * @default '#66CCFF'
    */
   primary: string
 

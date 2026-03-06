@@ -9,31 +9,96 @@ export default defineConfig<ThemeConfig>({
   theme: 'lolimeow',
 
   themeConfig: {
-    // colors: {
-    //   primary: 'red',
-    // },
+    ui: {
+      primary: '#66CCFF',
+    },
 
-    nav: [
-      {
-        text: 'GitHub',
-        link: 'https://github.com/iLaimiK/valaxy-theme-lolimeow',
+    // 背景图
+    background: {
+      type: 'image',
+      image: {
+        light: '/images/background1.webp',
+        dark: '/images/background2.webp',
+        apiUrls: [
+          'https://www.dmoe.cc/random.php',
+        ],
+        random: false,
+        overlayOpacity: 0.3,
       },
-      {
-        text: 'RSS',
-        link: 'https://starter.valaxy.site/atom.xml',
-      },
-      {
-        text: 'Discord',
-        link: 'https://discord.gg/sGe4U4p4CK',
-      },
-      {
-        text: 'Valaxy →',
-        link: 'https://github.com/YunYouJun/valaxy',
-      },
+    },
+
+    // 首屏
+    hero: {
+      motto: 'Welcome to Valaxy Theme Lolimeow',
+      // cover: {
+      //   urls: ['/images/background1.webp', '/images/background2.webp'],
+      //   apiUrls: [
+      //     'https://img.xjh.me/random_img.php?return=302',
+      //   ],
+      //   random: true,
+      //   fixed: false,
+      // },
+      typewriter: true,
+    },
+
+    // 导航栏
+    navbar: [
+      { text: '首页', link: '/', icon: 'i-ri-home-line' },
+      { text: '归档', link: '/archives/', icon: 'i-ri-archive-line' },
+      { text: '分类', link: '/categories/', icon: 'i-ri-folder-line' },
+      { text: '标签', link: '/tags/', icon: 'i-ri-price-tag-3-line' },
+      { text: '友链', link: '/links/', icon: 'i-ri-links-line' },
+      { text: '关于', link: '/about/', icon: 'i-ri-user-line' },
     ],
+    navbarOptions: {
+      title: 'My Blog',
+      tools: ['toggleDark', 'search'],
+    },
+
+    // 公告
+    notice: {
+      enable: true,
+      message: 'This is a notice message.',
+      closable: true,
+      scope: 'home',
+    },
+
+    // 置顶
+    pinned: {
+      enable: true,
+      title: 'START',
+      entries: [
+        {
+          title: 'Docs',
+          link: 'https://valaxy.site',
+          desc: 'Valaxy Documentation',
+        },
+        {
+          title: 'About',
+          link: '/about',
+          desc: 'About Me',
+        },
+      ],
+    },
+
+    // 文章列表
+    postList: {
+      title: 'Discovery',
+      coverApiUrls: ['https://img.xjh.me/random_img.php?return=302'],
+      coverRandom: true,
+      showExcerpt: true,
+      excerptLength: 140,
+      columns: {
+        'sm': 1,
+        'md': 1,
+        'lg': 2,
+        'xl': 2,
+        '2xl': 3,
+      },
+    },
 
     footer: {
-      since: 2016,
+      since: 2023,
     },
   },
 })

@@ -1,20 +1,49 @@
 @use 'sass:map';
 
 // common
-$common: () !default;
+$common: (
+  // 主题色
+  'c-brand': #66ccff,
+  'c-brand-strong': #0060df
+) !default;
 $common: map.merge((), $common);
 
 // palette
 $light: (
-  'c-brand': #3e88f6,
-  'c-link': 'var(--st-c-brand)',
+  'c-brand-soft': #e6f4ff,
 
-  'c-text': #101820,
+  // 文字
+  'c-text-primary': #111111,
+  'c-text-secondary': #48484a,
+  'c-text-muted': #8e8e93,
+
+  // 背景
+  'c-bg-base': #f2f2f7,
+  'c-bg-glass': rgba(249, 251, 255, 0.82),
+  // 边框 & 分隔线
+  'c-border': rgba(0, 0, 0, 0.08),
+  'c-divider': rgba(0, 0, 0, 0.06),
+  // 链接
+  'c-link': var(--lm-c-brand-strong),
 ) !default;
 $light: map.merge((), $light);
 
 $dark: (
-  'c-text': #f0f8ff,
+  'c-brand-soft': #0a1925,
+
+  // 文字
+  'c-text-primary': #f9fafb,
+  'c-text-secondary': #c7c7cc,
+  'c-text-muted': #707080,
+
+  // 背景
+  'c-bg-base': #0b0b10,
+  'c-bg-glass': rgba(5, 8, 22, 0.82),
+  // 边框 & 分隔线
+  'c-border': rgba(255, 255, 255, 0.08),
+  'c-divider': rgba(255, 255, 255, 0.06),
+  // 链接
+  'c-link': var(--lm-c-brand),
 ) !default;
 $dark: map.merge((), $dark);
 

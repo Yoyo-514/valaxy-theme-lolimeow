@@ -1,52 +1,17 @@
 <template>
   <div class="antialiased">
-    <!-- 固定在顶部的导航栏 -->
-    <div class="mx-auto px-4 max-w-3xl sm:px-6 xl:px-0 xl:max-w-5xl">
-      <StarterNav />
+    <div class="inset-x-0 top-0 fixed z-20">
+      <div class="mx-auto px-4 max-w-3xl sm:px-6 xl:px-0 xl:max-w-5xl">
+        <LmNav />
+      </div>
     </div>
 
-    <!-- 主内容区域，添加顶部 padding 避免被导航栏遮挡 -->
     <main class="mx-auto px-4 max-w-3xl sm:px-6 xl:px-0 xl:max-w-5xl">
-      <slot>
-        <RouterView v-slot="{ Component }">
-          <component :is="Component">
-            <template #main-header>
-              <slot name="main-header" />
-            </template>
-
-            <template #main-header-after>
-              <slot name="main-header-after" />
-            </template>
-            <template #main>
-              <slot name="main" />
-            </template>
-            <template #main-content>
-              <slot name="main-content" />
-            </template>
-            <template #main-content-after>
-              <slot name="main-content-after" />
-            </template>
-            <template #main-nav-before>
-              <slot name="main-nav-before" />
-            </template>
-            <template #main-nav-after>
-              <slot name="main-nav-after" />
-            </template>
-            <template #aside-custom>
-              <slot name="aside-custom" />
-            </template>
-            <template #footer>
-              <slot name="footer" />
-            </template>
-          </component>
-        </RouterView>
-      </slot>
+      <slot />
     </main>
 
-    <StarterHelper />
+    <LmHelper />
 
-    <StarterFooter>
-      <slot name="footer" />
-    </StarterFooter>
+    <LmFooter />
   </div>
 </template>
