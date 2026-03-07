@@ -13,12 +13,12 @@ const siteConfig = useSiteConfig()
   <main>
     <div w="full" flex="~">
       <slot name="main">
-        <div class="content" flex="~ col grow" w="full" p="l-4 lt-md:0">
+        <div class="content" flex="~ col grow" w="full" p="lt-md:0">
           <slot name="main-header" />
           <slot name="main-header-after" />
 
           <slot name="main-content">
-            <div class="markdown-body pb-8 max-w-none prose dark:prose-invert">
+            <div class="markdown-body pb-4 max-w-none prose dark:prose-invert">
               <ValaxyMd :frontmatter="frontmatter">
                 <slot name="main-content-md" />
                 <slot />
