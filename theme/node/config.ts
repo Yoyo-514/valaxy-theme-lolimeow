@@ -1,9 +1,9 @@
-import type { ThemeConfig, ThemeUserConfig } from '../types'
+import type { ThemeConfig } from '../types'
 
 /**
  * Default Config
  */
-export const defaultThemeConfig: ThemeUserConfig = {
+export const defaultThemeConfig: ThemeConfig = {
   valaxyDarkOptions: {
     circleTransition: false,
   },
