@@ -19,10 +19,11 @@ export default defineConfig<ThemeConfig>({
       image: {
         light: '/images/background1.webp',
         dark: '/images/background2.webp',
+        urls: ['/images/background1.webp', '/images/background2.webp'],
         apiUrls: [
           'https://www.dmoe.cc/random.php',
         ],
-        random: false,
+        random: true,
         overlayOpacity: 0.3,
       },
     },
@@ -30,14 +31,14 @@ export default defineConfig<ThemeConfig>({
     // 首屏
     hero: {
       motto: 'Welcome to Valaxy Theme Lolimeow',
-      // cover: {
-      //   urls: ['/images/background1.webp', '/images/background2.webp'],
-      //   apiUrls: [
-      //     'https://img.xjh.me/random_img.php?return=302',
-      //   ],
-      //   random: true,
-      //   fixed: false,
-      // },
+      cover: {
+        urls: ['/images/background1.webp', '/images/background2.webp'],
+        apiUrls: [
+          'https://img.xjh.me/random_img.php?return=302',
+        ],
+        random: true,
+        fixed: false,
+      },
       typewriter: true,
     },
 
@@ -53,6 +54,7 @@ export default defineConfig<ThemeConfig>({
     navbarOptions: {
       title: 'My Blog',
       tools: ['toggleDark', 'search'],
+      hamburgerStyle: 'classic',
     },
 
     // 公告

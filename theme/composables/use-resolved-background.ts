@@ -1,0 +1,194 @@
+import { useColorMode, useWindowSize } from '@vueuse/core'
+import { computed } from 'vue'
+import { useThemeConfig } from './config'
+
+type BackgroundScope = 'app' | 'hero'
+
+type BackgroundKind = 'image' | 'gradient' | 'color'
+type BackgroundSource = 'hero' | 'background' | 'fallback'
+
+export interface ResolvedBackground {
+  type: BackgroundKind
+  source: BackgroundSource
+  imageUrl: string
+  fallbackImageUrl: string
+  staticImageUrls: string[]
+  apiImageUrls: string[]
+  rotationEnabled: boolean
+  rotationInterval: number
+  random: boolean
+  gradientValue: string
+  colorValue: string
+  overlayOpacity: number
+  position: string
+  size: string
+  fixed: boolean
+}
+
+function normalizeUrls(urls?: string[]) {
+  return urls?.map(url => url.trim()).filter(Boolean) || []
+}
+
+function pickFirst(urls?: string[]) {
+  return normalizeUrls(urls)[0] || ''
+}
+
+function pickRandom(urls?: string[]) {
+  const candidates = normalizeUrls(urls)
+
+  if (!candidates.length)
+    return ''
+
+  return candidates[Math.floor(Math.random() * candidates.length)] || ''
+}
+
+function clampOpacity(opacity?: number, fallback = 0.3) {
+  if (typeof opacity !== 'number' || Number.isNaN(opacity))
+    return fallback
+
+  return Math.min(1, Math.max(0, opacity))
+}
+
+function createColorBackground(): ResolvedBackground {
+  return {
+    type: 'color',
+    source: 'fallback',
+    imageUrl: '',
+    fallbackImageUrl: '',
+    staticImageUrls: [],
+    apiImageUrls: [],
+    rotationEnabled: false,
+    rotationInterval: 12000,
+    random: false,
+    gradientValue: '',
+    colorValue: 'var(--lm-c-bg-base)',
+    overlayOpacity: 0,
+    position: 'center center',
+    size: 'cover',
+    fixed: true,
+  }
+}
+
+function createGradientBackground(gradientValue: string): ResolvedBackground {
+  return {
+    type: 'gradient',
+    source: 'background',
+    imageUrl: '',
+    fallbackImageUrl: '',
+    staticImageUrls: [],
+    apiImageUrls: [],
+    rotationEnabled: false,
+    rotationInterval: 12000,
+    random: false,
+    gradientValue,
+    colorValue: '',
+    overlayOpacity: 0,
+    position: 'center center',
+    size: 'cover',
+    fixed: true,
+  }
+}
+
+export function useResolvedBackground(scope: BackgroundScope = 'app') {
+  const themeConfig = useThemeConfig()
+  const colorMode = useColorMode()
+  const { width } = useWindowSize()
+
+  const isDark = computed(() => colorMode.value === 'dark')
+  const isMobile = computed(() => width.value < 768)
+
+  return computed<ResolvedBackground>(() => {
+    const background = themeConfig.value.background
+    const heroCover = themeConfig.value.hero?.cover
+
+    if (scope === 'hero' && heroCover) {
+      const heroStaticUrls = normalizeUrls(heroCover.urls)
+      const heroApiUrls = normalizeUrls(heroCover.apiUrls)
+      const heroPrimaryImage = heroCover.random
+        ? (pickRandom(heroApiUrls) || pickRandom(heroStaticUrls))
+        : (pickFirst(heroStaticUrls)
+          || (isMobile.value ? heroCover.mobile : heroCover.desktop)
+          || heroCover.desktop
+          || heroCover.mobile
+          || '')
+
+      const heroFallbackImage = pickFirst(heroStaticUrls)
+        || (isMobile.value ? heroCover.mobile : heroCover.desktop)
+        || heroCover.desktop
+        || heroCover.mobile
+        || ''
+      const heroRotationEnabled = Boolean(heroCover.random && (heroApiUrls.length || heroStaticUrls.length > 1))
+
+      if (heroPrimaryImage || heroFallbackImage) {
+        return {
+          type: 'image',
+          source: 'hero',
+          imageUrl: heroPrimaryImage,
+          fallbackImageUrl: heroFallbackImage,
+          staticImageUrls: heroStaticUrls,
+          apiImageUrls: heroApiUrls,
+          rotationEnabled: heroRotationEnabled,
+          rotationInterval: heroCover.rotationInterval ?? 12000,
+          random: Boolean(heroCover.random),
+          gradientValue: '',
+          colorValue: '',
+          overlayOpacity: clampOpacity(heroCover.overlayOpacity),
+          position: 'center center',
+          size: 'cover',
+          fixed: heroCover.fixed ?? false,
+        }
+      }
+    }
+
+    if (background.type === 'image' && background.image) {
+      const backgroundImage = background.image
+      const staticImageUrls = normalizeUrls(backgroundImage.urls)
+      const apiImageUrls = normalizeUrls(backgroundImage.apiUrls)
+      const primaryImageUrl = backgroundImage.random
+        ? (pickRandom(apiImageUrls) || pickRandom(staticImageUrls))
+        : (pickFirst(staticImageUrls)
+          || (isDark.value ? backgroundImage.dark : backgroundImage.light)
+          || backgroundImage.light
+          || backgroundImage.dark
+          || '')
+
+      const fallbackImageUrl = pickFirst(staticImageUrls)
+        || (isDark.value ? backgroundImage.dark : backgroundImage.light)
+        || backgroundImage.light
+        || backgroundImage.dark
+        || ''
+      const rotationEnabled = Boolean(backgroundImage.random && (apiImageUrls.length || staticImageUrls.length > 1))
+
+      if (primaryImageUrl || fallbackImageUrl) {
+        return {
+          type: 'image',
+          source: 'background',
+          imageUrl: primaryImageUrl,
+          fallbackImageUrl,
+          staticImageUrls,
+          apiImageUrls,
+          rotationEnabled,
+          rotationInterval: backgroundImage.rotationInterval ?? 12000,
+          random: Boolean(backgroundImage.random),
+          gradientValue: '',
+          colorValue: '',
+          overlayOpacity: clampOpacity(backgroundImage.overlayOpacity),
+          position: backgroundImage.position || 'center center',
+          size: backgroundImage.size || 'cover',
+          fixed: backgroundImage.fixed ?? true,
+        }
+      }
+    }
+
+    if (background.type === 'gradient' && background.gradient) {
+      const gradientValue = isDark.value
+        ? (background.gradient.dark || background.gradient.light || '')
+        : (background.gradient.light || background.gradient.dark || '')
+
+      if (gradientValue)
+        return createGradientBackground(gradientValue)
+    }
+
+    return createColorBackground()
+  })
+}

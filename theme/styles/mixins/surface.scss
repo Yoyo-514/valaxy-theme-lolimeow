@@ -1,0 +1,63 @@
+@use './glass' as *;
+
+/**
+ * 导航条 surface
+ *
+ * 导航是高频可见层，需要：
+ * 1. 比正文卡片更轻
+ * 2. 比普通 panel 更稳定
+ * 3. 在随机图背景上也能压住视觉噪音
+ */
+@mixin lm-surface-nav {
+  @include lm-glass(
+    var(--lm-blur-modal),
+    var(--lm-surface-nav-bg),
+    var(--lm-surface-nav-border),
+    var(--lm-surface-nav-shadow)
+  );
+}
+
+/**
+ * 普通信息面板 surface
+ *
+ * 适合：
+ * 1. TOC
+ * 2. 文章卡片
+ * 3. 空状态
+ * 4. 侧边模块
+ */
+@mixin lm-surface-panel {
+  @include lm-glass(
+    var(--lm-blur-panel),
+    var(--lm-surface-panel-bg),
+    var(--lm-surface-panel-border),
+    var(--lm-surface-panel-shadow)
+  );
+}
+
+/**
+ * 弹窗/抽屉 surface
+ *
+ * 这类容器需要比 panel 更强的“压背景”能力，
+ * 否则在高饱和随机图上会显得发飘。
+ */
+@mixin lm-surface-modal {
+  @include lm-glass(
+    var(--lm-blur-modal),
+    var(--lm-surface-modal-bg),
+    var(--lm-surface-modal-border),
+    var(--lm-surface-modal-shadow)
+  );
+}
+
+/**
+ * 长文本阅读 surface
+ *
+ * 正文容器不应该和首页卡片使用同一配方。
+ * 这里刻意减弱透明感，优先保证连续阅读时的对比度稳定。
+ */
+@mixin lm-surface-reading {
+  background: var(--lm-surface-reading-bg);
+  border: 1px solid var(--lm-surface-reading-border);
+  box-shadow: var(--lm-surface-reading-shadow);
+}

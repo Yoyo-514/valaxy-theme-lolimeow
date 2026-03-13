@@ -23,7 +23,7 @@ export default defineConfig({
   ],
   theme: {
     colors: {
-      primary: '#66CCFF',
+      primary: 'var(--lm-c-brand)',
     },
     breakpoints: Object.fromEntries(
       [640, 768, 1024, 1280, 1536, 1920, 2560].map((size, index) => [

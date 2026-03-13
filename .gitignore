@@ -64,3 +64,6 @@ build/
 # claude code
 .claude/
 CLAUDE.md
+
+# serena
+.serena/

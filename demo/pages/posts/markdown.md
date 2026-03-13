@@ -24,6 +24,28 @@ This is a dangerous warning.
 This is a details block.
 :::
 
+## Tables
+
+| Name     | Type      | Notes           |
+| -------- | --------- | --------------- |
+| Lolimeow | Theme     | Glassy style    |
+| Valaxy   | Framework | Markdown render |
+
+## Lists
+
+- Primary item
+  - Nested item
+- Another item
+
+1. First step
+2. Second step
+
+这是**强调**文本
+
+## Divider
+
+---
+
 ## Colored Diffs in Code Blocks
 
 <!-- eslint-skip -->

@@ -29,6 +29,12 @@ export interface Background {
      */
     random?: boolean
     /**
+     * 多图轮换间隔（ms）
+     * 当 urls 有多张，或 random 为 true 时生效
+     * @default 12000
+     */
+    rotationInterval?: number
+    /**
      * 图片位置
      * @default 'center center'
      */
