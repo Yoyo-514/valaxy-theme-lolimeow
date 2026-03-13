@@ -36,8 +36,6 @@ const incomingImageStyle = computed(() => {
 
 const overlayStyle = computed(() => ({
   opacity: String(background.value.overlayOpacity),
-  backdropFilter: 'blur(10px) saturate(1.16)',
-  WebkitBackdropFilter: 'blur(10px) saturate(1.16)',
   background: 'linear-gradient(180deg, var(--lm-c-overlay-base), var(--lm-c-overlay-tint))',
 }))
 </script>

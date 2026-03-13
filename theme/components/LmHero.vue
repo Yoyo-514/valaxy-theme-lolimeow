@@ -54,34 +54,32 @@ const incomingImageStyle = computed(() => {
 
 const overlayStyle = computed(() => ({
   opacity: String(heroBackground.value.overlayOpacity),
-  backdropFilter: 'blur(8px) saturate(1.12)',
-  WebkitBackdropFilter: 'blur(8px) saturate(1.12)',
   background: 'linear-gradient(180deg, var(--lm-c-overlay-base), var(--lm-c-overlay-tint))',
 }))
 </script>
 
 <template>
   <section
-    class="relative overflow-hidden py-4 flex flex-col min-h-screen items-center justify-center"
+    class="py-4 flex flex-col min-h-screen items-center justify-center relative overflow-hidden"
   >
     <div
       v-if="hasHeroCover && hasBaseImageLayer"
-      class="absolute inset-0"
+      class="inset-0 absolute"
       :style="baseImageStyle"
     />
     <div
       v-if="hasHeroCover && hasIncomingImageLayer"
-      class="absolute inset-0 transition-opacity duration-500 ease-out"
+      class="transition-opacity duration-500 ease-out inset-0 absolute"
       :class="incomingImageVisible ? 'opacity-100' : 'opacity-0'"
       :style="incomingImageStyle"
     />
     <div
       v-if="hasHeroCover && hasHeroVisualLayer"
-      class="absolute inset-0"
+      class="inset-0 absolute"
       :style="overlayStyle"
     />
 
-    <div class="relative z-10 mb-4 text-center">
+    <div class="mb-4 text-center relative z-10">
       <h1 class="text-4xl text-[var(--lm-c-text-primary)] font-bold mb-2 md:text-5xl">
         {{ siteConfig.title }}
       </h1>
@@ -89,7 +87,7 @@ const overlayStyle = computed(() => ({
         {{ siteConfig.subtitle }}
       </p>
     </div>
-    <div class="relative z-10 text-center">
+    <div class="text-center relative z-10">
       <p class="text-lg text-[var(--lm-c-text-secondary)] md:text-xl">
         {{ motto }}
       </p>
