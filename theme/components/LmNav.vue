@@ -76,7 +76,7 @@ const hamburgerLines = computed(() => {
         <button
           v-if="showSearch"
           type="button"
-          class="text-[var(--lm-c-text-primary)] border border-[var(--lm-c-border)] rounded-full bg-[var(--lm-c-bg-glass)] inline-flex h-9 w-9 transition-[border-color,background-color,transform] duration-220 ease-out items-center justify-center hover:border-[var(--lm-c-brand)] md:hidden hover:-translate-y-0.25"
+          class="text-[var(--lm-c-text-primary)] border border-[var(--lm-c-border)] rounded-full bg-[var(--lm-c-bg-glass)] inline-flex h-9 w-9 transition-[border-color,background-color,transform] duration-220 ease-out items-center justify-center hover:border-[var(--lm-c-brand)] hover:-translate-y-0.25"
           aria-label="Open Search"
           @click="emit('openSearch')"
         >
@@ -86,22 +86,12 @@ const hamburgerLines = computed(() => {
         <button
           v-if="showDarkToggle"
           type="button"
-          class="text-[var(--lm-c-text-primary)] border border-[var(--lm-c-border)] rounded-full bg-[var(--lm-c-bg-glass)] inline-flex h-9 w-9 transition-[border-color,background-color,transform] duration-220 ease-out items-center justify-center hover:border-[var(--lm-c-brand)] md:hidden hover:-translate-y-0.25"
+          class="text-[var(--lm-c-text-primary)] border border-[var(--lm-c-border)] rounded-full bg-[var(--lm-c-bg-glass)] inline-flex h-9 w-9 transition-[border-color,background-color,transform] duration-220 ease-out items-center justify-center hover:border-[var(--lm-c-brand)] hover:-translate-y-0.25"
           aria-label="Toggle Dark Mode"
           @click="appStore.toggleDarkWithTransition"
         >
           <div v-if="!appStore.isDark" i-ri-sun-line />
           <div v-else i-ri-moon-line />
-        </button>
-
-        <button
-          v-if="showSearch"
-          type="button"
-          class="text-[var(--lm-c-text-primary)] border border-[var(--lm-c-border)] rounded-full bg-[var(--lm-c-bg-glass)] h-9 w-9 hidden transition-[border-color,background-color,transform] duration-220 ease-out items-center justify-center hover:border-[var(--lm-c-brand)] md:inline-flex hover:-translate-y-0.25"
-          aria-label="Open Search"
-          @click="emit('openSearch')"
-        >
-          <div i-ri-search-line />
         </button>
 
         <button
@@ -124,17 +114,6 @@ const hamburgerLines = computed(() => {
               ]"
             />
           </span>
-        </button>
-
-        <button
-          v-if="showDarkToggle"
-          type="button"
-          class="text-[var(--lm-c-text-primary)] border border-[var(--lm-c-border)] rounded-full bg-[var(--lm-c-bg-glass)] h-9 w-9 hidden transition-[border-color,background-color,transform] duration-220 ease-out items-center justify-center hover:border-[var(--lm-c-brand)] md:inline-flex hover:-translate-y-0.25"
-          aria-label="Toggle Dark Mode"
-          @click="appStore.toggleDarkWithTransition"
-        >
-          <div v-if="!appStore.isDark" i-ri-sun-line />
-          <div v-else i-ri-moon-line />
         </button>
       </div>
     </div>
