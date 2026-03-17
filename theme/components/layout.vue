@@ -10,6 +10,8 @@ const { isOpen: isSearchOpen, open: openSearch, close: closeSearch } = useSearch
 
 const { visible } = useNavbarVisibility(themeConfig.value.navbarOptions?.autoHide ?? true)
 
+// 头部壳层的显示状态必须同时考虑 drawer/search 的打开状态。
+// 否则导航虽然被滚动逻辑隐藏了，但抽屉或搜索层还在屏幕上，会出现“壳层和浮层脱节”。
 const headerVisible = computed(() => {
   return isDrawerOpen.value || isSearchOpen.value || visible.value
 })

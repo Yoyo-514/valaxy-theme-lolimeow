@@ -101,6 +101,8 @@ export function useResolvedBackground(scope: BackgroundScope = 'app') {
     const background = themeConfig.value.background
     const heroCover = themeConfig.value.hero?.cover
 
+    // Hero scope 只决定首屏局部背景。它应优先消费 hero.cover，
+    // 但不应该反过来污染全局 app 背景的解析结果。
     if (scope === 'hero' && heroCover) {
       const heroStaticUrls = normalizeUrls(heroCover.urls)
       const heroApiUrls = normalizeUrls(heroCover.apiUrls)
@@ -112,6 +114,8 @@ export function useResolvedBackground(scope: BackgroundScope = 'app') {
           || heroCover.mobile
           || '')
 
+      // fallbackImageUrl 在解析层保持“稳定候选”的语义，
+      // 更细的随机保底策略放到 runtime 中，避免响应式重算导致随机结果抖动。
       const heroFallbackImage = pickFirst(heroStaticUrls)
         || (isMobile.value ? heroCover.mobile : heroCover.desktop)
         || heroCover.desktop
@@ -144,6 +148,8 @@ export function useResolvedBackground(scope: BackgroundScope = 'app') {
       const backgroundImage = background.image
       const staticImageUrls = normalizeUrls(backgroundImage.urls)
       const apiImageUrls = normalizeUrls(backgroundImage.apiUrls)
+      // imageUrl 表示“当前希望加载的目标图”，而不是保证立即可见的图。
+      // 真正的显示顺序、过渡和失败回退由 runtime 统一接管。
       const primaryImageUrl = backgroundImage.random
         ? (pickRandom(apiImageUrls) || pickRandom(staticImageUrls))
         : (pickFirst(staticImageUrls)

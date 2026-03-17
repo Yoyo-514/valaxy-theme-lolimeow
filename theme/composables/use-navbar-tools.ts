@@ -6,6 +6,7 @@ const DEFAULT_NAVBAR_TOOLS = ['toggleDark', 'search'] as const
 export function useNavbarTools() {
   const themeConfig = useThemeConfig()
 
+  // 工具项统一从配置层解析，避免桌面端和移动端各自维护一套显示条件。
   const tools = computed(() => themeConfig.value.navbarOptions?.tools ?? [...DEFAULT_NAVBAR_TOOLS])
   const showSearch = computed(() => tools.value.includes('search'))
   const showDarkToggle = computed(() => tools.value.includes('toggleDark'))

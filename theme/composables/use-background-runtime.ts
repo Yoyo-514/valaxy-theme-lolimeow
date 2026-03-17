@@ -6,13 +6,20 @@ type BackgroundRuntimeScope = 'app' | 'hero'
 
 interface BackgroundRuntimeOptions {
   /**
-   * 当首屏依赖随机 API 图时，先保持透明，直接穿透到底层全局背景，
-   * 避免因为静态回退图与全局背景重复而出现“叠叠乐”。
+   * 当首屏依赖随机 API 图时，先保持透明并直接穿透到底层全局背景，
+   * 避免 Hero 的静态回退图与全局背景叠出“双层同图”。
    */
   transparentUntilLoaded?: boolean
 }
 
+// 已经成功显示过的图片缓存。作用是切页时优先复用稳定结果，
+// 避免同一张图在短时间内重复经历“占位 -> 进场”的过程。
 const loadedImageCache = new Map<string, string>()
+/**
+ * 随机模式下的静态回退图缓存。作用是让“等待 API 图”的保底图
+ * 在当前会话内保持稳定，但不同访客仍然有机会看到不同的首图
+ */
+const sessionFallbackCache = new Map<string, string>()
 const IMAGE_FADE_DURATION = 520
 const MIN_ROTATION_INTERVAL = 4000
 
@@ -31,6 +38,13 @@ function withCacheBust(url: string) {
   return `${url}${separator}_ts=${Date.now()}`
 }
 
+function pickRandom(list: string[]) {
+  if (!list.length)
+    return ''
+
+  return list[Math.floor(Math.random() * list.length)] || ''
+}
+
 function preloadImage(url: string) {
   return new Promise<string>((resolve, reject) => {
     if (typeof Image === 'undefined') {
@@ -40,14 +54,15 @@ function preloadImage(url: string) {
 
     const image = new Image()
 
-    // onload 只能说明资源到达，decode 能进一步减少切图时的白闪。
+    // onload 只能说明资源已经到达浏览器，decode 则尽量把解码阶段前置，
+    // 降低切图瞬间出现白闪的概率。
     image.onload = async () => {
       try {
         if (typeof image.decode === 'function')
           await image.decode()
       }
       catch {
-        // decode 失败时仍然允许继续显示，避免把兼容性问题变成加载失败。
+        // decode 失败不视为真正的加载失败，否则兼容性问题会被放大成显示问题。
       }
 
       resolve(url)
@@ -55,13 +70,6 @@ function preloadImage(url: string) {
     image.onerror = () => reject(new Error(`Failed to load image: ${url}`))
     image.src = url
   })
-}
-
-function pickRandom(list: string[]) {
-  if (!list.length)
-    return ''
-
-  return list[Math.floor(Math.random() * list.length)] || ''
 }
 
 function getRotationCandidate(background: ResolvedBackground) {
@@ -74,19 +82,55 @@ function getRotationCandidate(background: ResolvedBackground) {
   return pickRandom(background.staticImageUrls)
 }
 
+function getFallbackCacheKey(scope: BackgroundRuntimeScope, background: ResolvedBackground) {
+  return [
+    scope,
+    background.source,
+    background.random ? 'random' : 'stable',
+    background.fallbackImageUrl,
+    background.staticImageUrls.join('|'),
+  ].join(':')
+}
+
+function getStableFallbackImage(scope: BackgroundRuntimeScope, background: ResolvedBackground) {
+  if (!background.fallbackImageUrl && !background.staticImageUrls.length)
+    return ''
+
+  const cacheKey = getFallbackCacheKey(scope, background)
+  const cachedFallback = sessionFallbackCache.get(cacheKey)
+
+  if (cachedFallback)
+    return cachedFallback
+
+  // 随机模式下如果也提供了静态图，保底图不应永远退回第一张。
+  // 这里在当前会话内固定挑一张，既保留随机感，又避免同一访客反复看到保底图变化。
+  const fallbackImage = background.random && background.staticImageUrls.length > 1
+    ? (pickRandom(background.staticImageUrls) || background.fallbackImageUrl)
+    : background.fallbackImageUrl
+
+  if (fallbackImage)
+    sessionFallbackCache.set(cacheKey, fallbackImage)
+
+  return fallbackImage
+}
+
 function afterNextPaint(callback: () => void) {
   if (typeof requestAnimationFrame === 'undefined') {
     callback()
     return
   }
 
-  // 等两帧再提交，尽量确保新图已经完成合成并真正进入可见结果。
+  // 切图过渡结束后再额外等两帧，让浏览器有时间把新图真正合成到屏幕上，
+  // 避免“时间到了但视觉上还没画稳”的闪烁感。
   requestAnimationFrame(() => {
     requestAnimationFrame(callback)
   })
 }
 
-function shouldUseTransparentFallback(background: ResolvedBackground, options: BackgroundRuntimeOptions) {
+function shouldUseTransparentFallback(
+  background: ResolvedBackground,
+  options: BackgroundRuntimeOptions,
+) {
   return Boolean(
     options.transparentUntilLoaded
     && background.random
@@ -105,6 +149,8 @@ export function useBackgroundRuntime(
   const isLoading = ref(false)
   const hasLoaded = ref(false)
   const usingFallback = ref(false)
+  // requestId 用于隔离并发异步任务。切页或配置变更后，旧请求即使更晚返回，
+  // 也不能覆盖当前最新的一轮背景状态。
   let requestId = 0
   let revealTimer: ReturnType<typeof setTimeout> | undefined
   let finalizeTimer: ReturnType<typeof setTimeout> | undefined
@@ -113,6 +159,8 @@ export function useBackgroundRuntime(
   const placeholderStyle = computed<CSSProperties>(() => {
     const resolved = resolvedBackground.value
 
+    // 图片背景的占位层只承担“纯色/渐变兜底”的职责，
+    // 真正的图片切换统一交给 current/incoming 两层处理。
     if (resolved.type === 'gradient' && resolved.gradientValue) {
       return {
         backgroundImage: resolved.gradientValue,
@@ -123,6 +171,11 @@ export function useBackgroundRuntime(
       backgroundColor: resolved.colorValue || 'var(--lm-c-bg-base)',
     }
   })
+
+  function clearIncomingImageLayer() {
+    incomingImageUrl.value = ''
+    incomingImageVisible.value = false
+  }
 
   function clearTransitionTimers() {
     if (revealTimer)
@@ -145,17 +198,24 @@ export function useBackgroundRuntime(
 
   function resetImages() {
     currentImageUrl.value = ''
-    incomingImageUrl.value = ''
-    incomingImageVisible.value = false
+    clearIncomingImageLayer()
+  }
+
+  function applyStableImage(url: string, fallback: boolean) {
+    currentImageUrl.value = url
+    clearIncomingImageLayer()
+    hasLoaded.value = true
+    usingFallback.value = fallback
   }
 
   function commitIncomingImage(url: string) {
     if (!url || currentImageUrl.value === url) {
-      incomingImageUrl.value = ''
-      incomingImageVisible.value = false
+      clearIncomingImageLayer()
       return
     }
 
+    // 新图始终走“旧图留在底层 + 新图淡入覆盖”的路径，
+    // 这样切换期间不会暴露 placeholder 层。
     clearTransitionTimers()
     incomingImageUrl.value = url
     incomingImageVisible.value = false
@@ -167,8 +227,7 @@ export function useBackgroundRuntime(
     finalizeTimer = setTimeout(() => {
       afterNextPaint(() => {
         currentImageUrl.value = url
-        incomingImageUrl.value = ''
-        incomingImageVisible.value = false
+        clearIncomingImageLayer()
       })
     }, IMAGE_FADE_DURATION)
   }
@@ -185,8 +244,7 @@ export function useBackgroundRuntime(
     }
 
     if (currentImageUrl.value === url) {
-      incomingImageUrl.value = ''
-      incomingImageVisible.value = false
+      clearIncomingImageLayer()
       return
     }
 
@@ -214,6 +272,7 @@ export function useBackgroundRuntime(
         if (currentRequestId !== requestId)
           return
 
+        // 轮换只在新图已完成加载后才提交，旧图会一直保留到新图淡入完成。
         applyImage(loadedUrl)
         loadedImageCache.set(getCacheKey(scope, background), loadedUrl)
         hasLoaded.value = true
@@ -223,9 +282,8 @@ export function useBackgroundRuntime(
         if (currentRequestId !== requestId)
           return
 
-        // 失败时继续保留旧图或静态保底图，不让半进场的新图层卡住界面。
-        incomingImageUrl.value = ''
-        incomingImageVisible.value = false
+        // 轮换失败时不动当前已显示的图，只清理半进场图层。
+        clearIncomingImageLayer()
         usingFallback.value = true
       }
       finally {
@@ -252,22 +310,18 @@ export function useBackgroundRuntime(
 
       const cacheKey = getCacheKey(scope, next)
       const cachedUrl = loadedImageCache.get(cacheKey)
-      const fallbackImageUrl = next.fallbackImageUrl
+      const fallbackImageUrl = getStableFallbackImage(scope, next)
       const transparentUntilLoaded = shouldUseTransparentFallback(next, options)
 
+      // 首轮解析优先级：
+      // 1. 已成功过的缓存图
+      // 2. 静态保底图（若当前 scope 允许）
+      // 3. 透明/纯色/渐变占位
       if (cachedUrl) {
-        currentImageUrl.value = cachedUrl
-        incomingImageUrl.value = ''
-        incomingImageVisible.value = false
-        hasLoaded.value = true
-        usingFallback.value = true
+        applyStableImage(cachedUrl, true)
       }
       else if (!transparentUntilLoaded && fallbackImageUrl) {
-        currentImageUrl.value = fallbackImageUrl
-        incomingImageUrl.value = ''
-        incomingImageVisible.value = false
-        hasLoaded.value = true
-        usingFallback.value = true
+        applyStableImage(fallbackImageUrl, true)
       }
       else {
         resetImages()
@@ -293,8 +347,7 @@ export function useBackgroundRuntime(
           return
 
         // 首次图或切页图加载失败时，同样保留当前可见图层，只回退状态，不清空底图。
-        incomingImageUrl.value = ''
-        incomingImageVisible.value = false
+        clearIncomingImageLayer()
         usingFallback.value = true
       }
       finally {

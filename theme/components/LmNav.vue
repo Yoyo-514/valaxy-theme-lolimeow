@@ -21,6 +21,8 @@ const themeConfig = useThemeConfig()
 const { isActive, clearPending } = useNavActive()
 const { showSearch, showDarkToggle } = useNavbarTools()
 
+// hamburgerLines 只负责把配置层的 classic / uneven 映射成几何宽度，
+// 具体的开合动画仍然留在模板里，这样配置语义和动画语义不会耦在一起。
 const hamburgerLines = computed(() => {
   if (themeConfig.value.navbarOptions?.hamburgerStyle === 'classic')
     return ['w-4', 'w-4', 'w-4']
@@ -35,7 +37,7 @@ const hamburgerLines = computed(() => {
   >
     <div class="px-4 py-2 flex gap-3 w-full items-center sm:px-5">
       <RouterLink
-        class="text-[var(--lm-c-text-primary)] no-underline inline-flex gap-2 items-center"
+        class="lm-nav-brand"
         to="/"
         :aria-label="siteConfig.title"
       >
@@ -51,7 +53,7 @@ const hamburgerLines = computed(() => {
       <div class="text-sm leading-6 ml-auto gap-2 hidden items-center md:flex">
         <template v-for="(item, index) in $props.items" :key="item.link">
           <AppLink
-            class="no-underline inline-flex gap-1.5 transition-[color,opacity] duration-250 ease-in-out items-center hover:text-[var(--lm-c-brand-strong)]"
+            class="lm-nav-link"
             :class="isActive(item.link)
               ? 'text-[var(--lm-c-brand)] opacity-92'
               : 'text-[var(--lm-c-text-secondary)] opacity-86'"
@@ -76,7 +78,7 @@ const hamburgerLines = computed(() => {
         <button
           v-if="showSearch"
           type="button"
-          class="text-[var(--lm-c-text-primary)] border border-[var(--lm-c-border)] rounded-full bg-[var(--lm-c-bg-glass)] inline-flex h-9 w-9 transition-[border-color,background-color,transform] duration-220 ease-out items-center justify-center hover:border-[var(--lm-c-brand)] hover:-translate-y-0.25"
+          class="lm-nav-tool-btn"
           aria-label="Open Search"
           @click="emit('openSearch')"
         >
@@ -86,7 +88,7 @@ const hamburgerLines = computed(() => {
         <button
           v-if="showDarkToggle"
           type="button"
-          class="text-[var(--lm-c-text-primary)] border border-[var(--lm-c-border)] rounded-full bg-[var(--lm-c-bg-glass)] inline-flex h-9 w-9 transition-[border-color,background-color,transform] duration-220 ease-out items-center justify-center hover:border-[var(--lm-c-brand)] hover:-translate-y-0.25"
+          class="lm-nav-tool-btn"
           aria-label="Toggle Dark Mode"
           @click="appStore.toggleDarkWithTransition"
         >
@@ -96,7 +98,7 @@ const hamburgerLines = computed(() => {
 
         <button
           type="button"
-          class="text-[var(--lm-c-text-primary)] border border-[var(--lm-c-border)] rounded-full bg-[color-mix(in_srgb,var(--lm-c-bg-glass)_72%,transparent)] inline-flex h-9 w-9 transition-[border-color,background-color,transform] duration-220 ease-out items-center justify-center hover:border-[var(--lm-c-border-hover)] md:hidden hover:-translate-y-0.25"
+          class="lm-nav-menu-btn"
           :aria-expanded="props.drawerOpen"
           aria-label="Toggle mobile menu"
           @click="emit('toggleMobileDrawer')"
@@ -131,5 +133,23 @@ const hamburgerLines = computed(() => {
   border-top: none;
   border-left: none;
   border-right: none;
+}
+
+.lm-nav-brand {
+  @apply text-[var(--lm-c-text-primary)] no-underline inline-flex gap-2 items-center;
+}
+
+.lm-nav-link {
+  @apply no-underline inline-flex gap-1.5 items-center transition-[color,opacity] duration-250 ease-in-out hover:text-[var(--lm-c-brand-strong)];
+}
+
+.lm-nav-tool-btn {
+  @apply text-[var(--lm-c-text-primary)] border border-[var(--lm-c-border)] rounded-full bg-[var(--lm-c-bg-glass)] inline-flex h-9 w-9 items-center justify-center transition-[border-color,background-color,transform] duration-220 ease-out hover:border-[var(--lm-c-brand)] hover:-translate-y-0.25;
+}
+
+.lm-nav-menu-btn {
+  @apply text-[var(--lm-c-text-primary)] border border-[var(--lm-c-border)] rounded-full inline-flex h-9 w-9 items-center justify-center transition-[border-color,background-color,transform] duration-220 ease-out hover:border-[var(--lm-c-brand)] md:hidden hover:-translate-y-0.25;
+
+  background: color-mix(in srgb, var(--lm-c-bg-glass) 72%, transparent);
 }
 </style>

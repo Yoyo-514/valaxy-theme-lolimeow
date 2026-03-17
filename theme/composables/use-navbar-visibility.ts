@@ -1,14 +1,12 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 /**
- * 顶栏显隐控制
+ * 顶栏显隐控制。
  *
- * 规则保持尽量简单：
- * 1. 不启用 auto hide 时始终显示
- * 2. 接近页面顶部时始终显示
- * 3. 向下滚动时隐藏，向上滚动时显示
- *
- * 这里故意不加入节流和复杂状态机，先保证行为稳定、易于理解。
+ * 这里刻意保持简单规则，而不是引入节流和复杂状态机：
+ * 1. autoHide 关闭时始终显示
+ * 2. 顶部缓冲区内始终显示，避免刚离开首屏就收起
+ * 3. 只有滚动幅度足够明显时才根据方向切换状态
  */
 export function useNavbarVisibility(enabled = true) {
   const visible = ref(true)
@@ -25,22 +23,18 @@ export function useNavbarVisibility(enabled = true) {
     const currentTop = window.scrollY || 0
     const delta = currentTop - lastScrollTop.value
 
-    // 在页面顶部和首屏过渡区域内都保持显示，避免刚离开首屏就收起。
+    // 顶部缓冲区内强制显示，避免首屏附近轻微滚动时出现闪烁感。
     if (currentTop < startHideOffset) {
       visible.value = true
       lastScrollTop.value = currentTop
       return
     }
 
-    // 只有滚动幅度足够明显时才切换状态，避免触摸板微小抖动造成闪烁。
+    // 忽略触摸板和鼠标滚轮的微小抖动，只响应明确的滚动方向。
     if (Math.abs(delta) < minDelta)
       return
 
-    if (delta > 0)
-      visible.value = false
-    else
-      visible.value = true
-
+    visible.value = delta <= 0
     lastScrollTop.value = currentTop
   }
 

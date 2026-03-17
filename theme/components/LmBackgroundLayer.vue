@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useBackgroundRuntime, useResolvedBackground } from '../composables'
+import { createBackgroundImageStyle } from '../utils'
 
 const background = useResolvedBackground('app')
 const runtimeBackground = useBackgroundRuntime('app', background)
@@ -10,28 +11,28 @@ const hasBaseImageLayer = computed(() => Boolean(runtimeBackground.currentImageU
 const hasIncomingImageLayer = computed(() => Boolean(runtimeBackground.incomingImageUrl.value))
 const incomingImageVisible = computed(() => runtimeBackground.incomingImageVisible.value)
 
+// 全局背景层只消费 app scope 的结果，不读取 hero.cover。
+// 这样首页 Hero 是否存在独立封面，不会反向影响整页壳层背景。
 const baseImageStyle = computed(() => {
   if (!hasBaseImageLayer.value)
     return {}
 
-  return {
-    backgroundImage: `url(${runtimeBackground.currentImageUrl.value})`,
-    backgroundPosition: background.value.position,
-    backgroundSize: background.value.size,
-    backgroundAttachment: background.value.fixed ? 'fixed' : 'scroll',
-  }
+  return createBackgroundImageStyle(runtimeBackground.currentImageUrl.value, {
+    fixed: background.value.fixed,
+    position: background.value.position,
+    size: background.value.size,
+  })
 })
 
 const incomingImageStyle = computed(() => {
   if (!hasIncomingImageLayer.value)
     return {}
 
-  return {
-    backgroundImage: `url(${runtimeBackground.incomingImageUrl.value})`,
-    backgroundPosition: background.value.position,
-    backgroundSize: background.value.size,
-    backgroundAttachment: background.value.fixed ? 'fixed' : 'scroll',
-  }
+  return createBackgroundImageStyle(runtimeBackground.incomingImageUrl.value, {
+    fixed: background.value.fixed,
+    position: background.value.position,
+    size: background.value.size,
+  })
 })
 
 const overlayStyle = computed(() => ({
@@ -42,21 +43,31 @@ const overlayStyle = computed(() => ({
 
 <template>
   <div class="pointer-events-none inset-0 fixed z-0 overflow-hidden" aria-hidden="true">
-    <div class="inset-0 absolute" :style="placeholderStyle" />
+    <div class="lm-bg-layer" :style="placeholderStyle" />
     <div
       v-if="hasBaseImageLayer"
-      class="inset-0 absolute"
+      class="lm-bg-layer"
       :style="baseImageStyle"
     />
     <div
       v-if="hasIncomingImageLayer"
-      class="transition-opacity duration-500 ease-out inset-0 absolute"
+      class="lm-bg-fade-layer"
       :class="incomingImageVisible ? 'opacity-100' : 'opacity-0'"
       :style="incomingImageStyle"
     />
     <div
-      class="inset-0 absolute"
+      class="lm-bg-layer"
       :style="overlayStyle"
     />
   </div>
 </template>
+
+<style scoped>
+.lm-bg-layer {
+  @apply inset-0 absolute;
+}
+
+.lm-bg-fade-layer {
+  @apply inset-0 absolute transition-opacity duration-500 ease-out;
+}
+</style>

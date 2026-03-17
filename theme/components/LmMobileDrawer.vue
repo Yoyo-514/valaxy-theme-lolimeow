@@ -14,7 +14,11 @@ const emit = defineEmits<{
 }>()
 
 const router = useRouter()
+// ACTIVE_PREVIEW_DURATION 给高亮一个极短的预览窗口，
+// 避免点击后抽屉立刻离场，用户来不及感知当前目标项。
 const ACTIVE_PREVIEW_DURATION = 80
+// NAV_CLOSE_DURATION 必须和抽屉高度过渡时长保持一致，
+// 否则跳转会打断收起动画。
 const NAV_CLOSE_DURATION = 280
 
 const { isActive, setPending, clearPending } = useNavActive()
@@ -57,6 +61,8 @@ function beforeEnter(el: Element) {
 
 function enter(el: Element) {
   const node = el as HTMLElement
+  // 使用真实内容高度做展开，而不是写死 max-height，
+  // 这样导航项数量变化时不需要同步改动画参数。
   node.style.height = `${node.scrollHeight}px`
 }
 
@@ -72,6 +78,7 @@ function beforeLeave(el: Element) {
 function leave(el: Element) {
   const node = el as HTMLElement
 
+  // 强制触发一次回流，确保浏览器接收到“当前高度 -> 0”的过渡起点。
   void node.offsetHeight
   node.style.height = '0px'
 }
@@ -95,7 +102,7 @@ function leave(el: Element) {
           v-for="item in props.items"
           :key="item.link"
           type="button"
-          class="text-sm px-4 py-3 border-b border-[var(--lm-c-divider)] no-underline inline-flex gap-2.5 min-h-11 transition-[color,background-color] duration-220 ease-out items-center last:border-b-0"
+          class="lm-mobile-nav-item"
           :class="isActive(item.link)
             ? 'text-[var(--lm-c-brand)] bg-[color-mix(in_srgb,var(--lm-c-brand-soft)_52%,transparent)]'
             : 'text-[var(--lm-c-text-secondary)] hover:text-[var(--lm-c-brand)]'"
@@ -122,6 +129,10 @@ function leave(el: Element) {
   margin-top: -1px;
   transform-origin: top center;
   box-shadow: 0 18px 36px rgb(15 23 42 / 0.16);
+}
+
+.lm-mobile-nav-item {
+  @apply text-sm px-4 py-3 border-b border-[var(--lm-c-divider)] no-underline inline-flex gap-2.5 min-h-11 items-center transition-[color,background-color] duration-220 ease-out last:border-b-0;
 }
 
 .lm-mobile-nav-enter-active,

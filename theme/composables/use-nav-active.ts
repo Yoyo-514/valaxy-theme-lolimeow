@@ -25,6 +25,8 @@ export function useNavActive() {
   const route = useRoute()
 
   const currentPath = computed(() => normalizePath(route.path))
+  // pendingLink 用来覆盖“抽屉先收起、再跳转”的时间窗，
+  // 让移动端在动画期间也能先高亮目标导航项。
   const activePath = computed(() => normalizePath(pendingLink.value || route.path))
 
   function isActive(link: string) {

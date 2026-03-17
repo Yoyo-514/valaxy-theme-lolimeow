@@ -21,6 +21,7 @@ watch(
     }
 
     await nextTick()
+    // 输入框聚焦依赖 Teleport 内容已挂载，因此需要等到下一轮 DOM 刷新后再执行。
     inputRef.value?.focus()
   },
 )
@@ -28,7 +29,7 @@ watch(
 
 <template>
   <Teleport to="body">
-    <div class="px-4 pt-[8vh] flex pointer-events-none items-start inset-0 justify-center fixed z-[var(--lm-z-modal)]">
+    <div class="lm-search-shell">
       <Transition name="lm-search-backdrop">
         <button
           v-if="props.open"
@@ -42,20 +43,20 @@ watch(
       <Transition name="lm-search-panel">
         <section
           v-if="props.open"
-          class="lm-search-modal rounded max-w-[720px] w-full pointer-events-auto relative"
+          class="lm-search-modal"
         >
-          <div class="px-4 py-3 border-b border-[var(--lm-c-divider)] flex gap-3 items-center">
+          <div class="lm-search-head">
             <div i-ri-search-line class="text-[var(--lm-c-text-muted)]" />
             <input
               ref="inputRef"
               v-model="keyword"
-              class="text-[var(--lm-c-text-primary)] outline-none bg-transparent w-full"
+              class="lm-search-input"
               type="text"
               placeholder="搜索文章、标签、分类"
             >
             <button
               type="button"
-              class="text-[var(--lm-c-text-secondary)] rounded-full inline-flex h-8 w-8 transition-colors duration-200 ease-out items-center justify-center hover:text-[var(--lm-c-text-primary)]"
+              class="lm-search-close-btn"
               aria-label="Close Search"
               @click="emit('close')"
             >
@@ -75,8 +76,26 @@ watch(
 <style scoped lang="scss">
 @use '../styles/mixins/surface' as *;
 
+.lm-search-shell {
+  @apply px-4 pt-[8vh] flex pointer-events-none items-start inset-0 justify-center fixed z-[var(--lm-z-modal)];
+}
+
 .lm-search-modal {
   @include lm-surface-modal;
+
+  @apply rounded max-w-[720px] w-full pointer-events-auto relative;
+}
+
+.lm-search-head {
+  @apply px-4 py-3 border-b border-[var(--lm-c-divider)] flex gap-3 items-center;
+}
+
+.lm-search-input {
+  @apply text-[var(--lm-c-text-primary)] outline-none bg-transparent w-full;
+}
+
+.lm-search-close-btn {
+  @apply text-[var(--lm-c-text-secondary)] rounded-full inline-flex h-8 w-8 items-center justify-center transition-colors duration-200 ease-out hover:text-[var(--lm-c-text-primary)];
 }
 
 .lm-search-backdrop-enter-active,
