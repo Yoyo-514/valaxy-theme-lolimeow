@@ -74,5 +74,5 @@ The title is a primary title
 - [x] FLAG
       :::
 
-![]()
+![image](../../public/images/background2.webp)
 _a_

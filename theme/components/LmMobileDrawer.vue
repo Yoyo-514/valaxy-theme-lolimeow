@@ -21,6 +21,8 @@ const ACTIVE_PREVIEW_DURATION = 80
 // 否则跳转会打断收起动画。
 const NAV_CLOSE_DURATION = 280
 
+const HTTP_LINK_REGEX = /^https?:?\/\//
+
 const { isActive, setPending, clearPending } = useNavActive()
 
 let navigateTimer: number | undefined
@@ -30,7 +32,7 @@ function closeDrawer() {
 }
 
 function isExternalLink(item: NavItem) {
-  return item.target === '_blank' || /^https?:?\/\//.test(item.link)
+  return item.target === '_blank' || HTTP_LINK_REGEX.test(item.link)
 }
 
 function handleItemClick(item: NavItem) {
