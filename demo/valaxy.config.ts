@@ -30,7 +30,7 @@ export default defineConfig<ThemeConfig>({
 
     // 首屏
     hero: {
-      motto: 'Welcome to Valaxy Theme Lolimeow',
+      motto: ['中文测试test', 'Welcome to Valaxy Theme Lolimeow', 'Test Long Long Long Long Long Long Long Long Long Long Long Long Text'],
       cover: {
         urls: ['/images/background1.webp', '/images/background2.webp'],
         apiUrls: [
@@ -90,13 +90,8 @@ export default defineConfig<ThemeConfig>({
       coverRandom: true,
       showExcerpt: true,
       excerptLength: 140,
-      columns: {
-        'sm': 1,
-        'md': 1,
-        'lg': 2,
-        'xl': 2,
-        '2xl': 3,
-      },
+      maxColumns: 1,
+      minCardWidth: '18rem',
     },
 
     footer: {

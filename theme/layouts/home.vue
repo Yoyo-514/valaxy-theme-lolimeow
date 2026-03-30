@@ -3,9 +3,15 @@
     <div class="home">
       <LmHero />
 
-      <div class="mx-auto px-4 max-w-3xl sm:px-6 xl:px-0 xl:max-w-5xl">
+      <div class="lm-home-content">
         <RouterView />
       </div>
     </div>
   </Layout>
 </template>
+
+<style scoped lang="scss">
+.lm-home-content {
+  @apply mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0;
+}
+</style>

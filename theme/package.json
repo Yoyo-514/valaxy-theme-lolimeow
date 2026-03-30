@@ -22,7 +22,8 @@
   "types": "types/index.d.ts",
   "dependencies": {
     "@iconify-json/ant-design": "catalog:",
-    "@iconify-json/simple-icons": "catalog:"
+    "@iconify-json/simple-icons": "catalog:",
+    "@vueuse/core": "catalog:"
   },
   "devDependencies": {
     "valaxy": "catalog:"

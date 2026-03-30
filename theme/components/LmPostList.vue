@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { Post } from 'valaxy'
-import { usePostList } from 'valaxy'
-import { computed } from 'vue'
+import { useElementSize } from '@vueuse/core'
+import { useSiteStore } from 'valaxy'
+import { computed, ref } from 'vue'
 import { useThemeConfig } from '../composables'
 
 const props = withDefaults(defineProps<{
@@ -13,27 +14,94 @@ const props = withDefaults(defineProps<{
 })
 
 const themeConfig = useThemeConfig()
+const site = useSiteStore()
+
+const listSection = ref<HTMLElement | null>(null)
+const { width: containerWidth } = useElementSize(listSection)
 
 const title = computed(() => themeConfig.value.postList.title ?? 'Discovery')
-const routes = usePostList({ type: props.type || '' })
-const posts = computed(() => props.posts || routes.value)
+
+const allPosts = computed(() => {
+  const list = site.postList || []
+  if (!props.type)
+    return list
+
+  return list.filter(post => post.type === props.type)
+})
+
+const posts = computed(() => props.posts ?? allPosts.value)
+
+const WIDTH_REGEX = /^(-?(?:\d+(?:\.\d+)?|\.\d+))(px|rem)?$/i
+const DEFAULT_MIN_CARD_WIDTH = '18rem'
+const GRID_GAP_PX = 16
+
+function clampColumnCount(value: unknown) {
+  const count = Number(value)
+
+  if (!Number.isFinite(count))
+    return 1
+
+  return Math.min(6, Math.max(1, Math.floor(count)))
+}
+
+function resolveLengthToPx(value: number | string | undefined) {
+  if (typeof value === 'number' && Number.isFinite(value))
+    return value
+
+  const raw = String(value ?? DEFAULT_MIN_CARD_WIDTH).trim()
+  const match = raw.match(WIDTH_REGEX)
+
+  if (!match)
+    return 288
+
+  const amount = Number(match[1])
+  const unit = (match[2] ?? 'px').toLowerCase()
+  const rootFontSize = typeof window !== 'undefined'
+    ? Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
+    : 16
+
+  if (unit === 'rem')
+    return amount * rootFontSize
+
+  return amount
+}
+
+const maxColumns = computed(() => {
+  return clampColumnCount(themeConfig.value.postList.maxColumns ?? 1)
+})
+
+const minCardWidth = computed(() => {
+  return themeConfig.value.postList.minCardWidth ?? DEFAULT_MIN_CARD_WIDTH
+})
+
+const minCardWidthPx = computed(() => resolveLengthToPx(minCardWidth.value))
+
+const actualColumns = computed(() => {
+  if (!containerWidth.value)
+    return 1
+
+  const fittedColumns = Math.floor((containerWidth.value + GRID_GAP_PX) / (minCardWidthPx.value + GRID_GAP_PX))
+  return Math.max(1, Math.min(maxColumns.value, fittedColumns || 1))
+})
+
+const gridStyle = computed(() => {
+  return {
+    '--lm-post-list-columns': String(actualColumns.value),
+  }
+})
 </script>
 
 <template>
-  <section class="py-8 md:py-12">
+  <section ref="listSection" class="py-8 md:py-12">
     <div class="mb-6">
       <h2 class="text-[1.5rem] text-[var(--lm-c-text-primary)] leading-[1.3] font-700 m-0">
         {{ title }}
       </h2>
     </div>
-    <ul v-if="posts.length > 0" class="m-0 p-0 list-none flex flex-col gap-4">
-      <template v-for="post in posts" :key="post.path">
-        <Transition name="fade">
-          <li v-if="post" class="m-0">
-            <LmPostCard :post="post" />
-          </li>
-        </Transition>
-      </template>
+    <ul v-if="posts.length > 0" :style="gridStyle" class="lm-post-list m-0 p-0 list-none">
+      <li v-for="(post, index) in posts" :key="post.path" class="lm-post-list__item m-0">
+        <LmPostCard :post="post" :index="index" />
+      </li>
     </ul>
     <div
       v-else
@@ -43,3 +111,17 @@ const posts = computed(() => props.posts || routes.value)
     </div>
   </section>
 </template>
+
+<style scoped lang="scss">
+.lm-post-list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(var(--lm-post-list-columns, 1), minmax(0, 1fr));
+}
+
+.lm-post-list__item {
+  min-width: 0;
+  display: flex;
+  container-type: inline-size;
+}
+</style>

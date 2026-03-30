@@ -17,7 +17,8 @@ import type {
 
 declare module 'vue-router' {
   interface TypesConfig {
-    ParamParsers: never
+    ParamParsers:
+      | never
   }
 }
 
@@ -129,7 +130,7 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    '../node_modules/.pnpm/valaxy@0.27.0_@babel+parser_135744cf477acc933a212854595b813e/node_modules/valaxy/client/pages/[...path].vue': {
+    '../node_modules/.pnpm/valaxy@0.28.4_@babel+parser_e7925e72253f6982fecc148d5df1f99e/node_modules/valaxy/client/pages/[...path].vue': {
       routes:
         | '/[...path]'
       views:

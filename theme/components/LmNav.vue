@@ -50,8 +50,8 @@ const hamburgerLines = computed(() => {
         <span class="text-sm leading-[1.2] font-700 hidden sm:text-base md:inline">{{ siteConfig.title }}</span>
       </RouterLink>
 
-      <div class="text-sm leading-6 ml-auto gap-2 hidden items-center md:flex">
-        <template v-for="(item, index) in $props.items" :key="item.link">
+      <div class="text-sm leading-6 ml-auto gap-5 hidden items-center md:flex">
+        <template v-for="item in $props.items" :key="item.link">
           <AppLink
             class="lm-nav-link"
             :class="isActive(item.link)
@@ -70,7 +70,6 @@ const hamburgerLines = computed(() => {
             />
             {{ item.text }}
           </AppLink>
-          <span v-if="index !== props.items.length - 1" class="text-[var(--lm-c-text-muted)]">&middot;</span>
         </template>
       </div>
 

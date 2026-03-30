@@ -1,4 +1,5 @@
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { useEventListener } from '@vueuse/core'
+import { ref } from 'vue'
 
 export function useSearchModal() {
   const isOpen = ref(false)
@@ -15,13 +16,10 @@ export function useSearchModal() {
     isOpen.value = !isOpen.value
   }
 
-  function onKeydown(event: KeyboardEvent) {
+  useEventListener(window, 'keydown', (event: KeyboardEvent) => {
     if (event.key === 'Escape')
       close()
-  }
-
-  onMounted(() => window.addEventListener('keydown', onKeydown))
-  onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
+  })
 
   return {
     isOpen,

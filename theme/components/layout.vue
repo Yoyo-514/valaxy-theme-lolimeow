@@ -46,6 +46,8 @@ const headerVisible = computed(() => {
       @close="closeSearch"
     />
 
+    <div class="lm-page-surface-layer" />
+
     <main class="w-full relative z-10">
       <slot />
     </main>
@@ -57,3 +59,19 @@ const headerVisible = computed(() => {
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.lm-page-surface-layer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--lm-page-surface-top, 0px);
+  bottom: 0;
+  z-index: 5;
+  pointer-events: none;
+
+  background: color-mix(in srgb, var(--lm-c-bg-glass) 62%, transparent);
+  backdrop-filter: blur(6px) saturate(1.04);
+  -webkit-backdrop-filter: blur(6px) saturate(1.04);
+}
+</style>

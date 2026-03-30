@@ -1,4 +1,5 @@
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { useWindowScroll } from '@vueuse/core'
+import { ref, watch } from 'vue'
 
 /**
  * 顶栏显隐控制。
@@ -14,38 +15,35 @@ export function useNavbarVisibility(enabled = true) {
   const startHideOffset = 96
   const minDelta = 8
 
-  function updateVisibility() {
-    if (!enabled) {
-      visible.value = true
-      return
-    }
+  const { y } = useWindowScroll()
 
-    const currentTop = window.scrollY || 0
-    const delta = currentTop - lastScrollTop.value
+  watch(
+    y,
+    (currentTop) => {
+      if (!enabled) {
+        visible.value = true
+        lastScrollTop.value = currentTop
+        return
+      }
 
-    // 顶部缓冲区内强制显示，避免首屏附近轻微滚动时出现闪烁感。
-    if (currentTop < startHideOffset) {
-      visible.value = true
+      const delta = currentTop - lastScrollTop.value
+
+      // 顶部缓冲区内强制显示，避免首屏附近轻微滚动时出现闪烁感。
+      if (currentTop < startHideOffset) {
+        visible.value = true
+        lastScrollTop.value = currentTop
+        return
+      }
+
+      // 忽略触摸板和鼠标滚轮的微小抖动，只响应明确的滚动方向。
+      if (Math.abs(delta) < minDelta)
+        return
+
+      visible.value = delta <= 0
       lastScrollTop.value = currentTop
-      return
-    }
-
-    // 忽略触摸板和鼠标滚轮的微小抖动，只响应明确的滚动方向。
-    if (Math.abs(delta) < minDelta)
-      return
-
-    visible.value = delta <= 0
-    lastScrollTop.value = currentTop
-  }
-
-  onMounted(() => {
-    lastScrollTop.value = window.scrollY || 0
-    window.addEventListener('scroll', updateVisibility, { passive: true })
-  })
-
-  onBeforeUnmount(() => {
-    window.removeEventListener('scroll', updateVisibility)
-  })
+    },
+    { immediate: true },
+  )
 
   return {
     visible,

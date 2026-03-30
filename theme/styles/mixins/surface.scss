@@ -8,13 +8,13 @@
  * 2. 比普通 panel 更稳定
  * 3. 在随机图背景上也能压住视觉噪音
  */
-@mixin lm-surface-nav {
-  @include lm-glass(
-    var(--lm-blur-modal),
-    var(--lm-surface-nav-bg),
-    var(--lm-surface-nav-border),
-    var(--lm-surface-nav-shadow)
-  );
+@mixin lm-surface-nav(
+  $background: var(--lm-surface-nav-bg),
+  $border-color: var(--lm-surface-nav-border),
+  $shadow: var(--lm-surface-nav-shadow),
+  $blur: var(--lm-blur-modal)
+) {
+  @include lm-glass($blur, $background, $border-color, $shadow);
 }
 
 /**
@@ -26,13 +26,13 @@
  * 3. 空状态
  * 4. 侧边模块
  */
-@mixin lm-surface-panel {
-  @include lm-glass(
-    var(--lm-blur-panel),
-    var(--lm-surface-panel-bg),
-    var(--lm-surface-panel-border),
-    var(--lm-surface-panel-shadow)
-  );
+@mixin lm-surface-panel(
+  $background: var(--lm-surface-panel-bg),
+  $border-color: var(--lm-surface-panel-border),
+  $shadow: var(--lm-surface-panel-shadow),
+  $blur: var(--lm-blur-panel)
+) {
+  @include lm-glass($blur, $background, $border-color, $shadow);
 }
 
 /**
@@ -41,13 +41,13 @@
  * 这类容器需要比 panel 更强的“压背景”能力，
  * 否则在高饱和随机图上会显得发飘。
  */
-@mixin lm-surface-modal {
-  @include lm-glass(
-    var(--lm-blur-modal),
-    var(--lm-surface-modal-bg),
-    var(--lm-surface-modal-border),
-    var(--lm-surface-modal-shadow)
-  );
+@mixin lm-surface-modal(
+  $background: var(--lm-surface-modal-bg),
+  $border-color: var(--lm-surface-modal-border),
+  $shadow: var(--lm-surface-modal-shadow),
+  $blur: var(--lm-blur-modal)
+) {
+  @include lm-glass($blur, $background, $border-color, $shadow);
 }
 
 /**

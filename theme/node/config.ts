@@ -97,19 +97,14 @@ export const defaultThemeConfig: ThemeConfig = {
 
   postList: {
     title: 'Discovery',
-    imageReversed: false,
+    imageReversed: true,
     coverFallback: [],
     coverApiUrls: [],
     coverRandom: false,
     showExcerpt: true,
     excerptLength: 140,
-    columns: {
-      'sm': 1,
-      'md': 1,
-      'lg': 2,
-      'xl': 2,
-      '2xl': 3,
-    },
+    maxColumns: 1,
+    minCardWidth: '18rem',
   },
 
   footer: {
