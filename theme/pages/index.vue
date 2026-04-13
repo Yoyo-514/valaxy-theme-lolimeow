@@ -1,5 +1,5 @@
 <template>
-  <LmPostList />
+  <LmHomeContent />
 </template>
 
 <route lang="yaml">

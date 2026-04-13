@@ -69,6 +69,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/page/[page]': RouteRecordInfo<
+      '/page/[page]',
+      '/page/:page',
+      { page: ParamValue<true> },
+      { page: ParamValue<false> },
+      | never
+    >,
     '/posts/draft': RouteRecordInfo<
       '/posts/draft',
       '/posts/draft',
@@ -157,6 +164,12 @@ declare module 'vue-router/auto-routes' {
     'pages/notes/index.md': {
       routes:
         | '/notes/'
+      views:
+        | never
+    }
+    '../theme/pages/page/[page].vue': {
+      routes:
+        | '/page/[page]'
       views:
         | never
     }

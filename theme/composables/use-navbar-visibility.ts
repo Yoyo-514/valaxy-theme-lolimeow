@@ -1,6 +1,8 @@
 import { useWindowScroll } from '@vueuse/core'
 import { ref, watch } from 'vue'
 
+const NAVBAR_SCROLL_LOCK_ATTR = 'data-lm-navbar-scroll-lock'
+
 /**
  * 顶栏显隐控制。
  *
@@ -22,6 +24,11 @@ export function useNavbarVisibility(enabled = true) {
     (currentTop) => {
       if (!enabled) {
         visible.value = true
+        lastScrollTop.value = currentTop
+        return
+      }
+
+      if (typeof document !== 'undefined' && document.documentElement.hasAttribute(NAVBAR_SCROLL_LOCK_ATTR)) {
         lastScrollTop.value = currentTop
         return
       }

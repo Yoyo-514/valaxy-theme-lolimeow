@@ -94,6 +94,16 @@ export default defineConfig<ThemeConfig>({
       minCardWidth: '18rem',
     },
 
+    pagination: {
+      type: 'infinite-scroll',
+      animation: true,
+      itemsPerPage: 10,
+      infiniteScrollOptions: {
+        preload: true,
+        threshold: 200,
+      },
+    },
+
     footer: {
       since: 2023,
     },

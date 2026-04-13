@@ -1,19 +1,78 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useMobileDrawer, useNavbarVisibility, useSearchModal, useThemeConfig } from '../composables'
+import { useCssVar } from '@vueuse/core'
+import { computed, onMounted, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useMobileDrawer, useNavbarVisibility, useSearchModal, useThemeConfig } from '../../composables'
+
+const HOME_PAGINATION_PATH_RE = /^\/(?:page\/\d+\/?)?$/
+const NAVBAR_SCROLL_LOCK_ATTR = 'data-lm-navbar-scroll-lock'
 
 const themeConfig = useThemeConfig()
+const route = useRoute()
+const router = useRouter()
+const pageSurfaceTop = useCssVar('--lm-page-surface-top', document.documentElement)
 
 const navItems = computed(() => themeConfig.value.navbar.filter(item => item.text))
 const { isOpen: isDrawerOpen, close: closeDrawer, toggle: toggleDrawer } = useMobileDrawer()
 const { isOpen: isSearchOpen, open: openSearch, close: closeSearch } = useSearchModal()
 
 const { visible } = useNavbarVisibility(themeConfig.value.navbarOptions?.autoHide ?? true)
+const isHomeLayout = computed(() => route.meta.layout === 'home')
 
 // 头部壳层的显示状态必须同时考虑 drawer/search 的打开状态。
 // 否则导航虽然被滚动逻辑隐藏了，但抽屉或搜索层还在屏幕上，会出现“壳层和浮层脱节”。
 const headerVisible = computed(() => {
   return isDrawerOpen.value || isSearchOpen.value || visible.value
+})
+
+function isHomePaginationPath(path: string) {
+  return HOME_PAGINATION_PATH_RE.test(path)
+}
+
+function lockNavbarScrollReaction() {
+  if (typeof document === 'undefined')
+    return
+
+  const root = document.documentElement
+  root.setAttribute(NAVBAR_SCROLL_LOCK_ATTR, 'true')
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      root.removeAttribute(NAVBAR_SCROLL_LOCK_ATTR)
+    })
+  })
+}
+
+watch(
+  isHomeLayout,
+  (value) => {
+    if (!value)
+      pageSurfaceTop.value = '0px'
+  },
+  { immediate: true },
+)
+
+onMounted(() => {
+  const previousScrollBehavior = router.options.scrollBehavior
+
+  router.options.scrollBehavior = (to, from, savedPosition) => {
+    if (savedPosition)
+      return savedPosition
+
+    if (isHomePaginationPath(to.path) && isHomePaginationPath(from.path)) {
+      lockNavbarScrollReaction()
+      return {
+        el: '#lm-home-content',
+        top: 0,
+      }
+    }
+
+    if (previousScrollBehavior)
+      return previousScrollBehavior(to, from, savedPosition)
+
+    if (to.path !== from.path)
+      return { top: 0 }
+  }
 })
 </script>
 

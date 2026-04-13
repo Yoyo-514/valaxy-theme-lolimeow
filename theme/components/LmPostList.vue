@@ -9,8 +9,10 @@ const props = withDefaults(defineProps<{
   type?: string
   posts?: Post[]
   curPage?: number
+  animateItems?: boolean
 }>(), {
   curPage: 1,
+  animateItems: false,
 })
 
 const themeConfig = useThemeConfig()
@@ -99,7 +101,12 @@ const gridStyle = computed(() => {
       </h2>
     </div>
     <ul v-if="posts.length > 0" :style="gridStyle" class="lm-post-list m-0 p-0 list-none">
-      <li v-for="(post, index) in posts" :key="post.path" class="lm-post-list__item m-0">
+      <li
+        v-for="(post, index) in posts"
+        :key="post.path"
+        class="lm-post-list__item m-0"
+        :class="{ 'lm-post-list__item--animated': props.animateItems }"
+      >
         <LmPostCard :post="post" :index="index" />
       </li>
     </ul>
@@ -123,5 +130,27 @@ const gridStyle = computed(() => {
   min-width: 0;
   display: flex;
   container-type: inline-size;
+}
+
+.lm-post-list__item--animated {
+  animation: lm-post-list-item-enter 0.45s ease-out both;
+}
+
+@keyframes lm-post-list-item-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-post-list__item--animated {
+    animation: none;
+  }
 }
 </style>
