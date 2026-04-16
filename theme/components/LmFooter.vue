@@ -1,10 +1,10 @@
 <script lang="ts" setup>
+import { useThemeConfig } from '@theme/composables'
 import { useSiteConfig, useValaxyConfig } from 'valaxy'
 import pkg from 'valaxy/package.json'
-import { capitalize, computed } from 'vue'
 
+import { capitalize, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useThemeConfig } from '../composables'
 
 const { t } = useI18n()
 

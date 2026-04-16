@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { NavItem } from '../types'
+import type { NavItem } from '@theme/types'
+import { useNavActive } from '@theme/composables'
 import { useRouter } from 'vue-router'
-import { useNavActive } from '../composables'
 
 const props = defineProps<{
   open: boolean
@@ -119,7 +119,7 @@ function leave(el: Element) {
 </template>
 
 <style lang="scss" scoped>
-@use '../styles/mixins/surface' as *;
+@use '@theme/styles/mixins/surface' as *;
 
 .lm-mobile-nav-panel {
   @include lm-surface-panel;

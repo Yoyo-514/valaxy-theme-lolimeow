@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Post } from 'valaxy'
+import { usePostCardViewModel } from '@theme/composables'
 import { computed, ref, watch } from 'vue'
-import { usePostCardViewModel } from '../composables'
 
 const props = defineProps<{
   post: Post
@@ -39,14 +39,14 @@ function handleImageLoad() {
 <template>
   <RouterLink
     :to="post.path || ''"
-    class="lm-post-card group rounded-2 no-underline h-full w-full block relative overflow-hidden"
+    class="lm-post-card"
     :class="{ 'lm-post-card--reversed': isReversed, 'lm-post-card--text-only': isTextOnly }"
   >
-    <div v-if="hasMedia" class="lm-post-card__media min-h-full self-stretch relative overflow-hidden">
-      <div class="lm-post-card__media-shape inset-0 absolute overflow-hidden">
+    <div v-if="hasMedia" class="lm-post-card__media">
+      <div class="lm-post-card__media-shape">
         <div
           v-if="showLoadingPlaceholder"
-          class="lm-post-card__loading-placeholder inset-0 absolute"
+          class="lm-post-card__loading-placeholder"
           aria-hidden="true"
         />
 
@@ -54,7 +54,7 @@ function handleImageLoad() {
           v-if="cover"
           :src="cover"
           alt=""
-          class="lm-post-card__image h-full w-full block inset-0 absolute object-cover"
+          class="lm-post-card__image"
           :class="{ 'lm-post-card__image--visible': imageLoaded }"
           @load="handleImageLoad"
           @error="handleCoverError"
@@ -62,23 +62,23 @@ function handleImageLoad() {
       </div>
     </div>
 
-    <div class="lm-post-card__content px-[1.35rem] py-[1.2rem] flex flex-col min-w-0 justify-start">
+    <div class="lm-post-card__content">
       <LmDate :date="post.date" />
-      <h2 class="lm-post-card__title text-[1.45rem] text-[var(--lm-c-text-primary)] leading-[1.3] font-700 mt-[0.55rem] line-clamp-2">
+      <h2 class="lm-post-card__title">
         {{ title }}
       </h2>
 
-      <div v-if="tags.length" class="lm-post-card__tags mt-[0.6rem] flex flex-wrap gap-[0.4rem]">
+      <div v-if="tags.length" class="lm-post-card__tags">
         <span
           v-for="tag in tags"
           :key="tag"
-          class="lm-post-card__tag text-[0.75rem] text-[var(--lm-c-text-secondary)] px-[0.45rem] py-[0.1rem] rounded-full bg-[color-mix(in_srgb,var(--lm-c-brand)_10%,transparent)]"
+          class="lm-post-card__tag"
         >
           {{ tag }}
         </span>
       </div>
 
-      <p v-if="excerpt" class="lm-post-card__excerpt text-[var(--lm-c-text-muted)] leading-[1.7] mt-[0.8rem] text-right line-clamp-3">
+      <p v-if="excerpt" class="lm-post-card__excerpt">
         {{ excerpt }}
       </p>
     </div>
@@ -86,10 +86,11 @@ function handleImageLoad() {
 </template>
 
 <style lang="scss" scoped>
-@use '../styles/mixins/surface' as *;
+@use '@theme/styles/mixins/surface' as *;
 
 .lm-post-card {
   @include lm-surface-panel;
+  @apply group relative block h-full w-full overflow-hidden rounded-2xl no-underline;
 
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
@@ -133,10 +134,12 @@ function handleImageLoad() {
 }
 
 .lm-post-card__media-shape {
+  @apply absolute inset-0 overflow-hidden;
   clip-path: polygon(0 0, 80% 0, 100% 100%, 0 100%);
 }
 
 .lm-post-card__image {
+  @apply absolute inset-0 block h-full w-full object-cover;
   opacity: 0;
   transition: opacity 220ms ease;
 }
@@ -146,6 +149,7 @@ function handleImageLoad() {
 }
 
 .lm-post-card__loading-placeholder {
+  @apply absolute inset-0;
   background: linear-gradient(
     115deg,
     color-mix(in srgb, var(--lm-c-bg-glass) 92%, white) 0%,
@@ -168,8 +172,34 @@ function handleImageLoad() {
   }
 }
 
+.lm-post-card__media {
+  @apply relative min-h-full self-stretch overflow-hidden;
+}
+
 .lm-post-card__content {
+  @apply flex min-w-0 flex-col justify-start px-5 py-5;
   align-items: flex-end;
+  text-align: right;
+}
+
+.lm-post-card__title {
+  @apply mt-2 line-clamp-2 text-[1.45rem] font-700 leading-[1.3];
+  color: var(--lm-c-text-primary);
+}
+
+.lm-post-card__tags {
+  @apply mt-2.5 flex flex-wrap gap-1.5;
+}
+
+.lm-post-card__tag {
+  @apply rounded-full px-2 py-0.5 text-xs;
+  color: var(--lm-c-text-secondary);
+  background: color-mix(in srgb, var(--lm-c-brand) 10%, transparent);
+}
+
+.lm-post-card__excerpt {
+  @apply mt-3 line-clamp-3 leading-[1.7];
+  color: var(--lm-c-text-muted);
   text-align: right;
 }
 
@@ -187,6 +217,7 @@ function handleImageLoad() {
   .lm-post-card__content {
     order: 1;
     align-items: flex-start;
+    text-align: left;
   }
 
   .lm-post-card__excerpt {
@@ -223,6 +254,13 @@ function handleImageLoad() {
   .lm-post-card__content,
   .lm-post-card--reversed .lm-post-card__content {
     justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .lm-post-card__excerpt,
+  .lm-post-card--reversed .lm-post-card__excerpt {
+    text-align: left;
   }
 }
 
@@ -250,6 +288,17 @@ function handleImageLoad() {
 
   .lm-post-card__media {
     min-height: 9rem;
+  }
+
+  .lm-post-card__content,
+  .lm-post-card--reversed .lm-post-card__content {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .lm-post-card__excerpt,
+  .lm-post-card--reversed .lm-post-card__excerpt {
+    text-align: left;
   }
 }
 </style>

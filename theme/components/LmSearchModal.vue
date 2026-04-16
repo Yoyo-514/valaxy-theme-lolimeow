@@ -74,7 +74,7 @@ watch(
 </template>
 
 <style scoped lang="scss">
-@use '../styles/mixins/surface' as *;
+@use '@theme/styles/mixins/surface' as *;
 
 .lm-search-shell {
   @apply px-4 pt-[8vh] flex pointer-events-none items-start inset-0 justify-center fixed z-[var(--lm-z-modal)];

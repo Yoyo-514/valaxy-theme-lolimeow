@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { NavItem } from '../../theme/types'
+import type { NavItem } from '@theme/types'
+import { useNavActive, useNavbarTools, useThemeConfig } from '@theme/composables'
 import { useAppStore, useSiteConfig } from 'valaxy'
 import { computed } from 'vue'
-import { useNavActive, useNavbarTools, useThemeConfig } from '../composables'
 
 const props = defineProps<{
   drawerOpen: boolean
@@ -122,7 +122,7 @@ const hamburgerLines = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-@use '../styles/mixins/surface' as *;
+@use '@theme/styles/mixins/surface' as *;
 
 .lm-nav {
   @include lm-surface-nav;

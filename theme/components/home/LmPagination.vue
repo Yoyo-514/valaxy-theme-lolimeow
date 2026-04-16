@@ -162,7 +162,7 @@ const nextLink = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-@use '../styles/mixins/surface' as *;
+@use '@theme/styles/mixins/surface' as *;
 
 .lm-pagination {
   @apply mt-6 flex items-center justify-center gap-3;

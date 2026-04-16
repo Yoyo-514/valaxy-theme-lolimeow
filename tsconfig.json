@@ -6,6 +6,10 @@
     "rootDir": ".",
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "paths": {
+      "@theme/*": ["./theme/*"],
+      "@demo/*": ["./demo/*"]
+    },
     "resolveJsonModule": true,
     "types": [
       "valaxy/client",

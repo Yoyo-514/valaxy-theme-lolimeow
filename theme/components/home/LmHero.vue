@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { useCssVar, useElementBounding } from '@vueuse/core'
-import { useSiteConfig } from 'valaxy'
-import { computed, onBeforeUnmount, useTemplateRef, watch } from 'vue'
 import {
   useBackgroundRuntime,
   useHeroMotto,
   useResolvedBackground,
   useThemeConfig,
-} from '../composables'
-import { createBackgroundImageStyle } from '../utils'
+} from '@theme/composables'
+import { createBackgroundImageStyle } from '@theme/utils'
+import { useCssVar, useElementBounding } from '@vueuse/core'
+import { useSiteConfig } from 'valaxy'
+import { computed, onBeforeUnmount, useTemplateRef, watch } from 'vue'
 
 interface SocialLink {
   name: string
@@ -242,7 +242,7 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped lang="scss">
-@use '../styles/mixins/surface' as *;
+@use '@theme/styles/mixins/surface' as *;
 
 .lm-hero-bg-layer {
   @apply inset-0 absolute;

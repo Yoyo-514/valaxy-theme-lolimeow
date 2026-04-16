@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { Post } from 'valaxy'
+import { useThemeConfig } from '@theme/composables'
 import { useElementSize } from '@vueuse/core'
 import { useSiteStore } from 'valaxy'
 import { computed, ref } from 'vue'
-import { useThemeConfig } from '../composables'
 
 const props = withDefaults(defineProps<{
   type?: string
@@ -94,7 +94,7 @@ const gridStyle = computed(() => {
 </script>
 
 <template>
-  <section ref="listSection" class="py-8 md:py-12">
+  <section ref="listSection" class="py-6 md:py-8">
     <div class="mb-6">
       <h2 class="text-[1.5rem] text-[var(--lm-c-text-primary)] leading-[1.3] font-700 m-0">
         {{ title }}

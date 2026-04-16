@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { useMobileDrawer, useNavbarVisibility, useSearchModal, useThemeConfig } from '@theme/composables'
 import { useCssVar } from '@vueuse/core'
 import { computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useMobileDrawer, useNavbarVisibility, useSearchModal, useThemeConfig } from '../../composables'
 
 const HOME_PAGINATION_PATH_RE = /^\/(?:page\/\d+\/?)?$/
 const NAVBAR_SCROLL_LOCK_ATTR = 'data-lm-navbar-scroll-lock'
@@ -18,6 +18,11 @@ const { isOpen: isSearchOpen, open: openSearch, close: closeSearch } = useSearch
 
 const { visible } = useNavbarVisibility(themeConfig.value.navbarOptions?.autoHide ?? true)
 const isHomeLayout = computed(() => route.meta.layout === 'home')
+
+const showGlobalNotice = computed(() => {
+  const notice = themeConfig.value.notice
+  return !isHomeLayout.value && notice.enable && notice.scope === 'global' && Boolean(notice.message?.trim())
+})
 
 // 头部壳层的显示状态必须同时考虑 drawer/search 的打开状态。
 // 否则导航虽然被滚动逻辑隐藏了，但抽屉或搜索层还在屏幕上，会出现“壳层和浮层脱节”。
@@ -107,6 +112,10 @@ onMounted(() => {
 
     <div class="lm-page-surface-layer" />
 
+    <div v-if="showGlobalNotice" class="lm-global-notice">
+      <LmNotice />
+    </div>
+
     <main class="w-full relative z-10">
       <slot />
     </main>
@@ -120,6 +129,10 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+.lm-global-notice {
+  @apply relative z-10 mx-auto w-full max-w-5xl pt-12 px-4 sm:px-6 xl:px-0;
+}
+
 .lm-page-surface-layer {
   position: fixed;
   left: 0;

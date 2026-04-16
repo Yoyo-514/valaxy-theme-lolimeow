@@ -74,11 +74,13 @@ export default defineConfig<ThemeConfig>({
           title: 'Docs',
           link: 'https://valaxy.site',
           desc: 'Valaxy Documentation',
+          img: '/images/background1.webp',
         },
         {
           title: 'About',
           link: '/about',
           desc: 'About Me',
+          img: '/images/background2.webp',
         },
       ],
     },

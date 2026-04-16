@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { Post } from 'valaxy'
+import { useThemeConfig } from '@theme/composables'
 import { useIntersectionObserver } from '@vueuse/core'
 import { useSiteConfig, useSiteStore } from 'valaxy'
 import { computed, ref, watch } from 'vue'
-import { useThemeConfig } from '../composables'
 
 const props = withDefaults(defineProps<{
   curPage?: number
@@ -24,6 +24,11 @@ const isStandardPagination = computed(() => paginationType.value === 'standard')
 const isInfiniteScroll = computed(() => paginationType.value === 'infinite-scroll')
 const paginationAnimation = computed(() => {
   return isInfiniteScroll.value && Boolean(themeConfig.value.pagination?.animation)
+})
+
+const showHomeNotice = computed(() => {
+  const notice = themeConfig.value.notice
+  return notice.enable && Boolean(notice.message?.trim()) && ['home', 'global'].includes(notice.scope ?? 'home')
 })
 
 const currentPage = computed(() => {
@@ -137,6 +142,10 @@ useIntersectionObserver(
 
 <template>
   <div id="lm-home-content" class="flex flex-col">
+    <LmNotice v-if="showHomeNotice" />
+
+    <LmPinned />
+
     <LmPostList :posts="pagedPosts" :cur-page="currentPage" :animate-items="paginationAnimation" />
 
     <LmPagination
