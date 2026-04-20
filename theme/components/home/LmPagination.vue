@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { usePaginationItems } from '@theme/composables'
 
 const props = withDefaults(defineProps<{
   currentPage?: number
@@ -10,111 +10,11 @@ const props = withDefaults(defineProps<{
   basePath: '/',
 })
 
-interface PaginationItem {
-  key: string
-  type: 'page' | 'ellipsis'
-  page?: number
-  to?: string
-  current?: boolean
-}
-
-const MAX_VISIBLE_PAGES = 6
-const SIBLING_COUNT = 1
-
-const currentPage = computed(() => {
-  const page = Number(props.currentPage)
-
-  if (!Number.isFinite(page))
-    return 1
-
-  return Math.max(1, Math.floor(page))
-})
-
-const totalPages = computed(() => {
-  const total = Number(props.totalPages)
-
-  if (!Number.isFinite(total) || total < 1)
-    return 0
-
-  return Math.floor(total)
-})
-
-function resolvePageLink(page: number) {
-  if (page <= 1)
-    return props.basePath
-
-  const normalizedBasePath = props.basePath.endsWith('/')
-    ? props.basePath.slice(0, -1)
-    : props.basePath
-
-  return `${normalizedBasePath}/page/${page}`
-}
-
-function createPageItem(page: number): PaginationItem {
-  return {
-    key: `page-${page}`,
-    type: 'page',
-    page,
-    to: resolvePageLink(page),
-    current: page === currentPage.value,
-  }
-}
-
-const paginationItems = computed<PaginationItem[]>(() => {
-  if (totalPages.value <= 0)
-    return []
-
-  if (totalPages.value <= MAX_VISIBLE_PAGES) {
-    return Array.from({ length: totalPages.value }, (_, index) => createPageItem(index + 1))
-  }
-
-  const items: PaginationItem[] = [createPageItem(1)]
-  const windowStart = Math.max(2, currentPage.value - SIBLING_COUNT)
-  const windowEnd = Math.min(totalPages.value - 1, currentPage.value + SIBLING_COUNT)
-
-  if (windowStart > 2) {
-    items.push({
-      key: 'ellipsis-left',
-      type: 'ellipsis',
-    })
-  }
-  else {
-    for (let page = 2; page < windowStart; page += 1)
-      items.push(createPageItem(page))
-  }
-
-  for (let page = windowStart; page <= windowEnd; page += 1)
-    items.push(createPageItem(page))
-
-  if (windowEnd < totalPages.value - 1) {
-    items.push({
-      key: 'ellipsis-right',
-      type: 'ellipsis',
-    })
-  }
-  else {
-    for (let page = windowEnd + 1; page < totalPages.value; page += 1)
-      items.push(createPageItem(page))
-  }
-
-  items.push(createPageItem(totalPages.value))
-
-  return items
-})
-
-const prevLink = computed(() => {
-  if (currentPage.value <= 1)
-    return null
-
-  return resolvePageLink(currentPage.value - 1)
-})
-
-const nextLink = computed(() => {
-  if (currentPage.value >= totalPages.value)
-    return null
-
-  return resolvePageLink(currentPage.value + 1)
-})
+const {
+  paginationItems,
+  prevLink,
+  nextLink,
+} = usePaginationItems(props)
 </script>
 
 <template>

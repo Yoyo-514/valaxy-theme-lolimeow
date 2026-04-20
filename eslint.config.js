@@ -9,6 +9,7 @@ export default antfu(
   {
     ignores: [
       '**/*/.valaxy',
+      '**/node_modules/**',
     ],
   },
 )

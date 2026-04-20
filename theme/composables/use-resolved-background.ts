@@ -1,3 +1,4 @@
+import { clampOpacity, normalizeUrls, pickFirstUrl, pickRandomUrl } from '@theme/utils'
 import { useColorMode, useWindowSize } from '@vueuse/core'
 import { computed } from 'vue'
 import { useThemeConfig } from './config'
@@ -23,30 +24,6 @@ export interface ResolvedBackground {
   position: string
   size: string
   fixed: boolean
-}
-
-function normalizeUrls(urls?: string[]) {
-  return urls?.map(url => url.trim()).filter(Boolean) || []
-}
-
-function pickFirst(urls?: string[]) {
-  return normalizeUrls(urls)[0] || ''
-}
-
-function pickRandom(urls?: string[]) {
-  const candidates = normalizeUrls(urls)
-
-  if (!candidates.length)
-    return ''
-
-  return candidates[Math.floor(Math.random() * candidates.length)] || ''
-}
-
-function clampOpacity(opacity?: number, fallback = 0.3) {
-  if (typeof opacity !== 'number' || Number.isNaN(opacity))
-    return fallback
-
-  return Math.min(1, Math.max(0, opacity))
 }
 
 function createColorBackground(): ResolvedBackground {
@@ -107,8 +84,8 @@ export function useResolvedBackground(scope: BackgroundScope = 'app') {
       const heroStaticUrls = normalizeUrls(heroCover.urls)
       const heroApiUrls = normalizeUrls(heroCover.apiUrls)
       const heroPrimaryImage = heroCover.random
-        ? (pickRandom(heroApiUrls) || pickRandom(heroStaticUrls))
-        : (pickFirst(heroStaticUrls)
+        ? (pickRandomUrl(heroApiUrls) || pickRandomUrl(heroStaticUrls))
+        : (pickFirstUrl(heroStaticUrls)
           || (isMobile.value ? heroCover.mobile : heroCover.desktop)
           || heroCover.desktop
           || heroCover.mobile
@@ -116,7 +93,7 @@ export function useResolvedBackground(scope: BackgroundScope = 'app') {
 
       // fallbackImageUrl 在解析层保持“稳定候选”的语义，
       // 更细的随机保底策略放到 runtime 中，避免响应式重算导致随机结果抖动。
-      const heroFallbackImage = pickFirst(heroStaticUrls)
+      const heroFallbackImage = pickFirstUrl(heroStaticUrls)
         || (isMobile.value ? heroCover.mobile : heroCover.desktop)
         || heroCover.desktop
         || heroCover.mobile
@@ -151,14 +128,14 @@ export function useResolvedBackground(scope: BackgroundScope = 'app') {
       // imageUrl 表示“当前希望加载的目标图”，而不是保证立即可见的图。
       // 真正的显示顺序、过渡和失败回退由 runtime 统一接管。
       const primaryImageUrl = backgroundImage.random
-        ? (pickRandom(apiImageUrls) || pickRandom(staticImageUrls))
-        : (pickFirst(staticImageUrls)
+        ? (pickRandomUrl(apiImageUrls) || pickRandomUrl(staticImageUrls))
+        : (pickFirstUrl(staticImageUrls)
           || (isDark.value ? backgroundImage.dark : backgroundImage.light)
           || backgroundImage.light
           || backgroundImage.dark
           || '')
 
-      const fallbackImageUrl = pickFirst(staticImageUrls)
+      const fallbackImageUrl = pickFirstUrl(staticImageUrls)
         || (isDark.value ? backgroundImage.dark : backgroundImage.light)
         || backgroundImage.light
         || backgroundImage.dark

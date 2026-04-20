@@ -1,28 +1,8 @@
+import { isSectionMatch, normalizePath } from '@theme/utils'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const pendingLink = ref('')
-
-const PATHNAME_REGEX = /[?#]/
-const TRAILING_SLASH_REGEX = /\/+$/
-
-function normalizePath(path: string) {
-  if (!path)
-    return '/'
-
-  const [pathname] = path.split(PATHNAME_REGEX)
-  if (!pathname)
-    return '/'
-
-  return pathname !== '/' ? pathname.replace(TRAILING_SLASH_REGEX, '') : '/'
-}
-
-function isSectionMatch(current: string, target: string) {
-  if (target === '/')
-    return current === '/'
-
-  return current === target || current.startsWith(`${target}/`)
-}
 
 export function useNavActive() {
   const route = useRoute()

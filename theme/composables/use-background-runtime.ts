@@ -1,5 +1,6 @@
 import type { CSSProperties, Ref } from 'vue'
 import type { ResolvedBackground } from './use-resolved-background'
+import { getBackgroundCacheKey, getRotationCandidate, pickRandomUrl, shouldUseTransparentFallback } from '@theme/utils'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 
 type BackgroundRuntimeScope = 'app' | 'hero'
@@ -22,28 +23,6 @@ const loadedImageCache = new Map<string, string>()
 const sessionFallbackCache = new Map<string, string>()
 const IMAGE_FADE_DURATION = 520
 const MIN_ROTATION_INTERVAL = 4000
-
-function getCacheKey(scope: BackgroundRuntimeScope, background: ResolvedBackground) {
-  if (background.type !== 'image' || !background.imageUrl)
-    return `${scope}:non-image`
-
-  return `${scope}:${background.source}:${background.imageUrl}`
-}
-
-function withCacheBust(url: string) {
-  if (!url)
-    return ''
-
-  const separator = url.includes('?') ? '&' : '?'
-  return `${url}${separator}_ts=${Date.now()}`
-}
-
-function pickRandom(list: string[]) {
-  if (!list.length)
-    return ''
-
-  return list[Math.floor(Math.random() * list.length)] || ''
-}
 
 function preloadImage(url: string) {
   return new Promise<string>((resolve, reject) => {
@@ -72,16 +51,6 @@ function preloadImage(url: string) {
   })
 }
 
-function getRotationCandidate(background: ResolvedBackground) {
-  if (!background.random)
-    return ''
-
-  if (background.apiImageUrls.length)
-    return withCacheBust(pickRandom(background.apiImageUrls))
-
-  return pickRandom(background.staticImageUrls)
-}
-
 function getFallbackCacheKey(scope: BackgroundRuntimeScope, background: ResolvedBackground) {
   return [
     scope,
@@ -105,7 +74,7 @@ function getStableFallbackImage(scope: BackgroundRuntimeScope, background: Resol
   // 随机模式下如果也提供了静态图，保底图不应永远退回第一张。
   // 这里在当前会话内固定挑一张，既保留随机感，又避免同一访客反复看到保底图变化。
   const fallbackImage = background.random && background.staticImageUrls.length > 1
-    ? (pickRandom(background.staticImageUrls) || background.fallbackImageUrl)
+    ? (pickRandomUrl(background.staticImageUrls) || background.fallbackImageUrl)
     : background.fallbackImageUrl
 
   if (fallbackImage)
@@ -125,17 +94,6 @@ function afterNextPaint(callback: () => void) {
   requestAnimationFrame(() => {
     requestAnimationFrame(callback)
   })
-}
-
-function shouldUseTransparentFallback(
-  background: ResolvedBackground,
-  options: BackgroundRuntimeOptions,
-) {
-  return Boolean(
-    options.transparentUntilLoaded
-    && background.random
-    && background.apiImageUrls.length,
-  )
 }
 
 export function useBackgroundRuntime(
@@ -274,7 +232,7 @@ export function useBackgroundRuntime(
 
         // 轮换只在新图已完成加载后才提交，旧图会一直保留到新图淡入完成。
         applyImage(loadedUrl)
-        loadedImageCache.set(getCacheKey(scope, background), loadedUrl)
+        loadedImageCache.set(getBackgroundCacheKey(scope, background), loadedUrl)
         hasLoaded.value = true
         usingFallback.value = false
       }
@@ -308,7 +266,7 @@ export function useBackgroundRuntime(
         return
       }
 
-      const cacheKey = getCacheKey(scope, next)
+      const cacheKey = getBackgroundCacheKey(scope, next)
       const cachedUrl = loadedImageCache.get(cacheKey)
       const fallbackImageUrl = getStableFallbackImage(scope, next)
       const transparentUntilLoaded = shouldUseTransparentFallback(next, options)

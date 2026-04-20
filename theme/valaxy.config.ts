@@ -13,10 +13,28 @@ export default defineTheme<ThemeConfig>((options) => {
     vite: {
       plugins: [themePlugin(options)],
       resolve: {
-        alias: {
-          '@theme': themeRoot,
-          '@demo': resolve(workspaceRoot, 'demo'),
-        },
+        alias: [
+          {
+            find: '@theme',
+            replacement: themeRoot,
+          },
+          {
+            find: '@demo',
+            replacement: resolve(workspaceRoot, 'demo'),
+          },
+        ],
+      },
+      optimizeDeps: {
+        include: [
+          '@braintree/sanitize-url',
+          'dayjs/plugin/advancedFormat',
+          'mermaid',
+          '@mermaid-js/parser',
+          'langium',
+        ],
+      },
+      ssr: {
+        noExternal: ['mermaid', '@mermaid-js/parser', 'langium'],
       },
     },
     unocss: {

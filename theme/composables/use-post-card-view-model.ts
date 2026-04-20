@@ -1,29 +1,7 @@
 import type { Post } from 'valaxy'
+import { appendSeedQuery, normalizeExcerpt, pickBySeed } from '@theme/utils'
 import { computed, ref, watch } from 'vue'
 import { useThemeConfig } from './config'
-
-const HTML_TAG_REGEX = /<[^>]+>/g
-const WHITESPACE_REGEX = /\s+/g
-
-function hashString(input: string) {
-  let hash = 0
-  for (let i = 0; i < input.length; i += 1)
-    hash = (hash * 31 + input.charCodeAt(i)) >>> 0
-  return hash
-}
-
-function pickBySeed<T>(list: T[], seed: string) {
-  if (!list.length)
-    return undefined
-
-  const index = hashString(seed) % list.length
-  return list[index]
-}
-
-function appendSeedQuery(url: string, seed: string) {
-  const joiner = url.includes('?') ? '&' : '?'
-  return `${url}${joiner}lm_seed=${hashString(seed)}`
-}
 
 export function usePostCardViewModel(post: Post, index = 0) {
   const themeConfig = useThemeConfig()
@@ -80,13 +58,8 @@ export function usePostCardViewModel(post: Post, index = 0) {
     if (postListConfig.value.showExcerpt === false)
       return ''
 
-    const raw = String(post.excerpt ?? '')
-      .replace(HTML_TAG_REGEX, '')
-      .replace(WHITESPACE_REGEX, ' ')
-      .trim()
-
     const max = postListConfig.value.excerptLength ?? 140
-    return raw.slice(0, max)
+    return normalizeExcerpt(String(post.excerpt ?? ''), max)
   })
 
   const isReversed = computed(() => {

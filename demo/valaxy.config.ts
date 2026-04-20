@@ -1,5 +1,9 @@
 import type { ThemeConfig } from 'valaxy-theme-lolimeow'
 import { defineConfig } from 'valaxy'
+// @ts-expect-error - 和设置一并注释
+import { addonTwikoo } from 'valaxy-addon-twikoo'
+// @ts-expect-error - 和设置一并注释
+import { addonWaline } from 'valaxy-addon-waline'
 
 /**
  * User Config
@@ -110,4 +114,14 @@ export default defineConfig<ThemeConfig>({
       since: 2023,
     },
   },
+  addons: [
+    // addonTwikoo({
+    //   envId: '',
+    // }),
+    addonWaline({
+      serverURL: 'https://waline.wrxinyue.org',
+      pageview: true,
+      comment: true,
+    }),
+  ],
 })

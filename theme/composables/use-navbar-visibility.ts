@@ -1,7 +1,6 @@
+import { NAVBAR_SCROLL_LOCK_ATTR } from '@theme/utils'
 import { useWindowScroll } from '@vueuse/core'
 import { ref, watch } from 'vue'
-
-const NAVBAR_SCROLL_LOCK_ATTR = 'data-lm-navbar-scroll-lock'
 
 /**
  * 顶栏显隐控制。
@@ -20,7 +19,7 @@ export function useNavbarVisibility(enabled = true) {
   const { y } = useWindowScroll()
 
   watch(
-    y,
+    () => Math.max(0, y.value),
     (currentTop) => {
       if (!enabled) {
         visible.value = true

@@ -1,14 +1,11 @@
 <script lang="ts" setup>
 import type { Post } from 'valaxy'
-import { usePostCardViewModel } from '@theme/composables'
-import { computed, ref, watch } from 'vue'
+import { usePostCardMediaState, usePostCardViewModel } from '@theme/composables'
 
 const props = defineProps<{
   post: Post
   index?: number
 }>()
-
-const imageLoaded = ref(false)
 
 const {
   title,
@@ -21,19 +18,11 @@ const {
   handleCoverError,
 } = usePostCardViewModel(props.post, props.index ?? 0)
 
-watch(
-  () => cover.value,
-  () => {
-    imageLoaded.value = false
-  },
-  { immediate: true },
-)
-
-const showLoadingPlaceholder = computed(() => hasMedia.value && !imageLoaded.value)
-
-function handleImageLoad() {
-  imageLoaded.value = true
-}
+const {
+  imageLoaded,
+  showLoadingPlaceholder,
+  handleImageLoad,
+} = usePostCardMediaState(hasMedia, cover)
 </script>
 
 <template>

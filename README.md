@@ -1,99 +1,171 @@
-<p align="center">
-Valaxy-Theme-Starter<sup><em>(vue)</em></sup>
-</p>
+# Valaxy Theme Lolimeow
 
-[![npm](https://img.shields.io/npm/v/valaxy-theme-starter)](https://www.npmjs.com/package/valaxy-theme-starter)
-[![npm dev dependency version](https://img.shields.io/npm/dependency-version/valaxy-theme-starter/dev/valaxy)](https://github.com/YunYouJun/valaxy)
+`valaxy-theme-lolimeow` is a custom [Valaxy](https://valaxy.site/) theme built around anime-style background imagery and a reading-first layout.
 
-> This is a template for creating a [valaxy](https://github.com/YunYouJun/valaxy) theme.
+The theme focuses on three things:
 
-## Usage
+- customizable and randomizable background imagery
+- a lightweight anime-inspired visual atmosphere
+- readable article pages on desktop and mobile
+- a maintainable structure for continued theme iteration
 
-### Clone to local
+## Features
 
-> Use [pnpm](https://pnpm.io/), because we need its workspace.
+### Home page
 
-```bash
-npx degit YunYouJun/valaxy-theme-starter valaxy-theme-name
+- Configurable global background with light/dark images, image pools, and random API sources
+- Separate hero cover runtime, so the landing section can use a different image strategy from the rest of the site
+- Anime-inspired visual tone kept behind a restrained reading surface instead of turning the page into a wallpaper showcase
+- Home feed, pinned entries, and infinite pagination arranged around that background-first presentation
 
-cd valaxy-theme-name
+### Article pages
 
-# If you don't have pnpm installed
-npm install -g pnpm
+- Cover and non-cover article headers that adapt to illustration-heavy posts without breaking reading width
+- Reading layer tuned to keep long-form content usable on top of dynamic, semi-transparent anime-style backgrounds
+- Desktop TOC and mobile TOC implemented as lightweight reading aids, not documentation-style control panels
+- Markdown styling focused on practical blog content such as code blocks, tables, media embeds, footnotes, and custom blocks
 
-pnpm i
+### Comments
+
+- Waline integration through `valaxy-addon-waline`
+- Twikoo integration through `valaxy-addon-twikoo`
+- Comment rendering resolved from enabled addons instead of a separate theme-only provider convention
+
+### Theme infrastructure
+
+- Background runtime with static image, random rotation, API fallback, preload, and decode handling
+- Auto-hide navbar, mobile drawer, and helper interactions tuned for background-rich reading pages
+- Search modal shell ready for search provider integration
+- Shared design tokens, SCSS mixins, and composable-driven UI state
+
+## Repository structure
+
+```txt
+.
+├─ demo/                  Demo site used for development and regression checks
+├─ temp/                  Working design and architecture notes
+├─ theme/
+│  ├─ components/         Theme components
+│  ├─ composables/        Theme state and interaction logic
+│  ├─ styles/             Theme tokens and global styles
+│  ├─ utils/              Shared helper utilities
+│  ├─ client/             Client entry
+│  ├─ node/               Node entry
+│  └─ valaxy.config.ts    Theme-side Valaxy configuration
+├─ package.json           Workspace scripts
+└─ pnpm-workspace.yaml    Workspace definition
 ```
 
-### Development
+## Development
+
+This repository uses `pnpm` workspace.
+
+Install dependencies:
 
 ```bash
-# dev node
-pnpm dev
-# dev client
+pnpm install
+```
+
+Start the demo site:
+
+```bash
 pnpm demo
 ```
 
-### Build
+Run the default development command:
+
+```bash
+pnpm dev
+```
+
+Build the demo site:
 
 ```bash
 pnpm build
 ```
 
-### Release
-
-> Publish to [npm](https://www.npmjs.com/).
-
-#### Manual
+Lint the repository:
 
 ```bash
-pnpm ci:publish
+pnpm lint
 ```
 
-#### Auto by GitHub Actions
-
-> You can release it by github actions.
-
-Click `Settings` -> `Secrets` -> `Actions` in your GitHub repo.
-
-Add `New repository secret`:
-
-- `NPM_TOKEN`: `your npm token` (Generate from your npm `Access Tokens` - `Automation`)
+Type-check the repository:
 
 ```bash
-npm run release
-# choose your version to automatic release
+pnpm typecheck
 ```
 
-## Checklist
+## Using the theme
 
-- [ ] Change the author name in `LICENSE` & `package.json` & `.github`
-- [ ] Write `ThemeConfig` & Other init content
-- [ ] Rename `valaxy-theme-starter` to `valaxy-theme-<name>` (custom it)
-- [ ] Change `theme: 'starter'` to `theme: <name>` in `valaxy.config.ts`
-- [ ] Each of your Vue components should have a namespace
-  - For example: `YunTest.vue` for `valaxy-theme-yun`
+When the theme package is available in your Valaxy project, enable it in your config:
 
-### About Checklist Rename
+```ts
+import { defineConfig } from 'valaxy'
 
-Rename `valaxy-theme-starter` with `valaxy-theme-name` in the `package.json` and `valaxy.config.ts` files.
-
-PS: there are a total of four files that need to be rename
-
-```bash
-valaxy-theme-name
-  - package.json
-  - demo
-    - package.json
-    - valaxy.config.ts
-  - theme
-    - package.json
+export default defineConfig({
+  theme: 'lolimeow',
+})
 ```
 
-Let's write the theme & docs!
+Theme-specific options are provided through `themeConfig`. The demo site contains the most complete reference for current usage:
 
-## Thanks
+- [demo/valaxy.config.ts](./demo/valaxy.config.ts)
 
-Starter theme ref theme:
+## Comment integration
 
+The theme does not define its own `comment.provider` field.
+
+Current behavior:
+
+- the article page comment area is rendered only when `siteConfig.comment.enable !== false`
+- page-level comments can be disabled with `frontmatter.comment === false`
+- if `valaxy-addon-waline` is enabled, Waline is used
+- otherwise, if `valaxy-addon-twikoo` is enabled, Twikoo is used
+
+Example addon setup:
+
+```ts
+import { defineConfig } from 'valaxy'
+import { addonWaline } from 'valaxy-addon-waline'
+
+export default defineConfig({
+  siteConfig: {
+    comment: {
+      enable: true,
+    },
+  },
+  addons: [
+    addonWaline({
+      serverURL: 'https://your-waline-server',
+    }),
+  ],
+})
+```
+
+## Demo pages
+
+The demo site includes several pages intended for manual regression checks:
+
+- [demo/pages/posts/demo.md](./demo/pages/posts/demo.md): comprehensive Markdown showcase
+- [demo/pages/posts/markdown.md](./demo/pages/posts/markdown.md): general Markdown examples
+- [demo/pages/posts/mermaid.md](./demo/pages/posts/mermaid.md): Mermaid examples
+- [demo/pages/posts/i18n.md](./demo/pages/posts/i18n.md): i18n-related checks
+
+## Status
+
+- [x] Home page
+- [x] Article reading layer
+- [x] Comment integration
+- [x] First-pass Markdown theming
+- [ ] Archive page
+- [ ] Category page
+- [ ] Tag page
+- [ ] Links page
+- [ ] Search provider and result experience
+
+## Acknowledgements
+
+- [Valaxy](https://github.com/YunYouJun/valaxy)
 - [vuejs/blog](https://github.com/vuejs/blog)
 - [tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)

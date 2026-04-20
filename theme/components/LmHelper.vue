@@ -183,11 +183,13 @@ function backToTop() {
 
 <style scoped lang="scss">
 .lm-helper-stage {
-  @apply hidden fixed right-6 bottom-7 z-20 md:block;
+  @apply hidden fixed xl:bottom-3 md:bottom-12 right-5 z-20 md:block;
 }
 
 .lm-helper-paw {
-  @apply p-0 inline-flex items-center justify-center border-none bg-transparent cursor-pointer;
+  @apply inline-flex items-center justify-center border-none bg-transparent p-0 cursor-pointer;
+  width: 3.5rem;
+  height: 3.5rem;
 
   filter: drop-shadow(0 14px 24px rgb(15 23 42 / 0.16))
     drop-shadow(0 0 0 color-mix(in srgb, var(--lm-c-brand) 0%, transparent));

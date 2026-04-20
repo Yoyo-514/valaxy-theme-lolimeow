@@ -19,6 +19,8 @@
     "eslint": "catalog:",
     "eslint-plugin-format": "catalog:",
     "typescript": "catalog:",
+    "valaxy-addon-twikoo": "catalog:",
+    "valaxy-addon-waline": "catalog:",
     "valaxy-theme-lolimeow": "workspace:*",
     "vitest": "catalog:",
     "vue-tsc": "catalog:"

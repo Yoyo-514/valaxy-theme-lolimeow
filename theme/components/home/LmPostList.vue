@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Post } from 'valaxy'
 import { useThemeConfig } from '@theme/composables'
+import { clampColumnCount, resolveGridColumnCount, resolveLengthToPx } from '@theme/utils'
 import { useElementSize } from '@vueuse/core'
 import { useSiteStore } from 'valaxy'
 import { computed, ref } from 'vue'
@@ -19,7 +20,7 @@ const themeConfig = useThemeConfig()
 const site = useSiteStore()
 
 const listSection = ref<HTMLElement | null>(null)
-const { width: containerWidth } = useElementSize(listSection)
+const { width: containerWidth } = useElementSize(() => listSection.value)
 
 const title = computed(() => themeConfig.value.postList.title ?? 'Discovery')
 
@@ -33,40 +34,8 @@ const allPosts = computed(() => {
 
 const posts = computed(() => props.posts ?? allPosts.value)
 
-const WIDTH_REGEX = /^(-?(?:\d+(?:\.\d+)?|\.\d+))(px|rem)?$/i
 const DEFAULT_MIN_CARD_WIDTH = '18rem'
 const GRID_GAP_PX = 16
-
-function clampColumnCount(value: unknown) {
-  const count = Number(value)
-
-  if (!Number.isFinite(count))
-    return 1
-
-  return Math.min(6, Math.max(1, Math.floor(count)))
-}
-
-function resolveLengthToPx(value: number | string | undefined) {
-  if (typeof value === 'number' && Number.isFinite(value))
-    return value
-
-  const raw = String(value ?? DEFAULT_MIN_CARD_WIDTH).trim()
-  const match = raw.match(WIDTH_REGEX)
-
-  if (!match)
-    return 288
-
-  const amount = Number(match[1])
-  const unit = (match[2] ?? 'px').toLowerCase()
-  const rootFontSize = typeof window !== 'undefined'
-    ? Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
-    : 16
-
-  if (unit === 'rem')
-    return amount * rootFontSize
-
-  return amount
-}
 
 const maxColumns = computed(() => {
   return clampColumnCount(themeConfig.value.postList.maxColumns ?? 1)
@@ -76,14 +45,16 @@ const minCardWidth = computed(() => {
   return themeConfig.value.postList.minCardWidth ?? DEFAULT_MIN_CARD_WIDTH
 })
 
-const minCardWidthPx = computed(() => resolveLengthToPx(minCardWidth.value))
+const minCardWidthPx = computed(() => {
+  const rootFontSize = typeof window !== 'undefined'
+    ? Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
+    : 16
+
+  return resolveLengthToPx(minCardWidth.value, 288, rootFontSize)
+})
 
 const actualColumns = computed(() => {
-  if (!containerWidth.value)
-    return 1
-
-  const fittedColumns = Math.floor((containerWidth.value + GRID_GAP_PX) / (minCardWidthPx.value + GRID_GAP_PX))
-  return Math.max(1, Math.min(maxColumns.value, fittedColumns || 1))
+  return resolveGridColumnCount(containerWidth.value, minCardWidthPx.value, maxColumns.value, GRID_GAP_PX)
 })
 
 const gridStyle = computed(() => {
@@ -94,7 +65,7 @@ const gridStyle = computed(() => {
 </script>
 
 <template>
-  <section ref="listSection" class="py-6 md:py-8">
+  <section id="lm-post-list-section" ref="listSection" class="py-6 md:py-8">
     <div class="mb-6">
       <h2 class="text-[1.5rem] text-[var(--lm-c-text-primary)] leading-[1.3] font-700 m-0">
         {{ title }}

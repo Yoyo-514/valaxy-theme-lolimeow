@@ -1,84 +1,21 @@
 <script setup lang="ts">
-import { useMobileDrawer, useNavbarVisibility, useSearchModal, useThemeConfig } from '@theme/composables'
-import { useCssVar } from '@vueuse/core'
-import { computed, onMounted, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useHomePaginationScrollBehavior, useLayoutShell } from '@theme/composables'
+import { useRouter } from 'vue-router'
 
-const HOME_PAGINATION_PATH_RE = /^\/(?:page\/\d+\/?)?$/
-const NAVBAR_SCROLL_LOCK_ATTR = 'data-lm-navbar-scroll-lock'
-
-const themeConfig = useThemeConfig()
-const route = useRoute()
 const router = useRouter()
-const pageSurfaceTop = useCssVar('--lm-page-surface-top', document.documentElement)
+const {
+  closeDrawer,
+  closeSearch,
+  headerVisible,
+  isDrawerOpen,
+  isSearchOpen,
+  navItems,
+  openSearch,
+  showGlobalNotice,
+  toggleDrawer,
+} = useLayoutShell()
 
-const navItems = computed(() => themeConfig.value.navbar.filter(item => item.text))
-const { isOpen: isDrawerOpen, close: closeDrawer, toggle: toggleDrawer } = useMobileDrawer()
-const { isOpen: isSearchOpen, open: openSearch, close: closeSearch } = useSearchModal()
-
-const { visible } = useNavbarVisibility(themeConfig.value.navbarOptions?.autoHide ?? true)
-const isHomeLayout = computed(() => route.meta.layout === 'home')
-
-const showGlobalNotice = computed(() => {
-  const notice = themeConfig.value.notice
-  return !isHomeLayout.value && notice.enable && notice.scope === 'global' && Boolean(notice.message?.trim())
-})
-
-// 头部壳层的显示状态必须同时考虑 drawer/search 的打开状态。
-// 否则导航虽然被滚动逻辑隐藏了，但抽屉或搜索层还在屏幕上，会出现“壳层和浮层脱节”。
-const headerVisible = computed(() => {
-  return isDrawerOpen.value || isSearchOpen.value || visible.value
-})
-
-function isHomePaginationPath(path: string) {
-  return HOME_PAGINATION_PATH_RE.test(path)
-}
-
-function lockNavbarScrollReaction() {
-  if (typeof document === 'undefined')
-    return
-
-  const root = document.documentElement
-  root.setAttribute(NAVBAR_SCROLL_LOCK_ATTR, 'true')
-
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      root.removeAttribute(NAVBAR_SCROLL_LOCK_ATTR)
-    })
-  })
-}
-
-watch(
-  isHomeLayout,
-  (value) => {
-    if (!value)
-      pageSurfaceTop.value = '0px'
-  },
-  { immediate: true },
-)
-
-onMounted(() => {
-  const previousScrollBehavior = router.options.scrollBehavior
-
-  router.options.scrollBehavior = (to, from, savedPosition) => {
-    if (savedPosition)
-      return savedPosition
-
-    if (isHomePaginationPath(to.path) && isHomePaginationPath(from.path)) {
-      lockNavbarScrollReaction()
-      return {
-        el: '#lm-home-content',
-        top: 0,
-      }
-    }
-
-    if (previousScrollBehavior)
-      return previousScrollBehavior(to, from, savedPosition)
-
-    if (to.path !== from.path)
-      return { top: 0 }
-  }
-})
+useHomePaginationScrollBehavior(router)
 </script>
 
 <template>
@@ -130,7 +67,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .lm-global-notice {
-  @apply relative z-10 mx-auto w-full max-w-5xl pt-12 px-4 sm:px-6 xl:px-0;
+  @apply relative z-10 mx-auto w-full max-w-6xl pt-12 px-4 sm:px-6 xl:px-0;
 }
 
 .lm-page-surface-layer {
