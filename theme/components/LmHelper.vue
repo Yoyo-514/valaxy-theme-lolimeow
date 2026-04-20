@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { getDocumentElement, getWindow } from '@theme/utils'
 import { isClient, useWindowScroll } from '@vueuse/core'
 import { computed } from 'vue'
 
@@ -13,7 +14,13 @@ const scrollProgress = computed(() => {
   if (!isClient)
     return 0
 
-  const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+  const root = getDocumentElement()
+  const currentWindow = getWindow()
+
+  if (!root || !currentWindow)
+    return 0
+
+  const maxScroll = root.scrollHeight - currentWindow.innerHeight
   if (maxScroll <= 0)
     return 0
 
@@ -35,7 +42,7 @@ function backToTop() {
   if (!isClient)
     return
 
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  getWindow()?.scrollTo({ top: 0, behavior: 'smooth' })
 }
 </script>
 

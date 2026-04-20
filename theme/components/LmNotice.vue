@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useThemeConfig } from '@theme/composables'
+import { getSessionStorage } from '@theme/utils'
 import { computed, ref, watch } from 'vue'
 
 const themeConfig = useThemeConfig()
@@ -25,12 +26,13 @@ watch(
       return
     }
 
-    if (!canClose || typeof window === 'undefined') {
+    const sessionStorage = getSessionStorage()
+    if (!canClose || !sessionStorage) {
       isOpen.value = true
       return
     }
 
-    isOpen.value = window.sessionStorage.getItem(key) !== '1'
+    isOpen.value = sessionStorage.getItem(key) !== '1'
   },
   { immediate: true },
 )
@@ -43,8 +45,8 @@ function closeNotice() {
 
   isOpen.value = false
 
-  if (typeof window !== 'undefined' && storageKey.value)
-    window.sessionStorage.setItem(storageKey.value, '1')
+  if (storageKey.value)
+    getSessionStorage()?.setItem(storageKey.value, '1')
 }
 </script>
 

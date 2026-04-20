@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useArticleHeaderMeta } from '@theme/composables'
+import { computed } from 'vue'
 
 const {
   frontmatter,
@@ -9,6 +10,8 @@ const {
   publishedDate,
   infoItems,
 } = useArticleHeaderMeta()
+
+const articleTitle = computed(() => frontmatter.value.title || '')
 </script>
 
 <template>
@@ -27,7 +30,7 @@ const {
         <div class="lm-article-header__cover-content">
           <div class="lm-article-header__content lm-article-header__content--cover">
             <h1 class="lm-article-header__title lm-article-header__title--cover">
-              {{ frontmatter.title }}
+              {{ articleTitle }}
             </h1>
 
             <LmArticleMeta
@@ -47,7 +50,7 @@ const {
       :class="{ 'lm-article-header__content--plain': !cover }"
     >
       <h1 v-if="!cover" class="lm-article-header__title">
-        {{ frontmatter.title }}
+        {{ articleTitle }}
       </h1>
 
       <LmArticleMeta

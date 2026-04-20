@@ -1,5 +1,5 @@
 import type { CSSProperties, ShallowRef } from 'vue'
-import { createBackgroundImageStyle } from '@theme/utils'
+import { createBackgroundImageStyle, getDocumentElement } from '@theme/utils'
 import { useCssVar, useElementBounding } from '@vueuse/core'
 import { computed, onBeforeUnmount, watch } from 'vue'
 import { useThemeConfig } from './config'
@@ -10,7 +10,7 @@ export function useHeroStage(heroSection: Readonly<ShallowRef<HTMLElement | null
   const themeConfig = useThemeConfig()
   const heroBackground = useResolvedBackground('hero')
   const { bottom } = useElementBounding(() => heroSection.value)
-  const pageSurfaceTop = useCssVar('--lm-page-surface-top', document.documentElement)
+  const pageSurfaceTop = useCssVar('--lm-page-surface-top', getDocumentElement())
 
   // Hero 在随机 API 图尚未就绪时应直接穿透全局背景。
   // 这样首屏不会先叠出一层与全局重复的静态图，背景边界也不会显脏。

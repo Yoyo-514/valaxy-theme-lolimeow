@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Post } from 'valaxy'
 import { useThemeConfig } from '@theme/composables'
-import { clampColumnCount, resolveGridColumnCount, resolveLengthToPx } from '@theme/utils'
+import { clampColumnCount, getRootFontSize, resolveGridColumnCount, resolveLengthToPx } from '@theme/utils'
 import { useElementSize } from '@vueuse/core'
 import { useSiteStore } from 'valaxy'
 import { computed, ref } from 'vue'
@@ -46,11 +46,7 @@ const minCardWidth = computed(() => {
 })
 
 const minCardWidthPx = computed(() => {
-  const rootFontSize = typeof window !== 'undefined'
-    ? Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
-    : 16
-
-  return resolveLengthToPx(minCardWidth.value, 288, rootFontSize)
+  return resolveLengthToPx(minCardWidth.value, 288, getRootFontSize())
 })
 
 const actualColumns = computed(() => {

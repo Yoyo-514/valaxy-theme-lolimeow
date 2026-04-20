@@ -47,7 +47,9 @@ const socialLinks = computed<SocialLink[]>(() => {
 
 const author = computed<SiteAuthor>(() => siteConfig.value.author || {})
 const authorAvatar = computed(() => author.value.avatar || '')
-const authorName = computed(() => author.value.name || siteConfig.value.title)
+const siteTitle = computed(() => siteConfig.value.title || '')
+const siteSubtitle = computed(() => siteConfig.value.subtitle || '')
+const authorName = computed(() => author.value.name || siteTitle.value)
 const showSocialIcons = computed(() => themeConfig.value.hero.showSocialIcons && socialLinks.value.length > 0)
 </script>
 
@@ -75,8 +77,8 @@ const showSocialIcons = computed(() => themeConfig.value.hero.showSocialIcons &&
       <LmHeroIdentity
         :avatar="authorAvatar"
         :author-name="authorName"
-        :title="siteConfig.title"
-        :subtitle="siteConfig.subtitle"
+        :title="siteTitle"
+        :subtitle="siteSubtitle"
         :has-motto="hasMotto"
         :rendered-motto="renderedMotto"
       />

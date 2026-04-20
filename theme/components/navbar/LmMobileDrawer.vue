@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { NavItem } from '@theme/types'
 import { useNavActive } from '@theme/composables'
+import { getWindow } from '@theme/utils'
 import { useRouter } from 'vue-router'
 
 const props = defineProps<{
@@ -36,17 +37,21 @@ function isExternalLink(item: NavItem) {
 }
 
 function handleItemClick(item: NavItem) {
+  const currentWindow = getWindow()
+  if (!currentWindow)
+    return
+
   setPending(item.link)
 
-  window.clearTimeout(navigateTimer)
+  currentWindow.clearTimeout(navigateTimer)
 
-  navigateTimer = window.setTimeout(() => {
+  navigateTimer = currentWindow.setTimeout(() => {
     closeDrawer()
 
-    window.setTimeout(() => {
+    currentWindow.setTimeout(() => {
       if (isExternalLink(item)) {
         clearPending()
-        window.open(item.link, item.target || '_blank', 'noopener')
+        currentWindow.open(item.link, item.target || '_blank', 'noopener')
         return
       }
 

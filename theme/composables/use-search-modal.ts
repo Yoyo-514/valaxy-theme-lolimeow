@@ -1,3 +1,4 @@
+import { getWindow } from '@theme/utils'
 import { useEventListener } from '@vueuse/core'
 import { ref } from 'vue'
 
@@ -16,7 +17,7 @@ export function useSearchModal() {
     isOpen.value = !isOpen.value
   }
 
-  useEventListener(window, 'keydown', (event: KeyboardEvent) => {
+  useEventListener(getWindow(), 'keydown', (event: KeyboardEvent) => {
     if (event.key === 'Escape')
       close()
   })

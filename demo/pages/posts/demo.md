@@ -91,7 +91,7 @@ Ordered
 
 Start numbering with offset:
 
-57. foo
+1. foo
 1. bar
 
 ## Code
@@ -188,6 +188,7 @@ Footnotes help keep the main paragraph clean.[^note]
 Another sentence with a second footnote.[^long-note]
 
 [^note]: This is a short footnote.
+
 [^long-note]: This footnote is slightly longer so the footnotes area can be checked.
 
 ## Embedded Media
@@ -238,6 +239,6 @@ Say: Good!
 
 <p align="center">
   <a href="https://sponsors.yunyoujun.cn">
-    <img src='https://fastly.jsdelivr.net/gh/YunYouJun/sponsors/public/sponsors.svg'/>
+    <img src='https://fastly.jsdelivr.net/gh/YunYouJun/sponsors/public/sponsors.svg' alt=''/>
   </a>
 </p>

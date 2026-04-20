@@ -1,5 +1,5 @@
 import type { MenuItem } from '@valaxyjs/utils'
-import { lockNavbarScrollReaction } from '@theme/utils'
+import { getDocumentElement, getWindow, lockNavbarScrollReaction } from '@theme/utils'
 import { useOutline } from 'valaxy'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 
@@ -19,15 +19,17 @@ function clamp(value: number, min: number, max: number) {
 }
 
 function getActiveScrollOffset() {
-  if (typeof window === 'undefined')
+  const currentWindow = getWindow()
+  const root = getDocumentElement()
+  if (!currentWindow || !root)
     return 160
 
-  const rawOffset = getComputedStyle(document.documentElement)
+  const rawOffset = currentWindow.getComputedStyle(root)
     .getPropertyValue('--lm-navbar-offset')
     .trim()
   const parsedOffset = Number.parseFloat(rawOffset)
   const navbarOffset = Number.isFinite(parsedOffset) ? parsedOffset : 72
-  const readingLineOffset = clamp(window.innerHeight * 0.18, ACTIVE_LINE_MIN, ACTIVE_LINE_MAX)
+  const readingLineOffset = clamp(currentWindow.innerHeight * 0.18, ACTIVE_LINE_MIN, ACTIVE_LINE_MAX)
 
   return Math.max(navbarOffset + ACTIVE_SCROLL_GAP, readingLineOffset)
 }
@@ -74,15 +76,21 @@ export function useArticleTocState() {
       return
     }
 
-    const scrollTop = window.scrollY + getActiveScrollOffset()
+    const currentWindow = getWindow()
+    if (!currentWindow) {
+      activeLink.value = currentItems[0]?.link || ''
+      return
+    }
+
+    const scrollTop = currentWindow.scrollY + getActiveScrollOffset()
     let nextActive = currentItems[0]?.link || ''
 
     currentItems.forEach((item) => {
       const id = decodeURIComponent(item.link.replace(HASH_PREFIX_RE, ''))
-      const heading = document.getElementById(id)
+      const heading = currentWindow.document.getElementById(id)
 
       if (heading) {
-        const headingTop = heading.getBoundingClientRect().top + window.scrollY
+        const headingTop = heading.getBoundingClientRect().top + currentWindow.scrollY
         if (headingTop <= scrollTop)
           nextActive = item.link
       }
@@ -92,17 +100,20 @@ export function useArticleTocState() {
   }
 
   onMounted(() => {
+    const currentWindow = getWindow()
+
     nextTick(() => {
       updateActiveLink()
     })
 
-    window.addEventListener('scroll', updateActiveLink, { passive: true })
-    window.addEventListener('resize', updateActiveLink, { passive: true })
+    currentWindow?.addEventListener('scroll', updateActiveLink, { passive: true })
+    currentWindow?.addEventListener('resize', updateActiveLink, { passive: true })
   })
 
   onUnmounted(() => {
-    window.removeEventListener('scroll', updateActiveLink)
-    window.removeEventListener('resize', updateActiveLink)
+    const currentWindow = getWindow()
+    currentWindow?.removeEventListener('scroll', updateActiveLink)
+    currentWindow?.removeEventListener('resize', updateActiveLink)
   })
 
   watch(

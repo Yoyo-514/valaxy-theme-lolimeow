@@ -1,8 +1,6 @@
 import type { ThemeConfig } from 'valaxy-theme-lolimeow'
 import { defineConfig } from 'valaxy'
-// @ts-expect-error - 和设置一并注释
-import { addonTwikoo } from 'valaxy-addon-twikoo'
-// @ts-expect-error - 和设置一并注释
+// @ts-expect-error - `valaxy-addon-waline` 仅提供源码与导出映射，CI 下 `vue-tsc` 可能无法正确解析包根类型
 import { addonWaline } from 'valaxy-addon-waline'
 
 /**
@@ -115,9 +113,6 @@ export default defineConfig<ThemeConfig>({
     },
   },
   addons: [
-    // addonTwikoo({
-    //   envId: '',
-    // }),
     addonWaline({
       serverURL: 'https://waline.wrxinyue.org',
       pageview: true,

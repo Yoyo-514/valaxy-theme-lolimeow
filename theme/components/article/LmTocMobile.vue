@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useArticleTocState } from '@theme/composables'
+import { removeDocumentClass, toggleDocumentClass } from '@theme/utils'
 import { onBeforeUnmount, ref, watch } from 'vue'
 
 const { items, visible, activeLink, handleClick } = useArticleTocState()
@@ -19,8 +20,7 @@ function onSelect(event: MouseEvent) {
 }
 
 watch(open, (isOpen) => {
-  document.documentElement.classList.toggle('lm-toc-mobile-open', isOpen)
-  document.body.classList.toggle('lm-toc-mobile-open', isOpen)
+  toggleDocumentClass('lm-toc-mobile-open', isOpen)
 })
 
 watch(items, () => {
@@ -33,8 +33,7 @@ watch(visible, (isVisible) => {
 })
 
 onBeforeUnmount(() => {
-  document.documentElement.classList.remove('lm-toc-mobile-open')
-  document.body.classList.remove('lm-toc-mobile-open')
+  removeDocumentClass('lm-toc-mobile-open')
 })
 </script>
 

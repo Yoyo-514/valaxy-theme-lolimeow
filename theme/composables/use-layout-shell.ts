@@ -1,3 +1,4 @@
+import { getDocumentElement } from '@theme/utils'
 import { useCssVar } from '@vueuse/core'
 import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -9,8 +10,9 @@ import { useSearchModal } from './use-search-modal'
 export function useLayoutShell() {
   const themeConfig = useThemeConfig()
   const route = useRoute()
-  const pageSurfaceTop = useCssVar('--lm-page-surface-top', document.documentElement)
-  const navbarOffset = useCssVar('--lm-navbar-offset', document.documentElement)
+  const root = getDocumentElement()
+  const pageSurfaceTop = useCssVar('--lm-page-surface-top', root)
+  const navbarOffset = useCssVar('--lm-navbar-offset', root)
 
   const navItems = computed(() => themeConfig.value.navbar.filter(item => item.text))
   const { isOpen: isDrawerOpen, close: closeDrawer, toggle: toggleDrawer } = useMobileDrawer()

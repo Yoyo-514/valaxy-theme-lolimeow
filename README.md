@@ -28,8 +28,7 @@ The theme focuses on three things:
 ### Comments
 
 - Waline integration through `valaxy-addon-waline`
-- Twikoo integration through `valaxy-addon-twikoo`
-- Comment rendering resolved from enabled addons instead of a separate theme-only provider convention
+- Waline is the only maintained comment integration in the current development stage
 
 ### Theme infrastructure
 
@@ -121,7 +120,6 @@ Current behavior:
 - the article page comment area is rendered only when `siteConfig.comment.enable !== false`
 - page-level comments can be disabled with `frontmatter.comment === false`
 - if `valaxy-addon-waline` is enabled, Waline is used
-- otherwise, if `valaxy-addon-twikoo` is enabled, Twikoo is used
 
 Example addon setup:
 

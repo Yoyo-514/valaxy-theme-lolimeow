@@ -10,7 +10,7 @@
     "demo": "pnpm -C demo run dev",
     "lint": "eslint .",
     "release": "cd theme && git add -A && bumpp --all",
-    "typecheck": "vue-tsc --noEmit --skipLibCheck"
+    "typecheck": "node ./scripts/typecheck.mjs"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:",
@@ -19,7 +19,6 @@
     "eslint": "catalog:",
     "eslint-plugin-format": "catalog:",
     "typescript": "catalog:",
-    "valaxy-addon-twikoo": "catalog:",
     "valaxy-addon-waline": "catalog:",
     "valaxy-theme-lolimeow": "workspace:*",
     "vitest": "catalog:",

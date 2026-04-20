@@ -1,28 +1,36 @@
 <script setup lang="ts">
 import { useFrontmatter, usePrevNext } from 'valaxy'
+import { computed } from 'vue'
 
 const frontmatter = useFrontmatter()
 const [prev, next] = usePrevNext()
+
+const navEnabled = computed(() => frontmatter.value.nav !== false)
+const prevPath = computed(() => prev.value?.path || '')
+const prevTitle = computed(() => prev.value?.title || '')
+const nextPath = computed(() => next.value?.path || '')
+const nextTitle = computed(() => next.value?.title || '')
+const hasPostNav = computed(() => navEnabled.value && (!!prevPath.value || !!nextPath.value))
 </script>
 
 <template>
-  <footer v-if="frontmatter.nav !== false && (prev?.path || next?.path)" class="lm-post-nav">
+  <footer v-if="hasPostNav" class="lm-post-nav">
     <RouterLink
-      v-if="prev?.path"
-      :to="prev.path"
+      v-if="prevPath"
+      :to="prevPath"
       class="lm-post-nav__item"
     >
       <span class="lm-post-nav__label">Previous Article</span>
-      <span class="lm-post-nav__title">{{ prev.title }}</span>
+      <span class="lm-post-nav__title">{{ prevTitle }}</span>
     </RouterLink>
 
     <RouterLink
-      v-if="next?.path"
-      :to="next.path"
+      v-if="nextPath"
+      :to="nextPath"
       class="lm-post-nav__item lm-post-nav__item--next"
     >
       <span class="lm-post-nav__label">Next Article</span>
-      <span class="lm-post-nav__title">{{ next.title }}</span>
+      <span class="lm-post-nav__title">{{ nextTitle }}</span>
     </RouterLink>
   </footer>
 </template>

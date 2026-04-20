@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import type { PageData, Post } from 'valaxy'
 import { useSiteConfig } from 'valaxy'
+import { computed } from 'vue'
 
-defineProps<{
+const props = defineProps<{
   frontmatter: Post
   data?: PageData
 }>()
 const siteConfig = useSiteConfig()
+const commentEnabled = computed(() => siteConfig.value.comment?.enable !== false && props.frontmatter.comment !== false)
 </script>
 
 <template>
@@ -34,7 +36,7 @@ const siteConfig = useSiteConfig()
 
         <slot name="main-nav-after" />
 
-        <slot v-if="siteConfig.comment.enable && frontmatter.comment !== false" name="comment" />
+        <slot v-if="commentEnabled" name="comment" />
 
         <slot name="footer" />
       </slot>

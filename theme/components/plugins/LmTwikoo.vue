@@ -1,9 +1,17 @@
 <script setup lang="ts">
-import { useTwikooWithOptions } from 'valaxy-addon-twikoo'
+/**
+ * @deprecated Twikoo 集成已停止维护。
+ * 当前文件仅保留历史实现与样式作为迁移参考，不再推荐启用。
+ * 主题运行时分发已切换为仅使用 Waline，相关入口见 `theme/components/LmComment.vue`。
+ */
+// 已废弃：保留旧实现供迁移参考。
+// import { useTwikooWithOptions } from 'valaxy-addon-twikoo'
 
-import 'valaxy-addon-twikoo/client/styles/index.scss'
+// 已废弃：保留旧样式供迁移参考。
+// import 'valaxy-addon-twikoo/client/styles/index.scss'
 
-useTwikooWithOptions()
+// 已废弃：保留旧初始化逻辑供迁移参考。
+// useTwikooWithOptions()
 </script>
 
 <template>

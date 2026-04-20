@@ -1,22 +1,25 @@
 <script lang="ts" setup>
 import { useSiteConfig } from 'valaxy'
+import { computed } from 'vue'
 
 const siteConfig = useSiteConfig()
+const siteTitle = computed(() => siteConfig.value.title || '')
+const siteFavicon = computed(() => siteConfig.value.favicon || '')
 </script>
 
 <template>
   <RouterLink
     class="lm-nav-brand"
     to="/"
-    :aria-label="siteConfig.title"
+    :aria-label="siteTitle"
   >
     <img
       class="lm-nav-brand__logo"
       style="width: 40px; height: 28px"
       alt="logo"
-      :src="siteConfig.favicon"
+      :src="siteFavicon"
     >
-    <span class="lm-nav-brand__title">{{ siteConfig.title }}</span>
+    <span class="lm-nav-brand__title">{{ siteTitle }}</span>
   </RouterLink>
 </template>
 

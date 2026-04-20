@@ -1,4 +1,4 @@
-import { NAVBAR_SCROLL_LOCK_ATTR } from '@theme/utils'
+import { getDocumentElement, NAVBAR_SCROLL_LOCK_ATTR } from '@theme/utils'
 import { useWindowScroll } from '@vueuse/core'
 import { ref, watch } from 'vue'
 
@@ -27,7 +27,7 @@ export function useNavbarVisibility(enabled = true) {
         return
       }
 
-      if (typeof document !== 'undefined' && document.documentElement.hasAttribute(NAVBAR_SCROLL_LOCK_ATTR)) {
+      if (getDocumentElement()?.hasAttribute(NAVBAR_SCROLL_LOCK_ATTR)) {
         lastScrollTop.value = currentTop
         return
       }

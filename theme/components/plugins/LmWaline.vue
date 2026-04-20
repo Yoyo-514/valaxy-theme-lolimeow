@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// cspell:ignore waline
+// @ts-expect-error - `valaxy-addon-waline` 仅提供源码与导出映射，CI 下 `vue-tsc` 可能无法正确解析包根类型
 import { useAddonWaline } from 'valaxy-addon-waline'
 
 const addon = useAddonWaline()

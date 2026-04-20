@@ -20,6 +20,8 @@ const isThisYear = computed(() => {
 
 const poweredHtml = computed(() => t('footer.powered', [`<a href="${pkg.repository}" target="_blank" rel="noopener">Valaxy</a> v${pkg.version}`]))
 const footerIcon = computed(() => themeConfig.value.footer.icon!)
+const authorName = computed(() => siteConfig.value.author?.name || '')
+const themeName = computed(() => config.value.theme || '')
 </script>
 
 <template>
@@ -53,7 +55,7 @@ const footerIcon = computed(() => themeConfig.value.footer.icon!)
         <div :class="footerIcon.name" />
       </a>
 
-      <span>{{ siteConfig.author.name }}</span>
+      <span>{{ authorName }}</span>
     </div>
 
     <div v-if="themeConfig.footer.powered" class="text-[var(--lm-c-text-muted)] mt-3">
@@ -63,10 +65,10 @@ const footerIcon = computed(() => themeConfig.value.footer.icon!)
         <a
           class="text-[var(--lm-c-link)] no-underline transition-colors duration-250 ease-in-out hover:text-[var(--lm-c-text-primary)]"
           :href="themeConfig.pkg.homepage"
-          :title="`valaxy-theme-${config.theme}`"
+          :title="`valaxy-theme-${themeName}`"
           target="_blank"
         >
-          {{ capitalize(config.theme) }}
+          {{ capitalize(themeName) }}
         </a>
         v{{ themeConfig.pkg.version }}
       </span>
