@@ -3,3 +3,16 @@ valaxy_theme_lolimeow: Valaxy Theme LoliMeow
 statistics:
   views: Page views
   traffic: Traffic
+
+pages:
+  archives:
+    eyebrow: Timeline Archive
+    title: Archives
+    description: Browse all posts by year with a restrained timeline rhythm and stable reading flow.
+    empty: No archive entries are available yet.
+    unknownYear: Unknown Year
+    desktopHint: Hover a year to preview its posts.
+    countLabel: posts
+    stats:
+      years: Years
+      posts: Posts

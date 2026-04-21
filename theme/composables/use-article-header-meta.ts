@@ -1,3 +1,4 @@
+import { resolveFrontmatterCover, resolveFrontmatterText } from '@theme/utils'
 import { formatDate, useFrontmatter } from 'valaxy'
 import { computed } from 'vue'
 
@@ -9,27 +10,12 @@ interface ArticleInfoItem {
 export function useArticleHeaderMeta() {
   const frontmatter = useFrontmatter()
 
+  const title = computed(() => {
+    return resolveFrontmatterText(frontmatter.value.title)
+  })
+
   const cover = computed(() => {
-    const postCover = frontmatter.value.cover
-
-    if (typeof postCover === 'string' && postCover)
-      return postCover
-
-    const image = frontmatter.value.image
-
-    if (typeof image === 'string' && image)
-      return image
-
-    if (Array.isArray(image)) {
-      const firstString = image.find(item => typeof item === 'string')
-      if (typeof firstString === 'string')
-        return firstString
-    }
-
-    if (image && typeof image === 'object' && 'url' in image && typeof image.url === 'string')
-      return image.url
-
-    return ''
+    return resolveFrontmatterCover(frontmatter.value)
   })
 
   const categories = computed(() => {
@@ -94,6 +80,7 @@ export function useArticleHeaderMeta() {
 
   return {
     frontmatter,
+    title,
     cover,
     categories,
     tags,

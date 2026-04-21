@@ -19,7 +19,7 @@ const emit = defineEmits<{
     <div class="px-4 py-2 flex gap-3 w-full items-center sm:px-5">
       <LmNavBrand />
 
-      <div class="text-sm leading-6 ml-auto gap-5 hidden items-center md:flex">
+      <div class="text-sm leading-6 ml-auto hidden items-center md:flex md:gap-3.5 xl:gap-5">
         <LmNavItem
           v-for="item in $props.items"
           :key="item.link"

@@ -1,5 +1,7 @@
 export * from './background'
+export * from './breakpoints'
 export * from './browser'
+export * from './frontmatter'
 export * from './layout'
 export * from './navigation'
 export * from './post'
