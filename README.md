@@ -156,7 +156,7 @@ The demo site includes several pages intended for manual regression checks:
 - [x] Article reading layer
 - [x] Comment integration
 - [x] First-pass Markdown theming
-- [ ] Archive page
+- [x] Archive page
 - [ ] Category page
 - [ ] Tag page
 - [ ] Links page
