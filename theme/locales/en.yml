@@ -8,11 +8,18 @@ pages:
   archives:
     eyebrow: Timeline Archive
     title: Archives
-    description: Browse all posts by year with a restrained timeline rhythm and stable reading flow.
     empty: No archive entries are available yet.
     unknownYear: Unknown Year
-    desktopHint: Hover a year to preview its posts.
     countLabel: posts
     stats:
-      years: Years
+      posts: Posts
+  categories:
+    eyebrow: Category Index
+    title: Categories
+    empty: No categories are available yet.
+    uncategorized: Uncategorized
+    postCountLabel: posts
+    childCountLabel: child categories
+    stats:
+      categories: Categories
       posts: Posts

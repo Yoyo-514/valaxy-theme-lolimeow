@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <div class="w-full">
-      <LmArchives />
+      <LmCategories />
     </div>
   </Layout>
 </template>

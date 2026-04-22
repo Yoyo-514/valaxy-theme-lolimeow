@@ -84,7 +84,7 @@ defineProps<{
     linear-gradient(
       180deg,
       rgba(255, 255, 255, 0.02) 0%,
-      rgba(255, 255, 255, 0.12) 60%,
+      rgba(0, 0, 0, 0.1) 60%,
       color-mix(in srgb, var(--lm-surface-reading-bg) 30%, transparent) 100%
     ),
     radial-gradient(circle at 20% 44%, rgba(255, 255, 255, 0.11), transparent 34%),

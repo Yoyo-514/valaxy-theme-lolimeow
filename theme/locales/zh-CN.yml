@@ -8,11 +8,18 @@ pages:
   archives:
     eyebrow: 时间归档
     title: 归档
-    description: 按年份整理全部文章，保留清晰的时间顺序与轻盈的浏览节奏。
     empty: 这里还没有可展示的归档文章。
     unknownYear: 未标注年份
-    desktopHint: 将鼠标移到年份上，查看对应文章。
     countLabel: 篇
     stats:
-      years: 年份
+      posts: 文章
+  categories:
+    eyebrow: 分类索引
+    title: 分类
+    empty: 这里还没有可展示的分类内容。
+    uncategorized: 未分类
+    postCountLabel: 篇文章
+    childCountLabel: 个子分类
+    stats:
+      categories: 分类
       posts: 文章
