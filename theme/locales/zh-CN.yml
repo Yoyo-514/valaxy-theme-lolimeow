@@ -23,3 +23,11 @@ pages:
     stats:
       categories: 分类
       posts: 文章
+  tags:
+    eyebrow: 标签索引
+    title: 标签
+    empty: 这里还没有可展示的标签内容。
+    postCountLabel: 篇文章
+    stats:
+      tags: 标签
+      posts: 文章

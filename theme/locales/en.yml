@@ -23,3 +23,11 @@ pages:
     stats:
       categories: Categories
       posts: Posts
+  tags:
+    eyebrow: Tag Index
+    title: Tags
+    empty: No tags are available yet.
+    postCountLabel: posts
+    stats:
+      tags: Tags
+      posts: Posts
