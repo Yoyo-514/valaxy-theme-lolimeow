@@ -20,60 +20,168 @@ const isThisYear = computed(() => {
 
 const poweredHtml = computed(() => t('footer.powered', [`<a href="${pkg.repository}" target="_blank" rel="noopener">Valaxy</a> v${pkg.version}`]))
 const footerIcon = computed(() => themeConfig.value.footer.icon!)
+const showFooterIcon = computed(() => Boolean(footerIcon.value.enable && footerIcon.value.name))
 const authorName = computed(() => siteConfig.value.author?.name || '')
 const themeName = computed(() => config.value.theme || '')
+const icpInfo = computed(() => {
+  const { icp } = themeConfig.value.footer
+
+  if (!icp)
+    return undefined
+
+  if (typeof icp === 'string') {
+    return {
+      link: 'https://beian.miit.gov.cn/',
+      text: icp,
+    }
+  }
+
+  return {
+    link: icp.link || 'https://beian.miit.gov.cn/',
+    text: icp.text,
+  }
+})
 </script>
 
 <template>
-  <footer class="text-sm text-[var(--lm-c-text-secondary)] leading-[1.7] px-4 py-8 text-center">
-    <div v-if="themeConfig.footer.icp" class="mb-3">
+  <footer class="lm-footer">
+    <div class="lm-footer__glow" aria-hidden="true" />
+
+    <div class="lm-footer__inner">
+      <div class="lm-footer__copyright">
+        <span class="lm-footer__year">
+          Copyright
+          &copy;
+          <template v-if="!isThisYear">
+            {{ themeConfig.footer.since }} -
+          </template>
+          {{ year }}
+        </span>
+
+        <a
+          v-if="showFooterIcon"
+          class="lm-footer__icon"
+          :class="{ 'lm-footer__icon--animated': footerIcon.animated }"
+          :href="footerIcon.url || undefined"
+          :target="footerIcon.url ? '_blank' : undefined"
+          :title="footerIcon.title"
+          :style="{ color: footerIcon.color }"
+          rel="noopener"
+        >
+          <span :class="footerIcon.name" />
+        </a>
+
+        <span class="lm-footer__author">{{ authorName }}</span>
+      </div>
+
+      <div v-if="themeConfig.footer.powered" class="lm-footer__powered">
+        <span v-html="poweredHtml" />
+        <span class="lm-footer__dot" aria-hidden="true" />
+        <span>
+          {{ t('footer.theme') }}
+          <a
+            :href="themeConfig.pkg.homepage"
+            :title="`valaxy-theme-${themeName}`"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ capitalize(themeName) }}
+          </a>
+          v{{ themeConfig.pkg.version }}
+        </span>
+      </div>
+
       <a
-        href="https://beian.miit.gov.cn/"
+        v-if="icpInfo"
+        :href="icpInfo.link"
         target="_blank"
         rel="noopener"
-        class="text-[var(--lm-c-link)] no-underline transition-colors duration-250 ease-in-out hover:text-[var(--lm-c-text-primary)]"
+        class="lm-footer__icp"
       >
-        {{ themeConfig.footer.icp }}
-      </a>
-    </div>
-
-    <div class="text-[var(--lm-c-text-secondary)] flex flex-wrap gap-2 items-center justify-center">
-      <span>
-        &copy;
-        <template v-if="!isThisYear">
-          {{ themeConfig.footer.since }} -
-        </template>
-        {{ year }}
-      </span>
-
-      <a
-        class="text-[var(--lm-c-brand)] no-underline inline-flex transition-colors duration-250 ease-in-out items-center justify-center hover:text-[var(--lm-c-text-primary)]"
-        :href="footerIcon.url"
-        target="_blank"
-        :title="footerIcon.title"
-      >
-        <div :class="footerIcon.name" />
+        {{ icpInfo.text }}
       </a>
 
-      <span>{{ authorName }}</span>
+      <slot />
     </div>
-
-    <div v-if="themeConfig.footer.powered" class="text-[var(--lm-c-text-muted)] mt-3">
-      <span v-html="poweredHtml" />
-      <span>
-        | {{ t('footer.theme') }} -
-        <a
-          class="text-[var(--lm-c-link)] no-underline transition-colors duration-250 ease-in-out hover:text-[var(--lm-c-text-primary)]"
-          :href="themeConfig.pkg.homepage"
-          :title="`valaxy-theme-${themeName}`"
-          target="_blank"
-        >
-          {{ capitalize(themeName) }}
-        </a>
-        v{{ themeConfig.pkg.version }}
-      </span>
-    </div>
-
-    <slot />
   </footer>
 </template>
+
+<style scoped lang="scss">
+.lm-footer {
+  @apply relative z-10 px-4 pb-7 pt-10 text-center text-sm leading-7;
+  color: var(--lm-c-text-secondary);
+}
+
+.lm-footer__glow {
+  @apply pointer-events-none absolute left-1/2 top-0 h-px w-[min(34rem,72vw)] -translate-x-1/2;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--lm-c-brand) 58%, transparent), transparent);
+}
+
+.lm-footer__inner {
+  @apply mx-auto flex max-w-4xl flex-col items-center gap-2;
+}
+
+.lm-footer__copyright {
+  @apply relative inline-flex flex-wrap items-center justify-center gap-2.5 rounded-full px-4 py-1.5;
+  color: var(--lm-c-text-secondary);
+  background:
+    radial-gradient(circle at 18% 0%, color-mix(in srgb, var(--lm-c-brand) 14%, transparent), transparent 42%),
+    color-mix(in srgb, var(--lm-c-bg-glass) 28%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--lm-c-border) 58%, transparent);
+}
+
+.lm-footer__year,
+.lm-footer__author {
+  @apply whitespace-nowrap;
+}
+
+.lm-footer__icon {
+  @apply inline-flex h-6 w-6 items-center justify-center rounded-full no-underline transition-[color,transform,background-color] duration-220 ease-out;
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.lm-footer__icon:hover {
+  transform: translateY(-1px) rotate(-8deg);
+  background: color-mix(in srgb, currentColor 16%, transparent);
+}
+
+.lm-footer__icon--animated {
+  animation: lm-footer-pulse 2.4s ease-in-out infinite;
+}
+
+.lm-footer__powered {
+  @apply flex flex-wrap items-center justify-center gap-2 text-xs;
+  color: var(--lm-c-text-muted);
+}
+
+.lm-footer__powered :deep(a),
+.lm-footer__icp {
+  @apply no-underline transition-colors duration-220 ease-out;
+  color: var(--lm-c-link);
+}
+
+.lm-footer__powered :deep(a:hover),
+.lm-footer__icp:hover {
+  color: var(--lm-c-text-primary);
+}
+
+.lm-footer__dot {
+  @apply h-1 w-1 rounded-full;
+  background: color-mix(in srgb, var(--lm-c-brand) 70%, transparent);
+}
+
+.lm-footer__icp {
+  @apply text-xs;
+}
+
+@keyframes lm-footer-pulse {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-1px) scale(1.08);
+  }
+}
+</style>

@@ -1,3 +1,15 @@
+export interface FooterIcp {
+  /**
+   * 备案号展示文本，例如：粤ICP备xxxx号 / 萌ICP备xxxx号
+   */
+  text: string
+
+  /**
+   * 备案链接。工信部备案可使用 https://beian.miit.gov.cn/，萌国 ICP 可填对应查询地址。
+   */
+  link?: string
+}
+
 export interface Footer {
   /**
    * 建站于
@@ -27,9 +39,7 @@ export interface Footer {
 
   /**
    * Chinese Users | 中国用户
-   * 备案 ICP
-   * 国内用户需要在网站页脚展示备案 ICP 号
-   * https://beian.miit.gov.cn/
+   * 备案 ICP。字符串写法默认跳转工信部备案；对象写法可自定义链接，兼容萌国 ICP。
    */
-  icp?: string
+  icp?: string | FooterIcp
 }

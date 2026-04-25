@@ -18,6 +18,12 @@
   --lm-surface-panel-shadow: var(--lm-shadow-glass);
   --lm-surface-modal-shadow: var(--lm-shadow-elevated);
   --lm-surface-reading-shadow: var(--lm-shadow-glass);
+  --lm-scrollbar-size: 0.55rem;
+  --lm-scrollbar-radius: var(--lm-radius-full);
+  --lm-scrollbar-track: color-mix(in srgb, var(--lm-c-bg-glass) 18%, transparent);
+  --lm-scrollbar-thumb: color-mix(in srgb, var(--lm-c-brand) 36%, var(--lm-c-border));
+  --lm-scrollbar-thumb-hover: color-mix(in srgb, var(--lm-c-brand) 62%, var(--lm-c-border-hover));
+  --lm-scrollbar-thumb-active: color-mix(in srgb, var(--lm-c-brand-strong) 72%, var(--lm-c-brand));
   --va-code-block-bg: color-mix(in srgb, var(--lm-c-brand-soft) 68%, transparent);
   --va-code-copy-code-border-color: color-mix(in srgb, var(--lm-c-brand-border) 60%, transparent);
   --va-code-copy-code-bg: color-mix(in srgb, var(--lm-c-bg-glass) 70%, transparent);
@@ -48,6 +54,10 @@ html.dark {
   --lm-surface-panel-shadow: var(--lm-shadow-glass);
   --lm-surface-modal-shadow: var(--lm-shadow-elevated);
   --lm-surface-reading-shadow: var(--lm-shadow-glass);
+  --lm-scrollbar-track: color-mix(in srgb, var(--lm-c-bg-glass) 14%, transparent);
+  --lm-scrollbar-thumb: color-mix(in srgb, var(--lm-c-brand) 42%, var(--lm-c-border));
+  --lm-scrollbar-thumb-hover: color-mix(in srgb, var(--lm-c-brand) 68%, var(--lm-c-border-hover));
+  --lm-scrollbar-thumb-active: color-mix(in srgb, var(--lm-c-brand) 86%, white);
   --va-code-block-bg: color-mix(in srgb, var(--lm-c-brand-soft) 68%, transparent);
   --va-code-copy-code-border-color: color-mix(in srgb, var(--lm-c-brand-border) 70%, transparent);
   --va-code-copy-code-bg: color-mix(in srgb, var(--lm-c-bg-glass) 90%, transparent);

@@ -82,21 +82,7 @@ watch(activeLink, async () => {
   @apply mt-5 min-h-0 flex flex-col gap-1.5 overflow-y-auto border-l pl-4 pr-2;
   border-color: color-mix(in srgb, var(--lm-c-brand) 28%, var(--lm-c-border));
   overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: color-mix(in srgb, var(--lm-c-brand) 36%, transparent) transparent;
-}
-
-.lm-toc__nav::-webkit-scrollbar {
-  width: 0.35rem;
-}
-
-.lm-toc__nav::-webkit-scrollbar-thumb {
-  border-radius: 9999px;
-  background: color-mix(in srgb, var(--lm-c-brand) 32%, transparent);
-}
-
-.lm-toc__nav::-webkit-scrollbar-track {
-  background: transparent;
+  --lm-scrollbar-size: 0.45rem;
 }
 
 .lm-toc__link {

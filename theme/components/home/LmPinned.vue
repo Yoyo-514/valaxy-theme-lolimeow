@@ -74,8 +74,9 @@ const {
 
 .lm-pinned__track {
   @apply grid grid-flow-col auto-cols-[minmax(15rem,1fr)] gap-4 overflow-x-auto pb-1 snap-x snap-proximity md:auto-cols-[minmax(17.5rem,1fr)];
-  scrollbar-width: thin;
-  scrollbar-color: color-mix(in srgb, var(--lm-c-border-hover) 52%, transparent) transparent;
+  --lm-scrollbar-size: 0.5rem;
+  --lm-scrollbar-thumb: color-mix(in srgb, var(--lm-c-border-hover) 52%, transparent);
+  --lm-scrollbar-thumb-hover: color-mix(in srgb, var(--lm-c-brand) 45%, var(--lm-c-border-hover));
 }
 
 .lm-pinned-card {
@@ -173,19 +174,6 @@ const {
   @apply m-0 line-clamp-2 max-w-[92%] text-sm leading-6;
   color: color-mix(in srgb, white 90%, var(--lm-c-brand-soft));
   text-shadow: 0 2px 12px rgb(15 23 42 / 0.22);
-}
-
-.lm-pinned__track::-webkit-scrollbar {
-  height: 8px;
-}
-
-.lm-pinned__track::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--lm-c-border-hover) 52%, transparent);
-}
-
-.lm-pinned__track::-webkit-scrollbar-track {
-  background: transparent;
 }
 
 @media (min-width: 1024px) {

@@ -143,7 +143,10 @@ export const defaultThemeConfig: ThemeConfig = {
  */
 export function generateSafelist(themeConfig: ThemeConfig) {
   const { navbar, footer, ui } = themeConfig
-  const footerIcon = footer?.icon?.img ?? footer?.icon?.name
+  const footerIcon = footer?.icon?.img
+    ?? footer?.icon?.name
+    ?? defaultThemeConfig.footer.icon?.img
+    ?? defaultThemeConfig.footer.icon?.name
 
   const safelist: string[] = []
 
