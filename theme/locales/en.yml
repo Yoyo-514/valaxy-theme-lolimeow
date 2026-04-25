@@ -5,6 +5,11 @@ statistics:
   traffic: Traffic
 
 pages:
+  about:
+    eyebrow: About
+    title: About
+    profile: Profile
+    description: Notes, code, and daily fragments.
   archives:
     eyebrow: Timeline Archive
     title: Archives

@@ -1,4 +1,5 @@
 export * from './config'
+export * from './use-about-profile'
 export * from './use-archive-groups'
 export * from './use-archive-timeline-state'
 export * from './use-article-header-meta'
