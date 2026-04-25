@@ -1,4 +1,5 @@
 import type { Post } from 'valaxy'
+import { isVisiblePost, normalizePostTitle, resolvePostTimestamp } from '@theme/utils'
 import { useSiteStore } from 'valaxy'
 import { computed } from 'vue'
 
@@ -27,24 +28,6 @@ interface MutableCategoryNode {
   children: Map<string, MutableCategoryNode>
 }
 
-function normalizeTitle(title: Post['title']) {
-  if (typeof title === 'string')
-    return title.trim() || 'Untitled'
-
-  if (title && typeof title === 'object') {
-    const resolved = Object.values(title).find(value => String(value).trim())
-    if (resolved)
-      return String(resolved).trim()
-  }
-
-  return 'Untitled'
-}
-
-function resolveTimestamp(post: Pick<Post, 'date' | 'updated'>) {
-  const timestamp = new Date(post.date ?? post.updated ?? 0).getTime()
-  return Number.isFinite(timestamp) ? timestamp : 0
-}
-
 function normalizeCategorySegments(categories: Post['categories']) {
   if (Array.isArray(categories)) {
     const segments = categories
@@ -64,10 +47,6 @@ function normalizeCategorySegments(categories: Post['categories']) {
   return ['Uncategorized']
 }
 
-function isVisibleInCategory(post: Post) {
-  return Boolean(post.path) && post.hide !== true
-}
-
 function createCategoryNode(name: string, segments: string[]): MutableCategoryNode {
   return {
     name,
@@ -85,8 +64,8 @@ function compareNodes(left: CategoryNode, right: CategoryNode) {
 }
 
 function compareEntries(left: CategoryEntry, right: CategoryEntry) {
-  const leftTimestamp = resolveTimestamp({ date: left.date, updated: undefined })
-  const rightTimestamp = resolveTimestamp({ date: right.date, updated: undefined })
+  const leftTimestamp = resolvePostTimestamp({ date: left.date, updated: undefined })
+  const rightTimestamp = resolvePostTimestamp({ date: right.date, updated: undefined })
 
   return rightTimestamp - leftTimestamp || left.title.localeCompare(right.title)
 }
@@ -117,9 +96,9 @@ export function useCategoryGroups() {
 
   const posts = computed(() => {
     return (site.postList ?? [])
-      .filter(isVisibleInCategory)
+      .filter(isVisiblePost)
       .slice()
-      .sort((left, right) => resolveTimestamp(right) - resolveTimestamp(left))
+      .sort((left, right) => resolvePostTimestamp(right) - resolvePostTimestamp(left))
   })
 
   const categories = computed<CategoryNode[]>(() => {
@@ -129,7 +108,7 @@ export function useCategoryGroups() {
       const segments = normalizeCategorySegments(post.categories)
       const entry: CategoryEntry = {
         path: String(post.path),
-        title: normalizeTitle(post.title),
+        title: normalizePostTitle(post.title),
         date: post.date ?? post.updated,
       }
 

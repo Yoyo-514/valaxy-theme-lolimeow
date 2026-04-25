@@ -6,9 +6,6 @@ type CommentProvider = 'waline'
 
 const WalineComment = defineAsyncComponent(() => import('@theme/components/plugins/LmWaline.vue'))
 
-// 已废弃：Twikoo 集成已停止维护，保留组件文件仅用于迁移说明，不再参与运行时分发。
-// const TwikooComment = defineAsyncComponent(() => import('@theme/components/plugins/LmTwikoo.vue'))
-
 const siteConfig = useSiteConfig()
 const frontmatter = useFrontmatter()
 const runtimeConfig = useRuntimeConfig()
@@ -16,10 +13,6 @@ const runtimeConfig = useRuntimeConfig()
 const provider = computed<CommentProvider | ''>(() => {
   if (runtimeConfig.value.addons?.['valaxy-addon-waline'])
     return 'waline'
-
-  // 已废弃：Twikoo 分支保留为历史注释，当前主题仅支持 Waline。
-  // if (runtimeConfig.value.addons?.['valaxy-addon-twikoo'])
-  //   return 'twikoo'
 
   return ''
 })
@@ -33,10 +26,6 @@ const enabled = computed(() => {
 const providerComponent = computed(() => {
   if (provider.value === 'waline')
     return WalineComment
-
-  // 已废弃：Twikoo 组件不再参与评论渲染分发。
-  // if (provider.value === 'twikoo')
-  //   return TwikooComment
 
   return null
 })

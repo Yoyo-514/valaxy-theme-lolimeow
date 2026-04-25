@@ -1,4 +1,5 @@
 import type { Post } from 'valaxy'
+import { isVisiblePost, normalizePostTitle, resolvePostTimestamp } from '@theme/utils'
 import { useSiteStore } from 'valaxy'
 import { computed } from 'vue'
 
@@ -16,19 +17,6 @@ export interface ArchiveGroup {
   entries: ArchiveEntry[]
 }
 
-function normalizeTitle(title: Post['title']) {
-  if (typeof title === 'string')
-    return title.trim() || 'Untitled'
-
-  if (title && typeof title === 'object') {
-    const resolved = Object.values(title).find(value => String(value).trim())
-    if (resolved)
-      return String(resolved).trim()
-  }
-
-  return 'Untitled'
-}
-
 function normalizeCategories(categories: Post['categories']) {
   if (Array.isArray(categories))
     return categories.filter(Boolean).map(category => String(category).trim()).filter(Boolean)
@@ -39,21 +27,12 @@ function normalizeCategories(categories: Post['categories']) {
   return []
 }
 
-function resolveTimestamp(post: Post) {
-  const timestamp = new Date(post.date ?? post.updated ?? 0).getTime()
-  return Number.isFinite(timestamp) ? timestamp : 0
-}
-
 function resolveYear(post: Post) {
-  const timestamp = resolveTimestamp(post)
+  const timestamp = resolvePostTimestamp(post)
   if (!timestamp)
     return 'Unknown'
 
   return String(new Date(timestamp).getFullYear())
-}
-
-function isVisibleInArchive(post: Post) {
-  return Boolean(post.path) && post.hide !== true
 }
 
 export function useArchiveGroups() {
@@ -61,9 +40,9 @@ export function useArchiveGroups() {
 
   const posts = computed(() => {
     return (site.postList ?? [])
-      .filter(isVisibleInArchive)
+      .filter(isVisiblePost)
       .slice()
-      .sort((left, right) => resolveTimestamp(right) - resolveTimestamp(left))
+      .sort((left, right) => resolvePostTimestamp(right) - resolvePostTimestamp(left))
   })
 
   const groups = computed<ArchiveGroup[]>(() => {
@@ -74,7 +53,7 @@ export function useArchiveGroups() {
       const existingGroup = mapped.get(year)
       const entry: ArchiveEntry = {
         path: String(post.path),
-        title: normalizeTitle(post.title),
+        title: normalizePostTitle(post.title),
         date: post.date ?? post.updated,
         categories: normalizeCategories(post.categories),
       }

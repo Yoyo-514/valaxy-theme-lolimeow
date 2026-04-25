@@ -14,23 +14,28 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background:
-    linear-gradient(180deg, transparent, var(--lm-scrollbar-track), transparent);
+  background: linear-gradient(180deg, transparent, var(--lm-scrollbar-track), transparent);
 }
 
 ::-webkit-scrollbar-thumb {
   min-height: 2.5rem;
   border: 0.14rem solid transparent;
   border-radius: var(--lm-scrollbar-radius);
-  background:
-    linear-gradient(180deg, var(--lm-scrollbar-thumb), color-mix(in srgb, var(--lm-scrollbar-thumb) 64%, transparent))
+  background: linear-gradient(
+      180deg,
+      var(--lm-scrollbar-thumb),
+      color-mix(in srgb, var(--lm-scrollbar-thumb) 64%, transparent)
+    )
     border-box;
   background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background:
-    linear-gradient(180deg, var(--lm-scrollbar-thumb-hover), color-mix(in srgb, var(--lm-scrollbar-thumb-hover) 66%, transparent))
+  background: linear-gradient(
+      180deg,
+      var(--lm-scrollbar-thumb-hover),
+      color-mix(in srgb, var(--lm-scrollbar-thumb-hover) 66%, transparent)
+    )
     border-box;
   background-clip: padding-box;
 }

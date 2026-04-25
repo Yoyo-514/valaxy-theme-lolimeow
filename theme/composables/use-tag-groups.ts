@@ -1,4 +1,4 @@
-import type { Post } from 'valaxy'
+import { isVisiblePost, normalizePostTitle, resolvePostTimestamp } from '@theme/utils'
 import { useSiteStore } from 'valaxy'
 import { computed } from 'vue'
 
@@ -21,24 +21,6 @@ interface MutableTagGroup {
   entries: TagEntry[]
 }
 
-function normalizeTitle(title: Post['title']) {
-  if (typeof title === 'string')
-    return title.trim() || 'Untitled'
-
-  if (title && typeof title === 'object') {
-    const resolved = Object.values(title).find(value => String(value).trim())
-    if (resolved)
-      return String(resolved).trim()
-  }
-
-  return 'Untitled'
-}
-
-function resolveTimestamp(post: Pick<Post, 'date' | 'updated'>) {
-  const timestamp = new Date(post.date ?? post.updated ?? 0).getTime()
-  return Number.isFinite(timestamp) ? timestamp : 0
-}
-
 function normalizeTags(tags: unknown) {
   if (Array.isArray(tags))
     return Array.from(new Set(tags.map(tag => String(tag).trim()).filter(Boolean)))
@@ -53,13 +35,9 @@ function createTagId(name: string) {
   return `tag-${encodeURIComponent(name).replace(/%/g, '').replace(/[^\w-]/g, '-').toLowerCase()}`
 }
 
-function isVisibleInTags(post: Post) {
-  return Boolean(post.path) && post.hide !== true
-}
-
 function compareEntries(left: TagEntry, right: TagEntry) {
-  const leftTimestamp = resolveTimestamp({ date: left.date, updated: undefined })
-  const rightTimestamp = resolveTimestamp({ date: right.date, updated: undefined })
+  const leftTimestamp = resolvePostTimestamp({ date: left.date, updated: undefined })
+  const rightTimestamp = resolvePostTimestamp({ date: right.date, updated: undefined })
 
   return rightTimestamp - leftTimestamp || left.title.localeCompare(right.title)
 }
@@ -73,9 +51,9 @@ export function useTagGroups() {
 
   const posts = computed(() => {
     return (site.postList ?? [])
-      .filter(isVisibleInTags)
+      .filter(isVisiblePost)
       .slice()
-      .sort((left, right) => resolveTimestamp(right) - resolveTimestamp(left))
+      .sort((left, right) => resolvePostTimestamp(right) - resolvePostTimestamp(left))
   })
 
   const groups = computed<TagGroup[]>(() => {
@@ -88,7 +66,7 @@ export function useTagGroups() {
 
       const entry: TagEntry = {
         path: String(post.path),
-        title: normalizeTitle(post.title),
+        title: normalizePostTitle(post.title),
         date: post.date ?? post.updated,
       }
 

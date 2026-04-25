@@ -1,5 +1,5 @@
 import type { MenuItem } from '@valaxyjs/utils'
-import { getDocument, getDocumentElement, getWindow, lockNavbarScrollReaction } from '@theme/utils'
+import { createThrottledFunction, getDocument, getDocumentElement, getWindow, lockNavbarScrollReaction } from '@theme/utils'
 import { useOutline } from 'valaxy'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 
@@ -7,6 +7,7 @@ const HASH_PREFIX_RE = /^#/
 const ACTIVE_SCROLL_GAP = 24
 const ACTIVE_LINE_MIN = 96
 const ACTIVE_LINE_MAX = 168
+const ACTIVE_SCROLL_THROTTLE = 100
 
 interface TocItem {
   title: string
@@ -100,6 +101,8 @@ export function useArticleTocState() {
     activeLink.value = nextActive
   }
 
+  const updateActiveLinkOnScroll = createThrottledFunction(updateActiveLink, ACTIVE_SCROLL_THROTTLE)
+
   onMounted(() => {
     const currentWindow = getWindow()
 
@@ -107,14 +110,15 @@ export function useArticleTocState() {
       updateActiveLink()
     })
 
-    currentWindow?.addEventListener('scroll', updateActiveLink, { passive: true })
+    currentWindow?.addEventListener('scroll', updateActiveLinkOnScroll, { passive: true })
     currentWindow?.addEventListener('resize', updateActiveLink, { passive: true })
   })
 
   onUnmounted(() => {
     const currentWindow = getWindow()
-    currentWindow?.removeEventListener('scroll', updateActiveLink)
+    currentWindow?.removeEventListener('scroll', updateActiveLinkOnScroll)
     currentWindow?.removeEventListener('resize', updateActiveLink)
+    updateActiveLinkOnScroll.cancel()
   })
 
   watch(

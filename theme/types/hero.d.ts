@@ -13,14 +13,14 @@ export interface Hero {
   cover?: HeroCover
 
   /**
-   * 签名/一言文字
+   * 签名文字
    * 支持字符串（固定显示）或字符串数组（打字机轮播效果）
    * @default ''
    */
   motto: string | string[]
 
   /**
-   * 一言切换间隔（ms），仅在 motto 为字符串数组时生效
+   * 签名切换间隔（ms），仅在 motto 为字符串数组时生效
    * @default 4000
    */
   mottoInterval: number

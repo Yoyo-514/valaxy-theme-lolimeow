@@ -1,3 +1,5 @@
+import type { Post } from 'valaxy'
+
 const HTML_TAG_REGEX = /<[^>]+>/g
 const WHITESPACE_REGEX = /\s+/g
 
@@ -29,4 +31,26 @@ export function normalizeExcerpt(raw: string, maxLength = 140) {
     .replace(WHITESPACE_REGEX, ' ')
     .trim()
     .slice(0, maxLength)
+}
+
+export function normalizePostTitle(title: Post['title']) {
+  if (typeof title === 'string')
+    return title.trim() || 'Untitled'
+
+  if (title && typeof title === 'object') {
+    const resolved = Object.values(title).find(value => String(value).trim())
+    if (resolved)
+      return String(resolved).trim()
+  }
+
+  return 'Untitled'
+}
+
+export function resolvePostTimestamp(post: Pick<Post, 'date' | 'updated'>) {
+  const timestamp = new Date(post.date ?? post.updated ?? 0).getTime()
+  return Number.isFinite(timestamp) ? timestamp : 0
+}
+
+export function isVisiblePost(post: Post) {
+  return Boolean(post.path) && post.hide !== true
 }
