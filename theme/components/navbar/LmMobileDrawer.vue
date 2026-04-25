@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import type { NavItem } from '@theme/types'
+import type { BrowserTimeout } from '@theme/utils'
 import { useNavActive } from '@theme/composables'
-import { getWindow } from '@theme/utils'
+import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '@theme/utils'
 import { useRouter } from 'vue-router'
 
 const props = defineProps<{
@@ -26,7 +27,7 @@ const HTTP_LINK_REGEX = /^https?:?\/\//
 
 const { isActive, setPending, clearPending } = useNavActive()
 
-let navigateTimer: number | undefined
+let navigateTimer: BrowserTimeout | undefined
 
 function closeDrawer() {
   emit('close')
@@ -43,12 +44,12 @@ function handleItemClick(item: NavItem) {
 
   setPending(item.link)
 
-  currentWindow.clearTimeout(navigateTimer)
+  clearBrowserTimeout(navigateTimer)
 
-  navigateTimer = currentWindow.setTimeout(() => {
+  navigateTimer = setBrowserTimeout(() => {
     closeDrawer()
 
-    currentWindow.setTimeout(() => {
+    setBrowserTimeout(() => {
       if (isExternalLink(item)) {
         clearPending()
         currentWindow.open(item.link, item.target || '_blank', 'noopener')

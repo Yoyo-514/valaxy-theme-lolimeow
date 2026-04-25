@@ -4,6 +4,12 @@ statistics:
   views: Page views
   traffic: Traffic
 
+search:
+  placeholder: Search posts, tags, or categories...
+  loading: Searching...
+  no_results: No results found
+  no_results_hint: Try another keyword, tag, or category
+
 pages:
   about:
     eyebrow: About

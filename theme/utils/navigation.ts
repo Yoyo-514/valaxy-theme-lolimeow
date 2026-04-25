@@ -1,7 +1,9 @@
+import type { BrowserTimeout } from './browser'
+import { clearBrowserTimeout, getDocumentElement, getWindow, requestBrowserAnimationFrame, setBrowserTimeout } from './browser'
+
 const HOME_PAGINATION_PATH_RE = /^\/(?:page\/\d+\/?)?$/
 const PATHNAME_REGEX = /[?#]/
 const TRAILING_SLASH_REGEX = /\/+$/
-
 export const NAVBAR_SCROLL_LOCK_ATTR = 'data-lm-navbar-scroll-lock'
 
 interface NavbarScrollLockOptions {
@@ -10,13 +12,15 @@ interface NavbarScrollLockOptions {
 }
 
 export function lockNavbarScrollReaction(options: NavbarScrollLockOptions = {}) {
-  if (typeof document === 'undefined' || typeof window === 'undefined')
+  const currentWindow = getWindow()
+  const root = getDocumentElement()
+
+  if (!currentWindow || !root)
     return () => {}
 
   const { deferFrames = 0, timeoutMs } = options
-  const root = document.documentElement
   let released = false
-  let timeoutId: number | undefined
+  let timeoutId: BrowserTimeout | undefined
 
   root.setAttribute(NAVBAR_SCROLL_LOCK_ATTR, 'true')
 
@@ -26,14 +30,13 @@ export function lockNavbarScrollReaction(options: NavbarScrollLockOptions = {}) 
 
     released = true
 
-    if (timeoutId)
-      window.clearTimeout(timeoutId)
+    clearBrowserTimeout(timeoutId)
 
     root.removeAttribute(NAVBAR_SCROLL_LOCK_ATTR)
   }
 
   if (Number.isFinite(timeoutMs))
-    timeoutId = window.setTimeout(release, timeoutMs)
+    timeoutId = setBrowserTimeout(release, timeoutMs)
 
   if (deferFrames > 0) {
     let remainingFrames = deferFrames
@@ -48,10 +51,10 @@ export function lockNavbarScrollReaction(options: NavbarScrollLockOptions = {}) 
       }
 
       remainingFrames -= 1
-      window.requestAnimationFrame(scheduleRelease)
+      requestBrowserAnimationFrame(scheduleRelease)
     }
 
-    window.requestAnimationFrame(scheduleRelease)
+    requestBrowserAnimationFrame(scheduleRelease)
   }
 
   return release

@@ -9,6 +9,17 @@ export default defineSiteConfig({
     name: '云游君',
   },
   description: 'Valaxy Theme Lolimeow.',
+  search: {
+    enable: true,
+    provider: 'fuse',
+  },
+  fuse: {
+    options: {
+      keys: ['title', 'tags', 'categories', 'excerpt', 'content'],
+      threshold: 0.35,
+      ignoreLocation: true,
+    },
+  },
   social: [
     {
       name: 'RSS',

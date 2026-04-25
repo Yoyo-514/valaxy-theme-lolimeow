@@ -1,3 +1,5 @@
+import type { BrowserTimeout } from '@theme/utils'
+import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '@theme/utils'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useThemeConfig } from './config'
 
@@ -8,8 +10,8 @@ export function useHeroMotto() {
   const themeConfig = useThemeConfig()
   const activeIndex = ref(0)
   const renderedMotto = ref('')
-  let typingTimer: ReturnType<typeof setTimeout> | undefined
-  let rotationTimer: ReturnType<typeof setTimeout> | undefined
+  let typingTimer: BrowserTimeout | undefined
+  let rotationTimer: BrowserTimeout | undefined
 
   const mottoList = computed(() => {
     const { motto } = themeConfig.value.hero
@@ -27,10 +29,8 @@ export function useHeroMotto() {
   const rotationDelay = computed(() => Math.max(themeConfig.value.hero.mottoInterval || 4000, MIN_ROTATION_DELAY))
 
   function clearTimers() {
-    if (typingTimer)
-      clearTimeout(typingTimer)
-    if (rotationTimer)
-      clearTimeout(rotationTimer)
+    clearBrowserTimeout(typingTimer)
+    clearBrowserTimeout(rotationTimer)
 
     typingTimer = undefined
     rotationTimer = undefined
@@ -40,9 +40,13 @@ export function useHeroMotto() {
     if (!shouldRotate.value)
       return
 
+    const currentWindow = getWindow()
+    if (!currentWindow)
+      return
+
     // 轮播定时器和打字定时器必须严格分离：
     // 前者控制“下一条何时开始”，后者控制“当前条如何显现”。
-    rotationTimer = setTimeout(() => {
+    rotationTimer = setBrowserTimeout(() => {
       activeIndex.value = (activeIndex.value + 1) % mottoList.value.length
       renderActiveMotto()
     }, rotationDelay.value)
@@ -54,6 +58,12 @@ export function useHeroMotto() {
   }
 
   function renderWithTypewriter(text: string) {
+    const currentWindow = getWindow()
+    if (!currentWindow) {
+      renderImmediately(text)
+      return
+    }
+
     if (!text) {
       renderedMotto.value = ''
       scheduleNextMotto()
@@ -68,14 +78,14 @@ export function useHeroMotto() {
       renderedMotto.value = text.slice(0, visibleLength)
 
       if (visibleLength < text.length) {
-        typingTimer = setTimeout(step, typingSpeed.value)
+        typingTimer = setBrowserTimeout(step, typingSpeed.value)
         return
       }
 
       scheduleNextMotto()
     }
 
-    typingTimer = setTimeout(step, typingSpeed.value)
+    typingTimer = setBrowserTimeout(step, typingSpeed.value)
   }
 
   function renderActiveMotto() {

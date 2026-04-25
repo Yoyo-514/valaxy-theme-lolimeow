@@ -1,5 +1,5 @@
 import type { CSSProperties, ShallowRef } from 'vue'
-import { createBackgroundImageStyle, getDocumentElement } from '@theme/utils'
+import { createBackgroundImageStyle, getDocumentElement, getWindow } from '@theme/utils'
 import { useCssVar, useElementBounding } from '@vueuse/core'
 import { computed, onBeforeUnmount, watch } from 'vue'
 import { useThemeConfig } from './config'
@@ -72,8 +72,9 @@ export function useHeroStage(heroSection: Readonly<ShallowRef<HTMLElement | null
   }))
 
   function scrollToNextSection() {
+    const currentWindow = getWindow()
     const currentSection = heroSection.value
-    if (!currentSection || typeof window === 'undefined')
+    if (!currentWindow || !currentSection)
       return
 
     // Scroll-down 的目标不应写死为“一个视口高度”，
@@ -86,7 +87,7 @@ export function useHeroStage(heroSection: Readonly<ShallowRef<HTMLElement | null
       return
     }
 
-    window.scrollTo({
+    currentWindow.scrollTo({
       top: currentSection.offsetTop + currentSection.offsetHeight,
       behavior: 'smooth',
     })

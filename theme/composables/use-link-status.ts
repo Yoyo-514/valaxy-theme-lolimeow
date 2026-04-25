@@ -1,3 +1,4 @@
+import { getWindow } from '@theme/utils'
 import { computed, onMounted, ref } from 'vue'
 
 export type LinkStatus = 'idle' | 'checking' | 'online' | 'offline' | 'unknown'
@@ -5,11 +6,12 @@ export type LinkStatus = 'idle' | 'checking' | 'online' | 'offline' | 'unknown'
 const LINK_STATUS_CACHE = new Map<string, LinkStatus>()
 
 function canCheckLink(url: string) {
-  if (typeof window === 'undefined')
+  const currentWindow = getWindow()
+  if (!currentWindow)
     return false
 
   try {
-    const target = new URL(url, window.location.href)
+    const target = new URL(url, currentWindow.location.href)
     return target.protocol === 'http:' || target.protocol === 'https:'
   }
   catch {

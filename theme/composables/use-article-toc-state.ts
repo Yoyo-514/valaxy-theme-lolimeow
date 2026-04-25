@@ -1,5 +1,5 @@
 import type { MenuItem } from '@valaxyjs/utils'
-import { getDocumentElement, getWindow, lockNavbarScrollReaction } from '@theme/utils'
+import { getDocument, getDocumentElement, getWindow, lockNavbarScrollReaction } from '@theme/utils'
 import { useOutline } from 'valaxy'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 
@@ -77,7 +77,8 @@ export function useArticleTocState() {
     }
 
     const currentWindow = getWindow()
-    if (!currentWindow) {
+    const currentDocument = getDocument()
+    if (!currentWindow || !currentDocument) {
       activeLink.value = currentItems[0]?.link || ''
       return
     }
@@ -87,7 +88,7 @@ export function useArticleTocState() {
 
     currentItems.forEach((item) => {
       const id = decodeURIComponent(item.link.replace(HASH_PREFIX_RE, ''))
-      const heading = currentWindow.document.getElementById(id)
+      const heading = currentDocument.getElementById(id)
 
       if (heading) {
         const headingTop = heading.getBoundingClientRect().top + currentWindow.scrollY

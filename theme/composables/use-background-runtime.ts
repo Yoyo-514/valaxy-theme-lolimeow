@@ -1,6 +1,7 @@
+import type { BrowserTimeout } from '@theme/utils'
 import type { CSSProperties, Ref } from 'vue'
 import type { ResolvedBackground } from './use-resolved-background'
-import { getBackgroundCacheKey, getRotationCandidate, pickRandomUrl, shouldUseTransparentFallback } from '@theme/utils'
+import { clearBrowserTimeout, getBackgroundCacheKey, getRotationCandidate, getWindow, pickRandomUrl, requestBrowserAnimationFrame, setBrowserTimeout, shouldUseTransparentFallback } from '@theme/utils'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 
 type BackgroundRuntimeScope = 'app' | 'hero'
@@ -26,12 +27,14 @@ const MIN_ROTATION_INTERVAL = 4000
 
 function preloadImage(url: string) {
   return new Promise<string>((resolve, reject) => {
-    if (typeof Image === 'undefined') {
+    const currentWindow = getWindow()
+
+    if (!currentWindow?.Image) {
       resolve(url)
       return
     }
 
-    const image = new Image()
+    const image = new currentWindow.Image()
 
     // onload 只能说明资源已经到达浏览器，decode 则尽量把解码阶段前置，
     // 降低切图瞬间出现白闪的概率。
@@ -84,15 +87,17 @@ function getStableFallbackImage(scope: BackgroundRuntimeScope, background: Resol
 }
 
 function afterNextPaint(callback: () => void) {
-  if (typeof requestAnimationFrame === 'undefined') {
+  const currentWindow = getWindow()
+
+  if (!currentWindow) {
     callback()
     return
   }
 
   // 切图过渡结束后再额外等两帧，让浏览器有时间把新图真正合成到屏幕上，
   // 避免“时间到了但视觉上还没画稳”的闪烁感。
-  requestAnimationFrame(() => {
-    requestAnimationFrame(callback)
+  requestBrowserAnimationFrame(() => {
+    requestBrowserAnimationFrame(callback)
   })
 }
 
@@ -110,9 +115,9 @@ export function useBackgroundRuntime(
   // requestId 用于隔离并发异步任务。切页或配置变更后，旧请求即使更晚返回，
   // 也不能覆盖当前最新的一轮背景状态。
   let requestId = 0
-  let revealTimer: ReturnType<typeof setTimeout> | undefined
-  let finalizeTimer: ReturnType<typeof setTimeout> | undefined
-  let rotationTimer: ReturnType<typeof setTimeout> | undefined
+  let revealTimer: BrowserTimeout | undefined
+  let finalizeTimer: BrowserTimeout | undefined
+  let rotationTimer: BrowserTimeout | undefined
 
   const placeholderStyle = computed<CSSProperties>(() => {
     const resolved = resolvedBackground.value
@@ -136,10 +141,8 @@ export function useBackgroundRuntime(
   }
 
   function clearTransitionTimers() {
-    if (revealTimer)
-      clearTimeout(revealTimer)
-    if (finalizeTimer)
-      clearTimeout(finalizeTimer)
+    clearBrowserTimeout(revealTimer)
+    clearBrowserTimeout(finalizeTimer)
 
     revealTimer = undefined
     finalizeTimer = undefined
@@ -148,8 +151,7 @@ export function useBackgroundRuntime(
   function clearAllTimers() {
     clearTransitionTimers()
 
-    if (rotationTimer)
-      clearTimeout(rotationTimer)
+    clearBrowserTimeout(rotationTimer)
 
     rotationTimer = undefined
   }
@@ -177,12 +179,20 @@ export function useBackgroundRuntime(
     clearTransitionTimers()
     incomingImageUrl.value = url
     incomingImageVisible.value = false
+    const currentWindow = getWindow()
 
-    revealTimer = setTimeout(() => {
+    if (!currentWindow) {
+      incomingImageVisible.value = true
+      currentImageUrl.value = url
+      clearIncomingImageLayer()
+      return
+    }
+
+    revealTimer = setBrowserTimeout(() => {
       incomingImageVisible.value = true
     }, 16)
 
-    finalizeTimer = setTimeout(() => {
+    finalizeTimer = setBrowserTimeout(() => {
       afterNextPaint(() => {
         currentImageUrl.value = url
         clearIncomingImageLayer()
@@ -213,7 +223,11 @@ export function useBackgroundRuntime(
     if (!background.rotationEnabled)
       return
 
-    rotationTimer = setTimeout(async () => {
+    const currentWindow = getWindow()
+    if (!currentWindow)
+      return
+
+    rotationTimer = setBrowserTimeout(async () => {
       if (currentRequestId !== requestId)
         return
 
