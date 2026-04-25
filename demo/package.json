@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "valaxy": "catalog:",
+    "valaxy-addon-hitokoto": "catalog:",
+    "valaxy-addon-waline": "catalog:",
     "valaxy-theme-lolimeow": "workspace:*"
   }
 }

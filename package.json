@@ -8,6 +8,8 @@
     "ci:publish": "pnpm -r publish --access public --no-git-checks",
     "dev": "pnpm run demo",
     "demo": "pnpm -C demo run dev",
+    "check:vue-overrides": "node ./scripts/check-vue-overrides.mjs",
+    "fix:vue-overrides": "node ./scripts/check-vue-overrides.mjs --write",
     "lint": "eslint .",
     "release": "cd theme && git add -A && bumpp --all",
     "typecheck": "node ./scripts/typecheck.mjs"
@@ -19,7 +21,6 @@
     "eslint": "catalog:",
     "eslint-plugin-format": "catalog:",
     "typescript": "catalog:",
-    "valaxy-addon-waline": "catalog:",
     "valaxy-theme-lolimeow": "workspace:*",
     "vitest": "catalog:",
     "vue-tsc": "catalog:"

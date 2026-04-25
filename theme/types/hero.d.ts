@@ -1,3 +1,19 @@
+export type HeroMottoSource = 'config' | 'hitokoto'
+
+export interface HeroHitokotoDisplayOptions {
+  /**
+   * 是否在一言后展示来源
+   * @default false
+   */
+  showFrom?: boolean
+
+  /**
+   * 一言正文与来源之间的分隔符
+   * @default '——'
+   */
+  fromSeparator?: string
+}
+
 export interface Hero {
   /**
    * 是否启用首屏封面
@@ -18,6 +34,19 @@ export interface Hero {
    * @default ''
    */
   motto: string | string[]
+
+  /**
+   * 签名文案来源
+   * - config: 使用 themeConfig.hero.motto
+   * - hitokoto: 使用 valaxy-addon-hitokoto
+   * @default 'config'
+   */
+  mottoSource: HeroMottoSource
+
+  /**
+   * 一言在 Hero motto 中的展示配置；请求参数请写在 addonHitokoto({...}) 中
+   */
+  hitokoto: HeroHitokotoDisplayOptions
 
   /**
    * 签名切换间隔（ms），仅在 motto 为字符串数组时生效

@@ -1,10 +1,12 @@
 import type { BrowserTimeout } from '@theme/utils'
 import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '@theme/utils'
+import { useAddonHitokoto } from 'valaxy-addon-hitokoto'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useThemeConfig } from './config'
 
 const MIN_TYPING_SPEED = 24
 const MIN_ROTATION_DELAY = 1200
+const DEFAULT_HITOKOTO_SEPARATOR = '——'
 
 export function useHeroMotto() {
   const themeConfig = useThemeConfig()
@@ -13,13 +15,46 @@ export function useHeroMotto() {
   let typingTimer: BrowserTimeout | undefined
   let rotationTimer: BrowserTimeout | undefined
 
-  const mottoList = computed(() => {
+  const hitokotoApi = themeConfig.value.hero.mottoSource === 'hitokoto'
+    ? useAddonHitokoto()
+    : undefined
+
+  const useHitokoto = computed(() => themeConfig.value.hero.mottoSource === 'hitokoto' && Boolean(hitokotoApi))
+
+  const configMottoList = computed(() => {
     const { motto } = themeConfig.value.hero
 
     if (Array.isArray(motto))
       return motto.filter(Boolean)
 
     return motto ? [motto] : []
+  })
+
+  const hitokotoMotto = computed(() => {
+    const currentHitokoto = hitokotoApi?.hitokoto.value
+    if (!currentHitokoto)
+      return ''
+
+    const text = currentHitokoto.hitokoto.trim()
+    if (!text)
+      return ''
+
+    const hitokotoOptions = themeConfig.value.hero.hitokoto
+    if (!hitokotoOptions?.showFrom)
+      return text
+
+    const from = (currentHitokoto.from || currentHitokoto.fromWho || '').trim()
+    if (!from)
+      return text
+
+    return `${text} ${hitokotoOptions.fromSeparator || DEFAULT_HITOKOTO_SEPARATOR} ${from}`
+  })
+
+  const mottoList = computed(() => {
+    if (!useHitokoto.value)
+      return configMottoList.value
+
+    return hitokotoMotto.value ? [hitokotoMotto.value] : configMottoList.value
   })
 
   const hasMotto = computed(() => mottoList.value.length > 0)
@@ -37,6 +72,23 @@ export function useHeroMotto() {
   }
 
   function scheduleNextMotto() {
+    if (useHitokoto.value && hitokotoApi) {
+      const currentWindow = getWindow()
+      if (!currentWindow)
+        return
+
+      rotationTimer = setBrowserTimeout(async () => {
+        rotationTimer = undefined
+        const currentMottoKey = mottoList.value.join('\u0000')
+
+        await hitokotoApi.fetchHitokoto()
+
+        if (mottoList.value.join('\u0000') === currentMottoKey)
+          scheduleNextMotto()
+      }, rotationDelay.value)
+      return
+    }
+
     if (!shouldRotate.value)
       return
 

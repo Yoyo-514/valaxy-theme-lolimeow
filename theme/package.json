@@ -26,6 +26,8 @@
     "@vueuse/core": "catalog:"
   },
   "devDependencies": {
-    "valaxy": "catalog:"
+    "valaxy": "catalog:",
+    "valaxy-addon-hitokoto": "catalog:",
+    "valaxy-addon-waline": "catalog:"
   }
 }

@@ -11,6 +11,7 @@ export default antfu(
     ignores: [
       '**/*/.valaxy',
       '**/node_modules/**',
+      '**/scripts/**',
       'demo/.vite-ssg-dist/**',
       'demo/.vite-ssg-temp/**',
       'demo/temp/**',

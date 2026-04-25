@@ -65,6 +65,11 @@ export const defaultThemeConfig: ThemeConfig = {
       overlayOpacity: 0.3,
     },
     motto: '',
+    mottoSource: 'config',
+    hitokoto: {
+      showFrom: false,
+      fromSeparator: '——',
+    },
     mottoInterval: 4000,
     typewriter: true,
     typingSpeed: 100,
