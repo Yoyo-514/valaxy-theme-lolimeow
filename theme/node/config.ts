@@ -95,6 +95,11 @@ export const defaultThemeConfig: ThemeConfig = {
     entries: [],
   },
 
+  links: {
+    statusCheck: false,
+    groups: [],
+  },
+
   postList: {
     title: 'Discovery',
     imageReversed: true,

@@ -31,3 +31,16 @@ pages:
     stats:
       tags: Tags
       posts: Posts
+  links:
+    eyebrow: Link Index
+    title: Friendly Links
+    empty: No links are available yet.
+    status:
+      idle: Not checked
+      checking: Checking
+      online: Reachable
+      offline: Unreachable
+      unknown: Unknown status
+    stats:
+      groups: Groups
+      links: Friends

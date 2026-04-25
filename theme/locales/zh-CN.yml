@@ -31,3 +31,16 @@ pages:
     stats:
       tags: 标签
       posts: 文章
+  links:
+    eyebrow: 友链索引
+    title: 友情链接
+    empty: 这里还没有可展示的友链。
+    status:
+      idle: 未检测
+      checking: 检测中
+      online: 可访问
+      offline: 暂不可访问
+      unknown: 未知状态
+    stats:
+      groups: 分组
+      links: 伙伴

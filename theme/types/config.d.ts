@@ -3,6 +3,7 @@ import type { Background } from './background'
 import type { Footer } from './footer'
 import type { Hero } from './hero'
 import type { LayoutOptions } from './layout'
+import type { Links } from './link'
 import type { NavbarOptions, NavItem } from './navbar'
 import type { Notice } from './notice'
 import type { Pagination } from './pagination'
@@ -51,6 +52,11 @@ export interface ThemeConfig extends DefaultTheme.Config {
    * 置顶卡片配置
    */
   pinned: Pinned
+
+  /**
+   * 友情链接配置
+   */
+  links: Links
 
   /**
    * 文章列表配置
