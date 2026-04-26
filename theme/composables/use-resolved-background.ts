@@ -1,6 +1,6 @@
 import { clampOpacity, normalizeUrls, pickFirstUrl, pickRandomUrl } from '@theme/utils'
 import { useColorMode, useWindowSize } from '@vueuse/core'
-import { computed, onMounted, ref } from 'vue'
+import { computed } from 'vue'
 import { useThemeConfig } from './config'
 
 type BackgroundScope = 'app' | 'hero'
@@ -70,32 +70,9 @@ export function useResolvedBackground(scope: BackgroundScope = 'app') {
   const themeConfig = useThemeConfig()
   const colorMode = useColorMode()
   const { width } = useWindowSize()
-  const isMounted = ref(false)
-  const mountedHeroRandomImage = ref('')
-  const mountedBackgroundRandomImage = ref('')
 
-  onMounted(() => {
-    isMounted.value = true
-
-    const heroCover = themeConfig.value.hero?.cover
-    if (heroCover?.random) {
-      const heroApiUrls = normalizeUrls(heroCover.apiUrls)
-      const heroStaticUrls = normalizeUrls(heroCover.urls)
-      mountedHeroRandomImage.value = pickRandomUrl(heroApiUrls) || pickRandomUrl(heroStaticUrls)
-    }
-
-    const backgroundImage = themeConfig.value.background.type === 'image'
-      ? themeConfig.value.background.image
-      : undefined
-    if (backgroundImage?.random) {
-      const apiImageUrls = normalizeUrls(backgroundImage.apiUrls)
-      const staticImageUrls = normalizeUrls(backgroundImage.urls)
-      mountedBackgroundRandomImage.value = pickRandomUrl(apiImageUrls) || pickRandomUrl(staticImageUrls)
-    }
-  })
-
-  const isDark = computed(() => isMounted.value && colorMode.value === 'dark')
-  const isMobile = computed(() => isMounted.value && width.value < 768)
+  const isDark = computed(() => colorMode.value === 'dark')
+  const isMobile = computed(() => width.value < 768)
 
   return computed<ResolvedBackground>(() => {
     const background = themeConfig.value.background
@@ -106,12 +83,8 @@ export function useResolvedBackground(scope: BackgroundScope = 'app') {
     if (scope === 'hero' && heroCover) {
       const heroStaticUrls = normalizeUrls(heroCover.urls)
       const heroApiUrls = normalizeUrls(heroCover.apiUrls)
-      const stableHeroImage = pickFirstUrl(heroStaticUrls)
-        || heroCover.desktop
-        || heroCover.mobile
-        || ''
       const heroPrimaryImage = heroCover.random
-        ? (mountedHeroRandomImage.value || stableHeroImage)
+        ? (pickRandomUrl(heroApiUrls) || pickRandomUrl(heroStaticUrls))
         : (pickFirstUrl(heroStaticUrls)
           || (isMobile.value ? heroCover.mobile : heroCover.desktop)
           || heroCover.desktop
@@ -154,12 +127,8 @@ export function useResolvedBackground(scope: BackgroundScope = 'app') {
       const apiImageUrls = normalizeUrls(backgroundImage.apiUrls)
       // imageUrl 表示“当前希望加载的目标图”，而不是保证立即可见的图。
       // 真正的显示顺序、过渡和失败回退由 runtime 统一接管。
-      const stableBackgroundImage = pickFirstUrl(staticImageUrls)
-        || backgroundImage.light
-        || backgroundImage.dark
-        || ''
       const primaryImageUrl = backgroundImage.random
-        ? (mountedBackgroundRandomImage.value || stableBackgroundImage)
+        ? (pickRandomUrl(apiImageUrls) || pickRandomUrl(staticImageUrls))
         : (pickFirstUrl(staticImageUrls)
           || (isDark.value ? backgroundImage.dark : backgroundImage.light)
           || backgroundImage.light
