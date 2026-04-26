@@ -14,6 +14,7 @@
   <img width="2000" height="0" alt="" aria-hidden="true"><br>
   <span><b>English | <a href="./README.zh-CN.md">简体中文</a></b></span><br>
   <sub>Light anime atmosphere, soft reading surfaces, Hitokoto motto, local search, and themed aggregate pages.</sub><br>
+  <sub><a href="https://lolimeow.yoyo514.top/">Live Demo</a></sub><br>
   <img width="2000" height="0" alt="" aria-hidden="true">
 </td>
 </tr>
