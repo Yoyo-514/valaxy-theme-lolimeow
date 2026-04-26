@@ -1,7 +1,7 @@
 {
   "type": "module",
   "private": true,
-  "homepage": "https://valaxy.site",
+  "homepage": "https://lolimeow.yoyo514.top",
   "scripts": {
     "build": "pnpm run build:demo",
     "build:demo": "pnpm -C demo run build",
