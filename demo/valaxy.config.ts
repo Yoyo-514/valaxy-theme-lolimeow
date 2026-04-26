@@ -179,9 +179,11 @@ export default defineConfig<ThemeConfig>({
       maxLength: 30,
     }),
     addonWaline({
-      serverURL: 'https://waline.wrxinyue.org',
+      serverURL: 'https://waline.yoyo514.top',
       pageview: true,
       comment: true,
+      login: 'force',
+      requiredMeta: ['nick', 'mail'],
     }),
   ],
 })

@@ -15,21 +15,38 @@ const addon = useAddonWaline()
 <style lang="scss" scoped>
 .lm-waline {
   @apply w-full;
+  --lm-waline-surface-border: color-mix(in srgb, var(--lm-c-brand) 14%, var(--lm-c-border));
+  --lm-waline-surface-bg: color-mix(in srgb, var(--lm-surface-reading-bg) 72%, transparent);
+}
+
+:deep(.wl-header .wl-input:focus) {
+  background: transparent;
 }
 
 :deep(.wl-editor),
 :deep(.wl-panel),
-:deep(.wl-card),
-:deep(.wl-meta-head),
 :deep(.wl-empty) {
   border-radius: 0.5rem;
 }
 
+:deep(.wl-actions a) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 :deep(.wl-panel),
-:deep(.wl-editor),
-:deep(.wl-card) {
-  border-color: color-mix(in srgb, var(--lm-c-brand) 14%, var(--lm-c-border));
-  background: color-mix(in srgb, var(--lm-surface-reading-bg) 72%, transparent);
+:deep(.wl-editor) {
+  border-color: var(--lm-waline-surface-border);
+  background: var(--lm-waline-surface-bg);
+}
+
+:deep(.wl-meta span) {
+  padding: 3px 6px;
+  border-radius: 0.5rem;
+  border-color: var(--lm-waline-surface-border);
+  background: var(--lm-waline-surface-bg);
+  color: var(--lm-c-text-secondary);
 }
 
 :deep(.wl-input),
@@ -39,22 +56,35 @@ const addon = useAddonWaline()
 }
 
 :deep(.wl-header label),
-:deep(.wl-meta),
+:deep(.wl-sort li:not(.active)),
+:deep(.wl-time),
+:deep(.wl-comment-actions button),
 :deep(.wl-empty),
-:deep(.wl-info) {
+:deep(.wl-info),
+:deep(.wl-power) {
   color: var(--lm-c-text-secondary);
 }
 
-:deep(.wl-content),
-:deep(.wl-addr),
-:deep(.wl-nick),
-:deep(.wl-pageview-count),
+:deep(.wl-comment-actions button + button) {
+  margin-left: 8px;
+}
+
+:deep(.wl-content p),
+:deep(span.wl-nick),
 :deep(.wl-count) {
   color: var(--lm-c-text-primary);
 }
 
 :deep(.wl-btn) {
   border-radius: 9999px;
+}
+
+:deep(.wl-card) {
+  border-bottom-color: color-mix(in srgb, var(--lm-c-brand) 92%, white);
+}
+
+:deep(.wl-card .wl-quote) {
+  border-inline-start-color: color-mix(in srgb, var(--lm-c-brand-strong) 32%, white);
 }
 
 :deep(.wl-btn.primary) {
