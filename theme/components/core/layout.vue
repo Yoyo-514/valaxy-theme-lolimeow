@@ -2,6 +2,10 @@
 import { useHomePaginationScrollBehavior, useLayoutShell } from '@theme/composables'
 import { useRouter } from 'vue-router'
 
+defineProps<{
+  hideFooter?: boolean
+}>()
+
 const router = useRouter()
 const {
   closeDrawer,
@@ -59,7 +63,7 @@ useHomePaginationScrollBehavior(router)
 
     <LmHelper />
 
-    <div class="relative z-10">
+    <div v-if="!hideFooter" class="relative z-10">
       <LmFooter />
     </div>
   </div>
