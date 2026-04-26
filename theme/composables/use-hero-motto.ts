@@ -1,7 +1,7 @@
 import type { BrowserTimeout } from '@theme/utils'
 import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '@theme/utils'
 import { useAddonHitokoto } from 'valaxy-addon-hitokoto'
-import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useThemeConfig } from './config'
 
 const MIN_TYPING_SPEED = 24
@@ -12,6 +12,7 @@ export function useHeroMotto() {
   const themeConfig = useThemeConfig()
   const activeIndex = ref(0)
   const renderedMotto = ref('')
+  const isMounted = ref(false)
   let typingTimer: BrowserTimeout | undefined
   let rotationTimer: BrowserTimeout | undefined
 
@@ -58,6 +59,7 @@ export function useHeroMotto() {
   })
 
   const hasMotto = computed(() => mottoList.value.length > 0)
+  const canAnimateMotto = computed(() => isMounted.value)
   const shouldRotate = computed(() => mottoList.value.length > 1)
   const shouldType = computed(() => Boolean(themeConfig.value.hero.typewriter))
   const typingSpeed = computed(() => Math.max(themeConfig.value.hero.typingSpeed || 100, MIN_TYPING_SPEED))
@@ -149,6 +151,11 @@ export function useHeroMotto() {
       return
     }
 
+    if (!canAnimateMotto.value) {
+      renderedMotto.value = currentMotto
+      return
+    }
+
     if (!shouldType.value) {
       renderImmediately(currentMotto)
       return
@@ -157,12 +164,18 @@ export function useHeroMotto() {
     renderWithTypewriter(currentMotto)
   }
 
+  onMounted(() => {
+    isMounted.value = true
+    renderActiveMotto()
+  })
+
   watch(
     () => [
       mottoList.value.join('\u0000'),
       shouldType.value,
       typingSpeed.value,
       rotationDelay.value,
+      canAnimateMotto.value,
     ],
     () => {
       // Hero 配置变化后必须从第一条重新启动状态机，否则会出现：

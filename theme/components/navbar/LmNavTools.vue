@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useNavbarTools, useThemeConfig } from '@theme/composables'
 import { useAppStore } from 'valaxy'
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const props = defineProps<{
   drawerOpen: boolean
@@ -15,6 +15,19 @@ const emit = defineEmits<{
 const appStore = useAppStore()
 const themeConfig = useThemeConfig()
 const { showSearch, showDarkToggle } = useNavbarTools()
+
+const isMounted = ref(false)
+
+onMounted(() => {
+  isMounted.value = true
+})
+
+const darkToggleIcon = computed(() => {
+  if (!isMounted.value)
+    return 'i-ri-sun-line'
+
+  return appStore.isDark ? 'i-ri-moon-line' : 'i-ri-sun-line'
+})
 
 const hamburgerLines = computed(() => {
   if (themeConfig.value.navbarOptions?.hamburgerStyle === 'classic')
@@ -43,8 +56,7 @@ const hamburgerLines = computed(() => {
       aria-label="Toggle Dark Mode"
       @click="appStore.toggleDarkWithTransition"
     >
-      <div v-if="!appStore.isDark" i-ri-sun-line />
-      <div v-else i-ri-moon-line />
+      <div :class="darkToggleIcon" />
     </button>
 
     <button
