@@ -1,14 +1,20 @@
 <script lang="ts" setup>
 import { useBackgroundRuntime, useResolvedBackground } from '@theme/composables'
 import { createBackgroundImageStyle } from '@theme/utils'
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const background = useResolvedBackground('app')
 const runtimeBackground = useBackgroundRuntime('app', background)
 
+const isMounted = ref(false)
+
+onMounted(() => {
+  isMounted.value = true
+})
+
 const placeholderStyle = computed(() => runtimeBackground.placeholderStyle.value)
-const hasBaseImageLayer = computed(() => Boolean(runtimeBackground.currentImageUrl.value))
-const hasIncomingImageLayer = computed(() => Boolean(runtimeBackground.incomingImageUrl.value))
+const hasBaseImageLayer = computed(() => isMounted.value && Boolean(runtimeBackground.currentImageUrl.value))
+const hasIncomingImageLayer = computed(() => isMounted.value && Boolean(runtimeBackground.incomingImageUrl.value))
 const incomingImageVisible = computed(() => runtimeBackground.incomingImageVisible.value)
 
 // 全局背景层只消费 app scope 的结果，不读取 hero.cover。

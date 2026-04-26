@@ -54,51 +54,53 @@ const showSocialIcons = computed(() => themeConfig.value.hero.showSocialIcons &&
 </script>
 
 <template>
-  <section
-    ref="heroSection"
-    class="flex w-full justify-center relative overflow-hidden"
-    :style="heroLayoutStyle"
-  >
-    <LmHeroVisualLayer
-      :has-hero-cover="hasHeroCover"
-      :has-base-image-layer="hasBaseImageLayer"
-      :has-incoming-image-layer="hasIncomingImageLayer"
-      :has-hero-visual-layer="hasHeroVisualLayer"
-      :incoming-image-visible="incomingImageVisible"
-      :base-image-style="baseImageStyle"
-      :incoming-image-style="incomingImageStyle"
-      :overlay-style="overlayStyle"
-    />
-
-    <div
-      class="lm-hero-content"
-      :class="contentAlignmentClass"
+  <ClientOnly>
+    <section
+      ref="heroSection"
+      class="flex w-full justify-center relative overflow-hidden"
+      :style="heroLayoutStyle"
     >
-      <LmHeroIdentity
-        :avatar="authorAvatar"
-        :author-name="authorName"
-        :title="siteTitle"
-        :subtitle="siteSubtitle"
-        :has-motto="hasMotto"
-        :rendered-motto="renderedMotto"
+      <LmHeroVisualLayer
+        :has-hero-cover="hasHeroCover"
+        :has-base-image-layer="hasBaseImageLayer"
+        :has-incoming-image-layer="hasIncomingImageLayer"
+        :has-hero-visual-layer="hasHeroVisualLayer"
+        :incoming-image-visible="incomingImageVisible"
+        :base-image-style="baseImageStyle"
+        :incoming-image-style="incomingImageStyle"
+        :overlay-style="overlayStyle"
       />
 
-      <LmHeroSocialLinks
-        v-if="showSocialIcons"
-        :items="socialLinks"
-      />
-    </div>
+      <div
+        class="lm-hero-content"
+        :class="contentAlignmentClass"
+      >
+        <LmHeroIdentity
+          :avatar="authorAvatar"
+          :author-name="authorName"
+          :title="siteTitle"
+          :subtitle="siteSubtitle"
+          :has-motto="hasMotto"
+          :rendered-motto="renderedMotto"
+        />
 
-    <button
-      v-if="showScrollDown"
-      type="button"
-      class="lm-hero-scroll-down"
-      aria-label="Scroll to next section"
-      @click="scrollToNextSection"
-    >
-      <div i-ri-arrow-down-s-line class="lm-hero-scroll-down__icon" />
-    </button>
-  </section>
+        <LmHeroSocialLinks
+          v-if="showSocialIcons"
+          :items="socialLinks"
+        />
+      </div>
+
+      <button
+        v-if="showScrollDown"
+        type="button"
+        class="lm-hero-scroll-down"
+        aria-label="Scroll to next section"
+        @click="scrollToNextSection"
+      >
+        <div i-ri-arrow-down-s-line class="lm-hero-scroll-down__icon" />
+      </button>
+    </section>
+  </ClientOnly>
 </template>
 
 <style scoped lang="scss">

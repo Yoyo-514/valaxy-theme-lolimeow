@@ -3,7 +3,7 @@ import { useThemeConfig } from '@theme/composables'
 import { useSiteConfig, useValaxyConfig } from 'valaxy'
 import pkg from 'valaxy/package.json'
 
-import { capitalize, computed } from 'vue'
+import { capitalize, computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
@@ -12,10 +12,14 @@ const config = useValaxyConfig()
 const siteConfig = useSiteConfig()
 const themeConfig = useThemeConfig()
 
-const year = new Date().getFullYear()
+const year = ref(themeConfig.value.footer.since)
+
+onMounted(() => {
+  year.value = new Date().getFullYear()
+})
 
 const isThisYear = computed(() => {
-  return year === themeConfig.value.footer.since
+  return year.value === themeConfig.value.footer.since
 })
 
 const poweredHtml = computed(() => t('footer.powered', [`<a href="${pkg.repository}" target="_blank" rel="noopener">Valaxy</a> v${pkg.version}`]))
