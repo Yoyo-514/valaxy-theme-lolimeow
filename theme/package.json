@@ -23,11 +23,11 @@
   "dependencies": {
     "@iconify-json/ant-design": "catalog:",
     "@iconify-json/simple-icons": "catalog:",
-    "@vueuse/core": "catalog:"
-  },
-  "devDependencies": {
-    "valaxy": "catalog:",
+    "@vueuse/core": "catalog:",
     "valaxy-addon-hitokoto": "catalog:",
     "valaxy-addon-waline": "catalog:"
+  },
+  "devDependencies": {
+    "valaxy": "catalog:"
   }
 }
