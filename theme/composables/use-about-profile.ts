@@ -1,7 +1,7 @@
-import { resolveFrontmatterCover, resolveFrontmatterText } from '@theme/utils'
 import { useFrontmatter, useSiteConfig } from 'valaxy'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { resolveFrontmatterCover, resolveFrontmatterText } from '../utils'
 
 interface SiteAuthor {
   avatar?: string

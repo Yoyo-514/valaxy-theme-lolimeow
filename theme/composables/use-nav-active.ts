@@ -1,6 +1,6 @@
-import { isSectionMatch, normalizePath } from '@theme/utils'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { isSectionMatch, normalizePath } from '../utils'
 
 const pendingLink = ref('')
 

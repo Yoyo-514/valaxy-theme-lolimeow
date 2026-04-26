@@ -1,4 +1,4 @@
-import type { LinkGroup, LinkItem } from '@theme/types'
+import type { LinkGroup, LinkItem } from '../types'
 import { computed } from 'vue'
 import { useThemeConfig } from './config'
 

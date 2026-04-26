@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useArticleTocState } from '@theme/composables'
 import { nextTick, ref, watch } from 'vue'
+import { useArticleTocState } from '../../composables'
 
 const { items, visible, activeLink, handleClick } = useArticleTocState()
 const navRef = ref<HTMLElement>()

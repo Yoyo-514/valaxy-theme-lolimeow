@@ -1,6 +1,6 @@
-import { resolveFrontmatterCover, resolveFrontmatterText } from '@theme/utils'
 import { formatDate, useFrontmatter } from 'valaxy'
 import { computed } from 'vue'
+import { resolveFrontmatterCover, resolveFrontmatterText } from '../utils'
 
 interface ArticleInfoItem {
   icon: string

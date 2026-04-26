@@ -1,5 +1,5 @@
-import { useThemeConfig } from '@theme/composables'
 import { computed } from 'vue'
+import { useThemeConfig } from '../composables'
 
 export function usePinnedEntries() {
   const themeConfig = useThemeConfig()

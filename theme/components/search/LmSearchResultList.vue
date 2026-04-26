@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LmFuseSearchResult } from '@theme/composables'
+import type { LmFuseSearchResult } from '../../composables'
 
 defineProps<{
   results: LmFuseSearchResult[]

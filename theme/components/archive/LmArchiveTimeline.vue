@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { ArchiveGroup } from '@theme/composables'
-import { useArchiveTimelineState } from '@theme/composables'
+import type { ArchiveGroup } from '../../composables'
+import { useArchiveTimelineState } from '../../composables'
 
 const props = defineProps<{
   groups: ArchiveGroup[]

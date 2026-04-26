@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Post } from 'valaxy'
-import { usePostCardMediaState, usePostCardViewModel } from '@theme/composables'
+import { usePostCardMediaState, usePostCardViewModel } from '../../composables'
 
 const props = defineProps<{
   post: Post
@@ -75,7 +75,7 @@ const {
 </template>
 
 <style lang="scss" scoped>
-@use '@theme/styles/mixins/surface' as *;
+@use '../../styles/mixins/surface' as *;
 
 .lm-post-card {
   @include lm-surface-panel;

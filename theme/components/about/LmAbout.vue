@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAboutProfile } from '@theme/composables'
+import { useAboutProfile } from '../../composables'
 
 const {
   authorAvatar,

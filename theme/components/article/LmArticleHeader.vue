@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useArticleHeaderMeta } from '@theme/composables'
+import { useArticleHeaderMeta } from '../../composables'
 
 const {
   title,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ResolvedLinkItem } from '@theme/composables'
+import type { ResolvedLinkItem } from '../../composables'
 
 defineProps<{
   item: ResolvedLinkItem

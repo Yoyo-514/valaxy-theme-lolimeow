@@ -48,7 +48,7 @@ const props = defineProps<{
 </template>
 
 <style scoped lang="scss">
-@use '@theme/styles/mixins/surface' as *;
+@use '../../styles/mixins/surface' as *;
 
 .lm-hero-avatar-badge {
   @apply relative z-10 flex h-22 w-22 items-center justify-center rounded-full p-1.5 md:h-24 md:w-24;

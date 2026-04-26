@@ -1,6 +1,6 @@
 import type { Router } from 'vue-router'
-import { isHomePaginationPath, lockNavbarScrollReaction } from '@theme/utils'
 import { onMounted } from 'vue'
+import { isHomePaginationPath, lockNavbarScrollReaction } from '../utils'
 
 export function useHomePaginationScrollBehavior(router: Router) {
   onMounted(() => {

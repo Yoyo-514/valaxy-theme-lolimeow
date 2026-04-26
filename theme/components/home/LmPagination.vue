@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { usePaginationItems } from '@theme/composables'
+import { usePaginationItems } from '../../composables'
 
 const props = withDefaults(defineProps<{
   currentPage?: number
@@ -62,7 +62,7 @@ const {
 </template>
 
 <style lang="scss" scoped>
-@use '@theme/styles/mixins/surface' as *;
+@use '../../styles/mixins/surface' as *;
 
 .lm-pagination {
   @apply mt-6 flex items-center justify-center gap-3;

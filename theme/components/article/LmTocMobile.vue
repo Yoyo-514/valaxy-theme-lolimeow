@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useArticleTocState } from '@theme/composables'
-import { removeDocumentClass, toggleDocumentClass } from '@theme/utils'
 import { onBeforeUnmount, ref, watch } from 'vue'
+import { useArticleTocState } from '../../composables'
+import { removeDocumentClass, toggleDocumentClass } from '../../utils'
 
 const { items, visible, activeLink, handleClick } = useArticleTocState()
 const open = ref(false)

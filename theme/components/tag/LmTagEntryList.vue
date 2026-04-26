@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TagEntry } from '@theme/composables'
+import type { TagEntry } from '../../composables'
 import { formatDate } from 'valaxy'
 
 defineProps<{

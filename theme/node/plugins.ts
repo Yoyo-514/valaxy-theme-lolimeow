@@ -1,6 +1,6 @@
-import type { ThemeConfig } from '@theme/types'
 import type { ResolvedValaxyOptions } from 'valaxy'
 import type { Plugin } from 'vite'
+import type { ThemeConfig } from '../types'
 
 // write a vite plugin
 // https://vitejs.dev/guide/api-plugin.html

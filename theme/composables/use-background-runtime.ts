@@ -1,8 +1,8 @@
-import type { BrowserTimeout } from '@theme/utils'
 import type { CSSProperties, Ref } from 'vue'
+import type { BrowserTimeout } from '../utils'
 import type { ResolvedBackground } from './use-resolved-background'
-import { clearBrowserTimeout, getBackgroundCacheKey, getRotationCandidate, getWindow, pickRandomUrl, requestBrowserAnimationFrame, setBrowserTimeout, shouldUseTransparentFallback } from '@theme/utils'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { clearBrowserTimeout, getBackgroundCacheKey, getRotationCandidate, getWindow, pickRandomUrl, requestBrowserAnimationFrame, setBrowserTimeout, shouldUseTransparentFallback } from '../utils'
 
 type BackgroundRuntimeScope = 'app' | 'hero'
 

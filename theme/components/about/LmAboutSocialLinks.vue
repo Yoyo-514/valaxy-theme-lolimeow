@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AboutSocialLink } from '@theme/composables'
+import type { AboutSocialLink } from '../../composables'
 
 defineProps<{
   items: AboutSocialLink[]

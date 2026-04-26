@@ -1,6 +1,6 @@
-import { getDocumentElement, NAVBAR_SCROLL_LOCK_ATTR } from '@theme/utils'
 import { useWindowScroll } from '@vueuse/core'
 import { ref, watch } from 'vue'
+import { getDocumentElement, NAVBAR_SCROLL_LOCK_ATTR } from '../utils'
 
 /**
  * 顶栏显隐控制。

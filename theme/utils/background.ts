@@ -1,5 +1,5 @@
-import type { ResolvedBackground } from '@theme/composables/use-resolved-background'
 import type { CSSProperties } from 'vue'
+import type { ResolvedBackground } from '../composables/use-resolved-background'
 
 interface BackgroundImageStyleOptions {
   fixed?: boolean

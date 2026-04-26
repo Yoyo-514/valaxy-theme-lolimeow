@@ -1,6 +1,6 @@
-import { getWindow } from '@theme/utils'
 import { useEventListener } from '@vueuse/core'
 import { ref } from 'vue'
+import { getWindow } from '../utils'
 
 export function useSearchModal() {
   const isOpen = ref(false)

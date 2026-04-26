@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ResolvedLinkGroup } from '@theme/composables'
+import type { ResolvedLinkGroup } from '../../composables'
 
 defineProps<{
   groups: ResolvedLinkGroup[]

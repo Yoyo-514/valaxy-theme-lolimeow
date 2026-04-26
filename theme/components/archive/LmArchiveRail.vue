@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ArchiveGroup } from '@theme/composables'
+import type { ArchiveGroup } from '../../composables'
 
 defineProps<{
   groups: ArchiveGroup[]

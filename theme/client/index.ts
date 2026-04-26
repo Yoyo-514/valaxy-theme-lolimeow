@@ -1,1 +1,1 @@
-export * from '@theme/composables'
+export * from '../composables'

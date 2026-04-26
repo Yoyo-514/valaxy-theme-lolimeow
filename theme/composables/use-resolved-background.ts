@@ -1,6 +1,6 @@
-import { clampOpacity, normalizeUrls, pickFirstUrl, pickRandomUrl } from '@theme/utils'
 import { useColorMode, useWindowSize } from '@vueuse/core'
 import { computed } from 'vue'
+import { clampOpacity, normalizeUrls, pickFirstUrl, pickRandomUrl } from '../utils'
 import { useThemeConfig } from './config'
 
 type BackgroundScope = 'app' | 'hero'

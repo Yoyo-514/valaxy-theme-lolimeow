@@ -1,7 +1,7 @@
 import type { Post } from 'valaxy'
-import { isVisiblePost, normalizePostTitle, resolvePostTimestamp } from '@theme/utils'
 import { useSiteStore } from 'valaxy'
 import { computed } from 'vue'
+import { isVisiblePost, normalizePostTitle, resolvePostTimestamp } from '../utils'
 
 export interface ArchiveEntry {
   path: string

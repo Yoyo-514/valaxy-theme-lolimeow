@@ -36,7 +36,7 @@ const hasPostNav = computed(() => navEnabled.value && (!!prevPath.value || !!nex
 </template>
 
 <style lang="scss" scoped>
-@use '@theme/styles/mixins/surface' as *;
+@use '../../styles/mixins/surface' as *;
 
 .lm-post-nav {
   @apply mx-auto mt-4 flex w-full flex-col gap-3 md:flex-row md:justify-between px-4 sm:px-6 xl:px-0;

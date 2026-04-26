@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useThemeConfig } from '@theme/composables'
-import { getSessionStorage } from '@theme/utils'
 import { computed, ref, watch } from 'vue'
+import { useThemeConfig } from '../composables'
+import { getSessionStorage } from '../utils'
 
 const themeConfig = useThemeConfig()
 
@@ -79,7 +79,7 @@ function closeNotice() {
 </template>
 
 <style lang="scss" scoped>
-@use '@theme/styles/mixins/surface' as *;
+@use '../styles/mixins/surface' as *;
 
 .lm-notice {
   @include lm-surface-panel(

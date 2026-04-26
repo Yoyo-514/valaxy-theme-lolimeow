@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useTagGroups } from '@theme/composables'
-import { resolveFrontmatterCover, resolveFrontmatterText } from '@theme/utils'
 import { useFrontmatter } from 'valaxy'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useTagGroups } from '../../composables'
+import { resolveFrontmatterCover, resolveFrontmatterText } from '../../utils'
 
 const { t } = useI18n()
 const frontmatter = useFrontmatter()

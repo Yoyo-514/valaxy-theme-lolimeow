@@ -34,7 +34,7 @@ const emit = defineEmits<{
 </template>
 
 <style scoped lang="scss">
-@use '@theme/styles/mixins/surface' as *;
+@use '../../styles/mixins/surface' as *;
 
 .lm-search-shell {
   @apply px-4 pt-[8vh] flex pointer-events-none items-start inset-0 justify-center fixed z-[var(--lm-z-modal)];

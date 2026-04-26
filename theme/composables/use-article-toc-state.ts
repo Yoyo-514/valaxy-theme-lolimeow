@@ -1,7 +1,7 @@
 import type { MenuItem } from '@valaxyjs/utils'
-import { createThrottledFunction, getDocument, getDocumentElement, getWindow, lockNavbarScrollReaction } from '@theme/utils'
 import { useOutline } from 'valaxy'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { createThrottledFunction, getDocument, getDocumentElement, getWindow, lockNavbarScrollReaction } from '../utils'
 
 const HASH_PREFIX_RE = /^#/
 const ACTIVE_SCROLL_GAP = 24

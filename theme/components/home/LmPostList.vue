@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { Post } from 'valaxy'
-import { useThemeConfig } from '@theme/composables'
-import { clampColumnCount, getRootFontSize, resolveGridColumnCount, resolveLengthToPx } from '@theme/utils'
 import { useElementSize } from '@vueuse/core'
 import { useSiteStore } from 'valaxy'
 import { computed, ref } from 'vue'
+import { useThemeConfig } from '../../composables'
+import { clampColumnCount, getRootFontSize, resolveGridColumnCount, resolveLengthToPx } from '../../utils'
 
 const props = withDefaults(defineProps<{
   type?: string

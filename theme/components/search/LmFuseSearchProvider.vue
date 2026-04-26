@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { LmFuseSearchResult } from '@theme/composables'
-import { useLmFuseSearch } from '@theme/composables'
-import { createDebouncedFunction } from '@theme/utils'
+import type { LmFuseSearchResult } from '../../composables'
 import { computed, onUnmounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { useLmFuseSearch } from '../../composables'
+import { createDebouncedFunction } from '../../utils'
 
 const props = defineProps<{
   open: boolean

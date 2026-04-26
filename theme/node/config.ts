@@ -1,4 +1,4 @@
-import type { ThemeConfig } from '@theme/types'
+import type { ThemeConfig } from '../types'
 
 /**
  * Default Config

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useHomePaginationScrollBehavior, useLayoutShell } from '@theme/composables'
 import { useRouter } from 'vue-router'
+import { useHomePaginationScrollBehavior, useLayoutShell } from '../../composables'
 
 defineProps<{
   hideFooter?: boolean

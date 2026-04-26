@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CategoryEntry } from '@theme/composables'
+import type { CategoryEntry } from '../../composables'
 import { formatDate } from 'valaxy'
 
 defineProps<{

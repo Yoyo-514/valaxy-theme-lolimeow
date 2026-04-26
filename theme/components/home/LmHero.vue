@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useHeroMotto, useHeroStage, useThemeConfig } from '@theme/composables'
 import { useSiteConfig } from 'valaxy'
 import { computed, useTemplateRef } from 'vue'
+import { useHeroMotto, useHeroStage, useThemeConfig } from '../../composables'
 
 interface SocialLink {
   name: string
@@ -103,7 +103,7 @@ const showSocialIcons = computed(() => themeConfig.value.hero.showSocialIcons &&
 </template>
 
 <style scoped lang="scss">
-@use '@theme/styles/mixins/surface' as *;
+@use '../../styles/mixins/surface' as *;
 
 .lm-hero-content {
   @apply relative z-10 flex w-full max-w-5xl flex-col justify-center px-4 sm:px-6 lg:px-8;

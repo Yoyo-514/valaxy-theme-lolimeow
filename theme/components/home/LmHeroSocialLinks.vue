@@ -35,7 +35,7 @@ const props = defineProps<{
 </template>
 
 <style scoped lang="scss">
-@use '@theme/styles/mixins/surface' as *;
+@use '../../styles/mixins/surface' as *;
 
 .lm-hero-social-list {
   @apply mt-1 flex flex-wrap gap-2;

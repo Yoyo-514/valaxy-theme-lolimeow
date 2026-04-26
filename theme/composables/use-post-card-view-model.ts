@@ -1,6 +1,6 @@
 import type { Post } from 'valaxy'
-import { appendSeedQuery, normalizeExcerpt, pickBySeed } from '@theme/utils'
 import { computed, ref, watch } from 'vue'
+import { appendSeedQuery, normalizeExcerpt, pickBySeed } from '../utils'
 import { useThemeConfig } from './config'
 
 export function usePostCardViewModel(post: Post, index = 0) {

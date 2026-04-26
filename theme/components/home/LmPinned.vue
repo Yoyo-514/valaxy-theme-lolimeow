@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { usePinnedEntries } from '@theme/composables'
+import { usePinnedEntries } from '../../composables'
 
 const {
   sectionTitle,
@@ -56,7 +56,7 @@ const {
 </template>
 
 <style scoped lang="scss">
-@use '@theme/styles/mixins/surface' as *;
+@use '../../styles/mixins/surface' as *;
 
 .lm-pinned {
   @apply pt-6 md:pt-8;

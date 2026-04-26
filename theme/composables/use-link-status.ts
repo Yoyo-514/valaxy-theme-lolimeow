@@ -1,5 +1,5 @@
-import { getWindow } from '@theme/utils'
 import { computed, onMounted, ref } from 'vue'
+import { getWindow } from '../utils'
 
 export type LinkStatus = 'idle' | 'checking' | 'online' | 'offline' | 'unknown'
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ArchiveEntry } from '@theme/composables'
+import type { ArchiveEntry } from '../../composables'
 import { formatDate } from 'valaxy'
 
 defineProps<{

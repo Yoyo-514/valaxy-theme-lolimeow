@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { NavItem } from '@theme/types'
+import type { NavItem } from '../../types'
 
 const props = defineProps<{
   drawerOpen: boolean
@@ -37,7 +37,7 @@ const emit = defineEmits<{
 </template>
 
 <style lang="scss" scoped>
-@use '@theme/styles/mixins/surface' as *;
+@use '../../styles/mixins/surface' as *;
 
 .lm-nav {
   @include lm-surface-nav;

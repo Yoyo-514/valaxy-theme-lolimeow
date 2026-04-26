@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CategoryNode } from '@theme/composables'
+import type { CategoryNode } from '../../composables'
 import { ref } from 'vue'
 
 const props = withDefaults(defineProps<{

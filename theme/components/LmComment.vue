@@ -4,7 +4,7 @@ import { computed, defineAsyncComponent } from 'vue'
 
 type CommentProvider = 'waline'
 
-const WalineComment = defineAsyncComponent(() => import('@theme/components/plugins/LmWaline.vue'))
+const WalineComment = defineAsyncComponent(() => import('../components/plugins/LmWaline.vue'))
 
 const siteConfig = useSiteConfig()
 const frontmatter = useFrontmatter()

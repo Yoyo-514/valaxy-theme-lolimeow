@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { NavItem } from '@theme/types'
-import type { BrowserTimeout } from '@theme/utils'
-import { useNavActive } from '@theme/composables'
-import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '@theme/utils'
+import type { NavItem } from '../../types'
+import type { BrowserTimeout } from '../../utils'
 import { useRouter } from 'vue-router'
+import { useNavActive } from '../../composables'
+import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '../../utils'
 
 const props = defineProps<{
   open: boolean
@@ -125,7 +125,7 @@ function leave(el: Element) {
 </template>
 
 <style lang="scss" scoped>
-@use '@theme/styles/mixins/surface' as *;
+@use '../../styles/mixins/surface' as *;
 
 .lm-mobile-nav-panel {
   @include lm-surface-panel;

@@ -1,6 +1,6 @@
-import type { BrowserTimeout } from '@theme/utils'
-import { clearBrowserTimeout, fetchHitokoto, getWindow, setBrowserTimeout } from '@theme/utils'
+import type { BrowserTimeout } from '../utils'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { clearBrowserTimeout, fetchHitokoto, getWindow, setBrowserTimeout } from '../utils'
 import { useThemeConfig } from './config'
 
 const MIN_TYPING_SPEED = 24

@@ -1,7 +1,7 @@
-import { getDocumentElement } from '@theme/utils'
 import { useCssVar } from '@vueuse/core'
 import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { getDocumentElement } from '../utils'
 import { useThemeConfig } from './config'
 import { useMobileDrawer } from './use-mobile-drawer'
 import { useNavbarVisibility } from './use-navbar-visibility'

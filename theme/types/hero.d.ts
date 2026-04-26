@@ -1,4 +1,4 @@
-import type { HitokotoSentenceType } from '@theme/utils'
+import type { HitokotoSentenceType } from '../utils'
 
 export type HeroMottoSource = 'config' | 'hitokoto'
 

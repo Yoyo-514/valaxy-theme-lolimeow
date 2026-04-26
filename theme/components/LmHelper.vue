@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { getDocumentElement, getWindow } from '@theme/utils'
 import { isClient, useWindowScroll } from '@vueuse/core'
 import { computed } from 'vue'
+import { getDocumentElement, getWindow } from '../utils'
 
 const { y } = useWindowScroll()
 

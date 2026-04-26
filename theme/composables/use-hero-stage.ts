@@ -1,7 +1,7 @@
 import type { CSSProperties, ShallowRef } from 'vue'
-import { createBackgroundImageStyle, getDocumentElement, getWindow } from '@theme/utils'
 import { useCssVar, useElementBounding } from '@vueuse/core'
 import { computed, onBeforeUnmount, watch } from 'vue'
+import { createBackgroundImageStyle, getDocumentElement, getWindow } from '../utils'
 import { useThemeConfig } from './config'
 import { useBackgroundRuntime } from './use-background-runtime'
 import { useResolvedBackground } from './use-resolved-background'

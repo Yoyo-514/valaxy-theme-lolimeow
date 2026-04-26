@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useLinkStatus } from '@theme/composables'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useLinkStatus } from '../../composables'
 
 const props = defineProps<{
   url: string

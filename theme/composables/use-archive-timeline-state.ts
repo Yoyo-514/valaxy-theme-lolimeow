@@ -1,7 +1,7 @@
 import type { ArchiveGroup } from './use-archive-groups'
-import { ARCHIVE_ACCORDION_BREAKPOINT } from '@theme/utils'
 import { useWindowSize } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
+import { ARCHIVE_ACCORDION_BREAKPOINT } from '../utils'
 
 export function useArchiveTimelineState(getGroups: () => ArchiveGroup[]) {
   const { width } = useWindowSize()

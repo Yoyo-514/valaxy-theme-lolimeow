@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useNavbarTools, useThemeConfig } from '@theme/composables'
 import { useAppStore } from 'valaxy'
 import { computed } from 'vue'
+import { useNavbarTools, useThemeConfig } from '../../composables'
 
 const props = defineProps<{
   drawerOpen: boolean
