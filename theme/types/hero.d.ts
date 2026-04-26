@@ -1,6 +1,8 @@
+import type { HitokotoSentenceType } from '@theme/utils'
+
 export type HeroMottoSource = 'config' | 'hitokoto'
 
-export interface HeroHitokotoDisplayOptions {
+export interface HitokotoOptions {
   /**
    * 是否在一言后展示来源
    * @default false
@@ -12,6 +14,22 @@ export interface HeroHitokotoDisplayOptions {
    * @default '——'
    */
   fromSeparator?: string
+
+  /**
+   * 一言句子类型，可配置多个分类
+   * 例如：['a', 'c']
+   */
+  sentenceTypes?: HitokotoSentenceType[]
+
+  /**
+   * 一言最小长度
+   */
+  minLength?: number
+
+  /**
+   * 一言最大长度
+   */
+  maxLength?: number
 }
 
 export interface Hero {
@@ -44,9 +62,9 @@ export interface Hero {
   mottoSource: HeroMottoSource
 
   /**
-   * 一言在 Hero motto 中的展示配置；请求参数请写在 addonHitokoto({...}) 中
+   * 一言在 Hero motto 中的展示与请求配置
    */
-  hitokoto: HeroHitokotoDisplayOptions
+  hitokoto: HitokotoOptions
 
   /**
    * 签名切换间隔（ms），仅在 motto 为字符串数组时生效

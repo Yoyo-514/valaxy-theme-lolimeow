@@ -17,7 +17,7 @@ interface SiteAuthor {
 
 const siteConfig = useSiteConfig()
 const themeConfig = useThemeConfig()
-const { hasMotto, renderedMotto } = useHeroMotto()
+const { hasMotto, renderedMotto, shouldShowMotto } = useHeroMotto()
 const heroSection = useTemplateRef<HTMLElement>('heroSection')
 
 const {
@@ -81,6 +81,7 @@ const showSocialIcons = computed(() => themeConfig.value.hero.showSocialIcons &&
         :subtitle="siteSubtitle"
         :has-motto="hasMotto"
         :rendered-motto="renderedMotto"
+        :should-show-motto="shouldShowMotto"
       />
 
       <LmHeroSocialLinks

@@ -1,6 +1,5 @@
 import type { BrowserTimeout } from '@theme/utils'
-import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '@theme/utils'
-import { useAddonHitokoto } from 'valaxy-addon-hitokoto'
+import { clearBrowserTimeout, fetchHitokoto, getWindow, setBrowserTimeout } from '@theme/utils'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useThemeConfig } from './config'
 
@@ -12,14 +11,12 @@ export function useHeroMotto() {
   const themeConfig = useThemeConfig()
   const activeIndex = ref(0)
   const renderedMotto = ref('')
+  const hitokotoMotto = ref('')
+  const isHitokotoPending = ref(false)
   let typingTimer: BrowserTimeout | undefined
   let rotationTimer: BrowserTimeout | undefined
 
-  const hitokotoApi = themeConfig.value.hero.mottoSource === 'hitokoto'
-    ? useAddonHitokoto()
-    : undefined
-
-  const useHitokoto = computed(() => themeConfig.value.hero.mottoSource === 'hitokoto' && Boolean(hitokotoApi))
+  const useHitokoto = computed(() => themeConfig.value.hero.mottoSource === 'hitokoto')
 
   const configMottoList = computed(() => {
     const { motto } = themeConfig.value.hero
@@ -30,34 +27,18 @@ export function useHeroMotto() {
     return motto ? [motto] : []
   })
 
-  const hitokotoMotto = computed(() => {
-    const currentHitokoto = hitokotoApi?.hitokoto.value
-    if (!currentHitokoto)
-      return ''
-
-    const text = currentHitokoto.hitokoto.trim()
-    if (!text)
-      return ''
-
-    const hitokotoOptions = themeConfig.value.hero.hitokoto
-    if (!hitokotoOptions?.showFrom)
-      return text
-
-    const from = (currentHitokoto.from || currentHitokoto.fromWho || '').trim()
-    if (!from)
-      return text
-
-    return `${text} ${hitokotoOptions.fromSeparator || DEFAULT_HITOKOTO_SEPARATOR} ${from}`
-  })
-
   const mottoList = computed(() => {
     if (!useHitokoto.value)
       return configMottoList.value
+
+    if (isHitokotoPending.value)
+      return []
 
     return hitokotoMotto.value ? [hitokotoMotto.value] : configMottoList.value
   })
 
   const hasMotto = computed(() => mottoList.value.length > 0)
+  const shouldShowMotto = computed(() => hasMotto.value || (useHitokoto.value && isHitokotoPending.value))
   const shouldRotate = computed(() => mottoList.value.length > 1)
   const shouldType = computed(() => Boolean(themeConfig.value.hero.typewriter))
   const typingSpeed = computed(() => Math.max(themeConfig.value.hero.typingSpeed || 100, MIN_TYPING_SPEED))
@@ -71,8 +52,43 @@ export function useHeroMotto() {
     rotationTimer = undefined
   }
 
+  async function refreshHitokoto() {
+    const currentWindow = getWindow()
+    if (!currentWindow)
+      return false
+
+    isHitokotoPending.value = true
+
+    try {
+      const data = await fetchHitokoto({
+        sentenceTypes: themeConfig.value.hero.hitokoto.sentenceTypes,
+        minLength: themeConfig.value.hero.hitokoto.minLength,
+        maxLength: themeConfig.value.hero.hitokoto.maxLength,
+      })
+      const text = data.hitokoto?.trim()
+      if (!text)
+        return false
+
+      const hitokotoOptions = themeConfig.value.hero.hitokoto
+      const from = (data.from || data.fromWho || '').trim()
+
+      hitokotoMotto.value = hitokotoOptions?.showFrom && from
+        ? `${text} ${hitokotoOptions.fromSeparator || DEFAULT_HITOKOTO_SEPARATOR} ${from}`
+        : text
+
+      return true
+    }
+    catch (error) {
+      console.error('[lolimeow] Failed to fetch hitokoto.', error)
+      return false
+    }
+    finally {
+      isHitokotoPending.value = false
+    }
+  }
+
   function scheduleNextMotto() {
-    if (useHitokoto.value && hitokotoApi) {
+    if (useHitokoto.value) {
       const currentWindow = getWindow()
       if (!currentWindow)
         return
@@ -80,10 +96,9 @@ export function useHeroMotto() {
       rotationTimer = setBrowserTimeout(async () => {
         rotationTimer = undefined
         const currentMottoKey = mottoList.value.join('\u0000')
+        const fetched = await refreshHitokoto()
 
-        await hitokotoApi.fetchHitokoto()
-
-        if (mottoList.value.join('\u0000') === currentMottoKey)
+        if (!fetched || mottoList.value.join('\u0000') === currentMottoKey)
           scheduleNextMotto()
       }, rotationDelay.value)
       return
@@ -180,6 +195,21 @@ export function useHeroMotto() {
     { immediate: true },
   )
 
+  watch(
+    useHitokoto,
+    async (enabled) => {
+      if (!enabled) {
+        isHitokotoPending.value = false
+        hitokotoMotto.value = ''
+        return
+      }
+
+      renderedMotto.value = ''
+      await refreshHitokoto()
+    },
+    { immediate: true },
+  )
+
   onBeforeUnmount(() => {
     clearTimers()
   })
@@ -187,5 +217,6 @@ export function useHeroMotto() {
   return {
     hasMotto,
     renderedMotto,
+    shouldShowMotto,
   }
 }

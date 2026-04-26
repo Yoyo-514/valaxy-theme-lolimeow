@@ -1,6 +1,5 @@
 import type { ThemeConfig } from 'valaxy-theme-lolimeow'
 import { defineConfig } from 'valaxy'
-import { addonHitokoto, HitokotoType } from 'valaxy-addon-hitokoto'
 // @ts-expect-error - `valaxy-addon-waline` 仅提供源码与导出映射，CI 下 `vue-tsc` 可能无法正确解析包根类型
 import { addonWaline } from 'valaxy-addon-waline'
 
@@ -37,6 +36,8 @@ export default defineConfig<ThemeConfig>({
       motto: ['中文测试test', 'Welcome to Valaxy Theme Lolimeow', 'Test Long Long Long Long Long Long Long Long Long Long Long Long Text'],
       hitokoto: {
         showFrom: true,
+        sentenceTypes: ['a', 'b', 'c'],
+        maxLength: 30,
       },
       cover: {
         urls: ['/images/background1.webp', '/images/background2.webp'],
@@ -174,10 +175,6 @@ export default defineConfig<ThemeConfig>({
     },
   },
   addons: [
-    addonHitokoto({
-      args: [HitokotoType.Animation, HitokotoType.Comic],
-      maxLength: 30,
-    }),
     addonWaline({
       serverURL: 'https://waline.yoyo514.top',
       pageview: true,

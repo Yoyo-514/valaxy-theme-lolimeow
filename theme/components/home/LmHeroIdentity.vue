@@ -6,6 +6,7 @@ const props = defineProps<{
   subtitle?: string
   hasMotto: boolean
   renderedMotto: string
+  shouldShowMotto: boolean
 }>()
 </script>
 
@@ -34,7 +35,7 @@ const props = defineProps<{
   </div>
 
   <div
-    v-if="props.hasMotto"
+    v-if="props.shouldShowMotto"
     class="lm-hero-motto-strip"
   >
     <p

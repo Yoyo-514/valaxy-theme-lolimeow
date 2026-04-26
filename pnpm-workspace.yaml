@@ -36,7 +36,6 @@ catalog:
   eslint-plugin-format: ^2.0.1
   typescript: ^6.0.3
   valaxy: ^0.28.5
-  valaxy-addon-hitokoto: ^0.0.1
   valaxy-addon-waline: ^0.2.1
   vitest: ^4.1.5
   vue-tsc: ^3.2.7
