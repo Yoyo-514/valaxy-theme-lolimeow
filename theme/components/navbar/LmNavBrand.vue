@@ -15,7 +15,7 @@ const siteFavicon = computed(() => siteConfig.value.favicon || '')
   >
     <img
       class="lm-nav-brand__logo"
-      style="width: 40px; height: 28px"
+      style="width: auto; height: 32px"
       alt="logo"
       :src="siteFavicon"
     >

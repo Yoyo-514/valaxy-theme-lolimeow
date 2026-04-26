@@ -113,6 +113,36 @@ const showSocialIcons = computed(() => themeConfig.value.hero.showSocialIcons &&
   padding-block: clamp(4.5rem, 10vh, 7.5rem);
 }
 
+.lm-hero-content--left :deep(.lm-hero-subtitle) {
+  align-self: flex-start;
+  text-align: left;
+}
+
+.lm-hero-content--center :deep(.lm-hero-subtitle) {
+  align-self: center;
+  text-align: center;
+}
+
+.lm-hero-content--right :deep(.lm-hero-subtitle) {
+  align-self: flex-end;
+  text-align: right;
+}
+
+.lm-hero-content--left :deep(.lm-hero-social-list) {
+  align-self: flex-start;
+  justify-content: flex-start;
+}
+
+.lm-hero-content--center :deep(.lm-hero-social-list) {
+  align-self: center;
+  justify-content: center;
+}
+
+.lm-hero-content--right :deep(.lm-hero-social-list) {
+  align-self: flex-end;
+  justify-content: flex-end;
+}
+
 @media (max-width: 767px) {
   .lm-hero-content {
     gap: 0.95rem;

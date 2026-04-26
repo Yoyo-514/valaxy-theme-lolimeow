@@ -43,21 +43,6 @@ const props = defineProps<{
   row-gap: 0.55rem;
 }
 
-:deep(.lm-hero-content--left) .lm-hero-social-list {
-  align-self: flex-start;
-  justify-content: flex-start;
-}
-
-:deep(.lm-hero-content--center) .lm-hero-social-list {
-  align-self: center;
-  justify-content: center;
-}
-
-:deep(.lm-hero-content--right) .lm-hero-social-list {
-  align-self: flex-end;
-  justify-content: flex-end;
-}
-
 .lm-hero-social-link {
   @apply inline-flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-250 ease-out;
   @include lm-surface-panel(

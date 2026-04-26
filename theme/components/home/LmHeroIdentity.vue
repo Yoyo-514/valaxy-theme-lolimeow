@@ -153,18 +153,6 @@ const props = defineProps<{
   text-shadow: 0 1px 10px rgb(15 23 42 / 0.08);
 }
 
-:deep(.lm-hero-content--left) .lm-hero-subtitle {
-  align-self: flex-start;
-}
-
-:deep(.lm-hero-content--center) .lm-hero-subtitle {
-  align-self: center;
-}
-
-:deep(.lm-hero-content--right) .lm-hero-subtitle {
-  align-self: flex-end;
-}
-
 .lm-hero-motto-strip {
   @apply flex rounded-[12px] px-5 py-3 md:px-6;
   @include lm-surface-nav(

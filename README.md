@@ -1,127 +1,154 @@
-# Valaxy Theme Lolimeow
+<h1 align="center">valaxy-theme-lolimeow</h1>
 
-`valaxy-theme-lolimeow` is a custom [Valaxy](https://valaxy.site/) theme built around anime-style background imagery and a reading-first layout.
+<pre align="center">A soft anime-style Valaxy theme for a calm daily writing space.</pre>
 
-The theme focuses on three things:
+<p align="center">
+  <img src="./docs/assets/example.png" alt="valaxy-theme-lolimeow preview">
+</p>
 
-- customizable and randomizable background imagery
-- a lightweight anime-inspired visual atmosphere
-- readable article pages on desktop and mobile
-- a maintainable structure for continued theme iteration
+<div align="center">
+<table>
+<tbody>
+<tr>
+<td align="center">
+  <img width="2000" height="0" alt="" aria-hidden="true"><br>
+  <span><b>English | <a href="./README.zh-CN.md">简体中文</a></b></span><br>
+  <sub>Light anime atmosphere, soft reading surfaces, Hitokoto motto, local search, and themed aggregate pages.</sub><br>
+  <img width="2000" height="0" alt="" aria-hidden="true">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 
-## Features
+## Quick Start
 
-### Home page
-
-- Configurable global background with light/dark images, image pools, and random API sources
-- Separate hero cover runtime, so the landing section can use a different image strategy from the rest of the site
-- Anime-inspired visual tone kept behind a restrained reading surface instead of turning the page into a wallpaper showcase
-- Home feed, pinned entries, and infinite pagination arranged around that background-first presentation
-
-### Article pages
-
-- Cover and non-cover article headers that adapt to illustration-heavy posts without breaking reading width
-- Reading layer tuned to keep long-form content usable on top of dynamic, semi-transparent anime-style backgrounds
-- Desktop TOC and mobile TOC implemented as lightweight reading aids, not documentation-style control panels
-- Markdown styling focused on practical blog content such as code blocks, tables, media embeds, footnotes, and custom blocks
-
-### Comments
-
-- Waline integration through `valaxy-addon-waline`
-- Waline is the only maintained comment integration in the current development stage
-
-### Theme infrastructure
-
-- Background runtime with static image, random rotation, API fallback, preload, and decode handling
-- Auto-hide navbar, mobile drawer, and helper interactions tuned for background-rich reading pages
-- Search modal shell ready for search provider integration
-- Shared design tokens, SCSS mixins, and composable-driven UI state
-
-## Repository structure
-
-```txt
-.
-├─ demo/                  Demo site used for development and regression checks
-├─ temp/                  Working design and architecture notes
-├─ theme/
-│  ├─ components/         Theme components
-│  ├─ composables/        Theme state and interaction logic
-│  ├─ styles/             Theme tokens and global styles
-│  ├─ utils/              Shared helper utilities
-│  ├─ client/             Client entry
-│  ├─ node/               Node entry
-│  └─ valaxy.config.ts    Theme-side Valaxy configuration
-├─ package.json           Workspace scripts
-└─ pnpm-workspace.yaml    Workspace definition
-```
-
-## Development
-
-This repository uses `pnpm` workspace.
-
-Install dependencies:
+If this is your first Valaxy site, read the [Valaxy getting started guide](https://valaxy.site/guide/getting-started) first.
 
 ```bash
-pnpm install
+pnpm add valaxy-theme-lolimeow
 ```
-
-Start the demo site:
-
-```bash
-pnpm demo
-```
-
-Run the default development command:
-
-```bash
-pnpm dev
-```
-
-Build the demo site:
-
-```bash
-pnpm build
-```
-
-Lint the repository:
-
-```bash
-pnpm lint
-```
-
-Type-check the repository:
-
-```bash
-pnpm typecheck
-```
-
-## Using the theme
-
-When the theme package is available in your Valaxy project, enable it in your config:
 
 ```ts
+import type { ThemeConfig } from 'valaxy-theme-lolimeow'
 import { defineConfig } from 'valaxy'
 
-export default defineConfig({
+export default defineConfig<ThemeConfig>({
   theme: 'lolimeow',
+
+  themeConfig: {
+    ui: {
+      primary: '#66CCFF',
+    },
+  },
 })
 ```
 
-Theme-specific options are provided through `themeConfig`. The demo site contains the most complete reference for current usage:
+## Theme Highlights
 
+### Layered Anime Atmosphere
+
+- Separate global and hero background pipelines for static images, image pools, and random image APIs.
+- Image preload and decode handling for smoother background transitions.
+- Soft shared reading planes that let illustrations stay visible behind posts, cards, footer, and aggregate pages.
+
+### Hero Motto Scene
+
+- Typewriter motto animation for fixed text, rotating local text, or `valaxy-addon-hitokoto`.
+- Optional Hitokoto source suffix rendered as `sentence —— source`.
+- Hero cover, author identity, social links, and scroll hint are composed as one landing scene.
+
+### Gentle Reading Interactions
+
+- Auto-hide navbar with scroll-lock coordination for anchor jumps and pagination changes.
+- Uneven or classic mobile drawer styles.
+- Paw-like helper and mobile TOC placement for thumb-friendly reading on illustration-backed pages.
+
+### Local Search Modal
+
+- Fuse search based on Valaxy generated local search data.
+- Debounced input, keyboard navigation, and theme-styled loading / empty / error states.
+- Search modal uses the same soft surface language as drawers, cards, and reading panels.
+
+### Aggregate Pages With Their Own Shape
+
+- Archive timeline rail with responsive accordion behavior.
+- Click-to-expand category tree for nested browsing.
+- Capsule-style tag cloud with click-to-filter article results.
+- Friend-link cards with Markdown preface, optional comments, and avatar-corner status hints.
+
+### Themed Reading And Comments
+
+- Cover and non-cover article headers share the same rhythm.
+- Markdown styles are tuned for translucent reading surfaces, including code blocks, tables, media, footnotes, containers, and Mermaid examples.
+- Waline comments are restyled with the theme surface tokens.
+
+## Configuration Guide
+
+The snippets below are starter examples, not the full option list. For complete configuration details, use these references in order:
+
+- [theme/types/config.d.ts](./theme/types/config.d.ts) for the exported `ThemeConfig` structure.
+- [theme/node/config.ts](./theme/node/config.ts) for default values and fallback behavior.
 - [demo/valaxy.config.ts](./demo/valaxy.config.ts)
 
-## Comment integration
+Tip: import `ThemeConfig` in `valaxy.config.ts` to get editor autocomplete and hover hints while configuring the theme.
 
-The theme does not define its own `comment.provider` field.
+### Background And Hero Cover
 
-Current behavior:
+```ts
+export default defineConfig<ThemeConfig>({
+  theme: 'lolimeow',
+  themeConfig: {
+    background: {
+      type: 'image',
+      image: {
+        light: '/images/background-light.webp',
+        dark: '/images/background-dark.webp',
+        urls: ['/images/background-1.webp', '/images/background-2.webp'],
+        apiUrls: ['https://www.dmoe.cc/random.php'],
+        random: true,
+        overlayOpacity: 0.3,
+      },
+    },
+    hero: {
+      cover: {
+        urls: ['/images/hero-1.webp', '/images/hero-2.webp'],
+        random: true,
+      },
+    },
+  },
+})
+```
 
-- the article page comment area is rendered only when `siteConfig.comment.enable !== false`
-- page-level comments can be disabled with `frontmatter.comment === false`
-- if `valaxy-addon-waline` is enabled, Waline is used
+### Hitokoto Motto
 
-Example addon setup:
+Keep request options in `addonHitokoto({...})`. Use `themeConfig.hero` for display behavior.
+
+```ts
+import type { ThemeConfig } from 'valaxy-theme-lolimeow'
+import { defineConfig } from 'valaxy'
+import { addonHitokoto, HitokotoType } from 'valaxy-addon-hitokoto'
+
+export default defineConfig<ThemeConfig>({
+  theme: 'lolimeow',
+  themeConfig: {
+    hero: {
+      mottoSource: 'hitokoto',
+      hitokoto: {
+        showFrom: true,
+      },
+    },
+  },
+  addons: [
+    addonHitokoto({
+      args: [HitokotoType.Animation, HitokotoType.Comic],
+      maxLength: 30,
+    }),
+  ],
+})
+```
+
+### Waline Comments
 
 ```ts
 import { defineConfig } from 'valaxy'
@@ -141,29 +168,33 @@ export default defineConfig({
 })
 ```
 
-## Demo pages
+## Addons
 
-The demo site includes several pages intended for manual regression checks:
+| Addon                                                                      | Usage             |
+| -------------------------------------------------------------------------- | ----------------- |
+| [valaxy-addon-hitokoto](https://github.com/valaxyjs/valaxy-addon-hitokoto) | Hero motto source |
+| [valaxy-addon-waline](https://github.com/walinejs/waline)                  | Comment area      |
 
-- [demo/pages/posts/demo.md](./demo/pages/posts/demo.md): comprehensive Markdown showcase
-- [demo/pages/posts/markdown.md](./demo/pages/posts/markdown.md): general Markdown examples
-- [demo/pages/posts/mermaid.md](./demo/pages/posts/mermaid.md): Mermaid examples
-- [demo/pages/posts/i18n.md](./demo/pages/posts/i18n.md): i18n-related checks
+## Development
 
-## Status
+```bash
+pnpm install
+pnpm dev
+```
 
-- [x] Home page
-- [x] Article reading layer
-- [x] Comment integration
-- [x] First-pass Markdown theming
-- [x] Archive page
-- [ ] Category page
-- [ ] Tag page
-- [ ] Links page
-- [ ] Search provider and result experience
+```bash
+pnpm demo
+pnpm build
+pnpm lint
+pnpm typecheck
+```
 
 ## Acknowledgements
 
 - [Valaxy](https://github.com/YunYouJun/valaxy)
-- [vuejs/blog](https://github.com/vuejs/blog)
-- [tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)
+- [valaxy-addon-hitokoto](https://github.com/valaxyjs/valaxy-addon-hitokoto)
+- [Waline](https://github.com/walinejs/waline)
+
+## License
+
+[MIT License](./LICENSE) © Yoyo514
