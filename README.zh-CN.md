@@ -13,7 +13,7 @@
 <td align="center">
   <img width="2000" height="0" alt="" aria-hidden="true"><br>
   <span><b>简体中文 | <a href="./README.md">English</a></b></span><br>
-  <sub>轻二次元氛围、柔和阅读平面、一言 Hero、本地搜索与有辨识度的聚合页。</sub><br>
+  <sub>轻二次元氛围、柔和阅读平面、内置一言 Hero、本地搜索与有辨识度的聚合页。</sub><br>
   <sub><a href="https://lolimeow.yoyo514.top/">Live Demo</a></sub><br>
   <img width="2000" height="0" alt="" aria-hidden="true">
 </td>
@@ -55,8 +55,8 @@ export default defineConfig<ThemeConfig>({
 
 ### Hero 一言场景
 
-- 支持固定文案、本地轮播文案，也可以接入 `valaxy-addon-hitokoto`。
-- 一言来源可显示为 `句子 —— 来源`。
+- 支持固定文案、本地轮播文案，也支持使用内置的一言 API 模式。
+- 一言来源可显示为 `句子 —— 来源`，并支持配置句子类型与长度过滤。
 - Hero 头图、作者信息、社交链接、滚动提示组合成一个完整首屏场景。
 
 ### 轻柔阅读交互
@@ -123,12 +123,13 @@ export default defineConfig<ThemeConfig>({
 
 ### 一言 Hero
 
-请求参数写在 `addonHitokoto({...})` 中；主题的 `hero.hitokoto` 只控制展示行为。
+通过 `themeConfig.hero.hitokoto` 同时控制展示与请求参数。
+
+参考文档：https://developer.hitokoto.cn/sentence/#%E5%8F%A5%E5%AD%90%E7%B1%BB%E5%9E%8B-%E5%8F%82%E6%95%B0
 
 ```ts
 import type { ThemeConfig } from 'valaxy-theme-lolimeow'
 import { defineConfig } from 'valaxy'
-import { addonHitokoto, HitokotoType } from 'valaxy-addon-hitokoto'
 
 export default defineConfig<ThemeConfig>({
   theme: 'lolimeow',
@@ -137,15 +138,12 @@ export default defineConfig<ThemeConfig>({
       mottoSource: 'hitokoto',
       hitokoto: {
         showFrom: true,
+        sentenceTypes: ['a', 'b', 'c'],
+        minLength: 1,
+        maxLength: 30,
       },
     },
   },
-  addons: [
-    addonHitokoto({
-      args: [HitokotoType.Animation, HitokotoType.Comic],
-      maxLength: 30,
-    }),
-  ],
 })
 ```
 
@@ -171,10 +169,9 @@ export default defineConfig({
 
 ## 插件
 
-| 插件                                                                       | 用途          |
-| -------------------------------------------------------------------------- | ------------- |
-| [valaxy-addon-hitokoto](https://github.com/valaxyjs/valaxy-addon-hitokoto) | Hero 一言来源 |
-| [valaxy-addon-waline](https://github.com/walinejs/waline)                  | 评论区        |
+| 插件                                                      | 用途   |
+| --------------------------------------------------------- | ------ |
+| [valaxy-addon-waline](https://github.com/walinejs/waline) | 评论区 |
 
 ## 开发
 
@@ -193,7 +190,7 @@ pnpm typecheck
 ## 致谢
 
 - [Valaxy](https://github.com/YunYouJun/valaxy)
-- [valaxy-addon-hitokoto](https://github.com/valaxyjs/valaxy-addon-hitokoto)
+- [Hitokoto](https://hitokoto.cn/)
 - [Waline](https://github.com/walinejs/waline)
 
 ## License

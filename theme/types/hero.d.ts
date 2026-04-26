@@ -56,7 +56,7 @@ export interface Hero {
   /**
    * 签名文案来源
    * - config: 使用 themeConfig.hero.motto
-   * - hitokoto: 使用 valaxy-addon-hitokoto
+   * - hitokoto: 使用内置 Hitokoto API
    * @default 'config'
    */
   mottoSource: HeroMottoSource

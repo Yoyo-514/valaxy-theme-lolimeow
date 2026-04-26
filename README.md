@@ -13,7 +13,7 @@
 <td align="center">
   <img width="2000" height="0" alt="" aria-hidden="true"><br>
   <span><b>English | <a href="./README.zh-CN.md">简体中文</a></b></span><br>
-  <sub>Light anime atmosphere, soft reading surfaces, Hitokoto motto, local search, and themed aggregate pages.</sub><br>
+  <sub>Light anime atmosphere, soft reading surfaces, built-in Hitokoto motto, local search, and themed aggregate pages.</sub><br>
   <sub><a href="https://lolimeow.yoyo514.top/">Live Demo</a></sub><br>
   <img width="2000" height="0" alt="" aria-hidden="true">
 </td>
@@ -55,8 +55,8 @@ export default defineConfig<ThemeConfig>({
 
 ### Hero Motto Scene
 
-- Typewriter motto animation for fixed text, rotating local text, or `valaxy-addon-hitokoto`.
-- Optional Hitokoto source suffix rendered as `sentence —— source`.
+- Typewriter motto animation for fixed text, rotating local text, or the built-in Hitokoto API mode.
+- Optional Hitokoto source suffix rendered as `sentence —— source`, with configurable sentence types and length filters.
 - Hero cover, author identity, social links, and scroll hint are composed as one landing scene.
 
 ### Gentle Reading Interactions
@@ -123,12 +123,13 @@ export default defineConfig<ThemeConfig>({
 
 ### Hitokoto Motto
 
-Keep request options in `addonHitokoto({...})`. Use `themeConfig.hero` for display behavior.
+Use `themeConfig.hero.hitokoto` to control both display and request parameters.
+
+reference: https://developer.hitokoto.cn/sentence/#%E5%8F%A5%E5%AD%90%E7%B1%BB%E5%9E%8B-%E5%8F%82%E6%95%B0
 
 ```ts
 import type { ThemeConfig } from 'valaxy-theme-lolimeow'
 import { defineConfig } from 'valaxy'
-import { addonHitokoto, HitokotoType } from 'valaxy-addon-hitokoto'
 
 export default defineConfig<ThemeConfig>({
   theme: 'lolimeow',
@@ -137,15 +138,12 @@ export default defineConfig<ThemeConfig>({
       mottoSource: 'hitokoto',
       hitokoto: {
         showFrom: true,
+        sentenceTypes: ['a', 'b', 'c'],
+        minLength: 1,
+        maxLength: 30,
       },
     },
   },
-  addons: [
-    addonHitokoto({
-      args: [HitokotoType.Animation, HitokotoType.Comic],
-      maxLength: 30,
-    }),
-  ],
 })
 ```
 
@@ -171,10 +169,9 @@ export default defineConfig({
 
 ## Addons
 
-| Addon                                                                      | Usage             |
-| -------------------------------------------------------------------------- | ----------------- |
-| [valaxy-addon-hitokoto](https://github.com/valaxyjs/valaxy-addon-hitokoto) | Hero motto source |
-| [valaxy-addon-waline](https://github.com/walinejs/waline)                  | Comment area      |
+| Addon                                                     | Usage        |
+| --------------------------------------------------------- | ------------ |
+| [valaxy-addon-waline](https://github.com/walinejs/waline) | Comment area |
 
 ## Development
 
@@ -193,7 +190,7 @@ pnpm typecheck
 ## Acknowledgements
 
 - [Valaxy](https://github.com/YunYouJun/valaxy)
-- [valaxy-addon-hitokoto](https://github.com/valaxyjs/valaxy-addon-hitokoto)
+- [Hitokoto](https://hitokoto.cn/)
 - [Waline](https://github.com/walinejs/waline)
 
 ## License
