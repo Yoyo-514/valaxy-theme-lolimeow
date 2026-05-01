@@ -12,10 +12,17 @@ export interface LmFuseSearchItem {
   content?: string
 }
 
+export interface LmSearchHighlightPart {
+  text: string
+  highlighted: boolean
+}
+
 export interface LmFuseSearchResult {
   id: string
   title: string
+  titleParts: LmSearchHighlightPart[]
   excerpt: string
+  excerptParts: LmSearchHighlightPart[]
   tags: string[]
   categories: string[]
   score?: number
@@ -41,6 +48,75 @@ function stripHtml(value: string) {
     .replace(/<[^>]*>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
+}
+
+function collectQueryRanges(text: string, search: string) {
+  const terms = search
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+
+  const ranges: Array<[number, number]> = []
+  const lowerText = text.toLowerCase()
+
+  for (const term of terms) {
+    const lowerTerm = term.toLowerCase()
+    let start = lowerText.indexOf(lowerTerm)
+
+    while (start !== -1) {
+      ranges.push([start, start + term.length - 1])
+      start = lowerText.indexOf(lowerTerm, start + term.length)
+    }
+  }
+
+  return ranges
+}
+
+function mergeRanges(ranges: readonly (readonly [number, number])[], maxLength: number) {
+  const normalizedRanges = ranges
+    .map(([start, end]) => [Math.max(0, start), Math.min(maxLength - 1, end)] as const)
+    .filter(([start, end]) => start <= end)
+    .sort((a, b) => a[0] - b[0])
+
+  const mergedRanges: Array<[number, number]> = []
+
+  for (const [start, end] of normalizedRanges) {
+    const lastRange = mergedRanges.at(-1)
+
+    if (lastRange && start <= lastRange[1] + 1) {
+      lastRange[1] = Math.max(lastRange[1], end)
+      continue
+    }
+
+    mergedRanges.push([start, end])
+  }
+
+  return mergedRanges
+}
+
+function createHighlightParts(text: string, ranges: readonly (readonly [number, number])[]): LmSearchHighlightPart[] {
+  if (!text)
+    return []
+
+  const mergedRanges = mergeRanges(ranges, text.length)
+  if (!mergedRanges.length)
+    return [{ text, highlighted: false }]
+
+  const parts: LmSearchHighlightPart[] = []
+  let cursor = 0
+
+  for (const [start, end] of mergedRanges) {
+    if (cursor < start)
+      parts.push({ text: text.slice(cursor, start), highlighted: false })
+
+    parts.push({ text: text.slice(start, end + 1), highlighted: true })
+    cursor = end + 1
+  }
+
+  if (cursor < text.length)
+    parts.push({ text: text.slice(cursor), highlighted: false })
+
+  return parts
 }
 
 export function useLmFuseSearch(query: Ref<string>) {
@@ -74,10 +150,15 @@ export function useLmFuseSearch(query: Ref<string>) {
     return results.value.map((result) => {
       const item = result.item
 
+      const title = resolveText(item.title) || item.link
+      const excerpt = stripHtml(resolveText(item.excerpt || item.content))
+
       return {
         id: item.link,
-        title: resolveText(item.title) || item.link,
-        excerpt: stripHtml(resolveText(item.excerpt || item.content)),
+        title,
+        titleParts: createHighlightParts(title, collectQueryRanges(title, query.value)),
+        excerpt,
+        excerptParts: createHighlightParts(excerpt, collectQueryRanges(excerpt, query.value)),
         tags: item.tags ?? [],
         categories: item.categories ?? [],
         score: result.score,

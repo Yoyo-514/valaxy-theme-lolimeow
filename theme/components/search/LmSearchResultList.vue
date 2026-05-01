@@ -22,10 +22,18 @@ const emit = defineEmits<{
       @click="emit('navigate', result)"
     >
       <span class="lm-search-result__title">
-        {{ result.title }}
+        <span
+          v-for="(part, partIndex) in result.titleParts"
+          :key="`${result.id}-title-${partIndex}`"
+          :class="{ 'lm-search-result__highlight': part.highlighted }"
+        >{{ part.text }}</span>
       </span>
       <span v-if="result.excerpt" class="lm-search-result__excerpt">
-        {{ result.excerpt }}
+        <span
+          v-for="(part, partIndex) in result.excerptParts"
+          :key="`${result.id}-excerpt-${partIndex}`"
+          :class="{ 'lm-search-result__highlight': part.highlighted }"
+        >{{ part.text }}</span>
       </span>
     </button>
   </div>
@@ -59,5 +67,10 @@ const emit = defineEmits<{
 .lm-search-result__excerpt {
   @apply mt-1 line-clamp-2 text-xs leading-5;
   color: var(--lm-c-text-secondary);
+}
+
+.lm-search-result__highlight {
+  color: var(--lm-c-brand);
+  font-weight: 800;
 }
 </style>
