@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { Post } from 'valaxy'
+import { shallowRef } from 'vue'
 import { usePostCardMediaState, usePostCardViewModel } from '../../composables'
 
 const props = defineProps<{
@@ -18,11 +19,13 @@ const {
   handleCoverError,
 } = usePostCardViewModel(props.post, props.index ?? 0)
 
+const imageElement = shallowRef<HTMLImageElement | null>(null)
+
 const {
   imageLoaded,
   showLoadingPlaceholder,
   handleImageLoad,
-} = usePostCardMediaState(hasMedia, cover)
+} = usePostCardMediaState(hasMedia, cover, imageElement)
 </script>
 
 <template>
@@ -41,6 +44,7 @@ const {
 
         <img
           v-if="cover"
+          ref="imageElement"
           :src="cover"
           alt=""
           class="lm-post-card__image"

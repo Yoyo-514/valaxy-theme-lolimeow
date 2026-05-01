@@ -2,7 +2,7 @@ import type { CSSProperties, Ref } from 'vue'
 import type { BrowserTimeout } from '../utils'
 import type { ResolvedBackground } from './use-resolved-background'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
-import { clearBrowserTimeout, getBackgroundCacheKey, getRotationCandidate, getWindow, pickRandomUrl, requestBrowserAnimationFrame, setBrowserTimeout, shouldUseTransparentFallback } from '../utils'
+import { clearBrowserTimeout, getBackgroundCacheKey, getRotationCandidate, getWindow, requestBrowserAnimationFrame, setBrowserTimeout, shouldUseTransparentFallback } from '../utils'
 
 type BackgroundRuntimeScope = 'app' | 'hero'
 
@@ -74,11 +74,9 @@ function getStableFallbackImage(scope: BackgroundRuntimeScope, background: Resol
   if (cachedFallback)
     return cachedFallback
 
-  // 随机模式下如果也提供了静态图，保底图不应永远退回第一张。
-  // 这里在当前会话内固定挑一张，既保留随机感，又避免同一访客反复看到保底图变化。
-  const fallbackImage = background.random && background.staticImageUrls.length > 1
-    ? (pickRandomUrl(background.staticImageUrls) || background.fallbackImageUrl)
-    : background.fallbackImageUrl
+  // hydration 前后的首屏 fallback 必须稳定一致。
+  // 真正的随机切换交给 mounted 后的预加载与轮换流程处理。
+  const fallbackImage = background.fallbackImageUrl
 
   if (fallbackImage)
     sessionFallbackCache.set(cacheKey, fallbackImage)
@@ -284,6 +282,7 @@ export function useBackgroundRuntime(
       const cachedUrl = loadedImageCache.get(cacheKey)
       const fallbackImageUrl = getStableFallbackImage(scope, next)
       const transparentUntilLoaded = shouldUseTransparentFallback(next, options)
+      const currentWindow = getWindow()
 
       // 首轮解析优先级：
       // 1. 已成功过的缓存图
@@ -299,6 +298,13 @@ export function useBackgroundRuntime(
         resetImages()
         hasLoaded.value = false
         usingFallback.value = true
+      }
+
+      // SSR/SSG 阶段只输出稳定 fallback。真实图片预加载、随机 API 图提交与轮换
+      // 都属于客户端运行时增强，不能在服务端提前改变 HTML，否则会破坏 hydration 一致性。
+      if (!currentWindow) {
+        isLoading.value = false
+        return
       }
 
       isLoading.value = true

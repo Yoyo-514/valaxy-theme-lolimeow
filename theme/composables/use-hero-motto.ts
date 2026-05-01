@@ -1,5 +1,5 @@
 import type { BrowserTimeout } from '../utils'
-import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { clearBrowserTimeout, fetchHitokoto, getWindow, setBrowserTimeout } from '../utils'
 import { useThemeConfig } from './config'
 
@@ -14,6 +14,7 @@ export function useHeroMotto() {
   const renderedMotto = ref('')
   const hitokotoMotto = ref('')
   const isHitokotoPending = ref(false)
+  const isMounted = ref(false)
   let typingTimer: BrowserTimeout | undefined
   let rotationTimer: BrowserTimeout | undefined
 
@@ -129,7 +130,7 @@ export function useHeroMotto() {
 
   function renderWithTypewriter(text: string) {
     const currentWindow = getWindow()
-    if (!currentWindow) {
+    if (!currentWindow || !isMounted.value) {
       renderImmediately(text)
       return
     }
@@ -207,11 +208,26 @@ export function useHeroMotto() {
         return
       }
 
+      // 一言请求属于纯客户端动态增强，不能在 hydration 前改变首屏文案，
+      // 否则 SSG fallback motto 会和客户端 pending/空文案发生文本不一致。
+      if (!isMounted.value)
+        return
+
       renderedMotto.value = ''
       await refreshHitokoto()
     },
     { immediate: true },
   )
+
+  onMounted(async () => {
+    isMounted.value = true
+
+    if (shouldType.value)
+      renderActiveMotto()
+
+    if (useHitokoto.value)
+      await refreshHitokoto()
+  })
 
   onBeforeUnmount(() => {
     clearTimers()

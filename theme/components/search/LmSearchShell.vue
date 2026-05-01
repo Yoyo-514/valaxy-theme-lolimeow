@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
+
 const props = defineProps<{
   open: boolean
 }>()
@@ -6,10 +8,16 @@ const props = defineProps<{
 const emit = defineEmits<{
   close: []
 }>()
+
+const mounted = ref(false)
+
+onMounted(() => {
+  mounted.value = true
+})
 </script>
 
 <template>
-  <Teleport to="body">
+  <Teleport v-if="mounted" to="body">
     <div class="lm-search-shell">
       <Transition name="lm-search-backdrop">
         <button

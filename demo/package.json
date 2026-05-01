@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "pnpm run build:ssg",
+    "build:debug-hydration": "set HYDRATION_DEBUG=1 && valaxy build --ssg",
     "build:spa": "valaxy build",
     "build:ssg": "valaxy build --ssg",
     "dev": "valaxy",

@@ -1,6 +1,6 @@
 import { useColorMode, useWindowSize } from '@vueuse/core'
 import { computed } from 'vue'
-import { clampOpacity, normalizeUrls, pickFirstUrl, pickRandomUrl } from '../utils'
+import { clampOpacity, normalizeUrls, pickFirstUrl } from '../utils'
 import { useThemeConfig } from './config'
 
 type BackgroundScope = 'app' | 'hero'
@@ -84,7 +84,7 @@ export function useResolvedBackground(scope: BackgroundScope = 'app') {
       const heroStaticUrls = normalizeUrls(heroCover.urls)
       const heroApiUrls = normalizeUrls(heroCover.apiUrls)
       const heroPrimaryImage = heroCover.random
-        ? (pickRandomUrl(heroApiUrls) || pickRandomUrl(heroStaticUrls))
+        ? (pickFirstUrl(heroApiUrls) || pickFirstUrl(heroStaticUrls))
         : (pickFirstUrl(heroStaticUrls)
           || (isMobile.value ? heroCover.mobile : heroCover.desktop)
           || heroCover.desktop
@@ -128,7 +128,7 @@ export function useResolvedBackground(scope: BackgroundScope = 'app') {
       // imageUrl 表示“当前希望加载的目标图”，而不是保证立即可见的图。
       // 真正的显示顺序、过渡和失败回退由 runtime 统一接管。
       const primaryImageUrl = backgroundImage.random
-        ? (pickRandomUrl(apiImageUrls) || pickRandomUrl(staticImageUrls))
+        ? (pickFirstUrl(apiImageUrls) || pickFirstUrl(staticImageUrls))
         : (pickFirstUrl(staticImageUrls)
           || (isDark.value ? backgroundImage.dark : backgroundImage.light)
           || backgroundImage.light

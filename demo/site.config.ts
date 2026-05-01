@@ -2,6 +2,7 @@ import { defineSiteConfig } from 'valaxy'
 
 export default defineSiteConfig({
   lang: 'zh-CN',
+  timezone: 'Asia/Shanghai',
   title: 'Valaxy Theme Lolimeow',
   url: 'https://lolimeow.yoyo514.top/',
   favicon: '/images/favicon.ico',
