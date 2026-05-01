@@ -5,7 +5,9 @@ const props = defineProps<{
   title: string
   subtitle?: string
   hasMotto: boolean
+  mottoRenderKey: number
   renderedMotto: string
+  shouldFadeMotto: boolean
   shouldShowMotto: boolean
 }>()
 </script>
@@ -38,12 +40,15 @@ const props = defineProps<{
     v-if="props.shouldShowMotto"
     class="lm-hero-motto-strip"
   >
-    <p
-      class="lm-hero-motto"
-      aria-live="polite"
-    >
-      {{ props.renderedMotto }}
-    </p>
+    <Transition name="lm-hero-motto-fade" mode="out-in">
+      <p
+        :key="props.shouldFadeMotto ? props.mottoRenderKey : 'typewriter'"
+        class="lm-hero-motto"
+        aria-live="polite"
+      >
+        {{ props.renderedMotto }}
+      </p>
+    </Transition>
   </div>
 </template>
 
@@ -178,6 +183,23 @@ const props = defineProps<{
   font-family: 'Segoe Print', 'Bradley Hand', 'Lucida Handwriting', 'Comic Sans MS', cursive;
   letter-spacing: 0.01em;
   text-wrap: balance;
+}
+
+.lm-hero-motto-fade-enter-active,
+.lm-hero-motto-fade-leave-active {
+  transition:
+    opacity 180ms ease-out,
+    transform 180ms ease-out;
+}
+
+.lm-hero-motto-fade-enter-from {
+  opacity: 0;
+  transform: translateY(0.25rem);
+}
+
+.lm-hero-motto-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-0.125rem);
 }
 
 @media (max-width: 767px) {

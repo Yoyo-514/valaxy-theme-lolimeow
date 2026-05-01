@@ -53,17 +53,6 @@ export const defaultThemeConfig: ThemeConfig = {
   },
 
   hero: {
-    enable: true,
-    cover: {
-      urls: [],
-      apiUrls: [],
-      random: false,
-      rotationInterval: 12000,
-      desktop: '',
-      mobile: '',
-      fixed: false,
-      overlayOpacity: 0.3,
-    },
     motto: '',
     mottoSource: 'config',
     hitokoto: {

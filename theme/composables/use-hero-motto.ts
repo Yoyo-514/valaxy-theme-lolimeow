@@ -10,6 +10,7 @@ const DEFAULT_HITOKOTO_SEPARATOR = '——'
 export function useHeroMotto() {
   const themeConfig = useThemeConfig()
   const activeIndex = ref(0)
+  const mottoRenderKey = ref(0)
   const renderedMotto = ref('')
   const hitokotoMotto = ref('')
   const isHitokotoPending = ref(false)
@@ -41,6 +42,7 @@ export function useHeroMotto() {
   const shouldShowMotto = computed(() => hasMotto.value || (useHitokoto.value && isHitokotoPending.value))
   const shouldRotate = computed(() => mottoList.value.length > 1)
   const shouldType = computed(() => Boolean(themeConfig.value.hero.typewriter))
+  const shouldFadeMotto = computed(() => !shouldType.value)
   const typingSpeed = computed(() => Math.max(themeConfig.value.hero.typingSpeed || 100, MIN_TYPING_SPEED))
   const rotationDelay = computed(() => Math.max(themeConfig.value.hero.mottoInterval || 4000, MIN_ROTATION_DELAY))
 
@@ -120,6 +122,7 @@ export function useHeroMotto() {
   }
 
   function renderImmediately(text: string) {
+    mottoRenderKey.value += 1
     renderedMotto.value = text
     scheduleNextMotto()
   }
@@ -216,7 +219,9 @@ export function useHeroMotto() {
 
   return {
     hasMotto,
+    mottoRenderKey,
     renderedMotto,
+    shouldFadeMotto,
     shouldShowMotto,
   }
 }

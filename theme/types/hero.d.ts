@@ -34,14 +34,8 @@ export interface HitokotoOptions {
 
 export interface Hero {
   /**
-   * 是否启用首屏封面
-   * @default true
-   */
-  enable: boolean
-
-  /**
-   * 封面背景图设置
-   * - 不配置 cover: 继承全局背景设置
+   * 首屏独立封面设置
+   * - 不配置 cover: 不启用独立首屏封面，直接透出全局背景
    * - 配置 cover: 以 cover 为准，覆盖全局背景设置
    */
   cover?: HeroCover
@@ -67,7 +61,9 @@ export interface Hero {
   hitokoto: HitokotoOptions
 
   /**
-   * 签名切换间隔（ms），仅在 motto 为字符串数组时生效
+   * 签名轮换间隔（ms）
+   * - mottoSource 为 config 且 motto 为字符串数组时，控制下一条签名开始显示的间隔
+   * - mottoSource 为 hitokoto 时，控制下一次一言刷新尝试的间隔
    * @default 4000
    */
   mottoInterval: number
