@@ -1,14 +1,20 @@
 <script setup lang="ts">
 // cspell:ignore waline
-// @ts-expect-error - `valaxy-addon-waline` 仅提供源码与导出映射，CI 下 `vue-tsc` 可能无法正确解析包根类型
-import { useAddonWaline } from 'valaxy-addon-waline'
+import { useAddonConfig } from 'valaxy'
+import { computed } from 'vue'
 
-const addon = useAddonWaline()
+type WalineAddonOptions = {
+  serverURL: string
+} & Record<string, unknown>
+
+const waline = useAddonConfig<WalineAddonOptions>('valaxy-addon-waline')
+
+const options = computed(() => waline.value?.options)
 </script>
 
 <template>
-  <div class="lm-waline">
-    <WalineClient w="full" :options="addon.options" />
+  <div v-if="options" class="lm-waline">
+    <WalineClient w="full" :options="options" />
   </div>
 </template>
 

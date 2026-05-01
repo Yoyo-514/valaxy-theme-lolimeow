@@ -102,6 +102,10 @@ export default defineSiteConfig({
     // },
   ],
 
+  mediumZoom: {
+    enable: true,
+  },
+
   comment: {
     enable: true,
   },

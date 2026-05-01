@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useFrontmatter, useRuntimeConfig, useSiteConfig } from 'valaxy'
+import { useAddonConfig, useFrontmatter, useSiteConfig } from 'valaxy'
 import { computed, defineAsyncComponent } from 'vue'
 
 type CommentProvider = 'waline'
@@ -8,10 +8,10 @@ const WalineComment = defineAsyncComponent(() => import('../components/plugins/L
 
 const siteConfig = useSiteConfig()
 const frontmatter = useFrontmatter()
-const runtimeConfig = useRuntimeConfig()
+const waline = useAddonConfig('valaxy-addon-waline')
 
 const provider = computed<CommentProvider | ''>(() => {
-  if (runtimeConfig.value.addons?.['valaxy-addon-waline'])
+  if (waline.value)
     return 'waline'
 
   return ''

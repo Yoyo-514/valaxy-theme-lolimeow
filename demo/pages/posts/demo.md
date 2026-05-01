@@ -235,10 +235,43 @@ Say: Good!
 
 <img src="https://cdn.jsdelivr.net/gh/YunYouJun/yun/images/meme/yun-good-alpha.png" alt="Alt text" title="The Dojocat" />_Description_
 
-## [Sponsors](https://sponsors.yunyoujun.cn)
+## Custom Containers
 
-<p align="center">
-  <a href="https://sponsors.yunyoujun.cn">
-    <img src='https://fastly.jsdelivr.net/gh/YunYouJun/sponsors/public/sponsors.svg' alt=''/>
-  </a>
-</p>
+::: info
+This is an info box.
+:::
+
+::: tip
+This is a tip.
+:::
+
+::: warning
+This is a warning.
+:::
+
+::: danger
+This is a dangerous warning.
+:::
+
+::: details
+This is a details block.
+:::
+
+## Divider
+
+---
+
+## Colored Diffs in Code Blocks
+
+<!-- eslint-skip -->
+
+```js
+export default {
+  data () {
+    return {
+      msg: 'Removed' // [!code --]
+      msg: 'Added' // [!code ++]
+    }
+  }
+}
+```

@@ -114,13 +114,6 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/posts/markdown': RouteRecordInfo<
-      '/posts/markdown',
-      '/posts/markdown',
-      Record<never, never>,
-      Record<never, never>,
-      | never
-    >,
     '/posts/mermaid': RouteRecordInfo<
       '/posts/mermaid',
       '/posts/mermaid',
@@ -161,7 +154,7 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    '../node_modules/.pnpm/valaxy@0.28.5_@babel+parser_0a6712398c363e2e7cdbc79665a942a2/node_modules/valaxy/client/pages/[...path].vue': {
+    '../node_modules/.pnpm/valaxy@0.28.6_@babel+parser_04de338be60b2b273119a4a2bd338695/node_modules/valaxy/client/pages/[...path].vue': {
       routes:
         | '/[...path]'
       views:
@@ -224,12 +217,6 @@ declare module 'vue-router/auto-routes' {
     'pages/posts/i18n.md': {
       routes:
         | '/posts/i18n'
-      views:
-        | never
-    }
-    'pages/posts/markdown.md': {
-      routes:
-        | '/posts/markdown'
       views:
         | never
     }
