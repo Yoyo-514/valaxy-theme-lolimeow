@@ -32,7 +32,14 @@ function normalizeTags(tags: unknown) {
 }
 
 function createTagId(name: string) {
-  return `tag-${encodeURIComponent(name).replace(/%/g, '').replace(/[^\w-]/g, '-').toLowerCase()}`
+  const readable = encodeURIComponent(name)
+    .replace(/%/g, '')
+    .replace(/[^\w-]/g, '-')
+  const hash = Array.from(name)
+    .reduce((value, char) => (value * 31 + char.charCodeAt(0)) >>> 0, 0)
+    .toString(36)
+
+  return `tag-${readable}-${hash}`
 }
 
 function compareEntries(left: TagEntry, right: TagEntry) {

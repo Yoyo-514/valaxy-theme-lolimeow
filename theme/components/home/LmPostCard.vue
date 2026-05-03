@@ -11,6 +11,8 @@ const props = defineProps<{
 const {
   title,
   currentCover: cover,
+  dateLabel,
+  displayDate,
   excerpt,
   tags,
   hasMedia,
@@ -56,7 +58,7 @@ const {
     </div>
 
     <div class="lm-post-card__content">
-      <LmDate :date="post.date" />
+      <LmDate :date="displayDate" :label="dateLabel" />
       <h2 class="lm-post-card__title">
         {{ title }}
       </h2>

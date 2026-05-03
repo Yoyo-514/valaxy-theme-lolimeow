@@ -52,6 +52,10 @@ export function usePostCardViewModel(post: Post, index = 0) {
 
   const title = computed(() => String(post.title ?? '').trim() || 'Untitled')
 
+  const displayDate = computed(() => post.updated ?? post.date)
+
+  const dateLabel = computed(() => post.updated ? 'Updated on' : 'Published on')
+
   const tags = computed(() => post.tags ?? [])
 
   const excerpt = computed(() => {
@@ -74,6 +78,8 @@ export function usePostCardViewModel(post: Post, index = 0) {
 
   return {
     currentCover,
+    dateLabel,
+    displayDate,
     excerpt,
     tags,
     title,

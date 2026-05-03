@@ -65,7 +65,7 @@ const {
 @use '../../styles/mixins/surface' as *;
 
 .lm-pagination {
-  @apply mt-6 flex items-center justify-center gap-3;
+  @apply mb-6 mt-6 flex items-center justify-center gap-3;
 }
 
 .lm-pagination__pages {

@@ -5,8 +5,10 @@ import { computed } from 'vue'
 const props = withDefaults(defineProps<{
   date?: Date | number | string
   inline?: boolean
+  label?: string
 }>(), {
   inline: false,
+  label: 'Published on',
 })
 
 const datetime = computed(() => formatDate(props.date || ''))
@@ -18,7 +20,7 @@ const valueClass = computed(() => (props.inline ? 'lm-date__value lm-date__value
 <template>
   <dl :class="rootClass">
     <dt :class="labelClass">
-      Published on
+      {{ props.label }}
     </dt>
     <dd :class="valueClass">
       <time :datetime="datetime">{{ datetime }}</time>
