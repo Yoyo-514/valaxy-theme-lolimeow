@@ -11,9 +11,11 @@ const props = withDefaults(defineProps<{
 })
 
 const {
+  currentPage,
   paginationItems,
   prevLink,
   nextLink,
+  totalPages,
 } = usePaginationItems(props)
 </script>
 
@@ -50,6 +52,12 @@ const {
       </template>
     </div>
 
+    <div class="lm-pagination__mobile-status" aria-current="page">
+      <span class="lm-pagination__mobile-current">{{ currentPage }}</span>
+      <span class="lm-pagination__mobile-separator">/</span>
+      <span>{{ totalPages }}</span>
+    </div>
+
     <AppLink
       v-if="nextLink"
       class="lm-pagination__control"
@@ -73,7 +81,8 @@ const {
 }
 
 .lm-pagination__control,
-.lm-pagination__page {
+.lm-pagination__page,
+.lm-pagination__mobile-status {
   @apply inline-flex h-10 min-w-10 items-center justify-center rounded-full border border-transparent px-3.5 text-sm no-underline transition-all duration-200 ease-out;
   @include lm-surface-panel(
     color-mix(in srgb, var(--lm-c-bg-glass) 62%, transparent),
@@ -82,7 +91,10 @@ const {
     var(--lm-blur-panel)
   );
   color: var(--lm-c-text-secondary);
+}
 
+.lm-pagination__control,
+.lm-pagination__page {
   &:hover {
     color: var(--lm-c-text-primary);
     border-color: color-mix(in srgb, var(--lm-c-border-hover) 84%, transparent);
@@ -112,27 +124,34 @@ const {
   color: var(--lm-c-text-muted);
 }
 
+.lm-pagination__mobile-status {
+  @apply hidden gap-1.5;
+}
+
+.lm-pagination__mobile-current {
+  color: var(--lm-c-brand);
+}
+
+.lm-pagination__mobile-separator {
+  color: var(--lm-c-text-muted);
+}
+
 @media (max-width: 640px) {
   .lm-pagination {
     @apply gap-2 px-3 py-3;
   }
 
   .lm-pagination__pages {
-    @apply gap-1.5;
+    @apply hidden;
   }
 
-  .lm-pagination__control,
-  .lm-pagination__page {
-    @apply h-9 min-w-9 px-3;
+  .lm-pagination__mobile-status {
+    @apply inline-flex h-9 min-w-18 px-3;
   }
 
   .lm-pagination__control {
+    @apply h-9 min-w-9 px-0;
     width: 2.25rem;
-    @apply px-0;
-  }
-
-  .lm-pagination__ellipsis {
-    @apply h-9 min-w-7;
   }
 }
 </style>

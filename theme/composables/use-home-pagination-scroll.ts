@@ -12,10 +12,15 @@ export function useHomePaginationScrollBehavior(router: Router) {
 
       if (isHomePaginationPath(to.path) && isHomePaginationPath(from.path)) {
         lockNavbarScrollReaction({ deferFrames: 2 })
-        return {
-          el: '#lm-post-list-section',
-          top: 0,
+
+        if (to.hash) {
+          return {
+            el: to.hash,
+            top: 0,
+          }
         }
+
+        return { top: 0 }
       }
 
       if (previousScrollBehavior)

@@ -37,13 +37,13 @@ function normalizeTotalPages(value: number) {
 
 function resolvePageLink(basePath: string, page: number) {
   if (page <= 1)
-    return basePath
+    return `${basePath}#lm-post-list-section`
 
   const normalizedBasePath = basePath.endsWith('/')
     ? basePath.slice(0, -1)
     : basePath
 
-  return `${normalizedBasePath}/page/${page}`
+  return `${normalizedBasePath}/page/${page}#lm-post-list-section`
 }
 
 export function usePaginationItems(options: UsePaginationItemsOptions) {
