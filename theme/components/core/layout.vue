@@ -26,6 +26,14 @@ useHomePaginationScrollBehavior(router)
   <div class="min-h-screen antialiased relative isolate">
     <LmBackgroundLayer />
 
+    <button
+      v-if="isDrawerOpen"
+      type="button"
+      class="lm-mobile-drawer-backdrop"
+      aria-label="关闭移动端导航"
+      @click="closeDrawer"
+    />
+
     <div
       class="transition-transform duration-250 ease-in-out inset-x-0 top-0 fixed z-20"
       :class="headerVisible ? 'translate-y-0' : '-translate-y-full'"
@@ -70,6 +78,10 @@ useHomePaginationScrollBehavior(router)
 </template>
 
 <style lang="scss" scoped>
+.lm-mobile-drawer-backdrop {
+  @apply fixed inset-0 z-15 border-0 bg-transparent p-0 md:hidden;
+}
+
 .lm-global-notice {
   @apply relative z-10 mx-auto w-full max-w-6xl pt-12 px-4 sm:px-6 xl:px-0;
 }

@@ -2,7 +2,7 @@
 import type { NavItem } from '../../types'
 import type { BrowserTimeout } from '../../utils'
 import { useRouter } from 'vue-router'
-import { useNavActive } from '../../composables'
+import { resolveInternalNavRoute, shouldOpenNavLinkWithWindow } from '../../composables'
 import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '../../utils'
 
 const props = defineProps<{
@@ -23,18 +23,10 @@ const ACTIVE_PREVIEW_DURATION = 80
 // 否则跳转会打断收起动画。
 const NAV_CLOSE_DURATION = 280
 
-const HTTP_LINK_REGEX = /^https?:?\/\//
-
-const { isActive, setPending, clearPending } = useNavActive()
-
 let navigateTimer: BrowserTimeout | undefined
 
 function closeDrawer() {
   emit('close')
-}
-
-function isExternalLink(item: NavItem) {
-  return item.target === '_blank' || HTTP_LINK_REGEX.test(item.link)
 }
 
 function handleItemClick(item: NavItem) {
@@ -42,23 +34,18 @@ function handleItemClick(item: NavItem) {
   if (!currentWindow)
     return
 
-  setPending(item.link)
-
   clearBrowserTimeout(navigateTimer)
 
   navigateTimer = setBrowserTimeout(() => {
     closeDrawer()
 
     setBrowserTimeout(() => {
-      if (isExternalLink(item)) {
-        clearPending()
+      if (shouldOpenNavLinkWithWindow(item)) {
         currentWindow.open(item.link, item.target || '_blank', 'noopener')
         return
       }
 
-      router.push(item.link).finally(() => {
-        clearPending()
-      })
+      router.push(resolveInternalNavRoute(item.link))
     }, NAV_CLOSE_DURATION)
   }, ACTIVE_PREVIEW_DURATION)
 }
@@ -103,22 +90,15 @@ function leave(el: Element) {
   >
     <div
       v-if="props.open"
-      class="lm-mobile-nav-panel w-full relative z-[calc(var(--lm-z-nav)+1)] overflow-hidden md:hidden"
+      class="lm-mobile-nav-panel w-full relative z-[calc(var(--lm-z-navbar)+1)] overflow-hidden md:hidden"
     >
       <nav class="flex flex-col" aria-label="Mobile navigation">
-        <button
+        <LmMobileNavGroup
           v-for="item in props.items"
           :key="item.link"
-          type="button"
-          class="lm-mobile-nav-item"
-          :class="isActive(item.link)
-            ? 'text-[var(--lm-c-brand)] bg-[color-mix(in_srgb,var(--lm-c-brand-soft)_52%,transparent)]'
-            : 'text-[var(--lm-c-text-secondary)] hover:text-[var(--lm-c-brand)]'"
-          @click="handleItemClick(item)"
-        >
-          <span v-if="item.icon" :class="item.icon" />
-          {{ item.text }}
-        </button>
+          :item="item"
+          @navigate="handleItemClick"
+        />
       </nav>
     </div>
   </Transition>
@@ -137,10 +117,6 @@ function leave(el: Element) {
   margin-top: -1px;
   transform-origin: top center;
   box-shadow: 0 18px 36px rgb(15 23 42 / 0.16);
-}
-
-.lm-mobile-nav-item {
-  @apply text-sm px-4 py-3 border-b border-[var(--lm-c-divider)] no-underline inline-flex gap-2.5 min-h-11 items-center transition-[color,background-color] duration-220 ease-out last:border-b-0;
 }
 
 .lm-mobile-nav-enter-active,
