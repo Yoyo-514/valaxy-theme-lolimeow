@@ -30,6 +30,7 @@ interface MutableCategoryNode {
 
 function normalizeCategorySegments(categories: Post['categories']) {
   if (Array.isArray(categories)) {
+    // 数组分类按层级段处理，保持和 "A/B/C" 字符串分类一致的树语义。
     const segments = categories
       .map(category => String(category).trim())
       .filter(Boolean)
@@ -123,6 +124,7 @@ export function useCategoryGroups() {
           current.children.set(segment, next)
         }
 
+        // 每一层都累计文章数，父级 total 表示该分类树下的文章总量。
         next.total += 1
         current = next
       })

@@ -30,6 +30,7 @@ function getActiveScrollOffset() {
     .trim()
   const parsedOffset = Number.parseFloat(rawOffset)
   const navbarOffset = Number.isFinite(parsedOffset) ? parsedOffset : 72
+  // 激活线放在视口上方阅读区域内，比单纯贴着导航栏更符合阅读进度感知。
   const readingLineOffset = clamp(currentWindow.innerHeight * 0.18, ACTIVE_LINE_MIN, ACTIVE_LINE_MAX)
 
   return Math.max(navbarOffset + ACTIVE_SCROLL_GAP, readingLineOffset)
@@ -40,6 +41,7 @@ export function useArticleTocState() {
   const activeLink = ref('')
 
   const items = computed<TocItem[]>(() => {
+    // 组件只展示两级目录，深层标题仍参与 Valaxy 大纲但不挤压侧栏层级。
     const flattened: TocItem[] = []
 
     const visit = (nodes: MenuItem[], depth = 0) => {
@@ -63,6 +65,7 @@ export function useArticleTocState() {
   const visible = computed(() => items.value.length >= 2)
 
   function handleClick(event: MouseEvent) {
+    // 点击目录会主动滚动页面，短暂锁住导航栏滚动响应可避免头部闪烁。
     lockNavbarScrollReaction({
       deferFrames: 2,
       timeoutMs: 420,

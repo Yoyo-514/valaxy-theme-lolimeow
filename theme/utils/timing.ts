@@ -46,6 +46,7 @@ export function createDebouncedFunction<T extends AnyFunction>(
     if (!lastInvoke || signal?.aborted)
       return lastResult
 
+    // 始终执行最后一次调用参数，保证 trailing 场景拿到最新用户输入。
     const invokePending = lastInvoke
     lastInvoke = undefined
     lastResult = invokePending()
@@ -76,6 +77,7 @@ export function createDebouncedFunction<T extends AnyFunction>(
       invoke()
 
     if (!currentWindow) {
+      // SSR/测试环境没有计时器时同步落地 trailing，避免状态永久 pending。
       if (!shouldInvokeLeading && trailing)
         invoke()
 
@@ -116,6 +118,7 @@ export function createThrottledFunction<T extends AnyFunction>(
   wait = 0,
   options: Omit<RateLimitOptions, 'maxWait'> = {},
 ): RateLimitedFunction<T> {
+  // throttle 复用 debounce 的 maxWait 语义，确保持续触发时也会按节流间隔执行。
   return createDebouncedFunction(handler, wait, {
     leading: true,
     trailing: true,

@@ -33,6 +33,7 @@ function resolveText(value: unknown): string {
     return value.trim()
 
   if (value && typeof value === 'object') {
+    // Valaxy 标题可能是多语言对象，搜索列表只需要拿到第一个可读文案。
     const resolved: string | undefined = Object.values(value as Record<string, unknown>)
       .map(resolveText)
       .find(Boolean)
@@ -51,6 +52,7 @@ function stripHtml(value: string) {
 }
 
 function collectQueryRanges(text: string, search: string) {
+  // 高亮按用户输入的每个词独立匹配，和 Fuse 的模糊得分保持解耦。
   const terms = search
     .trim()
     .split(/\s+/)
@@ -73,6 +75,7 @@ function collectQueryRanges(text: string, search: string) {
 }
 
 function mergeRanges(ranges: readonly (readonly [number, number])[], maxLength: number) {
+  // 重叠或相邻的命中区间合并后再渲染，避免连续 mark 被拆成碎片。
   const normalizedRanges = ranges
     .map(([start, end]) => [Math.max(0, start), Math.min(maxLength - 1, end)] as const)
     .filter(([start, end]) => start <= end)
@@ -131,6 +134,7 @@ export function useLmFuseSearch(query: Ref<string>) {
     if (loaded.value || loading.value)
       return
 
+    // 搜索索引按需加载，避免每个页面首屏都拉取 Fuse 数据。
     loading.value = true
     error.value = null
 

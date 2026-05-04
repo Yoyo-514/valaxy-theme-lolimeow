@@ -20,6 +20,7 @@ function canCheckLink(url: string) {
 }
 
 async function probeLink(url: string) {
+  // no-cors 只能判断请求是否被浏览器接受，不能读取真实状态码。
   try {
     await fetch(url, {
       cache: 'no-store',
@@ -30,6 +31,7 @@ async function probeLink(url: string) {
     return 'online'
   }
   catch {
+    // 部分站点禁用 HEAD，但允许 GET；兜底探测能减少误判离线。
     try {
       await fetch(url, {
         cache: 'no-store',
@@ -65,6 +67,7 @@ export function useLinkStatus(url: () => string, enabled: () => boolean) {
       return
     }
 
+    // 同一会话内复用探测结果，避免友链列表反复触发跨域请求。
     const cachedStatus = LINK_STATUS_CACHE.get(targetUrl)
     if (cachedStatus) {
       status.value = cachedStatus

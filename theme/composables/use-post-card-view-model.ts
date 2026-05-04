@@ -10,6 +10,7 @@ export function usePostCardViewModel(post: Post, index = 0) {
   const seed = computed(() => post.path || `${post.title || 'post'}-${index}`)
 
   const coverCandidates = computed(() => {
+    // 同一篇文章始终映射到同一组随机封面，避免列表重排时图片抖动。
     const postCover = (post as Post & { cover?: string }).cover
     if (postCover)
       return [postCover]
@@ -41,6 +42,7 @@ export function usePostCardViewModel(post: Post, index = 0) {
   const currentCover = computed(() => coverCandidates.value[coverIndex.value] ?? '')
 
   function handleCoverError() {
+    // 封面加载失败时逐个尝试候选图；全部失败后退回纯文本卡片。
     if (coverIndex.value < coverCandidates.value.length - 1)
       coverIndex.value += 1
     else

@@ -20,6 +20,7 @@ export function pickBySeed<T>(list: T[], seed: string) {
 }
 
 export function appendSeedQuery(url: string, seed: string) {
+  // 给随机图 API 附加稳定种子，让同一文章在缓存和刷新后仍尽量命中同一张图。
   const joiner = url.includes('?') ? '&' : '?'
   return `${url}${joiner}lm_seed=${hashString(seed)}`
 }
@@ -38,6 +39,7 @@ export function normalizePostTitle(title: Post['title']) {
     return title.trim() || 'Untitled'
 
   if (title && typeof title === 'object') {
+    // 多语言标题优先取第一个非空值，列表页不在这里绑定具体 locale。
     const resolved = Object.values(title).find(value => String(value).trim())
     if (resolved)
       return String(resolved).trim()

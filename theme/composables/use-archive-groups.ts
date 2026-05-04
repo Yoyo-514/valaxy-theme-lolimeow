@@ -29,6 +29,7 @@ function normalizeCategories(categories: Post['categories']) {
 
 function resolveYear(post: Post) {
   const timestamp = resolvePostTimestamp(post)
+  // 无日期文章仍保留在归档中，但排序时固定落到最后。
   if (!timestamp)
     return 'Unknown'
 

@@ -17,6 +17,7 @@ catch (error) {
 
 const filtered = output
   .split(/\r?\n/)
+  // Valaxy 依赖类型噪声不属于主题源码问题，CI 只暴露可行动的本仓库错误。
   .filter(line => !line.includes('node_modules/'))
   .join('\n')
   .trim()

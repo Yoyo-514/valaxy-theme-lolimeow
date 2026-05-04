@@ -45,6 +45,7 @@ function resolveWeightRatio(count: number, min: number, range: number) {
 }
 
 function compareCloudItems(left: TagCloudViewItem, right: TagCloudViewItem) {
+  // 同权重标签用稳定哈希排序，避免每次响应式重算后云图跳动。
   return right.count - left.count || hashString(left.name) - hashString(right.name)
 }
 
@@ -68,6 +69,7 @@ function createRowSequence(rowCount: number) {
   const center = Math.floor(rowCount / 2)
   const rows = [center]
 
+  // 从中心行向外分发，让高权重标签优先落在视觉重心附近。
   for (let offset = 1; rows.length < rowCount; offset += 1) {
     const left = center - offset
     const right = center + offset
@@ -86,6 +88,7 @@ function moveStrongestItemToCenter(items: TagCloudViewItem[]) {
   if (items.length < 3)
     return items
 
+  // 每行最强标签放到行内中部，减少大字号贴边造成的视觉失衡。
   const strongestIndex = items.reduce((resolvedIndex, item, index) => {
     return item.count > items[resolvedIndex].count ? index : resolvedIndex
   }, 0)

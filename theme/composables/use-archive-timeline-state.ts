@@ -9,6 +9,7 @@ export function useArchiveTimelineState(getGroups: () => ArchiveGroup[]) {
   const selectedYear = ref<string | null>(null)
   const openedYear = ref<string | null>(null)
 
+  // 桌面端用 hover 预览、click 固定；移动端用 openedYear 表达手风琴展开态。
   const groups = computed(() => getGroups())
   const isAccordionMode = computed(() => width.value < ARCHIVE_ACCORDION_BREAKPOINT)
   const defaultDesktopYear = computed(() => groups.value[0]?.year ?? null)
@@ -45,6 +46,7 @@ export function useArchiveTimelineState(getGroups: () => ArchiveGroup[]) {
   })
 
   watch(isAccordionMode, (nextMode) => {
+    // 响应式模式切换时迁移当前年份，避免同一组归档在断点两侧丢失焦点。
     if (nextMode) {
       openedYear.value = resolveAccordionYear()
       return

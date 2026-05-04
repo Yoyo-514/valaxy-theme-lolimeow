@@ -32,6 +32,7 @@ function normalizeTags(tags: unknown) {
 }
 
 function createTagId(name: string) {
+  // 可读片段便于调试，哈希片段用于兜住中文或特殊字符归一化后的碰撞。
   const readable = encodeURIComponent(name)
     .replace(/%/g, '')
     .replace(/[^\w-]/g, '-')
@@ -105,6 +106,7 @@ export function useTagGroups() {
 
   const totalTags = computed(() => groups.value.length)
   const totalPosts = computed(() => {
+    // 一篇文章可拥有多个标签，统计文章总数时必须按路径去重。
     const paths = new Set<string>()
 
     groups.value.forEach((group) => {

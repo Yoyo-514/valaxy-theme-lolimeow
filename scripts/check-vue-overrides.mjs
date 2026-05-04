@@ -62,6 +62,7 @@ function readWorkspaceOverrides() {
   if (!fs.existsSync(workspaceFile))
     throw new Error('Cannot find pnpm-workspace.yaml.')
 
+  // pnpm-workspace.yaml 结构固定且很小，手写读取可避免为脚本引入 YAML 运行时依赖。
   const lines = fs.readFileSync(workspaceFile, 'utf8').split(/\r?\n/)
   const overrides = new Map()
   let inOverrides = false
@@ -87,6 +88,7 @@ function formatOverrideKey(packageName) {
 
 function updateWorkspaceOverrides(version) {
   const source = fs.readFileSync(workspaceFile, 'utf8')
+  // 写回时保留原文件换行风格，减少自动修复造成的无关 diff。
   const hasTrailingNewline = /\r?\n$/.test(source)
   const lineBreak = source.includes('\r\n') ? '\r\n' : '\n'
   const lines = source.split(/\r?\n/)

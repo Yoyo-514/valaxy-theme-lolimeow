@@ -15,6 +15,7 @@ export function useHomePostFeed(
   const siteConfig = useSiteConfig()
   const site = useSiteStore()
   const innerInfiniteScrollTrigger = ref<HTMLElement | null>(null)
+  // 允许组件传入自有触发点；未传入时由 composable 暴露内部默认触发点。
   const resolvedInfiniteScrollTrigger = infiniteScrollTrigger ?? innerInfiniteScrollTrigger
 
   const allPosts = computed<Post[]>(() => site.postList ?? [])
@@ -94,6 +95,7 @@ export function useHomePostFeed(
     return visiblePageCount.value * itemsPerPage.value
   })
 
+  // 无限滚动只增加可见页数，真实文章切片仍统一由 pagedPosts 负责。
   const hasMorePosts = computed(() => {
     if (!isInfiniteScroll.value)
       return false
@@ -128,6 +130,7 @@ export function useHomePostFeed(
   useIntersectionObserver(
     () => resolvedInfiniteScrollTrigger.value,
     ([entry]) => {
+      // 触发器进入预加载区域时再推进一页，避免滚动过程中一次性展开过多内容。
       if (!entry?.isIntersecting || !isInfiniteScroll.value || !hasMorePosts.value)
         return
 

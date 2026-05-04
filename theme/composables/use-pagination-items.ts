@@ -65,9 +65,11 @@ export function usePaginationItems(options: UsePaginationItemsOptions) {
     if (totalPages.value <= 0)
       return []
 
+    // 页数较少时完整展示，避免省略号带来额外的认知成本。
     if (totalPages.value <= MAX_VISIBLE_PAGES)
       return Array.from({ length: totalPages.value }, (_, index) => createPageItem(index + 1))
 
+    // 页数较多时固定保留首页和尾页，中间只展示当前页附近的窗口。
     const items: PaginationItem[] = [createPageItem(1)]
     const windowStart = Math.max(2, currentPage.value - SIBLING_COUNT)
     const windowEnd = Math.min(totalPages.value - 1, currentPage.value + SIBLING_COUNT)
