@@ -14,7 +14,7 @@
   <img width="2000" height="0" alt="" aria-hidden="true"><br>
   <span><b>简体中文 | <a href="./README.md">English</a></b></span><br>
   <sub>轻二次元氛围、柔和阅读平面、内置一言 Hero、本地搜索与有辨识度的聚合页。</sub><br>
-  <sub><a href="https://lolimeow.yoyo514.top/">Live Demo</a></sub><br>
+  <sub><a href="https://lolimeow.yoyo514.top/">Live Demo</a> · <a href="https://lolimeow.yoyo514.top/docs/">文档</a></sub><br>
   <img width="2000" height="0" alt="" aria-hidden="true">
 </td>
 </tr>
@@ -31,12 +31,10 @@ pnpm add valaxy-theme-lolimeow
 ```
 
 ```ts
-import type { ThemeConfig } from 'valaxy-theme-lolimeow'
-import { defineConfig } from 'valaxy'
+import { defineValaxyConfig } from 'valaxy'
 
-export default defineConfig<ThemeConfig>({
+export default defineValaxyConfig({
   theme: 'lolimeow',
-
   themeConfig: {
     ui: {
       primary: '#66CCFF',
@@ -84,88 +82,15 @@ export default defineConfig<ThemeConfig>({
 - Markdown 样式覆盖代码块、表格、媒体、脚注、容器和 Mermaid 示例。
 - Waline 评论区已经按主题 surface 重新调整样式。
 
-## 配置指引
+## 文档
 
-下面的片段只用于快速上手，不是完整配置表。完整配置建议按这个顺序查看：
+README 只保留最小安装与主题概览。完整使用说明与按模块拆分的配置文档请阅读 [在线文档](https://lolimeow.yoyo514.top/docs/)。
 
-- [theme/types/config.d.ts](./theme/types/config.d.ts)：查看导出的 `ThemeConfig` 结构。
+开发时可参考：
+
+- [theme/types/config.d.ts](./theme/types/config.d.ts)：查看主题配置结构。
 - [theme/node/config.ts](./theme/node/config.ts)：查看默认值和兜底行为。
-- [demo/valaxy.config.ts](./demo/valaxy.config.ts)
-
-提示：在 `valaxy.config.ts` 中导入 `ThemeConfig` 后，编辑器可以提供自动补全和悬浮提示。
-
-### 背景与 Hero 头图
-
-```ts
-export default defineConfig<ThemeConfig>({
-  theme: 'lolimeow',
-  themeConfig: {
-    background: {
-      type: 'image',
-      image: {
-        light: '/images/background-light.webp',
-        dark: '/images/background-dark.webp',
-        urls: ['/images/background-1.webp', '/images/background-2.webp'],
-        apiUrls: ['https://www.dmoe.cc/random.php'],
-        random: true,
-        overlayOpacity: 0.3,
-      },
-    },
-    hero: {
-      cover: {
-        urls: ['/images/hero-1.webp', '/images/hero-2.webp'],
-        random: true,
-      },
-    },
-  },
-})
-```
-
-### 一言 Hero
-
-通过 `themeConfig.hero.hitokoto` 同时控制展示与请求参数。
-
-参考文档：https://developer.hitokoto.cn/sentence/#%E5%8F%A5%E5%AD%90%E7%B1%BB%E5%9E%8B-%E5%8F%82%E6%95%B0
-
-```ts
-import type { ThemeConfig } from 'valaxy-theme-lolimeow'
-import { defineConfig } from 'valaxy'
-
-export default defineConfig<ThemeConfig>({
-  theme: 'lolimeow',
-  themeConfig: {
-    hero: {
-      mottoSource: 'hitokoto',
-      hitokoto: {
-        showFrom: true,
-        sentenceTypes: ['a', 'b', 'c'],
-        minLength: 1,
-        maxLength: 30,
-      },
-    },
-  },
-})
-```
-
-### Waline 评论
-
-```ts
-import { defineConfig } from 'valaxy'
-import { addonWaline } from 'valaxy-addon-waline'
-
-export default defineConfig({
-  siteConfig: {
-    comment: {
-      enable: true,
-    },
-  },
-  addons: [
-    addonWaline({
-      serverURL: 'https://your-waline-server',
-    }),
-  ],
-})
-```
+- [demo/valaxy.config.ts](./demo/valaxy.config.ts)：查看演示站配置。
 
 ## 插件
 

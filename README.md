@@ -14,7 +14,7 @@
   <img width="2000" height="0" alt="" aria-hidden="true"><br>
   <span><b>English | <a href="./README.zh-CN.md">简体中文</a></b></span><br>
   <sub>Light anime atmosphere, soft reading surfaces, built-in Hitokoto motto, local search, and themed aggregate pages.</sub><br>
-  <sub><a href="https://lolimeow.yoyo514.top/">Live Demo</a></sub><br>
+  <sub><a href="https://lolimeow.yoyo514.top/">Live Demo</a> · <a href="https://lolimeow.yoyo514.top/docs/">Documentation</a></sub><br>
   <img width="2000" height="0" alt="" aria-hidden="true">
 </td>
 </tr>
@@ -31,12 +31,10 @@ pnpm add valaxy-theme-lolimeow
 ```
 
 ```ts
-import type { ThemeConfig } from 'valaxy-theme-lolimeow'
-import { defineConfig } from 'valaxy'
+import { defineValaxyConfig } from 'valaxy'
 
-export default defineConfig<ThemeConfig>({
+export default defineValaxyConfig({
   theme: 'lolimeow',
-
   themeConfig: {
     ui: {
       primary: '#66CCFF',
@@ -84,88 +82,15 @@ export default defineConfig<ThemeConfig>({
 - Markdown styles are tuned for translucent reading surfaces, including code blocks, tables, media, footnotes, containers, and Mermaid examples.
 - Waline comments are restyled with the theme surface tokens.
 
-## Configuration Guide
+## Documentation
 
-The snippets below are starter examples, not the full option list. For complete configuration details, use these references in order:
+The README only keeps the minimal setup and overview. For full usage and module-based configuration, see the [Documentation](https://lolimeow.yoyo514.top/docs/).
 
-- [theme/types/config.d.ts](./theme/types/config.d.ts) for the exported `ThemeConfig` structure.
+Useful references for development:
+
+- [theme/types/config.d.ts](./theme/types/config.d.ts) for the exported theme configuration structure.
 - [theme/node/config.ts](./theme/node/config.ts) for default values and fallback behavior.
-- [demo/valaxy.config.ts](./demo/valaxy.config.ts)
-
-Tip: import `ThemeConfig` in `valaxy.config.ts` to get editor autocomplete and hover hints while configuring the theme.
-
-### Background And Hero Cover
-
-```ts
-export default defineConfig<ThemeConfig>({
-  theme: 'lolimeow',
-  themeConfig: {
-    background: {
-      type: 'image',
-      image: {
-        light: '/images/background-light.webp',
-        dark: '/images/background-dark.webp',
-        urls: ['/images/background-1.webp', '/images/background-2.webp'],
-        apiUrls: ['https://www.dmoe.cc/random.php'],
-        random: true,
-        overlayOpacity: 0.3,
-      },
-    },
-    hero: {
-      cover: {
-        urls: ['/images/hero-1.webp', '/images/hero-2.webp'],
-        random: true,
-      },
-    },
-  },
-})
-```
-
-### Hitokoto Motto
-
-Use `themeConfig.hero.hitokoto` to control both display and request parameters.
-
-reference: https://developer.hitokoto.cn/sentence/#%E5%8F%A5%E5%AD%90%E7%B1%BB%E5%9E%8B-%E5%8F%82%E6%95%B0
-
-```ts
-import type { ThemeConfig } from 'valaxy-theme-lolimeow'
-import { defineConfig } from 'valaxy'
-
-export default defineConfig<ThemeConfig>({
-  theme: 'lolimeow',
-  themeConfig: {
-    hero: {
-      mottoSource: 'hitokoto',
-      hitokoto: {
-        showFrom: true,
-        sentenceTypes: ['a', 'b', 'c'],
-        minLength: 1,
-        maxLength: 30,
-      },
-    },
-  },
-})
-```
-
-### Waline Comments
-
-```ts
-import { defineConfig } from 'valaxy'
-import { addonWaline } from 'valaxy-addon-waline'
-
-export default defineConfig({
-  siteConfig: {
-    comment: {
-      enable: true,
-    },
-  },
-  addons: [
-    addonWaline({
-      serverURL: 'https://your-waline-server',
-    }),
-  ],
-})
-```
+- [demo/valaxy.config.ts](./demo/valaxy.config.ts) for the demo configuration.
 
 ## Addons
 
