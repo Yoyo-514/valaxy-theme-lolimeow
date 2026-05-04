@@ -74,6 +74,7 @@ cover: /images/cover.webp
 | `categories` | 分类页             | `pages/categories/index.md` |
 | `tags`       | 标签页             | `pages/tags/index.md`       |
 | `links`      | 友链页             | `pages/links/index.md`      |
+| `404`        | 404 页面           | `pages/404/index.md`        |
 | `default`    | 普通 Markdown 页面 | 任意普通页面                |
 
 ## 关于页
@@ -131,6 +132,18 @@ title: 标签
 cover: /images/tags-cover.webp
 ---
 ```
+
+## 404 页面
+
+Lolimeow 内置了 `404` 布局。若你希望 GitHub Pages、Cloudflare Pages 等静态托管平台使用主题 404 页面，需要在站点侧添加实际页面：
+
+```md
+---
+layout: 404
+---
+```
+
+重新构建后，确认产物根目录存在 `404.html`。静态托管平台通常会读取这个文件作为自定义 404 页面。
 
 ## 加密相关字段
 
