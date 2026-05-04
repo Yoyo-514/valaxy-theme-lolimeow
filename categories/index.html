@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html  lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/images/favicon.ico">
+    <script>
+    ;(function () {
+      const prefersDark =
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+      const setting = localStorage.getItem('vueuse-color-scheme') || 'auto'
+      if (setting === 'dark' || (prefersDark && setting !== 'light'))
+        document.documentElement.classList.toggle('dark', true)
+    })()
+    </script>
+  <style type="text/css">
+    :root { color-scheme: light dark; --va-c-bg: #fff; }
+    html.dark { --va-c-bg: #000; }
+    html { background-color: var(--va-c-bg); }
+  </style><style id="valaxy-fouc">body{opacity:0!important}</style><style>body{transition:opacity .15s ease}</style><noscript><style>body{opacity:1!important}</style></noscript><script>(function foucGuardScript(maxDuration) {
+  var done = 0;
+  function reveal() {
+    if (done) return;
+    done = 1;
+    var s = document.getElementById("valaxy-fouc");
+    if (s) s.remove();
+  }
+  function check() {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      if (!links[i].sheet) return;
+    }
+    reveal();
+  }
+  new MutationObserver(check).observe(document.head, {
+    childList: true,
+    attributes: true,
+    attributeFilter: ["media", "rel"]
+  });
+  addEventListener("load", reveal);
+  if (maxDuration)
+    setTimeout(reveal, maxDuration);
+})(5000)</script>
+    <script>
+    const locale = localStorage.getItem('valaxy-locale') || 'zh-CN';
+    document.documentElement.setAttribute('lang', locale);
+    </script>
+    
+  <script type="module" crossorigin src="/assets/index.vGmLgglt.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime.BiFOH-Fq.js">
+  <link rel="modulepreload" crossorigin href="/assets/framework.BlnKvnlu.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/vue-i18n.ZiVMp_ch.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/dayjs.BkKCEiuQ.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/pinia.D3zQrH8v.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/vue-router.HJHPmoHL.js">
+  <link rel="modulepreload" crossorigin href="/assets/theme.DE4qYJuM.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/nprogress.Brp1enLk.js">
+  <link rel="stylesheet" crossorigin href="/assets/style.D8TN9mPf.css">
+<link rel="preload" href="/assets/KaTeX_AMS-Regular.BQhdFMY1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_AMS-Regular.DMm9YOAa.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Caligraphic-Bold.Dq_IR9rO.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Caligraphic-Bold.BEiXGLvX.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Caligraphic-Regular.Di6jR-x-.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Caligraphic-Regular.CTRA-rTL.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Fraktur-Bold.CL6g_b3V.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Fraktur-Bold.BsDP51OF.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Fraktur-Regular.CTYiF6lA.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Fraktur-Regular.Dxdc4cR9.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Main-Bold.Cx986IdX.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Main-Bold.Jm3AIy58.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Main-BoldItalic.DxDJ3AOS.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Main-BoldItalic.SpSLRI95.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Main-Italic.NWA7e6Wa.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Main-Italic.BMLOBm91.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Main-Regular.B22Nviop.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Main-Regular.Dr94JaBh.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Math-BoldItalic.CZnvNsCZ.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Math-BoldItalic.iY-2wyZ7.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Math-Italic.t53AETM-.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Math-Italic.DA0__PXp.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_SansSerif-Bold.D1sUS0GD.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_SansSerif-Bold.DbIhKOiC.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_SansSerif-Italic.C3H0VqGB.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_SansSerif-Italic.DN2j7dab.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_SansSerif-Regular.DDBCnlJ7.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_SansSerif-Regular.CS6fqUqJ.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Script-Regular.D3wIWfF6.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Script-Regular.D5yQViql.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Size1-Regular.mCD8mA8B.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Size1-Regular.C195tn64.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Size2-Regular.Dy4dx90m.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Size2-Regular.oD1tc_U0.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Size3-Regular.CTq5MqoE.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Size4-Regular.Dl5lxZxV.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Size4-Regular.BF-4gkZK.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Typewriter-Regular.CO6r4hn1.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/KaTeX_Typewriter-Regular.C0xS9mPB.woff" as="font" type="font/woff" crossorigin>
+<link rel="modulepreload" crossorigin href="/assets/theme.DE4qYJuM.js">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Valaxy Theme Lolimeow</title>
+<meta property="og:locale:alternate" content="en">
+<meta name="description" content="Valaxy Theme Lolimeow.">
+<meta property="og:description" content="Valaxy Theme Lolimeow.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:site_name" content="Valaxy Theme Lolimeow">
+<meta property="og:title" content="Valaxy Theme Lolimeow">
+<meta property="og:image" content="/images/favicon.ico">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lolimeow.yoyo514.top/">
+<link rel="icon" href="/images/favicon.ico" type="image/png">
+<meta name="generator" content="Valaxy 0.28.6">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+  <div id="app"><!--[--><!--[--><!----><!--[--><!--]--><!----><!--]--><div class="min-h-screen antialiased relative isolate" data-v-de9c4ca8><div class="pointer-events-none inset-0 fixed z-0 overflow-hidden" aria-hidden="true" data-v-de9c4ca8 data-v-1d087a48><div class="lm-bg-layer" style="background-color:var(--lm-c-bg-base);" data-v-1d087a48></div><div class="lm-bg-layer" style="background-image:url(/images/background1.webp);background-position:center center;background-size:cover;background-attachment:fixed;" data-v-1d087a48></div><!----><div class="lm-bg-layer" style="opacity:0.3;background:linear-gradient(180deg, var(--lm-c-overlay-base), var(--lm-c-overlay-tint));" data-v-1d087a48></div></div><!----><div class="translate-y-0 transition-transform duration-250 ease-in-out inset-x-0 top-0 fixed z-20" data-v-de9c4ca8><div class="w-full" data-v-de9c4ca8><nav class="lm-nav flex flex-col w-full transition-transform duration-250 ease-in-out relative" data-v-de9c4ca8 data-v-a23a7ddf><div class="px-4 py-2 flex gap-3 w-full items-center sm:px-5" data-v-a23a7ddf><a href="/" class="lm-nav-brand" aria-label="Valaxy Theme Lolimeow" data-v-a23a7ddf data-v-f937fdc7><img class="lm-nav-brand__logo" style="width:auto;height:32px;" alt="logo" src="/images/favicon.ico" data-v-f937fdc7><span class="lm-nav-brand__title" data-v-f937fdc7>Valaxy Theme Lolimeow</span></a><div class="text-sm leading-6 ml-auto hidden items-center md:flex md:gap-3.5 xl:gap-5" data-v-a23a7ddf><!--[--><div class="lm-nav-item-shell" data-v-a23a7ddf data-v-56abee50><a href="/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-56abee50><!--[--><span class="lm-nav-link-content" data-v-56abee50 data-v-68ec1249><span class="i-ri-home-line lm-nav-link-content__icon" data-v-68ec1249></span><span class="lm-nav-link-content__text" data-v-68ec1249>首页</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-a23a7ddf data-v-56abee50><a href="/archives/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-56abee50><!--[--><span class="lm-nav-link-content" data-v-56abee50 data-v-68ec1249><span class="i-ri-archive-line lm-nav-link-content__icon" data-v-68ec1249></span><span class="lm-nav-link-content__text" data-v-68ec1249>归档</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-a23a7ddf data-v-56abee50><a aria-current="page" href="/categories/" class="router-link-active router-link-exact-active va-link lm-nav-item text-[var(--lm-c-brand)] opacity-92" rel="noopener" data-v-56abee50><!--[--><span class="lm-nav-link-content" data-v-56abee50 data-v-68ec1249><span class="i-ri-folder-line lm-nav-link-content__icon" data-v-68ec1249></span><span class="lm-nav-link-content__text" data-v-68ec1249>分类</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-a23a7ddf data-v-56abee50><a href="/tags/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-56abee50><!--[--><span class="lm-nav-link-content" data-v-56abee50 data-v-68ec1249><span class="i-ri-price-tag-3-line lm-nav-link-content__icon" data-v-68ec1249></span><span class="lm-nav-link-content__text" data-v-68ec1249>标签</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-a23a7ddf data-v-56abee50><a href="/links/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-56abee50><!--[--><span class="lm-nav-link-content" data-v-56abee50 data-v-68ec1249><span class="i-ri-links-line lm-nav-link-content__icon" data-v-68ec1249></span><span class="lm-nav-link-content__text" data-v-68ec1249>友链</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-a23a7ddf data-v-56abee50><a href="/about/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-56abee50><!--[--><span class="lm-nav-link-content" data-v-56abee50 data-v-68ec1249><span class="i-ri-user-line lm-nav-link-content__icon" data-v-68ec1249></span><span class="lm-nav-link-content__text" data-v-68ec1249>关于</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><!--]--></div><div class="lm-nav-tools" data-v-a23a7ddf data-v-728bdf3f><button type="button" class="lm-nav-tools__button" aria-label="Open Search" data-v-728bdf3f><div i-ri-search-line data-v-728bdf3f></div></button><button type="button" class="lm-nav-tools__button" aria-label="Toggle Dark Mode" data-v-728bdf3f><div i-ri-sun-line data-v-728bdf3f></div></button><button type="button" class="lm-nav-tools__menu-button" aria-expanded="false" aria-label="Toggle mobile menu" data-v-728bdf3f><span class="lm-nav-tools__menu-lines" data-v-728bdf3f><!--[--><span class="w-4 lm-nav-tools__menu-line" data-v-728bdf3f></span><span class="w-4 lm-nav-tools__menu-line" data-v-728bdf3f></span><span class="w-4 lm-nav-tools__menu-line" data-v-728bdf3f></span><!--]--></span></button></div></div></nav><!----></div></div><!--[--><!----><!--]--><div class="lm-page-surface-layer" data-v-de9c4ca8></div><!----><main class="w-full relative z-10" data-v-de9c4ca8><!--[--><div class="w-full"><section class="lm-categories-page" data-v-2c9ae2b4><header class="lm-aggregate-header lm-aggregate-header--plain" data-v-2c9ae2b4 data-v-51f36b24><div class="lm-aggregate-header__content--plain lm-aggregate-header__content" data-v-51f36b24><div class="lm-aggregate-meta" data-v-51f36b24 data-v-76636d70><h1 class="lm-aggregate-meta__title" data-v-76636d70>分类</h1><p class="lm-aggregate-meta__eyebrow" data-v-76636d70>分类索引</p><ul class="lm-aggregate-meta__stats" data-v-76636d70><!--[--><li class="lm-aggregate-meta__item" data-v-76636d70><span class="lm-aggregate-meta__value" data-v-76636d70>7</span><span class="lm-aggregate-meta__label" data-v-76636d70>分类</span></li><li class="lm-aggregate-meta__item" data-v-76636d70><span class="lm-aggregate-meta__value" data-v-76636d70>6</span><span class="lm-aggregate-meta__label" data-v-76636d70>文章</span></li><!--]--></ul></div></div></header><div class="lm-categories-page__content" data-v-2c9ae2b4><div class="lm-category-tree" data-v-2c9ae2b4 data-v-29eedbf6><!--[--><section class="lm-category-tree__node" data-v-29eedbf6><header class="lm-category-tree__head" data-v-29eedbf6><!----><button class="lm-category-tree__trigger" type="button" aria-expanded="false" data-v-29eedbf6><span class="lm-category-tree__trigger-main" data-v-29eedbf6><span class="lm-category-tree__toggle" data-v-29eedbf6><span class="i-ri-arrow-right-s-line" data-v-29eedbf6></span></span><span class="lm-category-tree__title" data-v-29eedbf6>AAA</span></span><span class="lm-category-tree__stats" data-v-29eedbf6><span class="lm-category-tree__stats-item" data-v-29eedbf6>2 篇文章</span><span class="lm-category-tree__stats-item" data-v-29eedbf6>1 个子分类</span></span></button></header><!----></section><section class="lm-category-tree__node" data-v-29eedbf6><header class="lm-category-tree__head" data-v-29eedbf6><!----><button class="lm-category-tree__trigger" type="button" aria-expanded="false" data-v-29eedbf6><span class="lm-category-tree__trigger-main" data-v-29eedbf6><span class="lm-category-tree__toggle" data-v-29eedbf6><span class="i-ri-arrow-right-s-line" data-v-29eedbf6></span></span><span class="lm-category-tree__title" data-v-29eedbf6>Demo</span></span><span class="lm-category-tree__stats" data-v-29eedbf6><span class="lm-category-tree__stats-item" data-v-29eedbf6>1 篇文章</span><!----></span></button></header><!----></section><section class="lm-category-tree__node" data-v-29eedbf6><header class="lm-category-tree__head" data-v-29eedbf6><!----><button class="lm-category-tree__trigger" type="button" aria-expanded="false" data-v-29eedbf6><span class="lm-category-tree__trigger-main" data-v-29eedbf6><span class="lm-category-tree__toggle" data-v-29eedbf6><span class="i-ri-arrow-right-s-line" data-v-29eedbf6></span></span><span class="lm-category-tree__title" data-v-29eedbf6>未分类</span></span><span class="lm-category-tree__stats" data-v-29eedbf6><span class="lm-category-tree__stats-item" data-v-29eedbf6>1 篇文章</span><!----></span></button></header><!----></section><section class="lm-category-tree__node" data-v-29eedbf6><header class="lm-category-tree__head" data-v-29eedbf6><!----><button class="lm-category-tree__trigger" type="button" aria-expanded="false" data-v-29eedbf6><span class="lm-category-tree__trigger-main" data-v-29eedbf6><span class="lm-category-tree__toggle" data-v-29eedbf6><span class="i-ri-arrow-right-s-line" data-v-29eedbf6></span></span><span class="lm-category-tree__title" data-v-29eedbf6>Valaxy Notes</span></span><span class="lm-category-tree__stats" data-v-29eedbf6><span class="lm-category-tree__stats-item" data-v-29eedbf6>1 篇文章</span><!----></span></button></header><!----></section><section class="lm-category-tree__node" data-v-29eedbf6><header class="lm-category-tree__head" data-v-29eedbf6><!----><button class="lm-category-tree__trigger" type="button" aria-expanded="false" data-v-29eedbf6><span class="lm-category-tree__trigger-main" data-v-29eedbf6><span class="lm-category-tree__toggle" data-v-29eedbf6><span class="i-ri-arrow-right-s-line" data-v-29eedbf6></span></span><span class="lm-category-tree__title" data-v-29eedbf6>Valaxy 开发笔记</span></span><span class="lm-category-tree__stats" data-v-29eedbf6><span class="lm-category-tree__stats-item" data-v-29eedbf6>1 篇文章</span><!----></span></button></header><!----></section><!--]--></div></div></section></div><!--]--></main><div class="lm-helper-stage" data-v-de9c4ca8 data-v-3e5ae546><!----></div><div class="relative z-10" data-v-de9c4ca8><footer class="lm-footer" data-v-de9c4ca8 data-v-ab94905f><div class="lm-footer__glow" aria-hidden="true" data-v-ab94905f></div><div class="lm-footer__inner" data-v-ab94905f><div class="lm-footer__copyright" data-v-ab94905f><span class="lm-footer__year" data-v-ab94905f> Copyright © <!--[-->2023 - <!--]--> 2026</span><a class="lm-footer__icon--animated lm-footer__icon" title="" style="color:var(--lm-c-brand);" rel="noopener" data-v-ab94905f><span class="i-ri-heart-fill" data-v-ab94905f></span></a><span class="lm-footer__author" data-v-ab94905f>Yoyo</span></div><div class="lm-footer__powered" data-v-ab94905f><span data-v-ab94905f>由 <a href="[object Object]" target="_blank" rel="noopener">Valaxy</a> v0.28.6 驱动</span><span class="lm-footer__dot" aria-hidden="true" data-v-ab94905f></span><span data-v-ab94905f>主题 <a href="https://github.com/Yoyo-514/valaxy-theme-lolimeow" title="valaxy-theme-lolimeow" target="_blank" rel="noopener" data-v-ab94905f>Lolimeow</a> v1.0.6</span></div><!----><!--[--><!--]--></div></footer></div></div><!--]--></div><script>window.__INITIAL_STATE__='{"pinia":{"app":{"showLoading":true},"site":{},"routerStore":{}}}'</script><script type="application/ld+json" data-hid="schema-org-graph">{"@context":"https://schema.org","@graph":[{"@id":"https://lolimeow.yoyo514.top/#identity","@type":"Person","name":"Yoyo","url":"https://lolimeow.yoyo514.top/","image":{"@id":"https://lolimeow.yoyo514.top/#/schema/image/1"},"sameAs":["/atom.xml","https://im.qq.com","https://github.com/yourname","https://weibo.com","https://www.douban.com","https://music.163.com","https://www.zhihu.com","https://space.bilibili.com","https://weixin.qq.com/","https://twitter.com","https://web.telegram.org/",null]},{"@id":"https://lolimeow.yoyo514.top/#website","@type":"WebSite","dateModified":"2026-05-04T16:42:30.234Z","datePublished":"2026-05-04T16:42:30.234Z","inLanguage":"zh-CN","url":"https://lolimeow.yoyo514.top/","publisher":{"@id":"https://lolimeow.yoyo514.top/#identity"}},{"@id":"https://lolimeow.yoyo514.top/#webpage","@type":"WebPage","description":"Valaxy Theme Lolimeow.","url":"https://lolimeow.yoyo514.top/","about":{"@id":"https://lolimeow.yoyo514.top/#identity"},"isPartOf":{"@id":"https://lolimeow.yoyo514.top/#website"},"potentialAction":[{"@type":"ReadAction","target":["https://lolimeow.yoyo514.top/"]}]},{"@id":"https://lolimeow.yoyo514.top/#/schema/image/1","@type":"ImageObject","contentUrl":"https://lolimeow.yoyo514.top/images/avatar.jpg","inLanguage":"zh-CN","url":"https://lolimeow.yoyo514.top/images/avatar.jpg"}]}</script>
+  
+</body>
+</html>

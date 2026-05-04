@@ -1,0 +1,86 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Valaxy Theme Lolimeow",
+    "home_page_url": "https://lolimeow.yoyo514.top/",
+    "feed_url": "https://lolimeow.yoyo514.top/feed.json",
+    "description": "Valaxy Theme Lolimeow.",
+    "icon": "https://lolimeow.yoyo514.top/images/avatar.jpg",
+    "author": {
+        "name": "Yoyo",
+        "url": "https://valaxy.site"
+    },
+    "items": [
+        {
+            "id": "https://lolimeow.yoyo514.top/posts/mermaid",
+            "content_html": "<ul>\n<li><a href=\"https://mermaid.js.org/\">Mermaid</a> - Diagramming and charting tool</li>\n</ul>\n<h2>Flowchart</h2>\n<pre><code class=\"language-mermaid\">grap</code></pre>\n<br/><p>访问 <a href=\"https://lolimeow.yoyo514.top/posts/mermaid\" target=\"_blank\">https://lolimeow.yoyo514.top/posts/mermaid</a> 阅读全文。</p>",
+            "url": "https://lolimeow.yoyo514.top/posts/mermaid",
+            "title": "Mermaid",
+            "date_modified": "2026-05-04T16:42:30.234Z",
+            "date_published": "2026-05-04T16:42:30.234Z",
+            "author": {
+                "name": "Yoyo",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://lolimeow.yoyo514.top/posts/math",
+            "content_html": "<h2>Math Formula Test</h2>\n<p>This page is used to verify whether math formula rendering is already enabled</p>\n<br/><p>访问 <a href=\"https://lolimeow.yoyo514.top/posts/math\" target=\"_blank\">https://lolimeow.yoyo514.top/posts/math</a> 阅读全文。</p>",
+            "url": "https://lolimeow.yoyo514.top/posts/math",
+            "title": "Math Test",
+            "date_modified": "2026-05-01T16:57:00.000Z",
+            "date_published": "2026-05-01T16:57:00.000Z",
+            "author": {
+                "name": "Yoyo",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://lolimeow.yoyo514.top/posts/demo",
+            "content_html": "<h2>Headers 标题</h2>\n<h1>h1 Heading 标题</h1>\n<h2>h2 Heading 标题</h2>\n<h3>h3 Heading 标题</h3>\n<h4>h4 Heading 标题</h4>\n<h5>h5 H</h5>\n<br/><p>访问 <a href=\"https://lolimeow.yoyo514.top/posts/demo\" target=\"_blank\">https://lolimeow.yoyo514.top/posts/demo</a> 阅读全文。</p>",
+            "url": "https://lolimeow.yoyo514.top/posts/demo",
+            "title": "Markdown 测试",
+            "date_modified": "2026-04-20T00:00:00.000Z",
+            "date_published": "2026-04-20T00:00:00.000Z",
+            "author": {
+                "name": "Yoyo",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://lolimeow.yoyo514.top/posts/i18n",
+            "content_html": "<p>::: tip</p>\n<p>You can click this button to toggle locales.</p>\n<p>:::</p>\n<div class=\"text-center\">\n  <!-- <YunTo<br/><p>访问 <a href=\"https://lolimeow.yoyo514.top/posts/i18n\" target=\"_blank\">https://lolimeow.yoyo514.top/posts/i18n</a> 阅读全文。</p>",
+            "url": "https://lolimeow.yoyo514.top/posts/i18n",
+            "title": "i18n",
+            "date_modified": "2022-04-09T00:00:00.000Z",
+            "date_published": "2022-04-09T00:00:00.000Z",
+            "author": {
+                "name": "Yoyo",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://lolimeow.yoyo514.top/posts/test",
+            "content_html": "<p>::: zh-CN</p>\n<p>[[toc]]</p>\n<p>标题是一级标题</p>\n<h2>二级标题 {lang=&quot;zh-CN&quot;}</h2>\n<h3>三级标题 {lang=&quot;zh-CN&quot;}</h3>\n<h4>四级标题 {lang=&quot;zh-C</h4>\n<br/><p>访问 <a href=\"https://lolimeow.yoyo514.top/posts/test\" target=\"_blank\">https://lolimeow.yoyo514.top/posts/test</a> 阅读全文。</p>",
+            "url": "https://lolimeow.yoyo514.top/posts/test",
+            "title": "Valaxy Test 文章内容测试",
+            "date_modified": "2022-03-23T00:00:00.000Z",
+            "date_published": "2022-03-23T00:00:00.000Z",
+            "author": {
+                "name": "Yoyo",
+                "url": "https://valaxy.site"
+            }
+        },
+        {
+            "id": "https://lolimeow.yoyo514.top/posts/hello-valaxy",
+            "content_html": "<h2>Hello, Valaxy!</h2>\n<p>English</p>\n<p><strong>English Bold</strong></p>\n<pre><code class=\"language-ts\">import type { ThemeConfig } from 'valaxy-theme-</code></pre>\n<br/><p>访问 <a href=\"https://lolimeow.yoyo514.top/posts/hello-valaxy\" target=\"_blank\">https://lolimeow.yoyo514.top/posts/hello-valaxy</a> 阅读全文。</p>",
+            "url": "https://lolimeow.yoyo514.top/posts/hello-valaxy",
+            "title": "Hello, Valaxy!",
+            "date_modified": "2022-03-22T00:00:00.000Z",
+            "date_published": "2022-03-22T00:00:00.000Z",
+            "author": {
+                "name": "Yoyo",
+                "url": "https://valaxy.site"
+            }
+        }
+    ]
+}
