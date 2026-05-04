@@ -25,11 +25,14 @@ jobs:
       - name: Install
         run: pnpm install
 
-      - name: Build Theme
-        run: pnpm run build
-
       - name: Build Demo
         run: pnpm run build:demo
+
+      - name: Build Docs
+        run: pnpm run docs:build
+
+      - name: Merge Docs Into Demo
+        run: mkdir -p ./demo/dist/docs && cp -r ./docs/.vitepress/dist/* ./demo/dist/docs/
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

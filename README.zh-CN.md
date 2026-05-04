@@ -3,7 +3,7 @@
 <pre align="center">一个轻二次元风格的 Valaxy 博客主题，适合安静地写日常、笔记与长文。</pre>
 
 <p align="center">
-  <img src="./docs/assets/example.png" alt="valaxy-theme-lolimeow preview">
+  <img src="./public/images/example.png" alt="valaxy-theme-lolimeow preview">
 </p>
 
 <div align="center">

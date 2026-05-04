@@ -13,6 +13,7 @@ trustPolicyExclude:
 packages:
   - theme
   - demo
+  - docs
 overrides:
   '@vue/compiler-core': 3.5.33
   '@vue/compiler-dom': 3.5.33
@@ -37,5 +38,6 @@ catalog:
   typescript: ^6.0.3
   valaxy: ^0.28.6
   valaxy-addon-waline: ^0.2.1
+  vitepress: ^2.0.0-alpha.17
   vitest: ^4.1.5
   vue-tsc: ^3.2.7

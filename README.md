@@ -3,7 +3,7 @@
 <pre align="center">A soft anime-style Valaxy theme for a calm daily writing space.</pre>
 
 <p align="center">
-  <img src="./docs/assets/example.png" alt="valaxy-theme-lolimeow preview">
+  <img src="./public/images/example.png" alt="valaxy-theme-lolimeow preview">
 </p>
 
 <div align="center">

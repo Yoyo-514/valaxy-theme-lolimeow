@@ -15,10 +15,33 @@ catch (error) {
   exitCode = error.status ?? 1
 }
 
-const filtered = output
-  .split(/\r?\n/)
-  // Valaxy 依赖类型噪声不属于主题源码问题，CI 只暴露可行动的本仓库错误。
-  .filter(line => !line.includes('node_modules/'))
+function isDiagnosticStart(line) {
+  return /(?:^|[\\/])[^()\s]+\(\d+,\d+\):\s+error\s+TS\d+:/.test(line)
+}
+
+function isNodeModulesDiagnostic(lines) {
+  return lines.some(line => line.includes('node_modules/'))
+}
+
+// Valaxy 依赖里的类型噪声不属于主题源码问题；按诊断块过滤，避免留下孤立的多行错误详情。
+const diagnostics = []
+let currentDiagnostic = []
+
+for (const line of output.split(/\r?\n/)) {
+  if (isDiagnosticStart(line) && currentDiagnostic.length) {
+    diagnostics.push(currentDiagnostic)
+    currentDiagnostic = []
+  }
+
+  currentDiagnostic.push(line)
+}
+
+if (currentDiagnostic.length)
+  diagnostics.push(currentDiagnostic)
+
+const filtered = diagnostics
+  .filter(lines => !isNodeModulesDiagnostic(lines))
+  .flat()
   .join('\n')
   .trim()
 

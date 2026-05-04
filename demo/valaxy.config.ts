@@ -33,20 +33,20 @@ export default defineConfig<ThemeConfig>({
     // 首屏
     hero: {
       mottoSource: 'hitokoto',
-      motto: ['中文测试test', 'Welcome to Valaxy Theme Lolimeow', 'Test Long Long Long Long Long Long Long Long Long Long Long Long Text'],
+      // motto: ['中文测试test', 'Welcome to Valaxy Theme Lolimeow', 'Test Long Long Long Long Long Long Long Long Long Long Long Long Text'],
       hitokoto: {
         showFrom: true,
         sentenceTypes: ['a', 'b', 'c'],
         maxLength: 30,
       },
-      cover: {
-        urls: ['/images/background1.webp', '/images/background2.webp'],
-        apiUrls: [
-          'https://img.xjh.me/random_img.php?return=302',
-        ],
-        random: true,
-        fixed: false,
-      },
+      // cover: {
+      //   urls: ['/images/background1.webp', '/images/background2.webp'],
+      //   apiUrls: [
+      //     'https://img.xjh.me/random_img.php?return=302',
+      //   ],
+      //   random: true,
+      //   fixed: false,
+      // },
       typewriter: true,
     },
 
