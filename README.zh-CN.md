@@ -14,7 +14,7 @@
   <img width="2000" height="0" alt="" aria-hidden="true"><br>
   <span><b>简体中文 | <a href="./README.md">English</a></b></span><br>
   <sub>轻二次元氛围、柔和阅读平面、内置一言 Hero、本地搜索与有辨识度的聚合页。</sub><br>
-  <sub><a href="https://lolimeow.yoyo514.top/">Live Demo</a> · <a href="https://lolimeow.yoyo514.top/docs/">文档</a></sub><br>
+  <sub><a href="https://lolimeow.yoyo514.top/">Live Demo</a> | <a href="https://lolimeow.yoyo514.top/docs/">文档</a></sub><br>
   <img width="2000" height="0" alt="" aria-hidden="true">
 </td>
 </tr>
