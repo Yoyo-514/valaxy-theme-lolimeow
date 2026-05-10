@@ -84,7 +84,6 @@ const props = defineProps<{
   inset: -0.35rem -3.5rem;
   background: color-mix(in srgb, var(--lm-c-bg-glass) 52%, transparent);
   backdrop-filter: blur(calc(var(--lm-hero-surface-blur) + 1px)) saturate(1.08);
-  -webkit-backdrop-filter: blur(calc(var(--lm-hero-surface-blur) + 1px)) saturate(1.08);
   // 主牌承载区应围绕文字主体存在，而不是形成一整块横幅。
   // 这里通过横向 mask 让模糊从文字外缘向两侧逐步衰减，直到边界透明。
   mask-image: linear-gradient(

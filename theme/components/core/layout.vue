@@ -97,6 +97,5 @@ useHomePaginationScrollBehavior(router)
 
   background: color-mix(in srgb, var(--lm-c-bg-glass) 62%, transparent);
   backdrop-filter: blur(6px) saturate(1.04);
-  -webkit-backdrop-filter: blur(6px) saturate(1.04);
 }
 </style>

@@ -16,6 +16,5 @@
   background: $background;
   border: 1px solid $border-color;
   backdrop-filter: blur($blur);
-  -webkit-backdrop-filter: blur($blur);
   box-shadow: $shadow;
 }

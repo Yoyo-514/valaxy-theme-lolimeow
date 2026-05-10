@@ -8,6 +8,7 @@
     "ci:publish": "pnpm -r publish --access public --no-git-checks",
     "dev": "pnpm run demo",
     "demo": "pnpm -C demo run dev",
+    "demo:serve": "pnpm -C demo run serve",
     "docs:build": "pnpm -C docs run build",
     "docs:dev": "pnpm -C docs run dev",
     "docs:serve": "pnpm -C docs run serve",

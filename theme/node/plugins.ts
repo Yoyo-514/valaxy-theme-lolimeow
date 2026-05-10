@@ -23,5 +23,6 @@ export function themePlugin(options: ResolvedValaxyOptions<ThemeConfig>): Plugin
         valaxy: {},
       }
     },
+
   }
 }
