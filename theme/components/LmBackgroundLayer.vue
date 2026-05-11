@@ -69,5 +69,6 @@ const overlayStyle = computed(() => ({
 
 .lm-bg-fade-layer {
   @apply inset-0 absolute transition-opacity duration-500 ease-out;
+  will-change: opacity;
 }
 </style>

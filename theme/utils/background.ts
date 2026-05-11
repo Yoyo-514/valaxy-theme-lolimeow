@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'vue'
 import type { ResolvedBackground } from '../composables/use-resolved-background'
+import { clamp } from './common'
 
 interface BackgroundImageStyleOptions {
   fixed?: boolean
@@ -28,7 +29,7 @@ export function clampOpacity(opacity?: number, fallback = 0.3) {
   if (typeof opacity !== 'number' || Number.isNaN(opacity))
     return fallback
 
-  return Math.min(1, Math.max(0, opacity))
+  return clamp(opacity, 0, 1)
 }
 
 export function getBackgroundCacheKey(scope: 'app' | 'hero', background: ResolvedBackground) {

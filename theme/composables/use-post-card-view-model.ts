@@ -25,9 +25,9 @@ export function usePostCardViewModel(post: Post, index = 0) {
     }
 
     if (coverFallback.length) {
-      const pckedFallback = pickBySeed(coverFallback, seed.value)
-      if (pckedFallback)
-        candidates.push(pckedFallback)
+      const pickedFallback = pickBySeed(coverFallback, seed.value)
+      if (pickedFallback)
+        candidates.push(pickedFallback)
     }
 
     return candidates

@@ -2,7 +2,7 @@ import type { CSSProperties, Ref } from 'vue'
 import type { BrowserTimeout } from '../utils'
 import type { ResolvedBackground } from './use-resolved-background'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
-import { clearBrowserTimeout, getBackgroundCacheKey, getRotationCandidate, getWindow, requestBrowserAnimationFrame, setBrowserTimeout, shouldUseTransparentFallback } from '../utils'
+import { clearBrowserTimeout, getBackgroundCacheKey, getRotationCandidate, getWindow, LRUCache, requestBrowserAnimationFrame, setBrowserTimeout, shouldUseTransparentFallback } from '../utils'
 
 type BackgroundRuntimeScope = 'app' | 'hero'
 
@@ -14,13 +14,13 @@ interface BackgroundRuntimeOptions {
   transparentUntilLoaded?: boolean
 }
 
+const LOADED_IMAGE_CACHE_CAPACITY = 64
+
 // 已经成功显示过的图片缓存。作用是切页时优先复用稳定结果，
 // 避免同一张图在短时间内重复经历“占位 -> 进场”的过程。
-const loadedImageCache = new Map<string, string>()
-/**
- * 随机模式下的静态回退图缓存。作用是让“等待 API 图”的保底图
- * 在当前会话内保持稳定，但不同访客仍然有机会看到不同的首图
- */
+const loadedImageCache = new LRUCache<string, string>(LOADED_IMAGE_CACHE_CAPACITY)
+// 随机模式下的静态回退图缓存。当前为了 hydration 稳定，
+// fallback 使用解析层给出的稳定候选图，而不在运行时重新随机。
 const sessionFallbackCache = new Map<string, string>()
 const IMAGE_FADE_DURATION = 520
 const MIN_ROTATION_INTERVAL = 4000

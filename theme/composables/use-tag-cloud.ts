@@ -1,5 +1,6 @@
 import type { MaybeRefOrGetter } from 'vue'
 import { computed, toValue } from 'vue'
+import { clamp } from '../utils'
 
 export interface TagCloudSourceItem {
   id: string
@@ -27,10 +28,6 @@ function hashString(input: string) {
     hash = (hash * 31 + input.charCodeAt(i)) >>> 0
 
   return hash
-}
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max)
 }
 
 function interpolate(min: number, max: number, ratio: number) {
