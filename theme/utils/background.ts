@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'vue'
-import type { ResolvedBackground } from '../composables/use-resolved-background'
+import type { BackgroundScope, ResolvedBackground } from '../types'
 import { clamp } from './common'
 
 interface BackgroundImageStyleOptions {
@@ -32,7 +32,7 @@ export function clampOpacity(opacity?: number, fallback = 0.3) {
   return clamp(opacity, 0, 1)
 }
 
-export function getBackgroundCacheKey(scope: 'app' | 'hero', background: ResolvedBackground) {
+export function getBackgroundCacheKey(scope: BackgroundScope, background: ResolvedBackground) {
   if (background.type !== 'image' || !background.imageUrl)
     return `${scope}:non-image`
 

@@ -1,5 +1,6 @@
 export * from './background'
 export * from './config'
+export * from './domain'
 export * from './footer'
 export * from './hero'
 export * from './layout'

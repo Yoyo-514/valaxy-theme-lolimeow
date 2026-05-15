@@ -76,6 +76,6 @@ html.dark {
     Roboto, 'Helvetica Neue', Helvetica, Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', 'Noto Color Emoji';
   --lm-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  --va-font-mono: var(--lm-font-mono);
-  --va-font-sans: var(--lm-font-base);
+  --va-font-mono: var(--lm-font-mono) !important;
+  --va-font-sans: var(--lm-font-base) !important;
 }
