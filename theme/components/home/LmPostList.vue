@@ -53,6 +53,10 @@ const actualColumns = computed(() => {
   return resolveGridColumnCount(containerWidth.value, minCardWidthPx.value, maxColumns.value, GRID_GAP_PX)
 })
 
+const cardLayout = computed(() => {
+  return actualColumns.value === 1 ? 'alternating' : 'text-first'
+})
+
 const gridStyle = computed(() => {
   return {
     '--lm-post-list-columns': String(actualColumns.value),
@@ -74,7 +78,7 @@ const gridStyle = computed(() => {
         class="lm-post-list__item m-0"
         :class="{ 'lm-post-list__item--animated': props.animateItems }"
       >
-        <LmPostCard :post="post" :index="index" />
+        <LmPostCard :post="post" :index="index" :layout="cardLayout" />
       </li>
     </ul>
     <div

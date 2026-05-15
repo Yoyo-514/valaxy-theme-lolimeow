@@ -1,12 +1,18 @@
 <script lang="ts" setup>
 import type { Post } from 'valaxy'
-import { shallowRef } from 'vue'
+import { computed, shallowRef } from 'vue'
 import { usePostCardMediaState, usePostCardViewModel } from '../../composables'
 
-const props = defineProps<{
+type PostCardLayout = 'alternating' | 'text-first'
+
+const props = withDefaults(defineProps<{
   post: Post
   index?: number
-}>()
+  layout?: PostCardLayout
+}>(), {
+  index: 0,
+  layout: 'alternating',
+})
 
 const {
   title,
@@ -19,7 +25,14 @@ const {
   isTextOnly,
   isReversed,
   handleCoverError,
-} = usePostCardViewModel(props.post, props.index ?? 0)
+} = usePostCardViewModel(props.post, props.index)
+
+const shouldReverse = computed(() => {
+  if (props.layout === 'text-first')
+    return hasMedia.value
+
+  return isReversed.value
+})
 
 const imageElement = shallowRef<HTMLImageElement | null>(null)
 
@@ -34,7 +47,10 @@ const {
   <RouterLink
     :to="post.path || ''"
     class="lm-post-card"
-    :class="{ 'lm-post-card--reversed': isReversed, 'lm-post-card--text-only': isTextOnly }"
+    :class="{
+      'lm-post-card--reversed': shouldReverse,
+      'lm-post-card--text-only': isTextOnly,
+    }"
   >
     <div v-if="hasMedia" class="lm-post-card__media">
       <div class="lm-post-card__media-shape">
