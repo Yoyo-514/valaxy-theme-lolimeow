@@ -3,7 +3,7 @@
 <pre align="center">一个轻二次元风格的 Valaxy 博客主题，适合安静地写日常、笔记与长文。</pre>
 
 <p align="center">
-  <img src="./public/images/example.png" alt="valaxy-theme-lolimeow preview">
+  <img src="./public/images/preview.png" alt="valaxy-theme-lolimeow 桌面端预览">
 </p>
 
 <div align="center">
@@ -16,6 +16,25 @@
   <sub>轻二次元氛围、柔和阅读平面、内置一言 Hero、本地搜索与有辨识度的聚合页。</sub><br>
   <sub><a href="https://lolimeow.yoyo514.top/">Live Demo</a> | <a href="https://lolimeow.yoyo514.top/docs/">文档</a></sub><br>
   <img width="2000" height="0" alt="" aria-hidden="true">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+## 预览
+
+<div align="center">
+<table>
+<tbody>
+<tr>
+<td align="center" width="50%">
+  <img src="./public/images/tablet-preview.png" alt="valaxy-theme-lolimeow 平板端预览" width="320"><br>
+  <sub><b>平板端</b></sub>
+</td>
+<td align="center" width="50%">
+  <img src="./public/images/mobile-preview.png" alt="valaxy-theme-lolimeow 移动端预览" width="220"><br>
+  <sub><b>移动端</b></sub>
 </td>
 </tr>
 </tbody>

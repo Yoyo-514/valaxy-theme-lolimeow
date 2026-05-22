@@ -3,7 +3,7 @@
 <pre align="center">A soft anime-style Valaxy theme for a calm daily writing space.</pre>
 
 <p align="center">
-  <img src="./public/images/example.png" alt="valaxy-theme-lolimeow preview">
+  <img src="./public/images/preview.png" alt="valaxy-theme-lolimeow desktop preview">
 </p>
 
 <div align="center">
@@ -16,6 +16,25 @@
   <sub>Light anime atmosphere, soft reading surfaces, built-in Hitokoto motto, local search, and themed aggregate pages.</sub><br>
   <sub><a href="https://lolimeow.yoyo514.top/">Live Demo</a> | <a href="https://lolimeow.yoyo514.top/docs/">Documentation</a></sub><br>
   <img width="2000" height="0" alt="" aria-hidden="true">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+## Preview
+
+<div align="center">
+<table>
+<tbody>
+<tr>
+<td align="center" width="50%">
+  <img src="./public/images/tablet-preview.png" alt="valaxy-theme-lolimeow tablet preview" width="320"><br>
+  <sub><b>Tablet</b></sub>
+</td>
+<td align="center" width="50%">
+  <img src="./public/images/mobile-preview.png" alt="valaxy-theme-lolimeow mobile preview" width="220"><br>
+  <sub><b>Mobile</b></sub>
 </td>
 </tr>
 </tbody>
