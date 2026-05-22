@@ -9,6 +9,11 @@ interface MutableTagGroup {
   entries: TagEntry[]
 }
 
+interface TaggedEntry {
+  tag: string
+  entry: TagEntry
+}
+
 /**
  * 将 frontmatter 中的标签字段归一化为去重后的标签数组。
  */
@@ -52,42 +57,48 @@ function compareGroups(left: TagGroup, right: TagGroup) {
   return right.count - left.count || left.name.localeCompare(right.name)
 }
 
+function createTaggedEntries(post: Post): TaggedEntry[] {
+  const entry = createPostEntry(post)
+
+  return normalizeTags(post.tags).map(tag => ({ tag, entry }))
+}
+
+function appendTaggedEntry(mapped: Map<string, MutableTagGroup>, { tag, entry }: TaggedEntry) {
+  const existing = mapped.get(tag)
+  const nextGroup: MutableTagGroup = existing
+    ? {
+        ...existing,
+        entries: [...existing.entries, entry],
+      }
+    : {
+        id: createTagId(tag),
+        name: tag,
+        entries: [entry],
+      }
+
+  return new Map(mapped).set(tag, nextGroup)
+}
+
+function finalizeTagGroup(group: MutableTagGroup): TagGroup {
+  return {
+    id: group.id,
+    name: group.name,
+    count: group.entries.length,
+    entries: group.entries.slice().sort(compareEntries),
+  }
+}
+
 /**
  * 从文章列表构建标签聚合数据。
  */
 export function buildTagGroups(sourcePosts: readonly Post[]) {
-  const mapped = new Map<string, MutableTagGroup>()
-
-  getVisibleSortedPosts(sourcePosts).forEach((post) => {
-    const tags = normalizeTags(post.tags)
-    if (!tags.length)
-      return
-
-    const entry = createPostEntry(post)
-
-    tags.forEach((tag) => {
-      const existing = mapped.get(tag)
-
-      if (existing) {
-        existing.entries.push(entry)
-        return
-      }
-
-      mapped.set(tag, {
-        id: createTagId(tag),
-        name: tag,
-        entries: [entry],
-      })
-    })
-  })
-
-  return Array.from(mapped.values())
-    .map(group => ({
-      id: group.id,
-      name: group.name,
-      count: group.entries.length,
-      entries: group.entries.slice().sort(compareEntries),
-    }))
+  return Array.from(
+    getVisibleSortedPosts(sourcePosts)
+      .flatMap(createTaggedEntries)
+      .reduce(appendTaggedEntry, new Map<string, MutableTagGroup>())
+      .values(),
+  )
+    .map(finalizeTagGroup)
     .sort(compareGroups)
 }
 
@@ -96,11 +107,5 @@ export function buildTagGroups(sourcePosts: readonly Post[]) {
  */
 export function countTaggedPosts(groups: readonly TagGroup[]) {
   // 一篇文章可拥有多个标签，统计文章总数时必须按路径去重。
-  const paths = new Set<string>()
-
-  groups.forEach((group) => {
-    group.entries.forEach(entry => paths.add(entry.path))
-  })
-
-  return paths.size
+  return new Set(groups.flatMap(group => group.entries.map(entry => entry.path))).size
 }

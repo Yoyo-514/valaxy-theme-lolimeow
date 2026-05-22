@@ -30,7 +30,6 @@ const stats = computed(() => {
 <template>
   <section class="lm-archives-page">
     <LmAggregateHeader
-      :eyebrow="t('pages.archives.eyebrow')"
       :title="pageTitle"
       :cover="pageCover"
       :stats="stats"

@@ -6,7 +6,6 @@ const {
   authorName,
   description,
   pageCover,
-  pageEyebrow,
   pageTitle,
   profileLabel,
   socialLinks,
@@ -16,7 +15,6 @@ const {
 <template>
   <section class="lm-about-page">
     <LmAggregateHeader
-      :eyebrow="pageEyebrow"
       :title="pageTitle"
       :cover="pageCover"
     />
@@ -33,10 +31,6 @@ const {
         </div>
 
         <div class="lm-about-profile__body">
-          <p class="lm-about-profile__eyebrow">
-            {{ profileLabel }}
-          </p>
-
           <h2 class="lm-about-profile__name">
             {{ authorName }}
           </h2>
@@ -91,13 +85,8 @@ const {
   @apply flex min-w-0 flex-col justify-center;
 }
 
-.lm-about-profile__eyebrow {
-  @apply m-0 text-xs leading-5 font-800 uppercase tracking-[0.16em];
-  color: var(--lm-c-text-muted);
-}
-
 .lm-about-profile__name {
-  @apply m-0 mt-1 text-2xl leading-9 font-900 sm:text-3xl;
+  @apply m-0 text-2xl leading-9 font-900 sm:text-3xl;
 }
 
 .lm-about-profile__description {

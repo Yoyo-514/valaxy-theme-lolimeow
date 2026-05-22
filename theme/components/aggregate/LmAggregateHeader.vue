@@ -1,6 +1,5 @@
 <script setup lang="ts">
 defineProps<{
-  eyebrow: string
   title: string
   cover?: string
   stats?: Array<{
@@ -27,7 +26,6 @@ defineProps<{
           <div class="lm-aggregate-header__content lm-aggregate-header__content--cover">
             <LmAggregateMeta
               class="lm-aggregate-header__meta"
-              :eyebrow="eyebrow"
               :title="title"
               :stats="stats"
               cover
@@ -43,7 +41,6 @@ defineProps<{
       :class="{ 'lm-aggregate-header__content--plain': !cover }"
     >
       <LmAggregateMeta
-        :eyebrow="eyebrow"
         :title="title"
         :stats="stats"
       />

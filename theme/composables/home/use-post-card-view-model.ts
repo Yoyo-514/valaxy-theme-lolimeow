@@ -3,6 +3,10 @@ import { computed, ref, watch } from 'vue'
 import { appendSeedQuery, normalizeExcerpt, pickBySeed } from '../../utils'
 import { useThemeConfig } from '../config'
 
+function compactCoverCandidates(candidates: Array<string | false | undefined>) {
+  return candidates.filter((candidate): candidate is string => Boolean(candidate))
+}
+
 export function usePostCardViewModel(post: Post, index = 0) {
   const themeConfig = useThemeConfig()
   const postListConfig = computed(() => themeConfig.value.postList)
@@ -16,21 +20,17 @@ export function usePostCardViewModel(post: Post, index = 0) {
       return [postCover]
 
     const { coverRandom, coverApiUrls = [], coverFallback = [] } = postListConfig.value
-    const candidates: string[] = []
+    const pickedApi = coverRandom && coverApiUrls.length
+      ? pickBySeed(coverApiUrls, seed.value)
+      : undefined
+    const pickedFallback = coverFallback.length
+      ? pickBySeed(coverFallback, seed.value)
+      : undefined
 
-    if (coverRandom && coverApiUrls.length) {
-      const pickedApi = pickBySeed(coverApiUrls, seed.value)
-      if (pickedApi)
-        candidates.push(appendSeedQuery(pickedApi, seed.value))
-    }
-
-    if (coverFallback.length) {
-      const pickedFallback = pickBySeed(coverFallback, seed.value)
-      if (pickedFallback)
-        candidates.push(pickedFallback)
-    }
-
-    return candidates
+    return compactCoverCandidates([
+      pickedApi && appendSeedQuery(pickedApi, seed.value),
+      pickedFallback,
+    ])
   })
 
   const coverIndex = ref(0)

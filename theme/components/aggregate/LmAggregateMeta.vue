@@ -1,6 +1,5 @@
 <script setup lang="ts">
 withDefaults(defineProps<{
-  eyebrow?: string
   title: string
   stats?: Array<{
     label: string
@@ -8,7 +7,6 @@ withDefaults(defineProps<{
   }>
   cover?: boolean
 }>(), {
-  eyebrow: '',
   stats: () => [],
   cover: false,
 })
@@ -19,10 +17,6 @@ withDefaults(defineProps<{
     <h1 class="lm-aggregate-meta__title">
       {{ title }}
     </h1>
-
-    <p v-if="eyebrow" class="lm-aggregate-meta__eyebrow">
-      {{ eyebrow }}
-    </p>
 
     <ul v-if="stats.length" class="lm-aggregate-meta__stats">
       <li
@@ -40,11 +34,6 @@ withDefaults(defineProps<{
 <style scoped lang="scss">
 .lm-aggregate-meta {
   @apply flex flex-col justify-center items-center;
-}
-
-.lm-aggregate-meta__eyebrow {
-  @apply mt-3 text-xs font-700 uppercase tracking-[0.16em];
-  color: var(--lm-c-text-muted);
 }
 
 .lm-aggregate-meta__title {
@@ -68,10 +57,6 @@ withDefaults(defineProps<{
 .lm-aggregate-meta__label {
   @apply text-sm font-600;
   color: var(--lm-c-text-secondary);
-}
-
-.lm-aggregate-meta--cover .lm-aggregate-meta__eyebrow {
-  color: rgba(255, 255, 255, 0.86);
 }
 
 .lm-aggregate-meta--cover .lm-aggregate-meta__title {

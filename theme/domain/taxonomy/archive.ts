@@ -28,33 +28,40 @@ export function resolveArchiveYear(post: Post) {
   return String(new Date(timestamp).getFullYear())
 }
 
+function createArchiveEntry(post: Post): ArchiveEntry {
+  return {
+    ...createPostEntry(post),
+    categories: normalizeArchiveCategories(post.categories),
+  }
+}
+
+function appendArchiveGroup(mapped: Map<string, ArchiveGroup>, post: Post) {
+  const year = resolveArchiveYear(post)
+  const existingGroup = mapped.get(year)
+  const entry = createArchiveEntry(post)
+  const nextGroup: ArchiveGroup = existingGroup
+    ? {
+        ...existingGroup,
+        count: existingGroup.count + 1,
+        entries: [...existingGroup.entries, entry],
+      }
+    : {
+        year,
+        sortKey: year === 'Unknown' ? Number.NEGATIVE_INFINITY : Number(year),
+        count: 1,
+        entries: [entry],
+      }
+
+  return new Map(mapped).set(year, nextGroup)
+}
+
 /**
  * 从文章列表构建按年份分组的归档数据。
  */
 export function buildArchiveGroups(sourcePosts: readonly Post[]) {
-  const mapped = new Map<string, ArchiveGroup>()
-
-  getVisibleSortedPosts(sourcePosts).forEach((post) => {
-    const year = resolveArchiveYear(post)
-    const existingGroup = mapped.get(year)
-    const entry: ArchiveEntry = {
-      ...createPostEntry(post),
-      categories: normalizeArchiveCategories(post.categories),
-    }
-
-    if (existingGroup) {
-      existingGroup.entries.push(entry)
-      existingGroup.count += 1
-      return
-    }
-
-    mapped.set(year, {
-      year,
-      sortKey: year === 'Unknown' ? Number.NEGATIVE_INFINITY : Number(year),
-      count: 1,
-      entries: [entry],
-    })
-  })
-
-  return Array.from(mapped.values()).sort((left, right) => right.sortKey - left.sortKey)
+  return Array.from(
+    getVisibleSortedPosts(sourcePosts)
+      .reduce(appendArchiveGroup, new Map<string, ArchiveGroup>())
+      .values(),
+  ).sort((left, right) => right.sortKey - left.sortKey)
 }

@@ -7,6 +7,10 @@ interface ArticleInfoItem {
   text: string
 }
 
+function isArticleInfoItem(item: ArticleInfoItem | false | '' | undefined): item is ArticleInfoItem {
+  return Boolean(item)
+}
+
 export function useArticleHeaderMeta() {
   const frontmatter = useFrontmatter()
 
@@ -52,30 +56,20 @@ export function useArticleHeaderMeta() {
   })
 
   const infoItems = computed<ArticleInfoItem[]>(() => {
-    const items: ArticleInfoItem[] = []
-
-    if (updatedDate.value) {
-      items.push({
+    return [
+      updatedDate.value && {
         icon: 'i-ri-history-line',
         text: `更新于 ${updatedDate.value}`,
-      })
-    }
-
-    if (wordCount.value) {
-      items.push({
+      },
+      wordCount.value && {
         icon: 'i-ri-file-text-line',
         text: `本文字数: ${wordCount.value}`,
-      })
-    }
-
-    if (readingTime.value > 0) {
-      items.push({
+      },
+      readingTime.value > 0 && {
         icon: 'i-ri-book-open-line',
         text: `阅读时长: ${readingTime.value}m`,
-      })
-    }
-
-    return items
+      },
+    ].filter(isArticleInfoItem)
   })
 
   return {

@@ -49,20 +49,12 @@ function resolveRowCount(count: number) {
  */
 function createRowSequence(rowCount: number) {
   const center = Math.floor(rowCount / 2)
-  const rows = [center]
+  const offsets = Array.from({ length: rowCount }, (_, index) => index + 1)
+  const outwardRows = offsets.flatMap(offset => [center - offset, center + offset])
 
-  for (let offset = 1; rows.length < rowCount; offset += 1) {
-    const left = center - offset
-    const right = center + offset
-
-    if (left >= 0)
-      rows.push(left)
-
-    if (right < rowCount)
-      rows.push(right)
-  }
-
-  return rows
+  return [center, ...outwardRows]
+    .filter(rowIndex => rowIndex >= 0 && rowIndex < rowCount)
+    .slice(0, rowCount)
 }
 
 /**
@@ -75,11 +67,31 @@ function moveStrongestItemToCenter(items: TagCloudViewItem[]) {
   const strongestIndex = items.reduce((resolvedIndex, item, index) => {
     return item.count > items[resolvedIndex].count ? index : resolvedIndex
   }, 0)
-  const nextItems = items.slice()
-  const [strongestItem] = nextItems.splice(strongestIndex, 1)
-  nextItems.splice(Math.floor(nextItems.length / 2), 0, strongestItem)
+  const strongestItem = items[strongestIndex]
+  const remainingItems = items.filter((_, index) => index !== strongestIndex)
+  const targetIndex = Math.floor(remainingItems.length / 2)
 
-  return nextItems
+  return [
+    ...remainingItems.slice(0, targetIndex),
+    strongestItem,
+    ...remainingItems.slice(targetIndex),
+  ]
+}
+
+function createTagCloudViewItem(item: TagCloudSourceItem, min: number, range: number): TagCloudViewItem {
+  const ratio = resolveWeightRatio(item.count, min, range)
+  const hash = hashString(item.name)
+  const shiftX = ((hash % 9) - 4) / 10
+  const shiftY = (((hash >> 4) % 7) - 3) / 10
+
+  return {
+    ...item,
+    fontSize: `${interpolate(0.95, 2.35, ratio).toFixed(2)}rem`,
+    fontWeight: Math.round(interpolate(600, 900, ratio)),
+    opacity: interpolate(0.66, 1, ratio),
+    shiftX: `${shiftX.toFixed(2)}rem`,
+    shiftY: `${shiftY.toFixed(2)}rem`,
+  }
 }
 
 /**
@@ -95,31 +107,18 @@ export function buildTagCloudRows(sourceItems: readonly TagCloudSourceItem[]): T
   const range = max - min
 
   const viewItems = sourceItems
-    .map((item) => {
-      const ratio = resolveWeightRatio(item.count, min, range)
-      const hash = hashString(item.name)
-      const shiftX = ((hash % 9) - 4) / 10
-      const shiftY = (((hash >> 4) % 7) - 3) / 10
-
-      return {
-        ...item,
-        fontSize: `${interpolate(0.95, 2.35, ratio).toFixed(2)}rem`,
-        fontWeight: Math.round(interpolate(600, 900, ratio)),
-        opacity: interpolate(0.66, 1, ratio),
-        shiftX: `${shiftX.toFixed(2)}rem`,
-        shiftY: `${shiftY.toFixed(2)}rem`,
-      }
-    })
+    .map(item => createTagCloudViewItem(item, min, range))
     .sort(compareCloudItems)
 
   const rowCount = resolveRowCount(viewItems.length)
   const rowSequence = createRowSequence(rowCount)
-  const rows: TagCloudViewItem[][] = Array.from({ length: rowCount }, () => [])
-
-  viewItems.forEach((item, index) => {
+  const rows = viewItems.reduce<TagCloudViewItem[][]>((nextRows, item, index) => {
     const rowIndex = rowSequence[index % rowSequence.length]
-    rows[rowIndex].push(item)
-  })
+
+    return nextRows.map((row, currentIndex) => {
+      return currentIndex === rowIndex ? [...row, item] : row
+    })
+  }, Array.from({ length: rowCount }, () => []))
 
   return rows
     .map((row, index) => ({

@@ -3,12 +3,31 @@ import type { CategoryEntry, CategoryNode } from './types'
 import { resolvePostTimestamp } from '../../utils'
 import { createPostEntry, getVisibleSortedPosts } from '../post'
 
+const UNCATEGORIZED_CATEGORY_NAMES = new Set(['Uncategorized', '未分类'])
+
 interface MutableCategoryNode {
   name: string
   segments: string[]
   total: number
   entries: CategoryEntry[]
   children: Map<string, MutableCategoryNode>
+}
+
+interface CategoryPathState {
+  current: MutableCategoryNode
+}
+
+function isUncategorizedCategoryName(name: string) {
+  return UNCATEGORIZED_CATEGORY_NAMES.has(name.trim())
+}
+
+function isCountableCategoryNode(node: CategoryNode) {
+  return !isUncategorizedCategoryName(node.name)
+}
+
+function getCategorySortBucket(node: CategoryNode) {
+  // 未分类只是兜底分组，不参与真实分类竞争，排序时固定放到最后。
+  return isCountableCategoryNode(node) ? 0 : 1
 }
 
 /**
@@ -25,10 +44,12 @@ export function normalizeCategorySegments(categories: Post['categories']) {
   }
 
   if (typeof categories === 'string' && categories.trim()) {
-    return categories
+    const segments = categories
       .split('/')
       .map(category => category.trim())
       .filter(Boolean)
+
+    return segments.length ? segments : ['Uncategorized']
   }
 
   return ['Uncategorized']
@@ -51,7 +72,8 @@ function createCategoryNode(name: string, segments: string[]): MutableCategoryNo
  * 按文章数、子分类数、路径名稳定排序分类节点。
  */
 function compareNodes(left: CategoryNode, right: CategoryNode) {
-  return right.total - left.total
+  return getCategorySortBucket(left) - getCategorySortBucket(right)
+    || right.total - left.total
     || right.childCount - left.childCount
     || left.fullPath.localeCompare(right.fullPath)
 }
@@ -64,6 +86,36 @@ function compareEntries(left: CategoryEntry, right: CategoryEntry) {
   const rightTimestamp = resolvePostTimestamp({ date: right.date, updated: undefined })
 
   return rightTimestamp - leftTimestamp || left.title.localeCompare(right.title)
+}
+
+function getOrCreateCategoryChild(parent: MutableCategoryNode, name: string, segments: string[]) {
+  const existing = parent.children.get(name)
+  if (existing)
+    return existing
+
+  const next = createCategoryNode(name, segments)
+  parent.children.set(name, next)
+  return next
+}
+
+function appendCategoryPath(root: MutableCategoryNode, post: Post) {
+  const segments = normalizeCategorySegments(post.categories)
+  const entry = createPostEntry(post)
+  const { current } = segments.reduce<CategoryPathState>((state, segment, index) => {
+    const nextSegments = segments.slice(0, index + 1)
+    const next = getOrCreateCategoryChild(state.current, segment, nextSegments)
+
+    // 每一层都累计文章数，父级 total 表示该分类树下的文章总量。
+    next.total += 1
+
+    return {
+      ...state,
+      current: next,
+    }
+  }, { current: root })
+
+  current.entries = [...current.entries, entry]
+  return root
 }
 
 /**
@@ -80,7 +132,7 @@ function finalizeCategoryNode(node: MutableCategoryNode): CategoryNode {
     parentPath: node.segments.slice(0, -1).join(' / '),
     depth: Math.max(node.segments.length - 1, 0),
     total: node.total,
-    childCount: children.length,
+    childCount: children.filter(isCountableCategoryNode).length,
     entries: node.entries.slice().sort(compareEntries),
     children,
   }
@@ -90,36 +142,18 @@ function finalizeCategoryNode(node: MutableCategoryNode): CategoryNode {
  * 递归统计分类树节点总数。
  */
 export function countCategoryNodes(nodes: CategoryNode[]): number {
-  return nodes.reduce((total, node) => total + 1 + countCategoryNodes(node.children), 0)
+  return nodes.reduce((total, node) => {
+    const currentCount = isCountableCategoryNode(node) ? 1 : 0
+    return total + currentCount + countCategoryNodes(node.children)
+  }, 0)
 }
 
 /**
  * 从文章列表构建分类树。
  */
 export function buildCategoryTree(sourcePosts: readonly Post[]) {
-  const root = createCategoryNode('All', [])
-
-  getVisibleSortedPosts(sourcePosts).forEach((post) => {
-    const segments = normalizeCategorySegments(post.categories)
-    const entry = createPostEntry(post)
-    let current = root
-
-    segments.forEach((segment, index) => {
-      const nextSegments = segments.slice(0, index + 1)
-      let next = current.children.get(segment)
-
-      if (!next) {
-        next = createCategoryNode(segment, nextSegments)
-        current.children.set(segment, next)
-      }
-
-      // 每一层都累计文章数，父级 total 表示该分类树下的文章总量。
-      next.total += 1
-      current = next
-    })
-
-    current.entries.push(entry)
-  })
+  const root = getVisibleSortedPosts(sourcePosts)
+    .reduce(appendCategoryPath, createCategoryNode('All', []))
 
   return Array.from(root.children.values())
     .map(finalizeCategoryNode)

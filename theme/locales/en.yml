@@ -12,12 +12,10 @@ search:
 
 pages:
   about:
-    eyebrow: About
     title: About
     profile: Profile
     description: Notes, code, and daily fragments.
   archives:
-    eyebrow: Timeline Archive
     title: Archives
     empty: No archive entries are available yet.
     unknownYear: Unknown Year
@@ -25,7 +23,6 @@ pages:
     stats:
       posts: Posts
   categories:
-    eyebrow: Category Index
     title: Categories
     empty: No categories are available yet.
     uncategorized: Uncategorized
@@ -35,7 +32,6 @@ pages:
       categories: Categories
       posts: Posts
   tags:
-    eyebrow: Tag Index
     title: Tags
     empty: No tags are available yet.
     postCountLabel: posts
@@ -43,7 +39,6 @@ pages:
       tags: Tags
       posts: Posts
   links:
-    eyebrow: Link Index
     title: Friendly Links
     empty: No links are available yet.
     status:

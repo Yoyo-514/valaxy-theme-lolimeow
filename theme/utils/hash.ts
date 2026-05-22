@@ -4,10 +4,7 @@
  * 这里不使用加密哈希，只需要同一输入在客户端和构建时得到稳定结果。
  */
 export function hashString(input: string) {
-  let hash = 0
-
-  for (let i = 0; i < input.length; i += 1)
-    hash = (hash * 31 + input.charCodeAt(i)) >>> 0
-
-  return hash
+  return Array.from(input).reduce((hash, char) => {
+    return (hash * 31 + char.charCodeAt(0)) >>> 0
+  }, 0)
 }

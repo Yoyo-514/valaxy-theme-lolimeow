@@ -5,9 +5,10 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 
 const currentPage = computed(() => {
-  const rawPage = Array.isArray(route.params.page)
-    ? route.params.page[0]
-    : route.params.page
+  const params = route.params as { page?: string | string[] }
+  const rawPage = Array.isArray(params.page)
+    ? params.page[0]
+    : params.page
 
   const page = Number(rawPage)
 

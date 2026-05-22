@@ -32,31 +32,39 @@ function getActiveScrollOffset() {
   return Math.max(navbarOffset + ACTIVE_SCROLL_GAP, readingLineOffset)
 }
 
+function flattenTocItems(nodes: MenuItem[], depth = 0): TocItem[] {
+  return nodes.flatMap((node) => {
+    const currentItem = node.link && node.title
+      ? [{ title: node.title, link: node.link, depth }]
+      : []
+    const childItems = Array.isArray(node.children) && node.children.length
+      ? flattenTocItems(node.children, depth + 1)
+      : []
+
+    return [...currentItem, ...childItems]
+  })
+}
+
+function resolveActiveLink(items: TocItem[], scrollTop: number, currentDocument: Document, currentWindow: Window) {
+  return items.reduce((activeLink, item) => {
+    const id = decodeURIComponent(item.link.replace(HASH_PREFIX_RE, ''))
+    const heading = currentDocument.getElementById(id)
+
+    if (!heading)
+      return activeLink
+
+    const headingTop = heading.getBoundingClientRect().top + currentWindow.scrollY
+    return headingTop <= scrollTop ? item.link : activeLink
+  }, items[0]?.link || '')
+}
+
 export function useArticleTocState() {
   const { headers, handleClick: originalHandleClick } = useOutline()
   const activeLink = ref('')
 
   const items = computed<TocItem[]>(() => {
     // 组件只展示两级目录，深层标题仍参与 Valaxy 大纲但不挤压侧栏层级。
-    const flattened: TocItem[] = []
-
-    const visit = (nodes: MenuItem[], depth = 0) => {
-      nodes.forEach((node) => {
-        if (node.link && node.title) {
-          flattened.push({
-            title: node.title,
-            link: node.link,
-            depth,
-          })
-        }
-
-        if (Array.isArray(node.children) && node.children.length)
-          visit(node.children, depth + 1)
-      })
-    }
-
-    visit(headers.value || [])
-    return flattened.filter(item => item.depth <= 1)
+    return flattenTocItems(headers.value || []).filter(item => item.depth <= 1)
   })
   const visible = computed(() => items.value.length >= 2)
 
@@ -84,20 +92,7 @@ export function useArticleTocState() {
     }
 
     const scrollTop = currentWindow.scrollY + getActiveScrollOffset()
-    let nextActive = currentItems[0]?.link || ''
-
-    currentItems.forEach((item) => {
-      const id = decodeURIComponent(item.link.replace(HASH_PREFIX_RE, ''))
-      const heading = currentDocument.getElementById(id)
-
-      if (heading) {
-        const headingTop = heading.getBoundingClientRect().top + currentWindow.scrollY
-        if (headingTop <= scrollTop)
-          nextActive = item.link
-      }
-    })
-
-    activeLink.value = nextActive
+    activeLink.value = resolveActiveLink(currentItems, scrollTop, currentDocument, currentWindow)
   }
 
   const updateActiveLinkOnScroll = createThrottledFunction(updateActiveLink, ACTIVE_SCROLL_THROTTLE)

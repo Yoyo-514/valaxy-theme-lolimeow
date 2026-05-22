@@ -12,12 +12,10 @@ search:
 
 pages:
   about:
-    eyebrow: 关于本站
     title: 关于
     profile: Profile
     description: 记录想法、代码与日常。
   archives:
-    eyebrow: 时间归档
     title: 归档
     empty: 这里还没有可展示的归档文章。
     unknownYear: 未标注年份
@@ -25,7 +23,6 @@ pages:
     stats:
       posts: 文章
   categories:
-    eyebrow: 分类索引
     title: 分类
     empty: 这里还没有可展示的分类内容。
     uncategorized: 未分类
@@ -35,7 +32,6 @@ pages:
       categories: 分类
       posts: 文章
   tags:
-    eyebrow: 标签索引
     title: 标签
     empty: 这里还没有可展示的标签内容。
     postCountLabel: 篇文章
@@ -43,7 +39,6 @@ pages:
       tags: 标签
       posts: 文章
   links:
-    eyebrow: 友链索引
     title: 友情链接
     empty: 这里还没有可展示的友链。
     status:

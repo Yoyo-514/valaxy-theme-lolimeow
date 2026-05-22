@@ -29,6 +29,18 @@ export function stripSearchHtml(value: string) {
     .trim()
 }
 
+function collectTermRanges(lowerText: string, lowerTerm: string, termLength: number, fromIndex = 0): Array<[number, number]> {
+  const start = lowerText.indexOf(lowerTerm, fromIndex)
+
+  if (start === -1)
+    return []
+
+  return [
+    [start, start + termLength - 1],
+    ...collectTermRanges(lowerText, lowerTerm, termLength, start + termLength),
+  ]
+}
+
 /**
  * 收集查询词在目标文本中的命中区间。
  */
@@ -39,20 +51,11 @@ export function collectQueryRanges(text: string, search: string) {
     .split(/\s+/)
     .filter(Boolean)
 
-  const ranges: Array<[number, number]> = []
   const lowerText = text.toLowerCase()
 
-  for (const term of terms) {
-    const lowerTerm = term.toLowerCase()
-    let start = lowerText.indexOf(lowerTerm)
-
-    while (start !== -1) {
-      ranges.push([start, start + term.length - 1])
-      start = lowerText.indexOf(lowerTerm, start + term.length)
-    }
-  }
-
-  return ranges
+  return terms.flatMap((term) => {
+    return collectTermRanges(lowerText, term.toLowerCase(), term.length)
+  })
 }
 
 /**
@@ -65,20 +68,22 @@ export function mergeRanges(ranges: readonly (readonly [number, number])[], maxL
     .filter(([start, end]) => start <= end)
     .sort((a, b) => a[0] - b[0])
 
-  const mergedRanges: Array<[number, number]> = []
-
-  for (const [start, end] of normalizedRanges) {
+  return normalizedRanges.reduce<Array<[number, number]>>((mergedRanges, [start, end]) => {
     const lastRange = mergedRanges.at(-1)
 
-    if (lastRange && start <= lastRange[1] + 1) {
-      lastRange[1] = Math.max(lastRange[1], end)
-      continue
-    }
+    if (!lastRange || start > lastRange[1] + 1)
+      return [...mergedRanges, [start, end]]
 
-    mergedRanges.push([start, end])
-  }
+    return [
+      ...mergedRanges.slice(0, -1),
+      [lastRange[0], Math.max(lastRange[1], end)],
+    ]
+  }, [])
+}
 
-  return mergedRanges
+interface HighlightPartState {
+  cursor: number
+  parts: LmSearchHighlightPart[]
 }
 
 /**
@@ -95,19 +100,26 @@ export function createHighlightParts(
   if (!mergedRanges.length)
     return [{ text, highlighted: false }]
 
-  const parts: LmSearchHighlightPart[] = []
-  let cursor = 0
+  const { cursor, parts } = mergedRanges.reduce<HighlightPartState>((state, [start, end]) => {
+    const plainPart = state.cursor < start
+      ? [{ text: text.slice(state.cursor, start), highlighted: false }]
+      : []
 
-  for (const [start, end] of mergedRanges) {
-    if (cursor < start)
-      parts.push({ text: text.slice(cursor, start), highlighted: false })
+    return {
+      cursor: end + 1,
+      parts: [
+        ...state.parts,
+        ...plainPart,
+        { text: text.slice(start, end + 1), highlighted: true },
+      ],
+    }
+  }, { cursor: 0, parts: [] })
 
-    parts.push({ text: text.slice(start, end + 1), highlighted: true })
-    cursor = end + 1
-  }
+  if (cursor >= text.length)
+    return parts
 
-  if (cursor < text.length)
-    parts.push({ text: text.slice(cursor), highlighted: false })
-
-  return parts
+  return [
+    ...parts,
+    { text: text.slice(cursor), highlighted: false },
+  ]
 }

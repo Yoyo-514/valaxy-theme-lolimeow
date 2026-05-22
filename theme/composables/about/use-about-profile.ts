@@ -72,7 +72,6 @@ export function useAboutProfile() {
     authorAvatar,
     authorName,
     description,
-    pageEyebrow: computed(() => t('pages.about.eyebrow')),
     pageCover,
     pageTitle,
     profileLabel: computed(() => t('pages.about.profile')),

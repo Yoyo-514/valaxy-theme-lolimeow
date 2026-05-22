@@ -8,11 +8,10 @@ export function resolveFrontmatterText(value: unknown, fallback = ''): string {
     return String(value)
 
   if (value && typeof value === 'object') {
-    for (const candidate of Object.values(value as Record<string, unknown>)) {
-      const resolved: string = resolveFrontmatterText(candidate)
-      if (resolved)
-        return resolved
-    }
+    return Object.values(value as Record<string, unknown>)
+      .map(candidate => resolveFrontmatterText(candidate))
+      .find(Boolean)
+      ?? fallback
   }
 
   return fallback
