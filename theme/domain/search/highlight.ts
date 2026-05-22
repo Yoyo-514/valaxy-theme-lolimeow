@@ -1,4 +1,4 @@
-import type { LmSearchHighlightPart } from '../../types'
+import type { LmSearchHighlightPart } from './types'
 
 /**
  * 将搜索索引中的多形态文案解析为可展示字符串。

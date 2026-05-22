@@ -1,5 +1,5 @@
 import type { Ref } from 'vue'
-import type { LmFuseSearchItem, LmFuseSearchResult } from '../../types'
+import type { LmFuseSearchItem, LmFuseSearchResult } from '../../domain/search'
 import { useFuseSearch } from 'valaxy'
 import { computed, ref, shallowRef } from 'vue'
 import { collectQueryRanges, createHighlightParts, resolveSearchText, stripSearchHtml } from '../../domain'

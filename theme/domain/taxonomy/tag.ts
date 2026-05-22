@@ -1,5 +1,5 @@
 import type { Post } from 'valaxy'
-import type { TagEntry, TagGroup } from '../../types'
+import type { TagEntry, TagGroup } from './types'
 import { hashString, resolvePostTimestamp } from '../../utils'
 import { createPostEntry, getVisibleSortedPosts } from '../post'
 

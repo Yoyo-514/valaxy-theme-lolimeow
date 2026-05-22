@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'vue'
-import type { BackgroundScope, ResolvedBackground } from '../types'
+import type { BackgroundScope, ResolvedBackground } from '../domain/background'
 import { clamp } from './common'
 
 interface BackgroundImageStyleOptions {

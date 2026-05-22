@@ -1,5 +1,5 @@
 import type { MaybeRefOrGetter } from 'vue'
-import type { TagCloudSourceItem } from '../../types'
+import type { TagCloudSourceItem } from '../../domain/taxonomy'
 import { computed, toValue } from 'vue'
 import { buildTagCloudRows } from '../../domain'
 

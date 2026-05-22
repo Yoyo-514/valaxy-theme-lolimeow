@@ -1,4 +1,4 @@
-import type { ArchiveGroup } from '../../types'
+import type { ArchiveGroup } from '../../domain/taxonomy'
 import { useWindowSize } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
 import { ARCHIVE_ACCORDION_BREAKPOINT } from '../../utils'

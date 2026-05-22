@@ -1,5 +1,5 @@
-import type { TypewriterRenderOptions } from '../../types'
 import type { BrowserTimeout } from '../../utils'
+import type { TypewriterRenderOptions } from './types'
 import { onBeforeUnmount, ref } from 'vue'
 import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '../../utils'
 

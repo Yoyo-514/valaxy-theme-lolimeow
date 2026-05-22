@@ -1,4 +1,4 @@
-import type { TagCloudRow, TagCloudSourceItem, TagCloudViewItem } from '../../types'
+import type { TagCloudRow, TagCloudSourceItem, TagCloudViewItem } from './types'
 import { clamp, hashString } from '../../utils'
 
 /**

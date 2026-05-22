@@ -1,5 +1,5 @@
 import type { Post } from 'valaxy'
-import type { ArchiveEntry, ArchiveGroup } from '../../types'
+import type { ArchiveEntry, ArchiveGroup } from './types'
 import { resolvePostTimestamp } from '../../utils'
 import { createPostEntry, getVisibleSortedPosts } from '../post'
 

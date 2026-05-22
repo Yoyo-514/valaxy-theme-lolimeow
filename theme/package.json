@@ -18,7 +18,15 @@
     "lolimeow",
     "vue"
   ],
+  "exports": {
+    ".": "./client/index.ts",
+    "./*": "./*",
+    "./client": "./client/index.ts",
+    "./theme": "./types/index.d.ts",
+    "./types": "./types/index.d.ts"
+  },
   "main": "client/index.ts",
+  "module": "client/index.ts",
   "types": "types/index.d.ts",
   "dependencies": {
     "@iconify-json/ant-design": "catalog:",

@@ -1,13 +1,15 @@
 export type {
+  LmFuseSearchResult,
+} from '../domain/search'
+export type {
   ArchiveEntry,
   ArchiveGroup,
   CategoryEntry,
   CategoryNode,
-  LmFuseSearchResult,
   TagCloudSourceItem,
   TagEntry,
   TagGroup,
-} from '../types'
+} from '../domain/taxonomy'
 
 export * from './about'
 export * from './article'

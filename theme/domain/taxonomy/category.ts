@@ -1,5 +1,5 @@
 import type { Post } from 'valaxy'
-import type { CategoryEntry, CategoryNode } from '../../types'
+import type { CategoryEntry, CategoryNode } from './types'
 import { resolvePostTimestamp } from '../../utils'
 import { createPostEntry, getVisibleSortedPosts } from '../post'
 

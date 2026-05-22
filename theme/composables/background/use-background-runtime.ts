@@ -1,5 +1,5 @@
 import type { CSSProperties, Ref } from 'vue'
-import type { BackgroundScope, ResolvedBackground } from '../../types'
+import type { BackgroundScope, ResolvedBackground } from '../../domain/background'
 import type { BrowserTimeout } from '../../utils'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { clearBrowserTimeout, getBackgroundCacheKey, getRotationCandidate, getWindow, LRUCache, requestBrowserAnimationFrame, setBrowserTimeout, shouldUseTransparentFallback } from '../../utils'

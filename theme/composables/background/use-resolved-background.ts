@@ -1,4 +1,4 @@
-import type { BackgroundScope, ResolvedBackground } from '../../types'
+import type { BackgroundScope, ResolvedBackground } from '../../domain/background'
 import { useColorMode, useWindowSize } from '@vueuse/core'
 import { computed } from 'vue'
 import { clampOpacity, normalizeUrls, pickFirstUrl } from '../../utils'
