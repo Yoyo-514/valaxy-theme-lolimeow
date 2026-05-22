@@ -5,6 +5,10 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -14,14 +18,14 @@ jobs:
           fetch-depth: 0
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v5.0.0
+        uses: pnpm/action-setup@v6
         with:
           version: 10
           run_install: true
 
       # after pnpm
       - name: Use Node.js LTS
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: 'lts/*'
           registry-url: https://registry.npmjs.org/
@@ -29,9 +33,15 @@ jobs:
 
       - run: pnpm run build
       # https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-      - run: pnpm ci:publish
+      # npm Trusted Publishing 使用 GitHub OIDC，需要在 npm 包设置中配置受信发布者：
+      # 仓库：当前 GitHub 仓库
+      # 工作流：.github/workflows/release.yml
+      # 环境：留空，除非 npm 包设置中显式配置了环境
+      - run: pnpm ci:publish --provenance
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NPM_CONFIG_PROVENANCE: true
+          # 使用 OIDC 发布时不需要 npm token；如果需要临时回退到密钥发布，取消下一行注释并配置占位密钥。
+          # NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - run: npx changelogithub
         env:
