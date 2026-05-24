@@ -1,4 +1,6 @@
-@use './vars' as *;
+@use './vars' as * with (
+  $lm-c-brand: $lm-theme-primary
+);
 @use 'valaxy/client/styles/mixins/index.scss' as * with (
   $namespace: 'lm'
 );

@@ -1,11 +1,12 @@
 @use 'sass:map';
 
+$lm-c-brand: #66ccff !default;
+
 // common
 $common: (
   // 主题色
-  'c-brand': #66ccff,
-  'c-brand-strong': #0060df,
-
+  'c-brand': $lm-c-brand,
+  'c-brand-strong': color-mix(in srgb, #000 28%, var(--lm-c-brand)),
   // 模糊
   'blur-sm': 12px,
   'blur-md': 16px,
@@ -38,9 +39,8 @@ $common: map.merge((), $common);
 
 // palette
 $light: (
-  'c-brand-soft': #e6f4ff,
-  'c-brand-border': #99d6ff,
-
+  'c-brand-soft': color-mix(in srgb, var(--lm-c-brand) 14%, white),
+  'c-brand-border': color-mix(in srgb, var(--lm-c-brand) 44%, white),
   // 文字
   'c-text-primary': #111111,
   'c-text-secondary': #48484a,
@@ -51,9 +51,9 @@ $light: (
   'c-bg-glass': rgba(249, 251, 255, 0.82),
   'c-bg-glass-hover': rgba(255, 255, 255, 0.9),
   // 覆盖整页背景图的基础 overlay
-  'c-overlay-base': rgba(242, 247, 255, 0.9),
+  'c-overlay-base': color-mix(in srgb, var(--lm-c-brand) 8%, rgba(242, 247, 255, 0.9)),
   // 品牌氛围层
-  'c-overlay-tint': rgba(102, 204, 255, 0.24),
+  'c-overlay-tint': color-mix(in srgb, var(--lm-c-brand) 24%, transparent),
   // 边框 & 分隔线
   'c-border': rgba(0, 0, 0, 0.08),
   'c-border-hover': rgba(0, 0, 0, 0.12),
@@ -71,15 +71,15 @@ $light: (
   'c-warning-soft': #fff8e0,
   'c-danger': #ff3b30,
   'c-danger-soft': #ffecec,
-  'c-info': #5ac8fa,
-  'c-info-soft': #e6f7ff,
+  'c-info': color-mix(in srgb, #fff 18%, var(--lm-c-brand)),
+  'c-info-soft': color-mix(in srgb, var(--lm-c-info) 14%, white),
 ) !default;
 $light: map.merge((), $light);
 
 $dark: (
-  'c-brand-soft': #0a1925,
-  'c-brand-border': #66ccff,
-
+  'c-brand-strong': color-mix(in srgb, #fff 24%, var(--lm-c-brand)),
+  'c-brand-soft': color-mix(in srgb, var(--lm-c-brand) 18%, #050814),
+  'c-brand-border': color-mix(in srgb, var(--lm-c-brand) 72%, transparent),
   // 文字
   'c-text-primary': #f9fafb,
   'c-text-secondary': #c7c7cc,
@@ -90,9 +90,9 @@ $dark: (
   'c-bg-glass': rgba(5, 8, 22, 0.82),
   'c-bg-glass-hover': rgba(15, 18, 32, 0.9),
   // 覆盖整页背景图的基础 overlay
-  'c-overlay-base': rgba(4, 8, 24, 0.84),
+  'c-overlay-base': color-mix(in srgb, var(--lm-c-brand) 8%, rgba(4, 8, 24, 0.84)),
   // 品牌氛围层
-  'c-overlay-tint': rgba(102, 204, 255, 0.28),
+  'c-overlay-tint': color-mix(in srgb, var(--lm-c-brand) 28%, transparent),
   // 边框 & 分隔线
   'c-border': rgba(255, 255, 255, 0.08),
   'c-border-hover': rgba(255, 255, 255, 0.15),
@@ -110,8 +110,8 @@ $dark: (
   'c-warning-soft': #2b2305,
   'c-danger': #ff453a,
   'c-danger-soft': #2a0b0b,
-  'c-info': #64d2ff,
-  'c-info-soft': #051320,
+  'c-info': color-mix(in srgb, #fff 24%, var(--lm-c-brand)),
+  'c-info-soft': color-mix(in srgb, var(--lm-c-info) 18%, #051320),
 ) !default;
 $dark: map.merge((), $dark);
 

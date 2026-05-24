@@ -19,7 +19,7 @@
     "vue"
   ],
   "exports": {
-    ".": "./client/index.ts",
+    ".": "./index.ts",
     "./*": "./*",
     "./client": "./client/index.ts",
     "./theme": "./types/index.d.ts",

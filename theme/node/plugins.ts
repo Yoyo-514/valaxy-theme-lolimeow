@@ -15,7 +15,7 @@ export function themePlugin(options: ResolvedValaxyOptions<ThemeConfig>): Plugin
         css: {
           preprocessorOptions: {
             scss: {
-              additionalData: `$c-primary: ${themeConfig.ui?.primary || '#66CCFF'} !default;`,
+              additionalData: `$lm-theme-primary: ${themeConfig.ui?.primary || '#66CCFF'} !default;\n`,
             },
           },
         },

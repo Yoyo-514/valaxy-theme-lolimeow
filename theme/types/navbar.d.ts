@@ -30,7 +30,6 @@ export interface NavbarOptions {
    * The title of the navbar
    */
   title?: string | string[]
-  subTitle?: string
   /**
    * Tool buttons to include in the navbar
    * @default ['toggleDark', 'search']
