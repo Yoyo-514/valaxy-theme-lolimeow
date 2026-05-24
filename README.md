@@ -3,6 +3,12 @@
 <pre align="center">A soft anime-style Valaxy theme for a calm daily writing space.</pre>
 
 <p align="center">
+  <a href="https://www.npmjs.com/package/valaxy-theme-lolimeow"><img src="https://img.shields.io/npm/v/valaxy-theme-lolimeow/latest.svg?color=66ccff" alt="npm version"></a>
+  <a href="https://npm.chart.dev/valaxy-theme-lolimeow" target="__blank"><img src="https://img.shields.io/npm/dm/valaxy-theme-lolimeow.svg?color=66ccff" alt="Downloads"></a>
+  <a href="https://github.com/Yoyo-514/valaxy-theme-lolimeow/tree/main/LICENSE" target="__blank"><img src="https://img.shields.io/github/license/Yoyo-514/valaxy-theme-lolimeow.svg?color=66ccff" alt="License"></a>
+</p>
+
+<p align="center">
   <img src="./public/images/preview.png" alt="valaxy-theme-lolimeow desktop preview">
 </p>
 

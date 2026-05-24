@@ -18,6 +18,24 @@ valaxy-theme-lolimeow
 
 `create valaxy` 会自动配置 `valaxy.config.ts` 中的 `theme` 字段，并在 `package.json` 中添加主题依赖。
 
+::: info pnpm v11 临时兼容说明
+
+pnpm v11 起，`.npmrc` 主要保留给认证与 registry 相关配置，`shamefully-hoist`、`strict-peer-dependencies` 等安装行为配置应迁移到 `pnpm-workspace.yaml` 或全局 `config.yaml`。
+
+如果使用 `pnpm create valaxy` 创建项目并选择主题后，本地启动时出现依赖无法解析的问题，可以先在项目根目录新建 `pnpm-workspace.yaml`：
+
+```yaml
+packages:
+  - .
+
+shamefullyHoist: true
+strictPeerDependencies: false
+```
+
+这相当于把旧模板中 `.npmrc` 的 `shamefully-hoist=true` 与 `strict-peer-dependencies=false` 迁移到 pnpm v11 可读取的工作区配置中。`shamefullyHoist` 用于临时绕过 pnpm 的严格依赖隔离，处理上游包未显式声明却在运行时访问的依赖，也就是俗称的“幽灵依赖”；`strictPeerDependencies: false` 则用于避免部分上游 peer dependency 声明不完整或版本范围不完全匹配时阻断安装。后续上游依赖声明完善后，可再移除此临时配置。
+
+:::
+
 ## 已有项目安装主题
 
 如果你已经有 Valaxy 项目，可以手动安装主题：
