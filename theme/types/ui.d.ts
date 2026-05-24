@@ -18,14 +18,6 @@ export interface UI {
   }
 }
 
-export interface ResponsiveBreakpoints {
-  'sm': number
-  'md': number
-  'lg': number
-  'xl': number
-  '2xl': number
-}
-
 export type UserUI = {
   [K in keyof UI]?: Partial<UI[K]>
 }

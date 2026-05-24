@@ -431,18 +431,41 @@
 
   summary {
     cursor: pointer;
-    padding: 0.9rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.48rem;
     font-weight: 700;
     color: var(--lm-c-text-primary);
     user-select: none;
+
+    &::marker,
+    &::-webkit-details-marker {
+      display: none;
+      content: '';
+    }
+
+    &::before {
+      @apply i-ri-arrow-right-s-line;
+
+      content: '';
+      width: 1rem;
+      height: 1rem;
+      flex: 0 0 1rem;
+      transform: translateY(0.02rem);
+      transition: transform 0.18s ease;
+    }
 
     &:hover {
       background: color-mix(in srgb, var(--lm-c-brand) 6%, transparent);
     }
   }
 
+  details[open] > summary::before {
+    transform: translateY(0.02rem) rotate(90deg);
+  }
+
   details > :not(summary) {
-    margin-left: 1rem;
+    margin-left: 2.2rem;
     margin-right: 1rem;
   }
 
@@ -476,24 +499,67 @@
   }
 
   .custom-block-title {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
     font-weight: 800;
     letter-spacing: 0.01em;
+
+    &::before {
+      content: '';
+      width: 1.05em;
+      height: 1.05em;
+      flex: 0 0 1.05em;
+      transform: translateY(0.02em);
+    }
   }
 
   .custom-block.info {
     background: color-mix(in srgb, var(--lm-c-info-soft) 76%, transparent);
+
+    .custom-block-title {
+      color: color-mix(in srgb, var(--lm-c-info) 72%, var(--lm-c-text-primary));
+
+      &::before {
+        @apply i-ri-information-line;
+      }
+    }
   }
 
   .custom-block.tip {
     background: color-mix(in srgb, var(--lm-c-success-soft) 72%, transparent);
+
+    .custom-block-title {
+      color: color-mix(in srgb, var(--lm-c-success) 72%, var(--lm-c-text-primary));
+
+      &::before {
+        @apply i-ri-checkbox-circle-line;
+      }
+    }
   }
 
   .custom-block.warning {
     background: color-mix(in srgb, var(--lm-c-warning-soft) 76%, transparent);
+
+    .custom-block-title {
+      color: color-mix(in srgb, var(--lm-c-warning) 68%, var(--lm-c-text-primary));
+
+      &::before {
+        @apply i-ri-alert-line;
+      }
+    }
   }
 
   .custom-block.danger {
     background: color-mix(in srgb, var(--lm-c-danger-soft) 76%, transparent);
+
+    .custom-block-title {
+      color: color-mix(in srgb, var(--lm-c-danger) 72%, var(--lm-c-text-primary));
+
+      &::before {
+        @apply i-ri-error-warning-line;
+      }
+    }
   }
 
   sup,
