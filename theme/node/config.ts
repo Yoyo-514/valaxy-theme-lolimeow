@@ -138,9 +138,6 @@ export function generateSafelist(themeConfig: ThemeConfig) {
     }
   })
 
-  if (ui?.toggleLocaleBtn?.icon)
-    safelist.push(ui.toggleLocaleBtn.icon)
-
   if (ui?.toggleDarkBtn?.darkIcon)
     safelist.push(ui.toggleDarkBtn.darkIcon)
   if (ui?.toggleDarkBtn?.lightIcon)

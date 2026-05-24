@@ -27,7 +27,7 @@ const { t } = useI18n()
     <LmSearchState
       v-else-if="hasError"
       :title="t('search.no_results')"
-      hint="本地搜索数据加载失败。"
+      :hint="t('search.error_hint')"
     />
 
     <LmSearchState

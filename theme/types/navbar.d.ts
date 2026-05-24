@@ -3,10 +3,6 @@ export interface NavItem {
   link: string
   icon?: string
   /**
-   * i18n localization
-   */
-  locale?: string | number
-  /**
    * The target attribute of the <a> tag, specifying how to open the link
    */
   target?: '_blank' | '_self' | '_parent' | '_top' | ''
@@ -30,7 +26,7 @@ export interface NavbarOptions {
    * Tool buttons to include in the navbar
    * @default ['toggleDark', 'search']
    */
-  tools?: ('toggleLocale' | 'toggleDark' | 'search')[]
+  tools?: ('toggleDark' | 'search')[]
   /**
    * The style of the hamburger menu in the navbar
    * - 'uneven': A style where one line is different in length

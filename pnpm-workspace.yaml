@@ -1,6 +1,7 @@
 catalogMode: prefer
 
 cleanupUnusedCatalogs: true
+minimumReleaseAge: 0
 shamefullyHoist: true
 
 shellEmulator: true
@@ -17,23 +18,23 @@ packages:
   - demo
   - docs
 overrides:
-  "@vue/compiler-core": 3.5.33
-  "@vue/compiler-dom": 3.5.33
-  "@vue/compiler-sfc": 3.5.33
-  "@vue/compiler-ssr": 3.5.33
-  "@vue/reactivity": 3.5.33
-  "@vue/runtime-core": 3.5.33
-  "@vue/runtime-dom": 3.5.33
-  "@vue/server-renderer": 3.5.33
-  "@vue/shared": 3.5.33
+  '@vue/compiler-core': 3.5.33
+  '@vue/compiler-dom': 3.5.33
+  '@vue/compiler-sfc': 3.5.33
+  '@vue/compiler-ssr': 3.5.33
+  '@vue/reactivity': 3.5.33
+  '@vue/runtime-core': 3.5.33
+  '@vue/runtime-dom': 3.5.33
+  '@vue/server-renderer': 3.5.33
+  '@vue/shared': 3.5.33
   vue: 3.5.33
 
 catalog:
-  "@antfu/eslint-config": ^9.0.0
-  "@iconify-json/ant-design": ^1.2.5
-  "@iconify-json/simple-icons": ^1.2.83
-  "@unocss/eslint-plugin": ^66.7.0
-  "@vueuse/core": ^14.3.0
+  '@antfu/eslint-config': ^9.0.0
+  '@iconify-json/ant-design': ^1.2.5
+  '@iconify-json/simple-icons': ^1.2.83
+  '@unocss/eslint-plugin': ^66.7.0
+  '@vueuse/core': ^14.3.0
   bumpp: ^11.1.0
   eslint: ^10.4.0
   eslint-plugin-format: ^2.0.1
@@ -45,7 +46,5 @@ catalog:
   vue-tsc: ^3.3.1
 
 allowBuilds:
-  "@parcel/watcher": true
+  '@parcel/watcher': true
   esbuild: true
-
-minimumReleaseAge: 0

@@ -1,6 +1,6 @@
 # 导航栏
 
-导航栏用于组织博客的主要页面入口。本文只说明 `themeConfig.navbar` 与 `themeConfig.navbarOptions`，布局相关内容见 [布局与页面](/config/layout)。
+导航栏用于组织博客的主要页面入口。本文只说明 `themeConfig.navbar` 与 `themeConfig.navbarOptions`。
 
 ## 基础导航
 
@@ -22,15 +22,13 @@ export default defineValaxyConfig({
 
 ## 导航项字段
 
-| 字段       | 说明                 | 必填 |
-| ---------- | -------------------- | ---- |
-| `text`     | 导航显示文本         | 否   |
-| `link`     | 导航链接             | 是   |
-| `icon`     | Iconify 图标类名     | 否   |
-| `locale`   | 国际化键或本地化标识 | 否   |
-| `animated` | 图标动画类名         | 否   |
-| `target`   | 链接打开方式         | 否   |
-| `items`    | 子菜单               | 否   |
+| 字段     | 说明             | 必填 |
+| -------- | ---------------- | ---- |
+| `text`   | 导航显示文本     | 否   |
+| `link`   | 导航链接         | 是   |
+| `icon`   | Iconify 图标类名 | 否   |
+| `target` | 链接打开方式     | 否   |
+| `items`  | 子菜单           | 否   |
 
 ## 外部链接
 
@@ -85,7 +83,6 @@ export default defineValaxyConfig({
   themeConfig: {
     navbarOptions: {
       title: 'My Blog',
-      subTitle: 'Daily notes',
       showFavicon: true,
       tools: ['toggleDark', 'search'],
       hamburgerStyle: 'classic',
@@ -101,8 +98,7 @@ export default defineValaxyConfig({
 | ---------------- | --------------------------------------------- | -------------------------- |
 | `showFavicon`    | 是否在导航栏显示站点图标                      | `true`                     |
 | `title`          | 导航栏标题                                    | -                          |
-| `subTitle`       | 导航栏副标题                                  | -                          |
-| `tools`          | 导航栏工具按钮                                | `['toggleDark', 'search']` |
+| `tools`          | 导航栏工具按钮，可选 `toggleDark` / `search`  | `['toggleDark', 'search']` |
 | `hamburgerStyle` | 移动端菜单按钮风格，可选 `uneven` / `classic` | `'uneven'`                 |
 | `autoHide`       | 是否随滚动自动隐藏导航栏                      | `true`                     |
 

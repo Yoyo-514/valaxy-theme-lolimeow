@@ -5,10 +5,6 @@ export interface UI {
    */
   primary: string
 
-  toggleLocaleBtn?: {
-    icon: string
-  }
-
   /**
    * Icon for the light/dark mode toggle button
    */

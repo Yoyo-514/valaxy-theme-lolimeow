@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import { isClient, useWindowScroll } from '@vueuse/core'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { getDocumentElement, getWindow } from '../utils'
 
+const { t } = useI18n()
 const { y } = useWindowScroll()
 
 // Helper 只在用户已经明显离开首屏后出现，避免和 Hero 首屏视觉抢焦点。
@@ -53,7 +55,7 @@ function backToTop() {
         v-if="showBackToTop"
         class="lm-helper-paw"
         type="button"
-        aria-label="Back to top"
+        :aria-label="t('button.backToTop')"
         @click="backToTop"
       >
         <svg

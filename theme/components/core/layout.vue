@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useHomePaginationScrollBehavior, useLayoutShell } from '../../composables'
 
@@ -7,6 +8,7 @@ defineProps<{
 }>()
 
 const router = useRouter()
+const { t } = useI18n()
 const {
   closeDrawer,
   closeSearch,
@@ -30,7 +32,7 @@ useHomePaginationScrollBehavior(router)
       v-if="isDrawerOpen"
       type="button"
       class="lm-mobile-drawer-backdrop"
-      aria-label="关闭移动端导航"
+      :aria-label="t('button.closeMobileNav')"
       @click="closeDrawer"
     />
 

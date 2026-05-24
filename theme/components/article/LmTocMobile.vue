@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useArticleTocState } from '../../composables'
 import { removeDocumentClass, toggleDocumentClass } from '../../utils'
 
+const { t } = useI18n()
 const { items, visible, activeLink, handleClick } = useArticleTocState()
 const open = ref(false)
 
@@ -44,7 +46,7 @@ onBeforeUnmount(() => {
       class="lm-toc-mobile__trigger"
       :aria-expanded="open"
       aria-controls="lm-toc-mobile-panel"
-      aria-label="打开文章目录"
+      :aria-label="t('button.openToc')"
       @click="togglePanel"
     >
       <span class="lm-toc-mobile__trigger-icon i-ri-file-list-2-line" />
@@ -55,7 +57,7 @@ onBeforeUnmount(() => {
         v-if="open"
         type="button"
         class="lm-toc-mobile__scrim"
-        aria-label="关闭文章目录"
+        :aria-label="t('button.closeToc')"
         @click="closePanel"
       />
     </Transition>
@@ -65,22 +67,22 @@ onBeforeUnmount(() => {
         v-if="open"
         id="lm-toc-mobile-panel"
         class="lm-toc-mobile__panel"
-        aria-label="文章目录"
+        :aria-label="t('toc.label')"
       >
         <div class="lm-toc-mobile__panel-header">
           <div>
             <p class="lm-toc-mobile__eyebrow">
-              On this page
+              {{ t('toc.eyebrow') }}
             </p>
             <h2 class="lm-toc-mobile__title">
-              文章目录
+              {{ t('toc.title') }}
             </h2>
           </div>
 
           <button
             type="button"
             class="lm-toc-mobile__close"
-            aria-label="关闭文章目录"
+            :aria-label="t('button.closeToc')"
             @click="closePanel"
           >
             <span class="i-ri-close-line" />

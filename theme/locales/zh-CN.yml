@@ -9,6 +9,42 @@ search:
   loading: 正在检索...
   no_results: 未找到相关结果
   no_results_hint: 换个关键词或试试标签、分类名称
+  error_hint: 本地搜索数据加载失败。
+
+comment:
+  label: 评论区
+
+button:
+  home: 返回首页
+  back: 返回上一页
+  openSearch: 打开搜索
+  closeSearch: 关闭搜索
+  toggleDark: 切换深色模式
+  toggleMenu: 切换移动端导航
+  closeMobileNav: 关闭移动端导航
+  mobileNav: 移动端导航
+  backToTop: 返回顶部
+  scrollDown: 滚动到下一屏
+  closeNotice: 关闭公告
+  openToc: 打开文章目录
+  closeToc: 关闭文章目录
+
+footer:
+  powered: 由 {0} 驱动
+  theme: 主题
+
+notice:
+  label: 公告
+
+toc:
+  label: 文章目录
+  eyebrow: 本页目录
+  title: 文章目录
+
+pagination:
+  label: 分页
+  previous: 上一页
+  next: 下一页
 
 pages:
   about:

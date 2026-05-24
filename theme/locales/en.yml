@@ -9,6 +9,42 @@ search:
   loading: Searching...
   no_results: No results found
   no_results_hint: Try another keyword, tag, or category
+  error_hint: Failed to load local search data.
+
+comment:
+  label: Comments
+
+button:
+  home: Back Home
+  back: Go Back
+  openSearch: Open search
+  closeSearch: Close search
+  toggleDark: Toggle dark mode
+  toggleMenu: Toggle mobile navigation
+  closeMobileNav: Close mobile navigation
+  mobileNav: Mobile navigation
+  backToTop: Back to top
+  scrollDown: Scroll to next section
+  closeNotice: Close notice
+  openToc: Open table of contents
+  closeToc: Close table of contents
+
+footer:
+  powered: Powered by {0}
+  theme: Theme
+
+notice:
+  label: Notice
+
+toc:
+  label: Table of contents
+  eyebrow: On this page
+  title: Table of contents
+
+pagination:
+  label: Pagination
+  previous: Previous page
+  next: Next page
 
 pages:
   about:

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useSiteConfig } from 'valaxy'
 import { computed, useTemplateRef } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useHeroMotto, useHeroStage, useThemeConfig } from '../../composables'
 
 interface SocialLink {
@@ -15,6 +16,7 @@ interface SiteAuthor {
   name?: string
 }
 
+const { t } = useI18n()
 const siteConfig = useSiteConfig()
 const themeConfig = useThemeConfig()
 const { hasMotto, mottoRenderKey, renderedMotto, shouldFadeMotto, shouldShowMotto } = useHeroMotto()
@@ -96,7 +98,7 @@ const showSocialIcons = computed(() => themeConfig.value.hero.showSocialIcons &&
       v-if="showScrollDown"
       type="button"
       class="lm-hero-scroll-down"
-      aria-label="Scroll to next section"
+      :aria-label="t('button.scrollDown')"
       @click="scrollToNextSection"
     >
       <div i-ri-arrow-down-s-line class="lm-hero-scroll-down__icon" />

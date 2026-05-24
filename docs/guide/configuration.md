@@ -56,7 +56,6 @@ export default defineValaxyConfig({
 | 背景             | [背景](/config/background)                   | 全站背景、图片池、随机图片 API、渐变         |
 | Hero             | [Hero](/config/hero)                         | 首页首屏文案、一言、打字机、独立封面         |
 | 导航栏           | [导航栏](/config/navbar)                     | 导航菜单、工具按钮、移动端菜单               |
-| 布局配置         | [布局配置](/config/layout)                   | 默认页面结构、文章目录侧栏                   |
 | 页面 Frontmatter | [页面 Frontmatter](/config/page-frontmatter) | Markdown 页面的 layout、标题、封面、评论开关 |
 | 文章列表         | [文章列表](/config/post-list)                | 首页文章卡片、封面策略、摘要                 |
 | 分页             | [分页](/config/pagination)                   | 标准分页、无限滚动、每页数量                 |

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { NavItem } from '../../types'
 import type { BrowserTimeout } from '../../utils'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { resolveInternalNavRoute, shouldOpenNavLinkWithWindow } from '../../composables'
 import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '../../utils'
@@ -15,6 +16,7 @@ const emit = defineEmits<{
   openSearch: []
 }>()
 
+const { t } = useI18n()
 const router = useRouter()
 // ACTIVE_PREVIEW_DURATION 给高亮一个极短的预览窗口，
 // 避免点击后抽屉立刻离场，用户来不及感知当前目标项。
@@ -92,7 +94,7 @@ function leave(el: Element) {
       v-if="props.open"
       class="lm-mobile-nav-panel w-full relative z-[calc(var(--lm-z-navbar)+1)] overflow-hidden md:hidden"
     >
-      <nav class="flex flex-col" aria-label="Mobile navigation">
+      <nav class="flex flex-col" :aria-label="t('button.mobileNav')">
         <LmMobileNavGroup
           v-for="item in props.items"
           :key="item.link"

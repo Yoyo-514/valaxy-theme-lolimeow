@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { usePaginationItems } from '../../composables'
 
 const props = withDefaults(defineProps<{
@@ -10,6 +11,7 @@ const props = withDefaults(defineProps<{
   basePath: '/',
 })
 
+const { t } = useI18n()
 const {
   currentPage,
   paginationItems,
@@ -23,13 +25,13 @@ const {
   <nav
     v-if="paginationItems.length > 0"
     class="lm-pagination"
-    aria-label="Pagination"
+    :aria-label="t('pagination.label')"
   >
     <AppLink
       v-if="prevLink"
       class="lm-pagination__control"
       :to="prevLink"
-      aria-label="Previous page"
+      :aria-label="t('pagination.previous')"
     >
       <div i-ri-arrow-left-s-line class="lm-pagination__control-icon" />
     </AppLink>
@@ -62,7 +64,7 @@ const {
       v-if="nextLink"
       class="lm-pagination__control"
       :to="nextLink"
-      aria-label="Next page"
+      :aria-label="t('pagination.next')"
     >
       <div i-ri-arrow-right-s-line class="lm-pagination__control-icon" />
     </AppLink>

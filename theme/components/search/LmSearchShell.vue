@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   open: boolean
@@ -9,6 +10,7 @@ const emit = defineEmits<{
   close: []
 }>()
 
+const { t } = useI18n()
 const mounted = ref(false)
 
 onMounted(() => {
@@ -24,7 +26,7 @@ onMounted(() => {
           v-if="props.open"
           type="button"
           class="lm-search-shell__backdrop"
-          aria-label="Close Search"
+          :aria-label="t('button.closeSearch')"
           @click="emit('close')"
         />
       </Transition>

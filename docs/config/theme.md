@@ -22,7 +22,6 @@ export default defineValaxyConfig({
 | 配置项          | 说明                                            | 文档                          |
 | --------------- | ----------------------------------------------- | ----------------------------- |
 | `ui`            | 基础 UI 配色与按钮图标                          | 本页                          |
-| `layout`        | 首页、文章页和默认页面布局                      | [布局配置](/config/layout)    |
 | `background`    | 全局背景，支持图片、图片池、随机图片 API 与渐变 | [背景](/config/background)    |
 | `hero`          | 首页首屏文案、封面、一言与打字机效果            | [Hero](/config/hero)          |
 | `navbar`        | 导航菜单项                                      | [导航栏](/config/navbar)      |
@@ -51,16 +50,13 @@ export default defineValaxyConfig({
 
 ## 工具按钮图标
 
-可以为语言切换或明暗切换按钮指定图标。
+可以为明暗切换按钮指定图标。
 
 ```ts
 export default defineValaxyConfig({
   theme: 'lolimeow',
   themeConfig: {
     ui: {
-      toggleLocaleBtn: {
-        icon: 'i-ri-translate-2',
-      }, // 主题暂未设置该按钮
       toggleDarkBtn: {
         lightIcon: 'i-ri-sun-line',
         darkIcon: 'i-ri-moon-line',

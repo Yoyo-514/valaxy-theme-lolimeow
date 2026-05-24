@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { nextTick, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useArticleTocState } from '../../composables'
 
+const { t } = useI18n()
 const { items, visible, activeLink, handleClick } = useArticleTocState()
 const navRef = ref<HTMLElement>()
 
@@ -20,15 +22,15 @@ watch(activeLink, async () => {
   <aside
     v-if="visible"
     class="lm-toc"
-    aria-label="文章目录"
+    :aria-label="t('toc.label')"
   >
     <div class="lm-toc__inner">
       <div class="lm-toc__header">
         <p class="lm-toc__eyebrow">
-          On this page
+          {{ t('toc.eyebrow') }}
         </p>
         <h2 class="lm-toc__title">
-          文章目录
+          {{ t('toc.title') }}
         </h2>
       </div>
 

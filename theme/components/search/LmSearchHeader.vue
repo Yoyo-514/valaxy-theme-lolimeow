@@ -40,7 +40,7 @@ onMounted(async () => {
     <button
       type="button"
       class="lm-search-header__close"
-      aria-label="Close Search"
+      :aria-label="t('button.closeSearch')"
       @click="emit('close')"
     >
       <div i-ri-close-line />

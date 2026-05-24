@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { useAddonConfig, useFrontmatter, useSiteConfig } from 'valaxy'
 import { computed, defineAsyncComponent } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 type CommentProvider = 'waline'
 
 const WalineComment = defineAsyncComponent(() => import('../components/plugins/LmWaline.vue'))
 
+const { t } = useI18n()
 const siteConfig = useSiteConfig()
 const frontmatter = useFrontmatter()
 const waline = useAddonConfig('valaxy-addon-waline')
@@ -35,7 +37,7 @@ const providerComponent = computed(() => {
   <section
     v-if="enabled"
     class="lm-comment comment"
-    aria-label="评论区"
+    :aria-label="t('comment.label')"
   >
     <div class="lm-comment__content">
       <div class="lm-comment__body">

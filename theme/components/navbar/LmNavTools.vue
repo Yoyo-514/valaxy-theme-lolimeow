@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useAppStore } from 'valaxy'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useNavbarTools, useThemeConfig } from '../../composables'
 
 const props = defineProps<{
@@ -14,6 +15,7 @@ const emit = defineEmits<{
 
 const appStore = useAppStore()
 const themeConfig = useThemeConfig()
+const { t } = useI18n()
 const { showSearch, showDarkToggle } = useNavbarTools()
 
 const darkToggleIcon = computed(() => {
@@ -37,7 +39,7 @@ const hamburgerLines = computed(() => {
       v-if="showSearch"
       type="button"
       class="lm-nav-tools__button"
-      aria-label="Open Search"
+      :aria-label="t('button.openSearch')"
       @click="emit('openSearch')"
     >
       <div i-ri-search-line />
@@ -47,7 +49,7 @@ const hamburgerLines = computed(() => {
       v-if="showDarkToggle"
       type="button"
       class="lm-nav-tools__button"
-      aria-label="Toggle Dark Mode"
+      :aria-label="t('button.toggleDark')"
       @click="appStore.toggleDarkWithTransition"
     >
       <div :class="darkToggleIcon" />
@@ -57,7 +59,7 @@ const hamburgerLines = computed(() => {
       type="button"
       class="lm-nav-tools__menu-button"
       :aria-expanded="props.drawerOpen"
-      aria-label="Toggle mobile menu"
+      :aria-label="t('button.toggleMenu')"
       @click="emit('toggleMobileDrawer')"
     >
       <span class="lm-nav-tools__menu-lines">

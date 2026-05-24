@@ -97,5 +97,4 @@ yarn dev
 - 参考 [背景](/config/background)
 - 参考 [Hero](/config/hero)
 - 配置 [导航栏](/config/navbar)
-- 配置 [布局配置](/config/layout)
 - 查看 [页面 Frontmatter](/config/page-frontmatter)

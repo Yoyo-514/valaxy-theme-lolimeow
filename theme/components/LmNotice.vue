@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useThemeConfig } from '../composables'
 import { getSessionStorage } from '../utils'
 
+const { t } = useI18n()
 const themeConfig = useThemeConfig()
 
 const isOpen = ref(true)
@@ -54,7 +56,7 @@ function closeNotice() {
   <section
     v-if="visible"
     class="lm-notice"
-    aria-label="Notice"
+    :aria-label="t('notice.label')"
   >
     <div class="lm-notice__icon" aria-hidden="true">
       <div i-ri-megaphone-line />
@@ -70,7 +72,7 @@ function closeNotice() {
       v-if="closable"
       type="button"
       class="lm-notice__close"
-      aria-label="Close notice"
+      :aria-label="t('button.closeNotice')"
       @click="closeNotice"
     >
       <div i-ri-close-line />
