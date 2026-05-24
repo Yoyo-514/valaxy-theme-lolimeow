@@ -32,7 +32,7 @@ shamefullyHoist: true
 strictPeerDependencies: false
 ```
 
-这相当于把旧模板中 `.npmrc` 的 `shamefully-hoist=true` 与 `strict-peer-dependencies=false` 迁移到 pnpm v11 可读取的工作区配置中。`shamefullyHoist` 用于临时绕过 pnpm 的严格依赖隔离，处理上游包未显式声明却在运行时访问的依赖，也就是俗称的“幽灵依赖”；`strictPeerDependencies: false` 则用于避免部分上游 peer dependency 声明不完整或版本范围不完全匹配时阻断安装。后续上游依赖声明完善后，可再移除此临时配置。
+这相当于把旧模板中 `.npmrc` 的 `shamefully-hoist=true` 与 `strict-peer-dependencies=false` 迁移到 pnpm v11 可读取的工作区配置中。`shamefullyHoist` 用于临时绕过 pnpm 的严格依赖隔离，处理当前本地未显式声明却会在运行时访问的依赖，也就是俗称的“幽灵依赖”；`strictPeerDependencies: false` 则用于避免 peer dependency 声明不完整或版本范围不完全匹配时阻断安装。这只是等待框架侧修复依赖声明前的临时措施，后续框架修复后可再移除此配置。
 
 :::
 
