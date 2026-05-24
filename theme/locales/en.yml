@@ -74,6 +74,22 @@ pages:
     stats:
       tags: Tags
       posts: Posts
+  projects:
+    title: Projects
+    empty: No projects are available yet.
+    status:
+      active: Active
+      archived: Archived
+      wip: Work in progress
+    stats:
+      groups: Groups
+      projects: Projects
+      featured: Featured
+    actions:
+      visit: Visit
+      repo: Repo
+      docs: Docs
+      demo: Demo
   links:
     title: Friendly Links
     empty: No links are available yet.

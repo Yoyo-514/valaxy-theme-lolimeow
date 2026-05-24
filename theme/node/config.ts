@@ -74,6 +74,10 @@ export const defaultThemeConfig: ThemeConfig = {
     groups: [],
   },
 
+  projects: {
+    groups: [],
+  },
+
   postList: {
     title: 'Discovery',
     imageReversed: true,
@@ -136,6 +140,13 @@ export function generateSafelist(themeConfig: ThemeConfig) {
           safelist.push(item.icon)
       })
     }
+  })
+
+  themeConfig.projects?.groups?.forEach((group) => {
+    group.items?.forEach((item) => {
+      if (item.icon)
+        safelist.push(item.icon)
+    })
   })
 
   if (ui?.toggleDarkBtn?.darkIcon)

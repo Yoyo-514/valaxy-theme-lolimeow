@@ -74,6 +74,22 @@ pages:
     stats:
       tags: 标签
       posts: 文章
+  projects:
+    title: 项目
+    empty: 这里还没有可展示的项目。
+    status:
+      active: 维护中
+      archived: 已归档
+      wip: 开发中
+    stats:
+      groups: 分组
+      projects: 项目
+      featured: 精选
+    actions:
+      visit: 访问
+      repo: 仓库
+      docs: 文档
+      demo: 演示
   links:
     title: 友情链接
     empty: 这里还没有可展示的友链。

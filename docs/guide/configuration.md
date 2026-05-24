@@ -57,6 +57,7 @@ export default defineValaxyConfig({
 | Hero             | [Hero](/config/hero)                         | 首页首屏文案、一言、打字机、独立封面         |
 | 导航栏           | [导航栏](/config/navbar)                     | 导航菜单、工具按钮、移动端菜单               |
 | 页面 Frontmatter | [页面 Frontmatter](/config/page-frontmatter) | Markdown 页面的 layout、标题、封面、评论开关 |
+| 项目展示         | [项目展示](/config/projects)                 | 作品、开源项目、Demo 展示                    |
 | 文章列表         | [文章列表](/config/post-list)                | 首页文章卡片、封面策略、摘要                 |
 | 分页             | [分页](/config/pagination)                   | 标准分页、无限滚动、每页数量                 |
 | 友链             | [友链](/config/links)                        | 友链分组、友链条目、状态检测                 |
@@ -72,7 +73,7 @@ export default defineValaxyConfig({
 3. 配置 `navbar`，保证页面入口完整。
 4. 配置 `background` 与 `hero`，确定站点视觉基调。
 5. 配置 `postList` 与 `pagination`，调整首页文章展示方式。
-6. 根据需要配置 `links`、`pinned`、`notice`、`footer`、评论插件。
+6. 根据需要配置 `projects`、`links`、`pinned`、`notice`、`footer`、评论插件。
 
 ## 完整示例
 

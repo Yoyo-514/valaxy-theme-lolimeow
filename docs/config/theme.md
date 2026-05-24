@@ -28,6 +28,7 @@ export default defineValaxyConfig({
 | `navbarOptions` | 导航栏标题、工具按钮、移动端菜单和自动隐藏      | [导航栏](/config/navbar)      |
 | `notice`        | 站点公告                                        | [公告](/config/notice)        |
 | `pinned`        | 首页置顶卡片                                    | [置顶卡片](/config/pinned)    |
+| `projects`      | 项目展示页                                      | [项目展示](/config/projects)  |
 | `postList`      | 首页文章列表与封面策略                          | [文章列表](/config/post-list) |
 | `pagination`    | 标准分页或无限滚动                              | [分页](/config/pagination)    |
 | `links`         | 友链分组与可访问性状态提示                      | [友链](/config/links)         |

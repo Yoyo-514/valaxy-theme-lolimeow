@@ -56,6 +56,7 @@ export default defineConfig<ThemeConfig>({
       { text: '归档', link: '/archives/', icon: 'i-ri-archive-line' },
       { text: '分类', link: '/categories/', icon: 'i-ri-folder-line' },
       { text: '标签', link: '/tags/', icon: 'i-ri-price-tag-3-line' },
+      { text: '项目', link: '/projects/', icon: 'i-ri-apps-2-line' },
       { text: '友链', link: '/links/', icon: 'i-ri-links-line' },
       { text: '关于', link: '/about/', icon: 'i-ri-user-line' },
     ],
@@ -93,6 +94,50 @@ export default defineConfig<ThemeConfig>({
       ],
     },
 
+    // 项目
+    projects: {
+      groups: [
+        {
+          title: 'Open Source',
+          desc: '主题、工具与一些可复用的小项目。',
+          items: [
+            {
+              name: 'Valaxy Theme Lolimeow',
+              desc: 'A cute and clean Valaxy theme for personal blogs.',
+              link: 'https://lolimeow.yoyo514.top/',
+              repo: 'https://github.com/Yoyo-514/valaxy-theme-lolimeow',
+              docs: 'https://lolimeow.yoyo514.top/',
+              cover: '/images/background2.webp',
+              iconImg: '/images/favicon.ico',
+              color: '#66CCFF',
+              tags: ['Valaxy', 'Vue', 'Theme'],
+              status: 'active',
+              featured: true,
+            },
+            {
+              name: 'Valaxy',
+              desc: 'Next generation static blog framework.',
+              link: 'https://valaxy.site/',
+              repo: 'https://github.com/YunYouJun/valaxy',
+              icon: 'i-ri-vuejs-line',
+              color: '#8bd5ff',
+              tags: ['Blog Framework', 'Vue', 'Vite'],
+              status: 'active',
+            },
+            {
+              name: 'Demo Lab',
+              desc: 'A work-in-progress playground for theme experiments.',
+              demo: 'https://example.com',
+              icon: 'i-ri-flask-line',
+              color: '#ffb86c',
+              tags: ['Example', 'Demo', 'Experiment'],
+              status: 'wip',
+            },
+          ],
+        },
+      ],
+    },
+
     // 友链
     // statusCheck 开启后会在头像右下角显示状态点：
     // 主题色 = 检测中，绿色 = 可访问，红色 = 暂不可访问，灰色 = 未知状态。
@@ -126,23 +171,6 @@ export default defineConfig<ThemeConfig>({
               avatar: '/images/link3.jpg',
               color: '#8bd5ff',
               blog: 'Terminal Log',
-            },
-          ],
-        },
-        {
-          title: 'Project',
-          items: [
-            {
-              name: 'GitHub',
-              url: 'https://github.com/Yoyo-514/valaxy-theme-lolimeow',
-              avatar: 'https://avatars.githubusercontent.com/u/49911797',
-              desc: '主题源码仓库。',
-            },
-            {
-              name: 'Valaxy',
-              url: 'https://valaxy.site',
-              avatar: 'https://valaxy.site/favicon.svg',
-              desc: 'Valaxy 官方文档。',
             },
           ],
         },

@@ -8,6 +8,7 @@ import type { Notice } from './notice'
 import type { Pagination } from './pagination'
 import type { Pinned } from './pinned'
 import type { PostListOptions } from './post-list'
+import type { Projects } from './project'
 import type { UserUI } from './ui'
 
 export namespace LolimeowTheme {
@@ -51,6 +52,11 @@ export interface ThemeConfig extends DefaultTheme.Config {
    * 友情链接配置
    */
   links: Links
+
+  /**
+   * 项目展示配置
+   */
+  projects: Projects
 
   /**
    * 文章列表配置
