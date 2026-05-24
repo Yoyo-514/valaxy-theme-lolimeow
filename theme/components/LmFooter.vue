@@ -20,7 +20,7 @@ const isThisYear = computed(() => {
 
 const poweredHtml = computed(() => t('footer.powered', [`<a href="${pkg.repository}" target="_blank" rel="noopener">Valaxy</a> v${pkg.version}`]))
 const footerIcon = computed(() => themeConfig.value.footer.icon!)
-const showFooterIcon = computed(() => Boolean(footerIcon.value.enable && footerIcon.value.name))
+const showFooterIcon = computed(() => Boolean(footerIcon.value.enable && (footerIcon.value.name || footerIcon.value.img)))
 const authorName = computed(() => siteConfig.value.author?.name || '')
 const themeName = computed(() => config.value.theme || '')
 const icpInfo = computed(() => {
@@ -61,14 +61,19 @@ const icpInfo = computed(() => {
         <a
           v-if="showFooterIcon"
           class="lm-footer__icon"
-          :class="{ 'lm-footer__icon--animated': footerIcon.animated }"
           :href="footerIcon.url || undefined"
           :target="footerIcon.url ? '_blank' : undefined"
           :title="footerIcon.title"
           :style="{ color: footerIcon.color }"
           rel="noopener"
         >
-          <span :class="footerIcon.name" />
+          <img
+            v-if="footerIcon.img"
+            class="lm-footer__icon-img"
+            :src="footerIcon.img"
+            :alt="footerIcon.title || 'footer icon'"
+          >
+          <span v-else :class="footerIcon.name" />
         </a>
 
         <span class="lm-footer__author">{{ authorName }}</span>
@@ -136,17 +141,17 @@ const icpInfo = computed(() => {
 }
 
 .lm-footer__icon {
-  @apply inline-flex h-6 w-6 items-center justify-center rounded-full no-underline transition-[color,transform,background-color] duration-220 ease-out;
+  @apply inline-flex h-6 w-6 items-center justify-center overflow-hidden rounded-full no-underline transition-[color,transform,background-color] duration-220 ease-out;
   background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.lm-footer__icon-img {
+  @apply h-full w-full object-cover;
 }
 
 .lm-footer__icon:hover {
   transform: translateY(-1px) rotate(-8deg);
   background: color-mix(in srgb, currentColor 16%, transparent);
-}
-
-.lm-footer__icon--animated {
-  animation: lm-footer-pulse 2.4s ease-in-out infinite;
 }
 
 .lm-footer__powered {
@@ -172,16 +177,5 @@ const icpInfo = computed(() => {
 
 .lm-footer__icp {
   @apply text-xs;
-}
-
-@keyframes lm-footer-pulse {
-  0%,
-  100% {
-    transform: translateY(0) scale(1);
-  }
-
-  50% {
-    transform: translateY(-1px) scale(1.08);
-  }
 }
 </style>

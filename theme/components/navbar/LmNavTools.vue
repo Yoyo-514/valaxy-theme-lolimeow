@@ -16,6 +16,13 @@ const appStore = useAppStore()
 const themeConfig = useThemeConfig()
 const { showSearch, showDarkToggle } = useNavbarTools()
 
+const darkToggleIcon = computed(() => {
+  const toggleDarkBtn = themeConfig.value.ui?.toggleDarkBtn
+  return appStore.isDark
+    ? (toggleDarkBtn?.darkIcon || 'i-ri-moon-line')
+    : (toggleDarkBtn?.lightIcon || 'i-ri-sun-line')
+})
+
 const hamburgerLines = computed(() => {
   if (themeConfig.value.navbarOptions?.hamburgerStyle === 'classic')
     return ['w-4', 'w-4', 'w-4']
@@ -43,8 +50,7 @@ const hamburgerLines = computed(() => {
       aria-label="Toggle Dark Mode"
       @click="appStore.toggleDarkWithTransition"
     >
-      <div v-if="!appStore.isDark" i-ri-sun-line />
-      <div v-else i-ri-moon-line />
+      <div :class="darkToggleIcon" />
     </button>
 
     <button

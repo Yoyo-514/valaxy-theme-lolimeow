@@ -2,7 +2,6 @@ import type { DefaultTheme } from 'valaxy'
 import type { Background } from './background'
 import type { Footer } from './footer'
 import type { Hero } from './hero'
-import type { LayoutOptions } from './layout'
 import type { Links } from './link'
 import type { NavbarOptions, NavItem } from './navbar'
 import type { Notice } from './notice'
@@ -17,11 +16,6 @@ export namespace LolimeowTheme {
 }
 
 export interface ThemeConfig extends DefaultTheme.Config {
-  /**
-   * 页面布局配置
-   */
-  layout: LayoutOptions
-
   /**
    * UI 基础配置
    */

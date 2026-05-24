@@ -7,10 +7,6 @@ export interface NavItem {
    */
   locale?: string | number
   /**
-   * Icon animation
-   */
-  animated?: string
-  /**
    * The target attribute of the <a> tag, specifying how to open the link
    */
   target?: '_blank' | '_self' | '_parent' | '_top' | ''
@@ -29,7 +25,7 @@ export interface NavbarOptions {
   /**
    * The title of the navbar
    */
-  title?: string | string[]
+  title?: string
   /**
    * Tool buttons to include in the navbar
    * @default ['toggleDark', 'search']

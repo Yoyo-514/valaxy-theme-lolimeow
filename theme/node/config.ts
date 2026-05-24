@@ -8,26 +8,6 @@ export const defaultThemeConfig: ThemeConfig = {
     circleTransition: false,
   },
 
-  layout: {
-    general: {
-      layout: 'double-columns',
-      sidebar: {
-        left: [],
-        right: [],
-      },
-    },
-    home: {
-      layout: 'single-column',
-    },
-    post: {
-      layout: 'double-columns',
-      sidebar: {
-        left: [],
-        right: ['LmToc'],
-      },
-    },
-  },
-
   ui: {
     primary: '#66CCFF',
   },
@@ -111,7 +91,6 @@ export const defaultThemeConfig: ThemeConfig = {
     icon: {
       enable: true,
       name: 'i-ri-heart-fill',
-      animated: true,
       color: 'var(--lm-c-brand)',
       url: '',
       title: '',
