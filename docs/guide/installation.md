@@ -6,9 +6,9 @@
 
 ## 兼容性
 
-| Lolimeow | Node.js     | Valaxy  |
-| -------- | ----------- | ------- |
-| 1.0.0+   | Node.js LTS | 0.28.6+ |
+| Node.js     | Valaxy   |
+| ----------- | -------- |
+| Node.js LTS | 0.28.10+ |
 
 ## 创建 Valaxy 博客项目
 

@@ -8,10 +8,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "types": [
-      "valaxy/client",
-      "vitest",
-      "vite/client",
-      "vite-plugin-vue-layouts-next/client"
+      "vitest"
     ],
     "allowJs": true,
     "strict": true,

@@ -4,10 +4,13 @@
  * 该模块统一封装对 window、document、sessionStorage、定时器和动画帧等浏览器 API 的访问，
  * 避免组件或 composable 在 SSR/SSG 阶段直接引用浏览器全局对象导致构建或 hydration 异常。
  */
-export const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined'
+export function isBrowser() {
+  return typeof window !== 'undefined' && typeof document !== 'undefined'
+}
+
 export type BrowserWindow = NonNullable<ReturnType<typeof getWindow>>
 export type BrowserTimeout = number
-export type BrowserAnimationFrame = ReturnType<BrowserWindow['requestAnimationFrame']>
+export type BrowserAnimationFrame = number
 
 export function getWindow() {
   // 所有浏览器全局访问统一经过这里，避免 SSR/SSG 阶段直接触碰 window。
@@ -44,7 +47,12 @@ export function getRootFontSize(fallback = 16) {
 }
 
 export function getSessionStorage() {
-  return getWindow()?.sessionStorage
+  try {
+    return getWindow()?.sessionStorage
+  }
+  catch {
+    return undefined
+  }
 }
 
 export function setBrowserTimeout(handler: () => void, timeout?: number): BrowserTimeout | undefined {
