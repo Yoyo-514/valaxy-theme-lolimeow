@@ -80,15 +80,15 @@ export default defineConfig<ThemeConfig>({
       title: 'START',
       entries: [
         {
-          title: 'Docs',
+          title: 'Valaxy Docs',
           link: 'https://valaxy.site',
           desc: 'Valaxy Documentation',
           img: '/images/background1.webp',
         },
         {
-          title: 'About',
-          link: '/about',
-          desc: 'About Me',
+          title: 'Lolimeow Docs',
+          link: 'https://lolimeow.yoyo514.top/docs/',
+          desc: 'This Theme Documentation',
           img: '/images/background2.webp',
         },
       ],
