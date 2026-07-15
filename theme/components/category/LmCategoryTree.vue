@@ -95,7 +95,7 @@ function toggleNode(node: CategoryNode) {
     </section>
   </div>
 
-  <div v-else-if="emptyLabel && depth === 0" class="lm-category-tree__empty">
+  <div v-else-if="emptyLabel && depth === 0" class="lm-category-tree__empty lm-empty-state">
     {{ emptyLabel }}
   </div>
 </template>
@@ -152,7 +152,7 @@ function toggleNode(node: CategoryNode) {
 .lm-category-tree__toggle {
   @apply mt-1.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-sm transition-transform duration-220 ease-out;
   color: var(--lm-c-text-secondary);
-  background: color-mix(in srgb, var(--lm-c-brand) 10%, transparent);
+  background: var(--lm-c-brand-subtle);
 }
 
 .lm-category-tree__toggle--open {
@@ -207,13 +207,6 @@ function toggleNode(node: CategoryNode) {
   max-height: 42rem;
   opacity: 1;
   transform: translateY(0);
-}
-
-.lm-category-tree__empty {
-  @apply rounded-6 border border-dashed px-5 py-12 text-center text-sm leading-7;
-  border-color: color-mix(in srgb, var(--lm-c-brand) 14%, var(--lm-c-border));
-  color: var(--lm-c-text-secondary);
-  background: color-mix(in srgb, var(--lm-surface-reading-bg) 82%, transparent);
 }
 
 @media (max-width: 767px) {

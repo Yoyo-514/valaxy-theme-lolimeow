@@ -125,12 +125,12 @@ function closeNotice() {
     10px
   );
 
-  @apply relative z-1 inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full;
+  @apply relative z-[var(--lm-z-raised)] inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full;
   color: var(--lm-c-brand);
 }
 
 .lm-notice__content {
-  @apply relative z-1 min-w-0;
+  @apply relative z-[var(--lm-z-raised)] min-w-0;
 }
 
 .lm-notice__message {
@@ -139,7 +139,7 @@ function closeNotice() {
 }
 
 .lm-notice__close {
-  @apply relative z-1 inline-flex h-8 w-8 items-center justify-center rounded-full;
+  @apply relative z-[var(--lm-z-raised)] inline-flex h-8 w-8 items-center justify-center rounded-full;
   color: var(--lm-c-text-secondary);
   transition:
     color 180ms ease,

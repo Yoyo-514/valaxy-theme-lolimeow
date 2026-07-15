@@ -192,7 +192,7 @@ function backToTop() {
 
 <style scoped lang="scss">
 .lm-helper-stage {
-  @apply hidden fixed xl:bottom-3 md:bottom-12 right-5 z-20 md:block;
+  @apply hidden fixed xl:bottom-3 md:bottom-12 right-5 z-[var(--lm-z-floating)] md:block;
 }
 
 .lm-helper-paw {
@@ -210,8 +210,7 @@ function backToTop() {
 
 .lm-helper-paw:hover {
   transform: translateY(-2px) scale(1.018);
-  filter: drop-shadow(0 18px 28px rgb(15 23 42 / 0.18))
-    drop-shadow(0 0 8px color-mix(in srgb, var(--lm-c-brand) 10%, transparent));
+  filter: drop-shadow(0 18px 28px rgb(15 23 42 / 0.18)) drop-shadow(0 0 8px var(--lm-c-brand-subtle));
 }
 
 .lm-helper-paw:focus-visible {

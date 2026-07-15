@@ -156,7 +156,7 @@ const {
 }
 
 .lm-pinned-card__content {
-  @apply absolute inset-x-0 bottom-0 z-1 flex flex-col items-start px-4 pb-4 pt-12 md:px-5 md:pb-5;
+  @apply absolute inset-x-0 bottom-0 z-[var(--lm-z-raised)] flex flex-col items-start px-4 pb-4 pt-12 md:px-5 md:pb-5;
   gap: 0.55rem;
   transition:
     transform 300ms ease,

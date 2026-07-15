@@ -129,7 +129,7 @@ const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], stri
 
 .lm-project-card--featured::before {
   content: '';
-  @apply pointer-events-none absolute inset-x-4 top-0 z-2 h-px;
+  @apply pointer-events-none absolute inset-x-4 top-0 z-[var(--lm-z-raised-high)] h-px;
   background: linear-gradient(90deg, transparent, var(--lm-project-accent), transparent);
 }
 
@@ -160,7 +160,7 @@ const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], stri
 }
 
 .lm-project-card__inner {
-  @apply relative z-1 flex min-w-0 flex-1 flex-col gap-3.5 p-4.5;
+  @apply relative z-[var(--lm-z-raised)] flex min-w-0 flex-1 flex-col gap-3.5 p-4.5;
 }
 
 .lm-project-card__topline {

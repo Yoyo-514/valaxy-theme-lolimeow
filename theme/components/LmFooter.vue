@@ -113,7 +113,7 @@ const icpInfo = computed(() => {
 
 <style scoped lang="scss">
 .lm-footer {
-  @apply relative z-10 px-4 pb-7 pt-10 text-center text-sm leading-7;
+  @apply relative z-[var(--lm-z-content)] px-4 pb-7 pt-10 text-center text-sm leading-7;
   color: var(--lm-c-text-secondary);
 }
 

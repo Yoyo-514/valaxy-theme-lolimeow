@@ -56,7 +56,7 @@ const props = defineProps<{
 @use '../../styles/mixins/surface' as *;
 
 .lm-hero-avatar-badge {
-  @apply relative z-10 flex h-22 w-22 items-center justify-center rounded-full p-1.5 md:h-24 md:w-24;
+  @apply relative z-[var(--lm-z-content)] flex h-22 w-22 items-center justify-center rounded-full p-1.5 md:h-24 md:w-24;
   @include lm-surface-panel(
     color-mix(in srgb, var(--lm-c-bg-glass) 72%, transparent),
     color-mix(in srgb, var(--lm-c-border) 78%, transparent),
@@ -106,7 +106,7 @@ const props = defineProps<{
     rgb(0 0 0 / 0.42) 92%,
     transparent 100%
   );
-  z-index: -2;
+  z-index: var(--lm-z-deep-behind);
 }
 
 .lm-hero-identity-card::after {
@@ -133,13 +133,11 @@ const props = defineProps<{
       )
       bottom / 100% 1px no-repeat;
   pointer-events: none;
-  z-index: -1;
+  z-index: var(--lm-z-behind);
 }
 
 .lm-hero-title {
-  @apply text-4xl leading-tight font-700 text-[var(--lm-c-text-primary)] md:text-5xl xl:text-6xl;
-  position: relative;
-  z-index: 1;
+  @apply relative z-[var(--lm-z-raised)] text-4xl leading-tight font-700 text-[var(--lm-c-text-primary)] md:text-5xl xl:text-6xl;
   text-wrap: balance;
   text-shadow:
     0 2px 14px rgb(15 23 42 / 0.08),
@@ -147,9 +145,7 @@ const props = defineProps<{
 }
 
 .lm-hero-subtitle {
-  @apply text-base leading-7 text-[var(--lm-c-text-secondary)] md:text-lg;
-  position: relative;
-  z-index: 1;
+  @apply relative z-[var(--lm-z-raised)] text-base leading-7 text-[var(--lm-c-text-secondary)] md:text-lg;
   // subtitle 仍属于身份主牌的一部分，但它的阅读宽度不应无限跟随 title 变长。
   // 这里把它限制在一个稳定的阅读 measure 内，同时继续服从 Hero 的左右/居中对齐语义。
   width: fit-content;

@@ -50,7 +50,7 @@ const {
     </div>
   </div>
 
-  <div v-else class="lm-archive__empty">
+  <div v-else class="lm-archive__empty lm-empty-state">
     {{ emptyLabel }}
   </div>
 </template>
@@ -89,13 +89,6 @@ const {
 
 .lm-archive__panel {
   @apply h-full;
-}
-
-.lm-archive__empty {
-  @apply rounded-6 border border-dashed px-5 py-12 text-center text-sm leading-7;
-  border-color: color-mix(in srgb, var(--lm-c-brand) 14%, var(--lm-c-border));
-  color: var(--lm-c-text-secondary);
-  background: color-mix(in srgb, var(--lm-surface-reading-bg) 82%, transparent);
 }
 
 .lm-archive-stage-enter-active,

@@ -101,8 +101,8 @@ withDefaults(defineProps<{
 .lm-article-meta__pill {
   @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-600;
   color: var(--lm-c-text-secondary);
-  background: color-mix(in srgb, var(--lm-c-brand) 10%, transparent);
-  border: 1px solid color-mix(in srgb, var(--lm-c-brand) 14%, var(--lm-c-border));
+  background: var(--lm-c-brand-subtle);
+  border: 1px solid var(--lm-c-border-accent);
 }
 
 .lm-article-meta__pill--category {

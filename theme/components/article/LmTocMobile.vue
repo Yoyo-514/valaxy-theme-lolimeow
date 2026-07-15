@@ -115,7 +115,7 @@ onBeforeUnmount(() => {
 }
 
 .lm-toc-mobile__trigger {
-  @apply fixed bottom-5 right-4 z-35 inline-flex h-11 w-11 items-center justify-center rounded-full p-0 shadow-lg transition-transform duration-200 sm:right-6;
+  @apply fixed bottom-5 right-4 z-[var(--lm-z-overlay-trigger)] inline-flex h-11 w-11 items-center justify-center rounded-full p-0 shadow-lg transition-transform duration-200 sm:right-6;
   border: 1px solid color-mix(in srgb, var(--lm-c-brand) 16%, var(--lm-c-border));
   background: color-mix(in srgb, var(--lm-surface-reading-bg) 92%, transparent);
   color: var(--lm-c-text-primary);
@@ -140,14 +140,14 @@ onBeforeUnmount(() => {
 }
 
 .lm-toc-mobile__scrim {
-  @apply fixed inset-0 z-38 border-none p-0;
+  @apply fixed inset-0 z-[var(--lm-z-overlay-scrim)] border-none p-0;
   background: rgba(15, 23, 42, 0.14);
   backdrop-filter: blur(2px);
 }
 
 .lm-toc-mobile__panel {
-  @apply fixed inset-x-0 bottom-0 z-39 mx-auto flex max-h-[72vh] w-full max-w-3xl flex-col overflow-hidden rounded-[8px];
-  border: 1px solid color-mix(in srgb, var(--lm-c-brand) 14%, var(--lm-c-border));
+  @apply fixed inset-x-0 bottom-0 z-[var(--lm-z-overlay-panel)] mx-auto flex max-h-[72vh] w-full max-w-3xl flex-col overflow-hidden rounded-[8px];
+  border: 1px solid var(--lm-c-border-accent);
   border-bottom: none;
   background: linear-gradient(
     180deg,
@@ -198,7 +198,7 @@ onBeforeUnmount(() => {
     top: 50%;
     width: 0.3rem;
     height: 0.3rem;
-    border-radius: 9999px;
+    border-radius: var(--lm-radius-full);
     transform: translateY(-50%);
     background: color-mix(in srgb, var(--lm-c-border) 80%, transparent);
     transition:
@@ -263,7 +263,7 @@ onBeforeUnmount(() => {
 
   .lm-toc-mobile__panel {
     @apply bottom-4;
-    border-bottom: 1px solid color-mix(in srgb, var(--lm-c-brand) 14%, var(--lm-c-border));
+    border-bottom: 1px solid var(--lm-c-border-accent);
   }
 }
 </style>

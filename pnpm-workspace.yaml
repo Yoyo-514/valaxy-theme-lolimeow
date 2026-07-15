@@ -41,19 +41,19 @@ overrides:
 
 catalog:
   '@antfu/eslint-config': ^9.1.0
-  '@iconify-json/ant-design': ^1.2.7
-  '@iconify-json/simple-icons': ^1.2.88
-  '@unocss/eslint-plugin': ^66.7.4
+  '@iconify-json/ant-design': ^1.2.8
+  '@iconify-json/simple-icons': ^1.2.90
+  '@unocss/eslint-plugin': ^66.7.5
   '@vueuse/core': ^14.3.0
   bumpp: ^11.1.0
-  eslint: ^10.6.0
+  eslint: ^10.7.0
   eslint-plugin-format: ^2.0.1
   typescript: ^6.0.3
   valaxy: ^0.28.11
   valaxy-addon-waline: ^0.2.1
   vitepress: 2.0.0-alpha.17
-  vitest: ^4.1.9
-  vue-tsc: ^3.3.6
+  vitest: ^4.1.10
+  vue-tsc: ^3.3.7
 
 allowBuilds:
   '@parcel/watcher': true

@@ -8,7 +8,7 @@
     background: var(--lm-c-brand);
     opacity: 0.75;
     position: fixed;
-    z-index: 1024;
+    z-index: var(--lm-z-progress);
     top: 0;
     left: 0;
     width: 100%;

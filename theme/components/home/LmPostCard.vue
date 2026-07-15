@@ -129,7 +129,7 @@ const {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 18% 22%, color-mix(in srgb, var(--lm-c-brand) 10%, transparent), transparent 40%),
+    radial-gradient(circle at 18% 22%, var(--lm-c-brand-subtle), transparent 40%),
     linear-gradient(135deg, transparent 0 62%, rgba(255, 255, 255, 0.08) 62% 100%);
   opacity: 0.8;
 }
@@ -205,7 +205,7 @@ const {
 .lm-post-card__tag {
   @apply rounded-full px-2 py-0.5 text-xs;
   color: var(--lm-c-text-secondary);
-  background: color-mix(in srgb, var(--lm-c-brand) 10%, transparent);
+  background: var(--lm-c-brand-subtle);
 }
 
 .lm-post-card__excerpt {

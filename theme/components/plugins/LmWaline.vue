@@ -21,7 +21,7 @@ const options = computed(() => waline.value?.options)
 <style lang="scss" scoped>
 .lm-waline {
   @apply w-full;
-  --lm-waline-surface-border: color-mix(in srgb, var(--lm-c-brand) 14%, var(--lm-c-border));
+  --lm-waline-surface-border: var(--lm-c-border-accent);
   --lm-waline-surface-bg: color-mix(in srgb, var(--lm-surface-reading-bg) 72%, transparent);
 }
 
@@ -82,7 +82,7 @@ const options = computed(() => waline.value?.options)
 }
 
 :deep(.wl-btn) {
-  border-radius: 9999px;
+  border-radius: var(--lm-radius-full);
 }
 
 :deep(.wl-card) {

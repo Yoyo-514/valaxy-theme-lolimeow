@@ -92,7 +92,7 @@ function leave(el: Element) {
   >
     <div
       v-if="props.open"
-      class="lm-mobile-nav-panel w-full relative z-[calc(var(--lm-z-navbar)+1)] overflow-hidden md:hidden"
+      class="lm-mobile-nav-panel w-full relative z-[var(--lm-z-drawer)] overflow-hidden md:hidden"
     >
       <nav class="flex flex-col" :aria-label="t('button.mobileNav')">
         <LmMobileNavGroup

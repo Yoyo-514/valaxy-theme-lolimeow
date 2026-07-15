@@ -23,7 +23,8 @@ export default defineConfig<ThemeConfig>({
         dark: '/images/background2.webp',
         urls: ['/images/background1.webp', '/images/background2.webp'],
         apiUrls: [
-          'https://www.dmoe.cc/random.php',
+          // 'https://www.dmoe.cc/random.php',
+          'https://api.horosama.com/random.php'
         ],
         random: true,
         overlayOpacity: 0.3,
@@ -42,7 +43,7 @@ export default defineConfig<ThemeConfig>({
       // cover: {
       //   urls: ['/images/background1.webp', '/images/background2.webp'],
       //   apiUrls: [
-      //     'https://img.xjh.me/random_img.php?return=302',
+      //     'https://www.loliapi.com/acg/?type=img',
       //   ],
       //   random: true,
       //   fixed: false,
@@ -180,7 +181,7 @@ export default defineConfig<ThemeConfig>({
     // 文章列表
     postList: {
       title: 'Discovery',
-      coverApiUrls: ['https://img.xjh.me/random_img.php?return=302'],
+      coverApiUrls: ['https://www.loliapi.com/acg/?type=img'],
       coverRandom: true,
       showExcerpt: true,
       excerptLength: 140,

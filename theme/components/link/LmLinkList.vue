@@ -30,7 +30,7 @@ defineProps<{
     </section>
   </div>
 
-  <div v-else class="lm-link-list__empty">
+  <div v-else class="lm-link-list__empty lm-empty-state">
     {{ emptyLabel }}
   </div>
 </template>
@@ -45,7 +45,7 @@ defineProps<{
 }
 
 .lm-link-list__title {
-  @apply relative m-0 inline-flex w-fit text-2xl leading-8 font-900;
+  @apply relative isolate m-0 inline-flex w-fit text-2xl leading-8 font-900;
   color: var(--lm-c-text-primary);
 }
 
@@ -54,18 +54,11 @@ defineProps<{
   @apply absolute left-0 h-2.5 rounded-full;
   right: -0.35rem;
   bottom: 0.08rem;
-  z-index: -1;
+  z-index: var(--lm-z-behind);
   background: color-mix(in srgb, var(--lm-c-brand) 24%, transparent);
 }
 
 .lm-link-list__grid {
   @apply grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3;
-}
-
-.lm-link-list__empty {
-  @apply rounded-6 border border-dashed px-5 py-12 text-center text-sm leading-7;
-  border-color: color-mix(in srgb, var(--lm-c-brand) 14%, var(--lm-c-border));
-  color: var(--lm-c-text-secondary);
-  background: color-mix(in srgb, var(--lm-surface-reading-bg) 82%, transparent);
 }
 </style>

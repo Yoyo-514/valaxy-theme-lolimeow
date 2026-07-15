@@ -37,7 +37,7 @@ useHomePaginationScrollBehavior(router)
     />
 
     <div
-      class="transition-transform duration-250 ease-in-out inset-x-0 top-0 fixed z-20"
+      class="transition-transform duration-250 ease-in-out inset-x-0 top-0 fixed z-[var(--lm-z-navbar)]"
       :class="headerVisible ? 'translate-y-0' : '-translate-y-full'"
     >
       <div class="w-full">
@@ -67,13 +67,13 @@ useHomePaginationScrollBehavior(router)
       <LmNotice />
     </div>
 
-    <main class="w-full relative z-10">
+    <main class="w-full relative z-[var(--lm-z-content)]">
       <slot />
     </main>
 
     <LmHelper />
 
-    <div v-if="!hideFooter" class="relative z-10">
+    <div v-if="!hideFooter" class="relative z-[var(--lm-z-content)]">
       <LmFooter />
     </div>
   </div>
@@ -81,11 +81,11 @@ useHomePaginationScrollBehavior(router)
 
 <style lang="scss" scoped>
 .lm-mobile-drawer-backdrop {
-  @apply fixed inset-0 z-15 border-0 bg-transparent p-0 md:hidden;
+  @apply fixed inset-0 z-[var(--lm-z-drawer-backdrop)] border-0 bg-transparent p-0 md:hidden;
 }
 
 .lm-global-notice {
-  @apply relative z-10 mx-auto w-full max-w-6xl pt-12 px-4 sm:px-6 xl:px-0;
+  @apply relative z-[var(--lm-z-content)] mx-auto w-full max-w-6xl pt-12 px-4 sm:px-6 xl:px-0;
 }
 
 .lm-page-surface-layer {
@@ -94,7 +94,7 @@ useHomePaginationScrollBehavior(router)
   right: 0;
   top: var(--lm-page-surface-top, 0px);
   bottom: 0;
-  z-index: 5;
+  z-index: var(--lm-z-page-surface);
   pointer-events: none;
 
   background: color-mix(in srgb, var(--lm-c-bg-glass) 62%, transparent);

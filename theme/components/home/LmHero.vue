@@ -110,7 +110,7 @@ const showSocialIcons = computed(() => themeConfig.value.hero.showSocialIcons &&
 @use '../../styles/mixins/surface' as *;
 
 .lm-hero-content {
-  @apply relative z-10 flex w-full max-w-5xl flex-col justify-center px-4 sm:px-6 lg:px-8;
+  @apply relative z-[var(--lm-z-content)] flex w-full max-w-5xl flex-col justify-center px-4 sm:px-6 lg:px-8;
   --lm-hero-surface-blur: 5px;
   // Hero 使用固定舞台高度时，内部节奏需要随视口高度轻量缩放，
   // 否则在短屏和长屏上都会出现“堆得太紧”或“飘得太散”的问题。
@@ -156,7 +156,7 @@ const showSocialIcons = computed(() => themeConfig.value.hero.showSocialIcons &&
 }
 
 .lm-hero-scroll-down {
-  @apply absolute bottom-5 left-1/2 z-10 inline-flex h-10 w-10 -translate-x-1/2 items-center justify-center text-[var(--lm-c-text-primary)] transition-colors duration-250 ease-out md:bottom-7;
+  @apply absolute bottom-5 left-1/2 z-[var(--lm-z-content)] inline-flex h-10 w-10 -translate-x-1/2 items-center justify-center text-[var(--lm-c-text-primary)] transition-colors duration-250 ease-out md:bottom-7;
   filter: drop-shadow(0 4px 10px rgb(15 23 42 / 0.18));
 }
 

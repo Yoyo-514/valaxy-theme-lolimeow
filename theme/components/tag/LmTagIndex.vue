@@ -58,7 +58,7 @@ watch(
     </Transition>
   </div>
 
-  <div v-else class="lm-tag-index__empty">
+  <div v-else class="lm-tag-index__empty lm-empty-state">
     {{ emptyLabel }}
   </div>
 </template>
@@ -70,7 +70,7 @@ watch(
 
 .lm-tag-index__panel {
   @apply grid gap-4 border-t pt-5 md:grid-cols-[minmax(8rem,13rem)_minmax(0,1fr)] md:gap-7;
-  border-color: color-mix(in srgb, var(--lm-c-brand) 14%, var(--lm-c-border));
+  border-color: var(--lm-c-border-accent);
 }
 
 .lm-tag-index__head {
@@ -85,13 +85,6 @@ watch(
 .lm-tag-index__meta {
   @apply mt-1.5 mb-0 text-sm leading-6 font-700;
   color: var(--lm-c-text-muted);
-}
-
-.lm-tag-index__empty {
-  @apply rounded-6 border border-dashed px-5 py-12 text-center text-sm leading-7;
-  border-color: color-mix(in srgb, var(--lm-c-brand) 14%, var(--lm-c-border));
-  color: var(--lm-c-text-secondary);
-  background: color-mix(in srgb, var(--lm-surface-reading-bg) 82%, transparent);
 }
 
 .lm-tag-index-panel-enter-active,

@@ -74,7 +74,7 @@ const {
 .lm-about-profile__avatar-wrap {
   @apply h-24 w-24 overflow-hidden rounded-5 border p-1 sm:h-26 sm:w-26;
   border-color: color-mix(in srgb, var(--lm-c-brand) 28%, var(--lm-c-border));
-  background: color-mix(in srgb, var(--lm-c-brand) 10%, transparent);
+  background: var(--lm-c-brand-subtle);
 }
 
 .lm-about-profile__avatar {

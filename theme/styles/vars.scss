@@ -7,15 +7,16 @@ $common: (
   // 主题色
   'c-brand': $lm-c-brand,
   'c-brand-strong': color-mix(in srgb, #000 28%, var(--lm-c-brand)),
-  // 模糊
+  'c-brand-subtle': color-mix(in srgb, var(--lm-c-brand) 10%, transparent),
+  'c-border-accent': color-mix(in srgb, var(--lm-c-brand) 14%, var(--lm-c-border)),
+  // 模糊原子层级
   'blur-sm': 12px,
   'blur-md': 16px,
   'blur-lg': 20px,
-  // 语义化模糊层级
-  'blur-panel': 12px,
-  'blur-nav': 16px,
-  'blur-modal': 20px,
-
+  // 语义化模糊层级只引用原子层级，避免维护两套数值
+  'blur-panel': var(--lm-blur-sm),
+  'blur-nav': var(--lm-blur-md),
+  'blur-modal': var(--lm-blur-lg),
   // 阴影
   'shadow-glass': 0 2px 8px rgba(0, 0, 0, 0.06),
   'shadow-elevated': 0 4px 16px rgba(15, 23, 42, 0.1),
@@ -116,13 +117,29 @@ $dark: (
 $dark: map.merge((), $dark);
 
 $z-index: (
+  // 组件内部原子层级
+  'z-deep-behind': -2,
+  'z-behind': -1,
+  'z-base': 0,
+  'z-raised': 1,
+  'z-raised-high': 2,
+  // 页面壳层
+  'z-page-surface': 5,
+  'z-content': 10,
+  'z-floating': 20,
+  // 全局覆盖层
   'z-dropdown': 100,
   'z-sticky': 200,
   'z-navbar': 300,
+  'z-drawer-backdrop': calc(var(--lm-z-navbar) - 1),
+  'z-overlay-trigger': 350,
+  'z-overlay-scrim': 380,
+  'z-overlay-panel': 390,
   'z-sidebar': 400,
   'z-drawer': 500,
   'z-modal': 600,
   'z-toast': 700,
   'z-tooltip': 800,
+  'z-progress': 1024
 ) !default;
 $z-index: map.merge((), $z-index);

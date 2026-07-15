@@ -42,7 +42,7 @@ const overlayStyle = computed(() => ({
 </script>
 
 <template>
-  <div class="pointer-events-none inset-0 fixed z-0 overflow-hidden" aria-hidden="true">
+  <div class="pointer-events-none inset-0 fixed z-[var(--lm-z-base)] overflow-hidden" aria-hidden="true">
     <div class="lm-bg-layer" :style="placeholderStyle" />
     <div
       v-if="hasBaseImageLayer"
