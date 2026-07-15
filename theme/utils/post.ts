@@ -4,12 +4,21 @@ import { hashString } from './hash'
 const HTML_TAG_REGEX = /<[^>]+>/g
 const WHITESPACE_REGEX = /\s+/g
 
-export function pickBySeed<T>(list: T[], seed: string) {
-  if (!list.length)
-    return undefined
+function appendQueryParameter(url: string, key: string, value: string | number) {
+  const hashIndex = url.indexOf('#')
+  const baseUrl = hashIndex >= 0 ? url.slice(0, hashIndex) : url
+  const hash = hashIndex >= 0 ? url.slice(hashIndex) : ''
+  const joiner = baseUrl.includes('?') ? '&' : '?'
 
-  const index = hashString(seed) % list.length
-  return list[index]
+  return `${baseUrl}${joiner}${encodeURIComponent(key)}=${encodeURIComponent(value)}${hash}`
+}
+
+export function orderBySeed<T>(list: readonly T[], seed: string) {
+  if (!list.length)
+    return []
+
+  const startIndex = hashString(seed) % list.length
+  return [...list.slice(startIndex), ...list.slice(0, startIndex)]
 }
 
 /**
@@ -17,8 +26,14 @@ export function pickBySeed<T>(list: T[], seed: string) {
  */
 export function appendSeedQuery(url: string, seed: string) {
   // 给随机图 API 附加稳定种子，让同一文章在缓存和刷新后仍尽量命中同一张图。
-  const joiner = url.includes('?') ? '&' : '?'
-  return `${url}${joiner}lm_seed=${hashString(seed)}`
+  return appendQueryParameter(url, 'lm_seed', hashString(seed))
+}
+
+/**
+ * API 封面重试时改变请求地址，避免浏览器复用失败响应或不重新触发加载。
+ */
+export function appendRetryQuery(url: string, retry: number) {
+  return appendQueryParameter(url, 'lm_retry', retry)
 }
 
 /**

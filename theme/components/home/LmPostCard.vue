@@ -39,8 +39,9 @@ const imageElement = shallowRef<HTMLImageElement | null>(null)
 const {
   imageLoaded,
   showLoadingPlaceholder,
+  handleImageError,
   handleImageLoad,
-} = usePostCardMediaState(hasMedia, cover, imageElement)
+} = usePostCardMediaState(hasMedia, cover, imageElement, handleCoverError)
 </script>
 
 <template>
@@ -62,13 +63,14 @@ const {
 
         <img
           v-if="cover"
+          :key="cover"
           ref="imageElement"
           :src="cover"
           alt=""
           class="lm-post-card__image"
           :class="{ 'lm-post-card__image--visible': imageLoaded }"
           @load="handleImageLoad"
-          @error="handleCoverError"
+          @error="handleImageError"
         >
       </div>
     </div>

@@ -17,11 +17,22 @@ export default defineValaxyConfig({
 
 ## 封面策略
 
-主题会按以下顺序解析文章卡片封面：
+主题会按以下顺序尝试文章卡片封面：
 
 1. 文章 Frontmatter 中的 `cover`
 2. `postList.coverApiUrls`，仅当 `coverRandom` 为 `true` 时启用
 3. `postList.coverFallback`
+4. 所有候选均失败后，退化为纯文本卡片
+
+主题会根据文章路径等稳定标识确定 API 和 fallback 的候选起点，再依次尝试列表中的其余地址。文章具备稳定路径时，列表排序或分页变化不会改变其首选封面。
+
+加载失败时遵循以下规则：
+
+- Frontmatter 封面失败后不会直接退化为纯文本卡片；启用 `coverRandom` 时继续尝试随机图 API，否则直接进入静态 fallback。
+- 每个 API 地址首次失败后最多重试 3 次，即单个 API 最多请求 4 次。
+- 单次图片请求超过 60 秒仍未完成，按加载失败处理。
+- API 候选耗尽后继续尝试全部 `coverFallback`；静态 fallback 失败后不重试，直接切换下一项。
+- 切换候选期间保留加载占位层，成功后淡入图片；全部失败后移除媒体区域和占位层。
 
 ```ts
 export default defineValaxyConfig({

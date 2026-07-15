@@ -24,7 +24,7 @@ export default defineConfig<ThemeConfig>({
         urls: ['/images/background1.webp', '/images/background2.webp'],
         apiUrls: [
           // 'https://www.dmoe.cc/random.php',
-          'https://api.horosama.com/random.php'
+          'https://api.horosama.com/random.php',
         ],
         random: true,
         overlayOpacity: 0.3,
