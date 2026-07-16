@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { ArchiveEntry } from '../../composables'
+import type { ArchiveEntry } from '../../features/archive'
 import { formatDate } from 'valaxy'
 
 defineProps<{
   entries: ArchiveEntry[]
 }>()
 
+/** 将归档条目的日期格式化为列表展示文本。 */
 function formatEntryDate(date?: string | number | Date) {
   return formatDate(date ?? '')
 }

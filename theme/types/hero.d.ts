@@ -1,7 +1,26 @@
-import type { HitokotoSentenceType } from '../utils'
+/**
+ * Hitokoto API `c` 查询参数允许的句子分类代码。
+ *
+ * 主题用户可在 `hero.hitokoto.sentenceTypes` 中组合多个分类，主题会为每个分类追加一个 `c` 参数。
+ */
+export type HitokotoSentenceType
+  = | 'a'
+    | 'b'
+    | 'c'
+    | 'd'
+    | 'e'
+    | 'f'
+    | 'g'
+    | 'h'
+    | 'i'
+    | 'j'
+    | 'k'
+    | 'l'
 
+/** Hero 签名的内容来源：主题配置或 Hitokoto API。 */
 export type HeroMottoSource = 'config' | 'hitokoto'
 
+/** Hero 使用 Hitokoto API 时的展示与查询配置。 */
 export interface HitokotoOptions {
   /**
    * 是否在一言后展示来源
@@ -16,22 +35,19 @@ export interface HitokotoOptions {
   fromSeparator?: string
 
   /**
-   * 一言句子类型，可配置多个分类
-   * 例如：['a', 'c']
+   * 一言句子分类，可组合多个 `HitokotoSentenceType` 并分别作为 API 的 `c` 查询参数
+   * @example ['a', 'c']
    */
   sentenceTypes?: HitokotoSentenceType[]
 
-  /**
-   * 一言最小长度
-   */
+  /** 一言最小长度，对应 API 的 `min_length` 查询参数。 */
   minLength?: number
 
-  /**
-   * 一言最大长度
-   */
+  /** 一言最大长度，对应 API 的 `max_length` 查询参数。 */
   maxLength?: number
 }
 
+/** 主题首页 Hero 首屏的内容、行为与独立封面配置。 */
 export interface Hero {
   /**
    * 首屏独立封面设置
@@ -42,7 +58,7 @@ export interface Hero {
 
   /**
    * 签名文字
-   * 支持字符串（固定显示）或字符串数组（打字机轮播效果）
+   * 支持字符串（固定显示）或字符串数组（按间隔轮换显示，可配合打字机效果）
    * @default ''
    */
   motto: string | string[]
@@ -55,9 +71,7 @@ export interface Hero {
    */
   mottoSource: HeroMottoSource
 
-  /**
-   * 一言在 Hero motto 中的展示与请求配置
-   */
+  /** 一言在 Hero 签名中的展示与请求配置。 */
   hitokoto: HitokotoOptions
 
   /**
@@ -75,7 +89,7 @@ export interface Hero {
   typewriter: boolean
 
   /**
-   * 打字机效果速度（ms/字符），仅在 motto 为字符串数组且 typewriter 为 true 时生效
+   * 打字机效果速度（ms/字符），在 typewriter 为 true 且存在签名时生效
    * @default 100
    */
   typingSpeed: number
@@ -105,24 +119,22 @@ export interface Hero {
   textAlign: 'left' | 'center' | 'right'
 }
 
+/** Hero 独立封面的图片来源、轮换方式与视觉参数。 */
 interface HeroCover {
-  /**
-   * 本地/静态图片列表
-   */
+  /** 本地或静态图片地址列表。 */
   urls?: string[]
 
-  /**
-   * 随机图片 API 列表
-   */
+  /** 随机图片 API 地址列表。 */
   apiUrls?: string[]
 
   /**
    * 是否启用随机取图
-   * - true: 优先 使用 apiUrls 中的随机图片，apiUrls 为空时使用 urls 中的随机图片
+   * - true: 优先使用 apiUrls 中的随机图片，apiUrls 为空时使用 urls 中的随机图片
    * - false: 使用 desktop/mobile 中的单图或 urls 中的第一张图片
    * @default false
    */
   random?: boolean
+
   /**
    * 多图轮换间隔（ms）
    * 当 urls 有多张，或 random 为 true 时生效
@@ -130,11 +142,10 @@ interface HeroCover {
    */
   rotationInterval?: number
 
-  /**
-   * 单图配置
-   * 当 random 为 false 且 urls 为空时生效
-   */
+  /** 当 random 为 false 且 urls 为空时使用的桌面端单图地址。 */
   desktop?: string
+
+  /** 当 random 为 false 且 urls 为空时使用的移动端单图地址。 */
   mobile?: string
 
   /**

@@ -1,5 +1,5 @@
 @use './layout' as *;
-@use './markdown' as *;
+@use './markdown/index' as *;
 
 #nprogress {
   pointer-events: none;

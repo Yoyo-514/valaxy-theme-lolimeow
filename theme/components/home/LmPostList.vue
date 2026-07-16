@@ -3,8 +3,9 @@ import type { Post } from 'valaxy'
 import { useElementSize } from '@vueuse/core'
 import { useSiteStore } from 'valaxy'
 import { computed, ref } from 'vue'
-import { useThemeConfig } from '../../composables'
-import { clampColumnCount, getRootFontSize, resolveGridColumnCount, resolveLengthToPx } from '../../utils'
+import { clampColumnCount, resolveGridColumnCount, resolveLengthToPx } from '../../features/home'
+import { getRootFontSize } from '../../shared/browser'
+import { useThemeConfig } from '../../shared/config'
 
 const props = withDefaults(defineProps<{
   type?: string
@@ -34,7 +35,10 @@ const allPosts = computed(() => {
 
 const posts = computed(() => props.posts ?? allPosts.value)
 
+/** 首页文章卡片未配置时采用的默认最小宽度。 */
 const DEFAULT_MIN_CARD_WIDTH = '18rem'
+
+/** 首页文章网格中相邻卡片的固定像素间距。 */
 const GRID_GAP_PX = 16
 
 const maxColumns = computed(() => {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ResolvedProjectGroup } from '../../composables'
+import type { ResolvedProjectGroup } from '../../features/project'
 
 defineProps<{
   groups: ResolvedProjectGroup[]

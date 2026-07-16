@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { NavItem } from '../../types'
-import { useNavActive } from '../../composables'
+import { useNavActive } from '../../features/navigation'
 
 const props = defineProps<{
   items: NavItem[]

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TagGroup } from '../../composables'
+import type { TagGroup } from '../../features/tag'
 import { computed, ref, watch } from 'vue'
 
 const props = defineProps<{

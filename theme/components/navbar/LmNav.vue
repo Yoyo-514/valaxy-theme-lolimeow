@@ -21,7 +21,7 @@ const emit = defineEmits<{
 
       <div class="text-sm leading-6 ml-auto hidden items-center md:flex md:gap-3.5 xl:gap-5">
         <LmNavItem
-          v-for="item in $props.items"
+          v-for="item in props.items"
           :key="item.link"
           :item="item"
         />

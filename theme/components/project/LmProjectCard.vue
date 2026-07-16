@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ResolvedProjectItem } from '../../composables'
+import type { ResolvedProjectItem } from '../../features/project'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
@@ -22,6 +22,7 @@ const cardAttrs = computed(() => {
   }
 })
 
+/** 项目动作类型对应的卡片按钮图标类名。 */
 const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], string> = {
   demo: 'i-ri-play-circle-line',
   docs: 'i-ri-book-open-line',

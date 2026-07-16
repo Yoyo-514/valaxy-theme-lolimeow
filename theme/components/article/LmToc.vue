@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useArticleTocState } from '../../composables'
+import { useArticleTocState } from '../../features/article'
 
 const { t } = useI18n()
 const { items, visible, activeLink, handleClick } = useArticleTocState()

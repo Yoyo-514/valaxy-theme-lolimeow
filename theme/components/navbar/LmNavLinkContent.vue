@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { NavItem } from '../../types'
-import { shouldShowExternalNavIndicator } from '../../composables'
+import { shouldShowExternalNavIndicator } from '../../features/navigation'
 
 const props = defineProps<{
   item: NavItem

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
+import type { BrowserTimeout } from '../../shared/browser'
 import type { NavItem } from '../../types'
-import type { BrowserTimeout } from '../../utils'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { resolveInternalNavRoute, shouldOpenNavLinkWithWindow } from '../../composables'
-import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '../../utils'
+import { resolveInternalNavRoute, shouldOpenNavLinkWithWindow } from '../../features/navigation'
+import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '../../shared/browser'
 
 const props = defineProps<{
   open: boolean
@@ -18,19 +18,28 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 const router = useRouter()
-// ACTIVE_PREVIEW_DURATION 给高亮一个极短的预览窗口，
-// 避免点击后抽屉立刻离场，用户来不及感知当前目标项。
+/**
+ * 导航目标高亮的预览时长，避免抽屉立刻离场导致用户无法感知目标项。
+ */
 const ACTIVE_PREVIEW_DURATION = 80
-// NAV_CLOSE_DURATION 必须和抽屉高度过渡时长保持一致，
-// 否则跳转会打断收起动画。
+
+/**
+ * 抽屉收起动画时长，延迟跳转以免导航打断离场过渡。
+ */
 const NAV_CLOSE_DURATION = 280
 
 let navigateTimer: BrowserTimeout | undefined
 
+/** 通知布局关闭移动端导航抽屉。 */
 function closeDrawer() {
   emit('close')
 }
 
+/**
+ * 预览目标项高亮，关闭抽屉后按链接类型完成导航。
+ *
+ * @param item - 用户点击的导航项。
+ */
 function handleItemClick(item: NavItem) {
   const currentWindow = getWindow()
   if (!currentWindow)
@@ -52,10 +61,20 @@ function handleItemClick(item: NavItem) {
   }, ACTIVE_PREVIEW_DURATION)
 }
 
+/**
+ * 在抽屉进入过渡前将高度归零。
+ *
+ * @param el - 执行过渡的抽屉元素。
+ */
 function beforeEnter(el: Element) {
   (el as HTMLElement).style.height = '0px'
 }
 
+/**
+ * 将抽屉高度过渡到真实内容高度。
+ *
+ * @param el - 执行过渡的抽屉元素。
+ */
 function enter(el: Element) {
   const node = el as HTMLElement
   // 使用真实内容高度做展开，而不是写死 max-height，
@@ -63,15 +82,30 @@ function enter(el: Element) {
   node.style.height = `${node.scrollHeight}px`
 }
 
+/**
+ * 在抽屉进入过渡结束后恢复自适应高度。
+ *
+ * @param el - 完成进入过渡的抽屉元素。
+ */
 function afterEnter(el: Element) {
   (el as HTMLElement).style.height = 'auto'
 }
 
+/**
+ * 在抽屉离开前固定当前内容高度，建立收起过渡起点。
+ *
+ * @param el - 即将执行离开过渡的抽屉元素。
+ */
 function beforeLeave(el: Element) {
   const node = el as HTMLElement
   node.style.height = `${node.scrollHeight}px`
 }
 
+/**
+ * 强制建立离开过渡起点后将抽屉高度收至零。
+ *
+ * @param el - 执行离开过渡的抽屉元素。
+ */
 function leave(el: Element) {
   const node = el as HTMLElement
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { NavItem } from '../../types'
 import { computed, ref, watch } from 'vue'
-import { useNavActive, useNavItemState } from '../../composables'
+import { useNavActive, useNavItemState } from '../../features/navigation'
 
 const props = defineProps<{
   item: NavItem
@@ -21,6 +21,7 @@ watch(childActive, (active) => {
     expanded.value = true
 })
 
+/** 在展开与收起状态之间切换当前移动端子菜单。 */
 function toggleSubmenu() {
   expanded.value = !expanded.value
 }

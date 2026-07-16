@@ -1,0 +1,258 @@
+import type { BrowserTimeout } from '../../shared/browser'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '../../shared/browser'
+import { useThemeConfig } from '../../shared/config'
+import { fetchHitokoto } from './hitokoto'
+import { useTypewriter } from './typewriter'
+
+/** Hero 打字机允许的最小字符间隔，单位为毫秒。 */
+const MIN_TYPING_SPEED = 24
+/** Hero 签名轮换或一言刷新允许的最小间隔，单位为毫秒。 */
+const MIN_ROTATION_DELAY = 1200
+/** 一言正文与来源之间未配置分隔符时使用的默认值。 */
+const DEFAULT_HITOKOTO_SEPARATOR = '——'
+
+/**
+ * 管理 Hero 签名的配置读取、一言请求、轮换和打字机渲染状态。
+ *
+ * SSR/SSG 阶段先使用配置签名，一言仅在组件挂载后请求；首次请求未取得正文时回退到配置签名。
+ *
+ * @returns Hero 签名展示所需的响应式状态。
+ */
+export function useHeroMotto() {
+  const themeConfig = useThemeConfig()
+  const activeIndex = ref(0)
+  const mottoRenderKey = ref(0)
+  const hitokotoMotto = ref('')
+  const isHitokotoPending = ref(false)
+  const isMounted = ref(false)
+  const { render: renderTypewriter, renderedText: renderedMotto, stop: stopTypewriter } = useTypewriter()
+  let rotationTimer: BrowserTimeout | undefined
+
+  const useHitokoto = computed(() => themeConfig.value.hero.mottoSource === 'hitokoto')
+
+  const configMottoList = computed(() => {
+    const { motto } = themeConfig.value.hero
+
+    if (Array.isArray(motto))
+      return motto.filter(Boolean)
+
+    return motto ? [motto] : []
+  })
+
+  const mottoList = computed(() => {
+    if (!useHitokoto.value)
+      return configMottoList.value
+
+    if (isHitokotoPending.value)
+      return []
+
+    return hitokotoMotto.value ? [hitokotoMotto.value] : configMottoList.value
+  })
+
+  const hasMotto = computed(() => mottoList.value.length > 0)
+  const shouldShowMotto = computed(() => hasMotto.value || (useHitokoto.value && isHitokotoPending.value))
+  const shouldRotate = computed(() => mottoList.value.length > 1)
+  const shouldType = computed(() => Boolean(themeConfig.value.hero.typewriter))
+  const shouldFadeMotto = computed(() => !shouldType.value)
+  const typingSpeed = computed(() => Math.max(themeConfig.value.hero.typingSpeed || 100, MIN_TYPING_SPEED))
+  const rotationDelay = computed(() => Math.max(themeConfig.value.hero.mottoInterval || 4000, MIN_ROTATION_DELAY))
+
+  /** 停止签名轮换和逐字渲染使用的全部计时器。 */
+  function clearTimers() {
+    stopTypewriter()
+    clearBrowserTimeout(rotationTimer)
+
+    rotationTimer = undefined
+  }
+
+  /**
+   * 在浏览器中请求并更新一言签名。
+   *
+   * @returns 成功取得非空正文时返回 `true`，不可请求或请求失败时返回 `false`。
+   */
+  async function refreshHitokoto() {
+    const currentWindow = getWindow()
+    if (!currentWindow)
+      return false
+
+    isHitokotoPending.value = true
+
+    try {
+      const data = await fetchHitokoto({
+        sentenceTypes: themeConfig.value.hero.hitokoto.sentenceTypes,
+        minLength: themeConfig.value.hero.hitokoto.minLength,
+        maxLength: themeConfig.value.hero.hitokoto.maxLength,
+      })
+      const text = data.hitokoto?.trim()
+      if (!text)
+        return false
+
+      const hitokotoOptions = themeConfig.value.hero.hitokoto
+      const from = (data.from || data.fromWho || '').trim()
+
+      hitokotoMotto.value = hitokotoOptions?.showFrom && from
+        ? `${text} ${hitokotoOptions.fromSeparator || DEFAULT_HITOKOTO_SEPARATOR} ${from}`
+        : text
+
+      return true
+    }
+    catch (error) {
+      console.error('[lolimeow] Failed to fetch hitokoto.', error)
+      return false
+    }
+    finally {
+      isHitokotoPending.value = false
+    }
+  }
+
+  /** 根据当前签名来源和列表状态安排下一次轮换或一言刷新。 */
+  function scheduleNextMotto() {
+    if (useHitokoto.value) {
+      const currentWindow = getWindow()
+      if (!currentWindow)
+        return
+
+      rotationTimer = setBrowserTimeout(async () => {
+        rotationTimer = undefined
+        const currentMottoKey = mottoList.value.join('\u0000')
+        const fetched = await refreshHitokoto()
+
+        if (!fetched || mottoList.value.join('\u0000') === currentMottoKey)
+          scheduleNextMotto()
+      }, rotationDelay.value)
+      return
+    }
+
+    if (!shouldRotate.value)
+      return
+
+    const currentWindow = getWindow()
+    if (!currentWindow)
+      return
+
+    // 轮播定时器和打字定时器必须严格分离：
+    // 前者控制“下一条何时开始”，后者控制“当前条如何显现”。
+    rotationTimer = setBrowserTimeout(() => {
+      activeIndex.value = (activeIndex.value + 1) % mottoList.value.length
+      renderActiveMotto()
+    }, rotationDelay.value)
+  }
+
+  /**
+   * 立即显示完整签名，并在完成后安排下一次轮换。
+   *
+   * @param text - 待显示的完整签名。
+   */
+  function renderImmediately(text: string) {
+    mottoRenderKey.value += 1
+    renderTypewriter({
+      immediate: true,
+      onComplete: scheduleNextMotto,
+      speed: typingSpeed.value,
+      text,
+    })
+  }
+
+  /**
+   * 组件挂载后逐字显示签名；挂载前退化为立即渲染以保持 SSR 文本一致。
+   *
+   * @param text - 待显示的完整签名。
+   */
+  function renderWithTypewriter(text: string) {
+    if (!isMounted.value) {
+      renderImmediately(text)
+      return
+    }
+
+    mottoRenderKey.value += 1
+    renderTypewriter({
+      onComplete: scheduleNextMotto,
+      speed: typingSpeed.value,
+      text,
+    })
+  }
+
+  /** 根据当前索引和打字机配置重新渲染活动签名。 */
+  function renderActiveMotto() {
+    clearTimers()
+
+    const currentMotto = mottoList.value[activeIndex.value] ?? ''
+    if (!currentMotto) {
+      renderedMotto.value = ''
+      return
+    }
+
+    if (!shouldType.value) {
+      renderImmediately(currentMotto)
+      return
+    }
+
+    renderWithTypewriter(currentMotto)
+  }
+
+  watch(
+    () => [
+      mottoList.value.join('\u0000'),
+      shouldType.value,
+      typingSpeed.value,
+      rotationDelay.value,
+    ],
+    () => {
+      // Hero 配置变化后必须从第一条重新启动状态机，否则会出现：
+      // 旧定时器继续驱动新配置、activeIndex 越界、旧文案残留等时序污染。
+      clearTimers()
+      activeIndex.value = 0
+
+      if (!hasMotto.value) {
+        renderedMotto.value = ''
+        return
+      }
+
+      renderActiveMotto()
+    },
+    { immediate: true },
+  )
+
+  watch(
+    useHitokoto,
+    async (enabled) => {
+      if (!enabled) {
+        isHitokotoPending.value = false
+        hitokotoMotto.value = ''
+        return
+      }
+
+      // 一言请求属于纯客户端动态增强，不能在 hydration 前改变首屏文案，
+      // 否则 SSG fallback motto 会和客户端 pending/空文案发生文本不一致。
+      if (!isMounted.value)
+        return
+
+      renderedMotto.value = ''
+      await refreshHitokoto()
+    },
+    { immediate: true },
+  )
+
+  onMounted(async () => {
+    isMounted.value = true
+
+    if (shouldType.value)
+      renderActiveMotto()
+
+    if (useHitokoto.value)
+      await refreshHitokoto()
+  })
+
+  onBeforeUnmount(() => {
+    clearTimers()
+  })
+
+  return {
+    hasMotto,
+    mottoRenderKey,
+    renderedMotto,
+    shouldFadeMotto,
+    shouldShowMotto,
+  }
+}

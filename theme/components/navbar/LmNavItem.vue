@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { NavItem } from '../../types'
 import { computed } from 'vue'
-import { useNavActive, useNavItemState } from '../../composables'
+import { useNavActive, useNavItemState } from '../../features/navigation'
 
 const props = defineProps<{
   item: NavItem

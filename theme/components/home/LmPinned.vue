@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { usePinnedEntries } from '../../composables'
+import { usePinnedEntries } from '../../features/home'
 
 const {
   sectionTitle,

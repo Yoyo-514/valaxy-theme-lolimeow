@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useBackgroundRuntime, useResolvedBackground } from '../composables'
-import { createBackgroundImageStyle } from '../utils'
+import { createBackgroundImageStyle, useBackgroundRuntime, useResolvedBackground } from '../features/background'
 
 const background = useResolvedBackground('app')
 const runtimeBackground = useBackgroundRuntime('app', background)

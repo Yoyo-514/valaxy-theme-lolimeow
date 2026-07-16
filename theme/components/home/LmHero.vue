@@ -2,17 +2,26 @@
 import { useSiteConfig } from 'valaxy'
 import { computed, useTemplateRef } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useHeroMotto, useHeroStage, useThemeConfig } from '../../composables'
+import { useHeroMotto, useHeroStage } from '../../features/hero'
+import { useThemeConfig } from '../../shared/config'
 
+/** Hero 社交链接渲染所需的站点社交配置字段。 */
 interface SocialLink {
+  /** 社交平台或链接名称。 */
   name: string
+  /** 社交主页地址。 */
   link: string
+  /** 可选的图标类名。 */
   icon?: string
+  /** 可选的品牌颜色。 */
   color?: string
 }
 
+/** Hero 作者身份区域使用的站点作者字段。 */
 interface SiteAuthor {
+  /** 作者头像地址。 */
   avatar?: string
+  /** 作者显示名称。 */
   name?: string
 }
 

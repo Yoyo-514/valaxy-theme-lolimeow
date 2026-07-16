@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ArchiveGroup } from '../../composables'
+import type { ArchiveGroup } from '../../features/archive'
 
 defineProps<{
   groups: ArchiveGroup[]
@@ -14,6 +14,7 @@ const emit = defineEmits<{
   (e: 'selectYear', year: string): void
 }>()
 
+/** 将缺失年份的内部占位值转换为本地化展示文本。 */
 function displayYear(year: string, unknownYearLabel: string) {
   return year === 'Unknown' ? unknownYearLabel : year
 }

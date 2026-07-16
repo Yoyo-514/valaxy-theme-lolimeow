@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue'
-import { useHomePostFeed } from '../../composables'
+import { useHomePostFeed } from '../../features/home'
 
 const props = withDefaults(defineProps<{
   curPage?: number

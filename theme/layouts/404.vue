@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { getWindow } from '../utils'
+import { getWindow } from '../shared/browser'
 
 const router = useRouter()
 const { t } = useI18n()
 
+/** 返回可用的上一页；没有有效来源时回到首页。 */
 function goBack() {
   const currentWindow = getWindow()
   const referrer = currentWindow?.document.referrer

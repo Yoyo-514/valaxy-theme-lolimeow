@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { CategoryEntry } from '../../composables'
+import type { CategoryEntry } from '../../features/category'
 import { formatDate } from 'valaxy'
 
 defineProps<{
   entries: CategoryEntry[]
 }>()
 
+/** 将分类条目的日期格式化为列表展示文本。 */
 function formatEntryDate(date?: string | number | Date) {
   return formatDate(date ?? '')
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CategoryNode } from '../../composables'
+import type { CategoryNode } from '../../features/category'
 import { ref } from 'vue'
 
 const props = withDefaults(defineProps<{
@@ -16,14 +16,17 @@ const props = withDefaults(defineProps<{
 
 const expandedPaths = ref(new Set<string>())
 
+/** 将未分类节点的内部名称转换为本地化展示文本。 */
 function displayName(name: string) {
   return name === 'Uncategorized' ? props.uncategorizedLabel : name
 }
 
+/** 判断指定分类节点当前是否展开。 */
 function isExpanded(node: CategoryNode) {
   return expandedPaths.value.has(node.fullPath)
 }
 
+/** 切换指定分类节点的展开状态。 */
 function toggleNode(node: CategoryNode) {
   const nextPaths = new Set(expandedPaths.value)
 

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useThemeConfig } from '../composables'
-import { getSessionStorage } from '../utils'
+import { getSessionStorage } from '../shared/browser'
+import { useThemeConfig } from '../shared/config'
 
 const { t } = useI18n()
 const themeConfig = useThemeConfig()
@@ -41,6 +41,7 @@ watch(
 
 const visible = computed(() => enabled.value && Boolean(notice.value) && isOpen.value)
 
+/** 关闭当前公告，并在允许关闭时记录本次会话的已读状态。 */
 function closeNotice() {
   if (!closable.value)
     return

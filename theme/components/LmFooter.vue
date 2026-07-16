@@ -4,7 +4,7 @@ import pkg from 'valaxy/package.json'
 import { capitalize, computed } from 'vue'
 
 import { useI18n } from 'vue-i18n'
-import { useThemeConfig } from '../composables'
+import { useThemeConfig } from '../shared/config'
 
 const { t } = useI18n()
 

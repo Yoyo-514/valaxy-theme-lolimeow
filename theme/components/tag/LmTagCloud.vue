@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { TagCloudSourceItem } from '../../composables'
-import { useTagCloud } from '../../composables'
+import type { TagCloudSourceItem } from '../../features/tag'
+import { useTagCloud } from '../../features/tag'
 
 const props = defineProps<{
   items: TagCloudSourceItem[]

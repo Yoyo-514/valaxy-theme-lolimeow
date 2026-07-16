@@ -2,7 +2,8 @@
 import { useAppStore } from 'valaxy'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useNavbarTools, useThemeConfig } from '../../composables'
+import { useNavbarTools } from '../../features/navigation'
+import { useThemeConfig } from '../../shared/config'
 
 const props = defineProps<{
   drawerOpen: boolean

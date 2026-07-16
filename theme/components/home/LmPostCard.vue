@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type { Post } from 'valaxy'
-import { computed, shallowRef } from 'vue'
-import { usePostCardMediaState, usePostCardViewModel } from '../../composables'
+import { computed, shallowRef, toRef } from 'vue'
+import { usePostCardMediaState, usePostCardViewModel } from '../../features/post'
 
+/** 文章卡片支持的图文排列方式。 */
 type PostCardLayout = 'alternating' | 'text-first'
 
 const props = withDefaults(defineProps<{
@@ -25,7 +26,7 @@ const {
   isTextOnly,
   isReversed,
   handleCoverError,
-} = usePostCardViewModel(props.post, props.index)
+} = usePostCardViewModel(toRef(props, 'post'), toRef(props, 'index'))
 
 const shouldReverse = computed(() => {
   if (props.layout === 'text-first')
@@ -41,7 +42,12 @@ const {
   showLoadingPlaceholder,
   handleImageError,
   handleImageLoad,
-} = usePostCardMediaState(hasMedia, cover, imageElement, handleCoverError)
+} = usePostCardMediaState({
+  hasMedia,
+  cover,
+  imageElement,
+  onCoverFailure: handleCoverError,
+})
 </script>
 
 <template>
@@ -100,6 +106,44 @@ const {
 
 <style lang="scss" scoped>
 @use '../../styles/mixins/surface' as *;
+
+@mixin lm-post-card-compact-layout {
+  .lm-post-card,
+  .lm-post-card--reversed {
+    grid-template-columns: 1fr;
+    min-height: unset;
+  }
+
+  .lm-post-card__media,
+  .lm-post-card--reversed .lm-post-card__media {
+    order: 1;
+  }
+
+  .lm-post-card__content,
+  .lm-post-card--reversed .lm-post-card__content {
+    order: 2;
+  }
+
+  .lm-post-card__media-shape,
+  .lm-post-card--reversed .lm-post-card__media-shape {
+    clip-path: none;
+  }
+
+  .lm-post-card__media {
+    min-height: 9rem;
+  }
+
+  .lm-post-card__content,
+  .lm-post-card--reversed .lm-post-card__content {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .lm-post-card__excerpt,
+  .lm-post-card--reversed .lm-post-card__excerpt {
+    text-align: left;
+  }
+}
 
 .lm-post-card {
   @include lm-surface-panel;
@@ -239,79 +283,15 @@ const {
 }
 
 @container (max-width: 24rem) {
-  .lm-post-card,
-  .lm-post-card--reversed {
-    grid-template-columns: 1fr;
-    min-height: unset;
-  }
-
-  .lm-post-card__media,
-  .lm-post-card--reversed .lm-post-card__media {
-    order: 1;
-  }
-
-  .lm-post-card__content,
-  .lm-post-card--reversed .lm-post-card__content {
-    order: 2;
-  }
-
-  .lm-post-card__media-shape,
-  .lm-post-card--reversed .lm-post-card__media-shape {
-    clip-path: none;
-  }
-
-  .lm-post-card__media {
-    min-height: 9rem;
-  }
+  @include lm-post-card-compact-layout;
 
   .lm-post-card__content,
   .lm-post-card--reversed .lm-post-card__content {
     justify-content: flex-start;
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .lm-post-card__excerpt,
-  .lm-post-card--reversed .lm-post-card__excerpt {
-    text-align: left;
   }
 }
 
 @media (max-width: 767px) {
-  .lm-post-card,
-  .lm-post-card--reversed {
-    grid-template-columns: 1fr;
-    min-height: unset;
-  }
-
-  .lm-post-card__media,
-  .lm-post-card--reversed .lm-post-card__media {
-    order: 1;
-  }
-
-  .lm-post-card__content,
-  .lm-post-card--reversed .lm-post-card__content {
-    order: 2;
-  }
-
-  .lm-post-card__media-shape,
-  .lm-post-card--reversed .lm-post-card__media-shape {
-    clip-path: none;
-  }
-
-  .lm-post-card__media {
-    min-height: 9rem;
-  }
-
-  .lm-post-card__content,
-  .lm-post-card--reversed .lm-post-card__content {
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .lm-post-card__excerpt,
-  .lm-post-card--reversed .lm-post-card__excerpt {
-    text-align: left;
-  }
+  @include lm-post-card-compact-layout;
 }
 </style>

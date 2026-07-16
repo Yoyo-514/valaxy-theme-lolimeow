@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { TagEntry } from '../../composables'
+import type { TagEntry } from '../../features/tag'
 import { formatDate } from 'valaxy'
 
 defineProps<{
   entries: TagEntry[]
 }>()
 
+/** 将标签条目的日期格式化为列表展示文本。 */
 function formatEntryDate(date?: string | number | Date) {
   return formatDate(date ?? '')
 }

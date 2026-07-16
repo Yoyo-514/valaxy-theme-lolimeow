@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { usePaginationItems } from '../../composables'
+import { usePaginationItems } from '../../features/home'
 
 const props = withDefaults(defineProps<{
   currentPage?: number

@@ -2,7 +2,7 @@
 import { isClient, useWindowScroll } from '@vueuse/core'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { getDocumentElement, getWindow } from '../utils'
+import { getDocumentElement, getWindow } from '../shared/browser'
 
 const { t } = useI18n()
 const { y } = useWindowScroll()
@@ -40,6 +40,7 @@ const pawFillRect = computed(() => {
   }
 })
 
+/** 将浏览器窗口平滑滚动到页面顶部。 */
 function backToTop() {
   if (!isClient)
     return

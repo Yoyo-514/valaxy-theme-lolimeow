@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useSiteConfig } from 'valaxy'
 import { computed } from 'vue'
-import { useThemeConfig } from '../../composables'
+import { useThemeConfig } from '../../shared/config'
 
 const siteConfig = useSiteConfig()
 const themeConfig = useThemeConfig()

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAboutProfile } from '../../composables'
+import { useAboutProfile } from '../../features/about'
 
 const {
   authorAvatar,

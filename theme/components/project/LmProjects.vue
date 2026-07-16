@@ -2,8 +2,8 @@
 import { useFrontmatter } from 'valaxy'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useProjectGroups } from '../../composables'
-import { resolveFrontmatterCover, resolveFrontmatterText } from '../../utils'
+import { useProjectGroups } from '../../features/project'
+import { resolveFrontmatterCover, resolveFrontmatterText } from '../../shared/frontmatter'
 
 const { t } = useI18n()
 const frontmatter = useFrontmatter()

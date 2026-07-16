@@ -1,21 +1,28 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useArticleTocState } from '../../composables'
-import { removeDocumentClass, toggleDocumentClass } from '../../utils'
+import { useArticleTocState } from '../../features/article'
+import { removeDocumentClass, toggleDocumentClass } from '../../shared/browser'
 
 const { t } = useI18n()
 const { items, visible, activeLink, handleClick } = useArticleTocState()
 const open = ref(false)
 
+/** 关闭移动端目录面板，并由现有监听同步文档状态类。 */
 function closePanel() {
   open.value = false
 }
 
+/** 切换移动端目录面板的打开状态。 */
 function togglePanel() {
   open.value = !open.value
 }
 
+/**
+ * 处理移动端目录选择，在执行原目录滚动行为后关闭面板。
+ *
+ * @param event - 目录链接的鼠标点击事件。
+ */
 function onSelect(event: MouseEvent) {
   handleClick(event)
   closePanel()
