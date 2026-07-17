@@ -73,4 +73,15 @@ const emit = defineEmits<{
   color: var(--lm-c-brand);
   font-weight: 800;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-search-result {
+    transition: none;
+  }
+
+  .lm-search-result:hover,
+  .lm-search-result--active {
+    transform: none;
+  }
+}
 </style>

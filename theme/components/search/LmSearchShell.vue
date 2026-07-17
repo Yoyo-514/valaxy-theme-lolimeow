@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, toRef } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useModalFocusTrap } from '../../shared/browser'
 
 const props = defineProps<{
   open: boolean
@@ -12,6 +13,14 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 const mounted = ref(false)
+const panelRef = ref<HTMLElement>()
+
+useModalFocusTrap({
+  container: panelRef,
+  lockBodyScroll: true,
+  onClose: () => emit('close'),
+  open: toRef(props, 'open'),
+})
 
 onMounted(() => {
   mounted.value = true
@@ -34,7 +43,12 @@ onMounted(() => {
       <Transition name="lm-search-panel">
         <section
           v-if="props.open"
+          ref="panelRef"
           class="lm-search-shell__panel"
+          role="dialog"
+          aria-modal="true"
+          :aria-label="t('search.label')"
+          tabindex="-1"
         >
           <slot />
         </section>
@@ -81,5 +95,22 @@ onMounted(() => {
 .lm-search-panel-leave-to {
   opacity: 0;
   transform: translateY(-12px) scale(0.985);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-search-backdrop-enter-active,
+  .lm-search-backdrop-leave-active,
+  .lm-search-panel-enter-active,
+  .lm-search-panel-leave-active {
+    transition: none;
+  }
+
+  .lm-search-backdrop-enter-from,
+  .lm-search-backdrop-leave-to,
+  .lm-search-panel-enter-from,
+  .lm-search-panel-leave-to {
+    opacity: 1;
+    transform: none;
+  }
 }
 </style>

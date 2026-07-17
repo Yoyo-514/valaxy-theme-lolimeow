@@ -1,13 +1,13 @@
-import { useEventListener } from '@vueuse/core'
-import { ref } from 'vue'
-import { getWindow } from '../../shared/browser'
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 /**
- * 管理搜索弹窗的打开、关闭、切换状态及 Escape 键关闭行为。
+ * 管理搜索弹窗的打开、关闭与切换状态。
  *
  * @returns 搜索弹窗状态与对应控制方法。
  */
 export function useSearchModal() {
+  const route = useRoute()
   const isOpen = ref(false)
 
   /** 打开搜索弹窗。 */
@@ -25,10 +25,8 @@ export function useSearchModal() {
     isOpen.value = !isOpen.value
   }
 
-  useEventListener(getWindow(), 'keydown', (event: KeyboardEvent) => {
-    if (event.key === 'Escape')
-      close()
-  })
+  // 结果点击、程序导航与浏览器前进/后退都会更新 fullPath，统一在状态源关闭弹窗。
+  watch(() => route.fullPath, close)
 
   return {
     isOpen,

@@ -136,8 +136,8 @@ interface HeroCover {
   random?: boolean
 
   /**
-   * 多图轮换间隔（ms）
-   * 当 urls 有多张，或 random 为 true 时生效
+   * 图片定时轮换间隔（ms）
+   * 仅当 random 为 true，且 apiUrls 至少包含一个有效地址或 urls 至少包含两张有效静态图片时生效
    * @default 12000
    */
   rotationInterval?: number

@@ -1,7 +1,7 @@
 import type { BrowserTimeout } from '../../shared/browser'
 import type { TypewriterRenderOptions } from './types'
-import { onBeforeUnmount, ref } from 'vue'
-import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '../../shared/browser'
+import { onBeforeUnmount, ref, watch } from 'vue'
+import { clearBrowserTimeout, getWindow, setBrowserTimeout, useReducedMotion } from '../../shared/browser'
 
 /**
  * 创建供 Hero 文案复用的逐字渲染状态。
@@ -13,12 +13,34 @@ import { clearBrowserTimeout, getWindow, setBrowserTimeout } from '../../shared/
 export function useTypewriter() {
   /** 当前已经显示的文本片段。 */
   const renderedText = ref('')
+  const reducedMotion = useReducedMotion()
   let timer: BrowserTimeout | undefined
+  let renderGeneration = 0
+  let activeRender: { generation: number, options: TypewriterRenderOptions } | undefined
 
   /** 停止当前逐字渲染并释放对应计时器。 */
   function stop() {
+    renderGeneration += 1
+    activeRender = undefined
     clearBrowserTimeout(timer)
     timer = undefined
+  }
+
+  /**
+   * 以同一完成出口落地全文，确保每个渲染代际最多触发一次完成回调。
+   *
+   * @param generation - 本次渲染捕获的代际标识。
+   */
+  function complete(generation: number) {
+    if (!activeRender || activeRender.generation !== generation)
+      return
+
+    const { options } = activeRender
+    activeRender = undefined
+    clearBrowserTimeout(timer)
+    timer = undefined
+    renderedText.value = options.text
+    options.onComplete?.()
   }
 
   /**
@@ -29,16 +51,12 @@ export function useTypewriter() {
   function render(options: TypewriterRenderOptions) {
     stop()
 
-    // SSR 或调用方要求立即渲染时，保留完成回调语义，便于复用轮播调度。
-    if (options.immediate || !getWindow()) {
-      renderedText.value = options.text
-      options.onComplete?.()
-      return
-    }
+    const generation = renderGeneration
+    activeRender = { generation, options }
 
-    if (!options.text) {
-      renderedText.value = ''
-      options.onComplete?.()
+    // SSR、调用方要求立即渲染或系统偏好减少动态效果时，仍保留完成回调与轮播排程语义。
+    if (options.immediate || reducedMotion.value || !getWindow() || !options.text) {
+      complete(generation)
       return
     }
 
@@ -47,6 +65,9 @@ export function useTypewriter() {
 
     /** 显示下一个字符，并在文本完成后触发回调。 */
     const step = () => {
+      if (!activeRender || activeRender.generation !== generation)
+        return
+
       visibleLength += 1
       renderedText.value = options.text.slice(0, visibleLength)
 
@@ -55,12 +76,16 @@ export function useTypewriter() {
         return
       }
 
-      timer = undefined
-      options.onComplete?.()
+      complete(generation)
     }
 
     timer = setBrowserTimeout(step, options.speed)
   }
+
+  watch(reducedMotion, (reduced) => {
+    if (reduced && activeRender)
+      complete(activeRender.generation)
+  }, { flush: 'sync' })
 
   onBeforeUnmount(stop)
 

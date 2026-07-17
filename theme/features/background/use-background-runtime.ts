@@ -1,7 +1,7 @@
 import type { CSSProperties, Ref } from 'vue'
 import type { BackgroundScope, ResolvedBackground } from './types'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
-import { getWindow } from '../../shared/browser'
+import { getWindow, useReducedMotion } from '../../shared/browser'
 import { cacheBackgroundImage, getCachedBackgroundImage, getStableFallbackImage } from './background-cache'
 import { getBackgroundCacheKey, shouldUseTransparentFallback } from './background-image'
 import { createBackgroundRotationScheduler } from './background-rotation'
@@ -34,6 +34,7 @@ export function useBackgroundRuntime(
   options: BackgroundRuntimeOptions = {},
 ) {
   const transition = createBackgroundTransition()
+  const reducedMotion = useReducedMotion()
   const isLoading = ref(false)
   const hasLoaded = ref(false)
   const usingFallback = ref(false)
@@ -53,6 +54,11 @@ export function useBackgroundRuntime(
     }
   })
 
+  watch(reducedMotion, (shouldReduceMotion) => {
+    if (shouldReduceMotion)
+      transition.settlePendingTransition()
+  })
+
   const rotation = createBackgroundRotationScheduler({
     scope,
     isCurrentRequest: currentRequestId => currentRequestId === requestId,
@@ -60,6 +66,9 @@ export function useBackgroundRuntime(
       transition.transitionTo(url)
       hasLoaded.value = true
       usingFallback.value = false
+    },
+    onPause: () => {
+      transition.settlePendingTransition()
     },
     handleFailure: () => {
       transition.clearIncomingImage()

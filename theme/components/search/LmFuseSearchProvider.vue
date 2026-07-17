@@ -85,7 +85,7 @@ function updateQuery(value: string) {
   query.value = value
 }
 
-/** 处理结果列表的键盘选择、导航和关闭操作。 */
+/** 处理结果列表的键盘选择与导航操作。 */
 function onKeydown(event: KeyboardEvent) {
   switch (event.key) {
     case 'ArrowDown':
@@ -104,10 +104,6 @@ function onKeydown(event: KeyboardEvent) {
       event.preventDefault()
       if (results.value[selectedIndex.value])
         navigate(results.value[selectedIndex.value])
-      break
-    case 'Escape':
-      event.preventDefault()
-      emit('close')
       break
   }
 }

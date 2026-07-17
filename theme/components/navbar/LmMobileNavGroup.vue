@@ -116,4 +116,20 @@ function toggleSubmenu() {
   opacity: 0;
   transform: translateY(-0.25rem);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-mobile-nav-item,
+  .lm-mobile-nav-subitem,
+  .lm-mobile-nav-item__chevron,
+  .lm-mobile-nav-submenu-enter-active,
+  .lm-mobile-nav-submenu-leave-active {
+    transition: none;
+  }
+
+  .lm-mobile-nav-submenu-enter-from,
+  .lm-mobile-nav-submenu-leave-to {
+    opacity: 1;
+    transform: none;
+  }
+}
 </style>

@@ -5,6 +5,7 @@ import {
   cancelBrowserAnimationFrame,
   clearBrowserTimeout,
   getWindow,
+  prefersReducedMotion,
   requestBrowserAnimationFrame,
   setBrowserTimeout,
 } from '../../shared/browser'
@@ -27,6 +28,8 @@ export interface BackgroundTransitionController {
   clearIncomingImage: () => void
   /** 取消待执行的显示、提交定时器与收尾动画帧。 */
   cancelPendingTransition: () => void
+  /** 取消待执行任务，并将未完成的进场图片立即提交为稳定图片。 */
+  settlePendingTransition: () => void
   /** 立即显示已确认可用的缓存或回退图片。 */
   showProvisionalImage: (url: string) => void
   /** 将目标图片通过双图层淡入后提交为稳定图片。 */
@@ -70,6 +73,18 @@ export function createBackgroundTransition(): BackgroundTransitionController {
     secondPaintFrame = undefined
   }
 
+  /** 取消待执行任务，并将未完成的进场图片立即提交为稳定图片。 */
+  function settlePendingTransition(): void {
+    const pendingImageUrl = incomingImageUrl.value
+
+    cancelPendingTransition()
+
+    if (pendingImageUrl)
+      currentImageUrl.value = pendingImageUrl
+
+    clearIncomingImage()
+  }
+
   /**
    * 立即显示已确认可用的缓存或回退图片。
    *
@@ -100,6 +115,13 @@ export function createBackgroundTransition(): BackgroundTransitionController {
     }
 
     if (currentImageUrl.value === url) {
+      clearIncomingImage()
+      return
+    }
+
+    // 减少动态效果时仍由调用方完成预加载、缓存与轮换，仅跳过视觉淡入阶段。
+    if (prefersReducedMotion()) {
+      currentImageUrl.value = url
       clearIncomingImage()
       return
     }
@@ -152,6 +174,7 @@ export function createBackgroundTransition(): BackgroundTransitionController {
     incomingImageVisible,
     clearIncomingImage,
     cancelPendingTransition,
+    settlePendingTransition,
     showProvisionalImage,
     transitionTo,
     reset,

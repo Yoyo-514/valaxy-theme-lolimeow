@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
@@ -12,25 +11,19 @@ const emit = defineEmits<{
   updateQuery: [value: string]
 }>()
 
-const inputRef = ref<HTMLInputElement>()
 const { t } = useI18n()
 
 function resolveInputValue(event: Event) {
   return (event.target as HTMLInputElement | null)?.value ?? ''
 }
-
-onMounted(async () => {
-  await nextTick()
-  inputRef.value?.focus()
-})
 </script>
 
 <template>
   <div class="lm-search-header">
     <div i-ri-search-line class="text-[var(--lm-c-text-muted)]" />
     <input
-      ref="inputRef"
       class="lm-search-header__input"
+      data-modal-initial-focus
       type="text"
       :value="props.query"
       :placeholder="t('search.placeholder')"
@@ -59,5 +52,11 @@ onMounted(async () => {
 
 .lm-search-header__close {
   @apply text-[var(--lm-c-text-secondary)] rounded-full inline-flex h-8 w-8 items-center justify-center transition-colors duration-200 ease-out hover:text-[var(--lm-c-text-primary)];
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-search-header__close {
+    transition: none;
+  }
 }
 </style>

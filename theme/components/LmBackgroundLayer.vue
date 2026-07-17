@@ -70,4 +70,10 @@ const overlayStyle = computed(() => ({
   @apply inset-0 absolute transition-opacity duration-500 ease-out;
   will-change: opacity;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-bg-fade-layer {
+    transition: none;
+  }
+}
 </style>

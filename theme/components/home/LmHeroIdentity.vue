@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{
+  accessibleMotto: string
   avatar: string
   authorName: string
   title: string
@@ -40,11 +41,19 @@ const props = defineProps<{
     v-if="props.shouldShowMotto"
     class="lm-hero-motto-strip"
   >
+    <p
+      class="lm-hero-motto-sr"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      {{ props.accessibleMotto }}
+    </p>
+
     <Transition name="lm-hero-motto-fade" mode="out-in">
       <p
         :key="props.shouldFadeMotto ? props.mottoRenderKey : 'typewriter'"
         class="lm-hero-motto"
-        aria-live="polite"
+        aria-hidden="true"
       >
         {{ props.renderedMotto }}
       </p>
@@ -173,6 +182,18 @@ const props = defineProps<{
     inset 0 1px 0 rgb(255 255 255 / 0.1);
 }
 
+.lm-hero-motto-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .lm-hero-motto {
   @apply min-h-8 w-full text-base leading-7 text-[var(--lm-c-text-secondary)] md:text-[1.0625rem];
   font-family: 'Segoe Print', 'Bradley Hand', 'Lucida Handwriting', 'Comic Sans MS', cursive;
@@ -195,6 +216,19 @@ const props = defineProps<{
 .lm-hero-motto-fade-leave-to {
   opacity: 0;
   transform: translateY(-0.125rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-hero-motto-fade-enter-active,
+  .lm-hero-motto-fade-leave-active {
+    transition: none;
+  }
+
+  .lm-hero-motto-fade-enter-from,
+  .lm-hero-motto-fade-leave-to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (max-width: 767px) {

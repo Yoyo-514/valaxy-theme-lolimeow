@@ -4,7 +4,9 @@
       <LmHero />
 
       <div class="lm-home-content">
-        <RouterView />
+        <slot>
+          <RouterView />
+        </slot>
       </div>
     </div>
   </Layout>

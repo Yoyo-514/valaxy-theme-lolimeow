@@ -102,7 +102,7 @@ export function mergeRanges(ranges: readonly (readonly [number, number])[], maxL
     .sort((a, b) => a[0] - b[0])
 
   return normalizedRanges.reduce<Array<[number, number]>>((mergedRanges, [start, end]) => {
-    const lastRange = mergedRanges.at(-1)
+    const lastRange = mergedRanges[mergedRanges.length - 1]
 
     if (!lastRange || start > lastRange[1] + 1)
       return [...mergedRanges, [start, end]]

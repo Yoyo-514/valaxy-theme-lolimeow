@@ -5,6 +5,7 @@ statistics:
   traffic: Traffic
 
 search:
+  label: Search
   placeholder: Search posts, tags, or categories...
   loading: Searching...
   no_results: No results found

@@ -5,128 +5,93 @@ import { computed, ref, watch } from 'vue'
 /** Archive 时间线切换为折叠模式的视口宽度，单位为像素。 */
 const ARCHIVE_ACCORDION_BREAKPOINT = 1024
 
+type ArchiveSelectionChange = 'idle' | 'expand' | 'collapse' | 'replace'
+
 /**
- * 管理归档时间线在桌面预览与折叠模式下的年份状态。
+ * 管理归档时间线的年份选择状态。
+ *
+ * 桌面和移动端共享同一个选择，初始均为折叠状态；响应式模式切换不会自动选择年份。
  *
  * @param getGroups - 获取当前归档分组的响应式函数。
- * @returns 时间线模式、活动分组及交互控制方法。
+ * @returns 当前模式、所选年份、所选分组及年份切换方法。
  */
 export function useArchiveTimelineState(getGroups: () => ArchiveGroup[]) {
   const { width } = useWindowSize()
-  const hoveredYear = ref<string | null>(null)
   const selectedYear = ref<string | null>(null)
-  const openedYear = ref<string | null>(null)
-
-  // 桌面端用 hover 预览、click 固定；移动端用 openedYear 表达手风琴展开态。
+  const selectionChange = ref<ArchiveSelectionChange>('idle')
   const groups = computed(() => getGroups())
   const isAccordionMode = computed(() => width.value < ARCHIVE_ACCORDION_BREAKPOINT)
-  const defaultDesktopYear = computed(() => groups.value[0]?.year ?? null)
 
   /**
    * 校验年份是否仍存在于当前归档分组。
    *
    * @param year - 待校验的年份。
-   * @returns 可用年份；不存在时返回 `null`。
+   * @returns 年份仍可用时返回原值，否则返回 `null`。
    */
   function resolveAvailableYear(year: string | null) {
     return groups.value.some(group => group.year === year) ? year : null
   }
 
-  /**
-   * 按悬停、选中和默认年份的优先级解析桌面活动年份。
-   *
-   * @returns 当前桌面活动年份或 `null`。
-   */
-  function resolveDesktopYear() {
-    return resolveAvailableYear(hoveredYear.value)
-      ?? resolveAvailableYear(selectedYear.value)
-      ?? defaultDesktopYear.value
-  }
-
-  /**
-   * 按展开、选中、悬停和默认年份的优先级解析折叠活动年份。
-   *
-   * @returns 当前折叠模式活动年份或 `null`。
-   */
-  function resolveAccordionYear() {
-    return resolveAvailableYear(openedYear.value)
-      ?? resolveAvailableYear(selectedYear.value)
-      ?? resolveAvailableYear(hoveredYear.value)
-      ?? defaultDesktopYear.value
-  }
-
-  const activeYear = computed(() => {
-    if (isAccordionMode.value)
-      return resolveAccordionYear()
-
-    return resolveDesktopYear()
-  })
-
-  const activeGroup = computed(() => {
-    if (!activeYear.value)
+  /** 当前所选的归档分组；完全折叠或年份失效时为 `null`。 */
+  const selectedGroup = computed(() => {
+    if (!selectedYear.value)
       return null
 
-    return groups.value.find(group => group.year === activeYear.value) ?? null
+    return groups.value.find(group => group.year === selectedYear.value) ?? null
   })
 
-  watch(isAccordionMode, (nextMode) => {
-    // 响应式模式切换时迁移当前年份，避免同一组归档在断点两侧丢失焦点。
-    if (nextMode) {
-      openedYear.value = resolveAccordionYear()
+  // 保留旧版只读字段，并直接映射到当前纯点击选择状态。
+  const activeYear = computed(() => selectedYear.value)
+  const activeGroup = selectedGroup
+
+  /**
+   * 原子更新选择及其交互类型，确保年份替换不会经过折叠状态。
+   *
+   * @param nextYear - 下一次选择的年份。
+   */
+  function updateSelection(nextYear: string | null) {
+    const previousYear = selectedYear.value
+
+    if (previousYear === nextYear)
       return
-    }
 
-    selectedYear.value = resolveAvailableYear(selectedYear.value)
-      ?? resolveAvailableYear(openedYear.value)
-      ?? defaultDesktopYear.value
-    hoveredYear.value = null
-  }, { immediate: true })
+    if (!previousYear)
+      selectionChange.value = 'expand'
+    else if (!nextYear)
+      selectionChange.value = 'collapse'
+    else
+      selectionChange.value = 'replace'
 
-  watch(groups, () => {
-    if (isAccordionMode.value) {
-      openedYear.value = resolveAccordionYear()
-      return
-    }
+    selectedYear.value = nextYear
+  }
 
-    selectedYear.value = resolveAvailableYear(selectedYear.value)
-      ?? resolveAvailableYear(openedYear.value)
-      ?? defaultDesktopYear.value
-    hoveredYear.value = resolveAvailableYear(hoveredYear.value)
+  watch(() => groups.value.map(group => group.year), () => {
+    // 数据更新只清理失效选择，不自动回退到第一年。
+    updateSelection(resolveAvailableYear(selectedYear.value))
   })
 
   /**
-   * 在桌面模式下预览指定年份。
+   * @deprecated 兼容旧版悬停预览 API；悬停展开已移除，调用不会产生任何效果。
    *
-   * @param year - 待预览的年份。
+   * @param year - 旧版待预览的年份，现仅用于保持调用签名兼容。
    */
   function previewGroup(year: string) {
-    if (isAccordionMode.value)
-      return
-
-    hoveredYear.value = year
-  }
-
-  /** 清除桌面模式下的悬停预览年份。 */
-  function resetDesktopPreview() {
-    if (isAccordionMode.value)
-      return
-
-    hoveredYear.value = null
+    void year
   }
 
   /**
-   * 选择年份；折叠模式切换展开态，桌面模式固定并预览该年份。
+   * @deprecated 兼容旧版桌面预览重置 API；悬停展开已移除，调用不会产生任何效果。
+   */
+  function resetDesktopPreview() {}
+
+  /**
+   * 切换所选年份；再次选择同一年时恢复完全折叠。
    *
-   * @param year - 待选择的年份。
+   * @param year - 待切换的年份。
    */
   function selectGroup(year: string) {
-    if (isAccordionMode.value) {
-      openedYear.value = openedYear.value === year ? null : year
-      return
-    }
-
-    selectedYear.value = year
-    hoveredYear.value = year
+    const nextYear = selectedYear.value === year ? null : resolveAvailableYear(year)
+    updateSelection(nextYear)
   }
 
   return {
@@ -135,6 +100,9 @@ export function useArchiveTimelineState(getGroups: () => ArchiveGroup[]) {
     activeGroup,
     previewGroup,
     resetDesktopPreview,
+    selectedYear,
+    selectedGroup,
+    selectionChange,
     selectGroup,
   }
 }

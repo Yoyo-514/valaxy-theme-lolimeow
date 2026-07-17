@@ -28,7 +28,7 @@ interface SiteAuthor {
 const { t } = useI18n()
 const siteConfig = useSiteConfig()
 const themeConfig = useThemeConfig()
-const { hasMotto, mottoRenderKey, renderedMotto, shouldFadeMotto, shouldShowMotto } = useHeroMotto()
+const { accessibleMotto, hasMotto, mottoRenderKey, renderedMotto, shouldFadeMotto, shouldShowMotto } = useHeroMotto()
 const heroSection = useTemplateRef<HTMLElement>('heroSection')
 
 const {
@@ -86,6 +86,7 @@ const showSocialIcons = computed(() => themeConfig.value.hero.showSocialIcons &&
       :class="contentAlignmentClass"
     >
       <LmHeroIdentity
+        :accessible-motto="accessibleMotto"
         :avatar="authorAvatar"
         :author-name="authorName"
         :title="siteTitle"
@@ -189,6 +190,16 @@ const showSocialIcons = computed(() => themeConfig.value.hero.showSocialIcons &&
   50% {
     opacity: 1;
     transform: translateY(7px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-hero-scroll-down {
+    transition: none;
+  }
+
+  .lm-hero-scroll-down__icon {
+    animation: none;
   }
 }
 </style>

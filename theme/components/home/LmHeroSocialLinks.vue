@@ -62,4 +62,15 @@ const props = defineProps<{
   opacity: 1;
   border-color: color-mix(in srgb, var(--lm-hero-social-color) 38%, transparent);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-hero-social-link {
+    transition: none;
+  }
+
+  .lm-hero-social-link:hover,
+  .lm-hero-social-link:focus-visible {
+    transform: none;
+  }
+}
 </style>

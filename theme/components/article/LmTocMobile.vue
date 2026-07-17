@@ -1,36 +1,90 @@
 <script setup lang="ts">
-import { onBeforeUnmount, ref, watch } from 'vue'
+import { useMediaQuery } from '@vueuse/core'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useArticleTocState } from '../../features/article'
-import { removeDocumentClass, toggleDocumentClass } from '../../shared/browser'
+import { hasActiveModalFocusScope, useModalFocusTrap } from '../../shared/browser'
 
 const { t } = useI18n()
 const { items, visible, activeLink, handleClick } = useArticleTocState()
 const open = ref(false)
+const panelRef = ref<HTMLElement>()
+const isDesktopToc = useMediaQuery('(min-width: 1280px)')
 
-/** 关闭移动端目录面板，并由现有监听同步文档状态类。 */
+/** 关闭移动端目录面板，并由焦点域监听恢复滚动与焦点。 */
 function closePanel() {
   open.value = false
 }
 
-/** 切换移动端目录面板的打开状态。 */
-function togglePanel() {
-  open.value = !open.value
+/**
+ * 判断除当前目录外是否还有活动浮层，避免操作被上层焦点域覆盖的目录。
+ *
+ * @returns 存在其他活动浮层焦点域时返回 `true`。
+ */
+function hasBlockingModalScope() {
+  return hasActiveModalFocusScope(panelRef.value)
+}
+
+/** 仅在目录为最上层浮层时响应用户关闭操作。 */
+function closePanelByUser() {
+  if (!hasBlockingModalScope())
+    closePanel()
 }
 
 /**
- * 处理移动端目录选择，在执行原目录滚动行为后关闭面板。
+ * 在上层浮层活动期间拦截目录的指针与点击事件，避免焦点或导航穿透。
  *
- * @param event - 目录链接的鼠标点击事件。
+ * @param event - 目录根节点捕获到的交互事件。
+ */
+function guardPanelInteraction(event: Event) {
+  if (!open.value || !hasBlockingModalScope())
+    return
+
+  event.preventDefault()
+  event.stopPropagation()
+}
+
+/** 切换移动端目录面板；已有浮层活动时不创建新的目录焦点域。 */
+function togglePanel() {
+  if (open.value) {
+    closePanelByUser()
+    return
+  }
+
+  if (!hasActiveModalFocusScope())
+    open.value = true
+}
+
+const { deactivate } = useModalFocusTrap({
+  container: panelRef,
+  lockBodyScroll: true,
+  onClose: closePanel,
+  open,
+})
+
+/**
+ * 处理移动端目录选择，先同步释放浮层约束，再执行原目录滚动与聚焦行为。
+ *
+ * @param event - 目录链接的鼠标点击事件；保持同步传递以避免 `currentTarget` 失效。
  */
 function onSelect(event: MouseEvent) {
+  if (hasBlockingModalScope()) {
+    event.preventDefault()
+    return
+  }
+
+  deactivate({
+    restoreFocus: false,
+    restoreScroll: false,
+  })
   handleClick(event)
   closePanel()
 }
 
-watch(open, (isOpen) => {
-  toggleDocumentClass('lm-toc-mobile-open', isOpen)
-})
+watch(isDesktopToc, (desktop) => {
+  if (desktop)
+    closePanel()
+}, { immediate: true })
 
 watch(items, () => {
   closePanel()
@@ -40,14 +94,15 @@ watch(visible, (isVisible) => {
   if (!isVisible)
     closePanel()
 })
-
-onBeforeUnmount(() => {
-  removeDocumentClass('lm-toc-mobile-open')
-})
 </script>
 
 <template>
-  <div v-if="visible" class="lm-toc-mobile xl:hidden">
+  <div
+    v-if="visible"
+    class="lm-toc-mobile xl:hidden"
+    @click.capture="guardPanelInteraction"
+    @pointerdown.capture="guardPanelInteraction"
+  >
     <button
       type="button"
       class="lm-toc-mobile__trigger"
@@ -65,7 +120,7 @@ onBeforeUnmount(() => {
         type="button"
         class="lm-toc-mobile__scrim"
         :aria-label="t('button.closeToc')"
-        @click="closePanel"
+        @click="closePanelByUser"
       />
     </Transition>
 
@@ -73,8 +128,12 @@ onBeforeUnmount(() => {
       <section
         v-if="open"
         id="lm-toc-mobile-panel"
+        ref="panelRef"
         class="lm-toc-mobile__panel"
+        role="dialog"
+        aria-modal="true"
         :aria-label="t('toc.label')"
+        tabindex="-1"
       >
         <div class="lm-toc-mobile__panel-header">
           <div>
@@ -90,7 +149,7 @@ onBeforeUnmount(() => {
             type="button"
             class="lm-toc-mobile__close"
             :aria-label="t('button.closeToc')"
-            @click="closePanel"
+            @click="closePanelByUser"
           >
             <span class="i-ri-close-line" />
           </button>
@@ -256,9 +315,25 @@ onBeforeUnmount(() => {
   transform: translateY(1.4rem);
 }
 
-:global(html.lm-toc-mobile-open),
-:global(body.lm-toc-mobile-open) {
-  overflow: hidden;
+@media (prefers-reduced-motion: reduce) {
+  .lm-toc-mobile__trigger,
+  .lm-toc-mobile__close,
+  .lm-toc-mobile__link,
+  .lm-toc-mobile__link::before,
+  .lm-toc-mobile-fade-enter-active,
+  .lm-toc-mobile-fade-leave-active,
+  .lm-toc-mobile-sheet-enter-active,
+  .lm-toc-mobile-sheet-leave-active {
+    transition: none;
+  }
+
+  .lm-toc-mobile-fade-enter-from,
+  .lm-toc-mobile-fade-leave-to,
+  .lm-toc-mobile-sheet-enter-from,
+  .lm-toc-mobile-sheet-leave-to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (min-width: 768px) {

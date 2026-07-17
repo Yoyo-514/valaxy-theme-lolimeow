@@ -40,4 +40,10 @@ const props = defineProps<{
 .lm-hero-bg-fade-layer {
   @apply inset-0 absolute transition-opacity duration-500 ease-out;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-hero-bg-fade-layer {
+    transition: none;
+  }
+}
 </style>

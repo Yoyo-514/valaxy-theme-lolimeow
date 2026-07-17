@@ -61,11 +61,12 @@ function createHitokotoUrl(options: FetchHitokotoOptions = {}) {
  * 请求一条供 Hero 展示的一言。
  *
  * @param options - 一言分类与长度查询选项。
+ * @param signal - 用于取消当前网络请求的可选信号。
  * @returns Hitokoto API 返回的正文和来源信息。
- * @throws HTTP 响应状态不是成功状态时抛出错误。
+ * @throws HTTP 响应状态不是成功状态或请求被取消时抛出错误。
  */
-export async function fetchHitokoto(options: FetchHitokotoOptions = {}) {
-  const response = await fetch(createHitokotoUrl(options))
+export async function fetchHitokoto(options: FetchHitokotoOptions = {}, signal?: AbortSignal) {
+  const response = await fetch(createHitokotoUrl(options), { signal })
   if (!response.ok)
     throw new Error(`Failed to fetch hitokoto: ${response.status}`)
 

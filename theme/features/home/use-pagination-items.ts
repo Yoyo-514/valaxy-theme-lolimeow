@@ -1,4 +1,5 @@
 import { computed, toValue } from 'vue'
+import { normalizePageNumber } from './pagination-normalization'
 
 /** 首页分页导航中的页码或省略号条目。 */
 interface PaginationItem {
@@ -29,21 +30,6 @@ const MAX_VISIBLE_PAGES = 6
 
 /** 页数较多时在当前页两侧保留的相邻页数量。 */
 const SIBLING_COUNT = 1
-
-/**
- * 将输入规范为不小于 1 的整数页码。
- *
- * @param value - 待规范的当前页码。
- * @returns 有限输入向下取整并限制为至少 1；非法输入返回 1。
- */
-function normalizePageNumber(value: number | undefined) {
-  const page = Number(value)
-
-  if (!Number.isFinite(page))
-    return 1
-
-  return Math.max(1, Math.floor(page))
-}
 
 /**
  * 将输入规范为可用的总页数。

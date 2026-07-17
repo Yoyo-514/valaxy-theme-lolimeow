@@ -1,7 +1,7 @@
 import type { CSSProperties, ShallowRef } from 'vue'
 import { useCssVar, useElementBounding } from '@vueuse/core'
 import { computed, onBeforeUnmount, watch } from 'vue'
-import { getDocumentElement, getWindow } from '../../shared/browser'
+import { getDocumentElement, getWindow, prefersReducedMotion } from '../../shared/browser'
 import { useThemeConfig } from '../../shared/config'
 import { createBackgroundImageStyle, useBackgroundRuntime, useResolvedBackground } from '../background'
 
@@ -89,13 +89,16 @@ export function useHeroStage(heroSection: Readonly<ShallowRef<HTMLElement | null
     const nextSection = currentSection.nextElementSibling as HTMLElement | null
 
     if (nextSection) {
-      nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      nextSection.scrollIntoView({
+        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+        block: 'start',
+      })
       return
     }
 
     currentWindow.scrollTo({
       top: currentSection.offsetTop + currentSection.offsetHeight,
-      behavior: 'smooth',
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
     })
   }
 
