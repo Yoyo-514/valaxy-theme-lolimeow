@@ -1,5 +1,6 @@
 import { computed, toValue } from 'vue'
 import { normalizePageNumber } from './pagination-normalization'
+import { isPaginationPageOutOfRange, normalizeTotalPages } from './pagination-scope'
 
 /** 首页分页导航中的页码或省略号条目。 */
 interface PaginationItem {
@@ -30,21 +31,6 @@ const MAX_VISIBLE_PAGES = 6
 
 /** 页数较多时在当前页两侧保留的相邻页数量。 */
 const SIBLING_COUNT = 1
-
-/**
- * 将输入规范为可用的总页数。
- *
- * @param value - 待规范的总页数。
- * @returns 正有限输入的向下取整值；非法或小于 1 时返回 0。
- */
-function normalizeTotalPages(value: number) {
-  const total = Number(value)
-
-  if (!Number.isFinite(total) || total < 1)
-    return 0
-
-  return Math.floor(total)
-}
 
 /**
  * 生成目标页码对应的首页链接，并定位到文章列表锚点。
@@ -103,6 +89,9 @@ export function usePaginationItems(options: UsePaginationItemsOptions) {
   const totalPages = computed(() => normalizeTotalPages(toValue(options.totalPages)))
   const currentPage = computed(() => normalizePageNumber(toValue(options.currentPage)))
   const basePath = computed(() => toValue(options.basePath) || '/')
+  const isPageOutOfRange = computed(() => {
+    return isPaginationPageOutOfRange(currentPage.value, totalPages.value)
+  })
 
   /**
    * 创建与当前分页状态关联的页码链接条目。
@@ -148,8 +137,11 @@ export function usePaginationItems(options: UsePaginationItemsOptions) {
   })
 
   const prevLink = computed(() => {
-    if (currentPage.value <= 1)
+    if (currentPage.value <= 1 || totalPages.value <= 0)
       return null
+
+    if (isPageOutOfRange.value)
+      return resolvePageLink(basePath.value, totalPages.value)
 
     return resolvePageLink(basePath.value, currentPage.value - 1)
   })

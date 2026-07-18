@@ -190,9 +190,9 @@ export default defineConfig<ThemeConfig>({
     },
 
     pagination: {
-      type: 'standard',
+      type: 'infinite-scroll',
       animation: true,
-      itemsPerPage: 2,
+      itemsPerPage: 10,
       infiniteScrollOptions: {
         preload: true,
         threshold: 200,

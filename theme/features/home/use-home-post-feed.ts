@@ -1,8 +1,8 @@
 import type { Post } from 'valaxy'
 import type { MaybeRefOrGetter, ShallowRef } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
-import { useSiteStore } from 'valaxy'
-import { computed, onScopeDispose, ref, watch } from 'vue'
+import { useSiteConfig, useSiteStore } from 'valaxy'
+import { computed, onScopeDispose, ref, toValue, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useThemeConfig } from '../../shared/config'
 import { isHomePaginationPath } from '../navigation'
@@ -12,7 +12,7 @@ import {
   homeHistoryRestorationState,
   saveHomeHistoryPageCount,
 } from './home-history-state'
-import { useHomePaginationBoundary } from './use-home-pagination-boundary'
+import { resolvePageSize, resolvePaginationScope } from './pagination-scope'
 
 /**
  * 构建首页文章流的分页、无限滚动、公告与动画响应式状态。
@@ -26,6 +26,7 @@ export function useHomePostFeed(
   infiniteScrollTrigger?: Readonly<ShallowRef<HTMLElement | null>>,
 ) {
   const themeConfig = useThemeConfig()
+  const siteConfig = useSiteConfig()
   const site = useSiteStore()
   const route = useRoute()
   const router = useRouter()
@@ -34,15 +35,27 @@ export function useHomePostFeed(
   const resolvedInfiniteScrollTrigger = infiniteScrollTrigger ?? innerInfiniteScrollTrigger
 
   const allPosts = computed<Post[]>(() => site.postList ?? [])
-  const {
-    currentPage,
-    itemsPerPage,
-    isPageOutOfRange,
-    isStandardPagination,
-    paginationType,
-    totalPages,
-  } = useHomePaginationBoundary(curPage)
+
+  const paginationScope = computed(() => {
+    return resolvePaginationScope({
+      currentPage: toValue(curPage),
+      itemCount: allPosts.value.length,
+      itemsPerPage: resolvePageSize(
+        themeConfig.value.pagination?.itemsPerPage,
+        siteConfig.value.pageSize,
+      ),
+    })
+  })
+
+  const currentPage = computed(() => paginationScope.value.currentPage)
+  const itemsPerPage = computed(() => paginationScope.value.itemsPerPage)
+  const isPageOutOfRange = computed(() => paginationScope.value.isPageOutOfRange)
+  const totalPages = computed(() => paginationScope.value.totalPages)
+
+  const paginationType = computed(() => themeConfig.value.pagination?.type ?? 'standard')
+  const isStandardPagination = computed(() => paginationType.value === 'standard')
   const isInfiniteScroll = computed(() => paginationType.value === 'infinite-scroll')
+
   const paginationAnimation = computed(() => {
     return isInfiniteScroll.value && Boolean(themeConfig.value.pagination?.animation)
   })

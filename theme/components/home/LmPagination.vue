@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePaginationItems } from '../../features/home'
 
@@ -19,11 +20,20 @@ const {
   nextLink,
   totalPages,
 } = usePaginationItems(props)
+
+const paginationRenderKey = ref(0)
+
+onMounted(() => {
+  // 静态服务器可能为动态分页路径返回首页 HTML，其中残留第一页的链接与激活态。
+  // 挂载后统一重建分页导航，使其完全采用当前客户端路由对应的响应式状态。
+  paginationRenderKey.value += 1
+})
 </script>
 
 <template>
   <nav
     v-if="paginationItems.length > 0"
+    :key="paginationRenderKey"
     class="lm-pagination"
     :aria-label="t('pagination.label')"
   >
