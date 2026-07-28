@@ -31,6 +31,7 @@
   "dependencies": {
     "@iconify-json/ant-design": "catalog:",
     "@iconify-json/simple-icons": "catalog:",
+    "@unhead/vue": "catalog:",
     "@vueuse/core": "catalog:"
   },
   "devDependencies": {

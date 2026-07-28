@@ -1,9 +1,12 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { createBackgroundImageStyle, useBackgroundRuntime, useResolvedBackground } from '../features/background'
+import { createBackgroundImageStyle, useBackgroundPreload, useBackgroundRuntime, useResolvedBackground } from '../features/background'
 
 const background = useResolvedBackground('app')
 const runtimeBackground = useBackgroundRuntime('app', background)
+
+// 全局背景在每个页面都会加载，预加载让下载早于脚本水合开始。
+useBackgroundPreload('app')
 
 const placeholderStyle = computed(() => runtimeBackground.placeholderStyle.value)
 const hasBaseImageLayer = computed(() => Boolean(runtimeBackground.currentImageUrl.value))

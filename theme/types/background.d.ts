@@ -9,6 +9,16 @@ export interface Background {
   type: 'image' | 'gradient' | 'none'
 
   /**
+   * 是否在 head 中预加载首屏背景图（SSR 输出 `<link rel="preload" as="image">`）
+   *
+   * 对 hero 与全局背景均生效，可让背景下载从 HTML 解析阶段就开始，
+   * 而非等待脚本水合完成。使用随机图 API 时要求接口响应可缓存
+   * （Cache-Control 非 no-store），否则可能造成同地址重复下载，此时应关闭该选项。
+   * @default true
+   */
+  preload?: boolean
+
+  /**
    * 背景图片配置，仅在 type 为 'image' 时有效
    * 支持 Light/Dark + 随机 API
    */

@@ -67,7 +67,10 @@ export function useHeroMotto() {
   })
 
   const hasMotto = computed(() => mottoList.value.length > 0)
-  const shouldShowMotto = computed(() => hasMotto.value || (useHitokoto.value && isHitokotoPending.value))
+  // hitokoto 模式下文案虽然要等客户端请求，但“会有一条 motto”在配置阶段就已确定，
+  // 因此 SSR 就渲染条带外壳预留占位，避免水合后插入条带抬动整个 Hero 内容。
+  // 代价：接口失败且无配置兜底时会留下一条空壳，相比布局偏移这是可接受的取舍。
+  const shouldShowMotto = computed(() => hasMotto.value || useHitokoto.value)
   const shouldRotate = computed(() => mottoList.value.length > 1)
   const accessibleMotto = computed(() => mottoList.value[activeIndex.value] ?? '')
   const shouldType = computed(() => Boolean(themeConfig.value.hero.typewriter))

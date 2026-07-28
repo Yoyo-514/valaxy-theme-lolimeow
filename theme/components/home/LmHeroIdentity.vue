@@ -61,6 +61,15 @@ const props = defineProps<{
         {{ props.renderedMotto }}
       </p>
     </Transition>
+
+    <!-- 幽灵占位层始终持有完整文案，把条带的最终宽高一次性预定下来；
+         打字动画只在其上逐字显示，容器不再随字符数增长而回流（避免累计布局偏移）。 -->
+    <p
+      class="lm-hero-motto lm-hero-motto--ghost"
+      aria-hidden="true"
+    >
+      {{ props.accessibleMotto }}
+    </p>
   </div>
 </template>
 
@@ -167,7 +176,9 @@ const props = defineProps<{
 }
 
 .lm-hero-motto-strip {
-  @apply flex rounded-[12px] px-5 py-3 md:px-6;
+  // 使用网格堆叠让“幽灵占位层”与“打字层”共享同一单元格，
+  // 单元格尺寸由持有完整文案的幽灵层决定，打字过程中容器尺寸保持稳定。
+  @apply grid rounded-[12px] px-5 py-3 md:px-6;
   @include lm-surface-nav(
     color-mix(in srgb, var(--lm-c-bg-glass) 60%, transparent),
     color-mix(in srgb, var(--lm-c-border) 54%, transparent),
@@ -199,9 +210,14 @@ const props = defineProps<{
 
 .lm-hero-motto {
   @apply min-h-8 w-full text-base leading-7 text-[var(--lm-c-text-secondary)] md:text-[1.0625rem];
+  grid-area: 1 / 1;
   font-family: 'Segoe Print', 'Bradley Hand', 'Lucida Handwriting', 'Comic Sans MS', cursive;
   letter-spacing: 0.01em;
   text-wrap: balance;
+}
+
+.lm-hero-motto--ghost {
+  visibility: hidden;
 }
 
 .lm-hero-motto-fade-enter-active,

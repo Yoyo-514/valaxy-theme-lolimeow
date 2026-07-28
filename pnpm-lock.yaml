@@ -15,6 +15,9 @@ catalogs:
     '@iconify-json/simple-icons':
       specifier: ^1.2.91
       version: 1.2.91
+    '@unhead/vue':
+      specifier: ^2.1.13
+      version: 2.1.16
     '@unocss/eslint-plugin':
       specifier: ^66.7.5
       version: 66.7.5
@@ -119,6 +122,9 @@ importers:
       '@iconify-json/simple-icons':
         specifier: 'catalog:'
         version: 1.2.91
+      '@unhead/vue':
+        specifier: 'catalog:'
+        version: 2.1.16(vue@3.5.40(typescript@6.0.3))
       '@vueuse/core':
         specifier: 'catalog:'
         version: 14.3.0(vue@3.5.40(typescript@6.0.3))

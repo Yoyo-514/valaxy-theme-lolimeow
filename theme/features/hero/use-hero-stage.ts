@@ -2,7 +2,7 @@ import type { CSSProperties, ShallowRef } from 'vue'
 import { computed } from 'vue'
 import { getWindow, prefersReducedMotion } from '../../shared/browser'
 import { useThemeConfig } from '../../shared/config'
-import { createBackgroundImageStyle, useBackgroundRuntime, useResolvedBackground } from '../background'
+import { createBackgroundImageStyle, useBackgroundPreload, useBackgroundRuntime, useResolvedBackground } from '../background'
 
 /**
  * 组织 Hero 舞台的背景图层、布局、对齐方式和向下滚动行为。
@@ -13,6 +13,9 @@ import { createBackgroundImageStyle, useBackgroundRuntime, useResolvedBackground
 export function useHeroStage(heroSection: Readonly<ShallowRef<HTMLElement | null>>) {
   const themeConfig = useThemeConfig()
   const heroBackground = useResolvedBackground('hero')
+
+  // 预加载必须在 SSR 阶段进入 head，才能让下载早于脚本加载与水合开始。
+  useBackgroundPreload('hero')
 
   // Hero 在随机 API 图尚未就绪时应直接穿透全局背景。
   // 这样首屏不会先叠出一层与全局重复的静态图，背景边界也不会显脏。

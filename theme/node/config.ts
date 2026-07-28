@@ -14,6 +14,7 @@ export const defaultThemeConfig: ThemeConfig = {
 
   background: {
     type: 'none',
+    preload: true,
     image: {
       light: '',
       dark: '',
