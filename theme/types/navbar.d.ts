@@ -19,6 +19,13 @@ export interface NavbarOptions {
    */
   showFavicon?: boolean
   /**
+   * 导航栏 logo 图片地址，未设置时回退到站点 favicon。
+   *
+   * 建议提供不超过 64x64 的小尺寸资源，避免导航栏为了 32px 的展示位
+   * 下载大体积的 favicon 文件。
+   */
+  logo?: string
+  /**
    * The title of the navbar
    */
   title?: string

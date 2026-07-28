@@ -20,6 +20,9 @@ const props = defineProps<{
   >
     <img
       class="lm-hero-avatar-image"
+      width="96"
+      height="96"
+      decoding="async"
       :src="props.avatar"
       :alt="props.authorName"
     >

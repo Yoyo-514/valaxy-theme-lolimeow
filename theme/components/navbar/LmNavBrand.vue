@@ -13,7 +13,9 @@ const navbarTitle = computed(() => {
   return title || siteTitle.value
 })
 const siteFavicon = computed(() => siteConfig.value.favicon || '')
-const showFavicon = computed(() => navbarOptions.value.showFavicon !== false && Boolean(siteFavicon.value))
+// 优先使用小体积的专用 logo，避免强制复用可能很大的站点 favicon。
+const navLogo = computed(() => navbarOptions.value.logo || siteFavicon.value)
+const showLogo = computed(() => navbarOptions.value.showFavicon !== false && Boolean(navLogo.value))
 </script>
 
 <template>
@@ -23,11 +25,13 @@ const showFavicon = computed(() => navbarOptions.value.showFavicon !== false && 
     :aria-label="navbarTitle"
   >
     <img
-      v-if="showFavicon"
+      v-if="showLogo"
       class="lm-nav-brand__logo"
-      style="width: auto; height: 32px"
+      width="32"
+      height="32"
       alt="logo"
-      :src="siteFavicon"
+      decoding="async"
+      :src="navLogo"
     >
     <span class="lm-nav-brand__title">{{ navbarTitle }}</span>
   </RouterLink>
@@ -40,6 +44,10 @@ const showFavicon = computed(() => navbarOptions.value.showFavicon !== false && 
 
 .lm-nav-brand__logo {
   @apply block shrink-0;
+  // width/height 属性提供加载前的尺寸占位（避免 unsized-image 引发布局偏移），
+  // 最终渲染尺寸仍由 CSS 接管，非正方形 logo 也能保持原始比例。
+  width: auto;
+  height: 32px;
 }
 
 .lm-nav-brand__title {

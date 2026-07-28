@@ -1,5 +1,6 @@
 import type { Ref } from 'vue'
 import type { BrowserTimeout } from '../../shared/browser'
+import { useIntersectionObserver } from '@vueuse/core'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { clearBrowserTimeout, setBrowserTimeout } from '../../shared/browser'
 
@@ -29,6 +30,25 @@ export function usePostCardMediaState(options: UsePostCardMediaStateOptions) {
   const imageLoaded = ref(false)
   let loadTimeout: BrowserTimeout | undefined
   let mounted = false
+
+  // 封面使用原生懒加载后，远离视口的图片不会发起网络请求。
+  // 超时保护如果从挂载就开始计时，会把“尚未开始加载”误判为“加载失败”，
+  // 因此以视口交叉作为计时闸门；未提供元素引用时退回“挂载即计时”的旧行为。
+  const nearViewport = ref(!imageElement)
+
+  if (imageElement) {
+    // useIntersectionObserver 在 SSR 环境下自动降级为空操作，无需额外守卫。
+    const { stop: stopViewportObserver } = useIntersectionObserver(
+      imageElement,
+      (entries) => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          nearViewport.value = true
+          stopViewportObserver()
+        }
+      },
+      { rootMargin: '200px 0px' },
+    )
+  }
 
   /** 清除当前封面加载超时任务，避免旧请求影响新候选。 */
   function clearLoadTimeout() {
@@ -84,8 +104,15 @@ export function usePostCardMediaState(options: UsePostCardMediaStateOptions) {
       return
     }
 
-    startLoadTimeout(expectedCover)
+    // 懒加载图片在靠近视口前不开始计时，避免对未发起的请求误判超时。
+    if (nearViewport.value)
+      startLoadTimeout(expectedCover)
   }
+
+  watch(nearViewport, (value) => {
+    if (value && mounted)
+      void syncLoadedStateFromElement()
+  })
 
   watch(
     [() => cover.value, () => hasMedia.value],

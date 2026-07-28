@@ -18,6 +18,7 @@ const {
   isSearchOpen,
   navItems,
   openSearch,
+  pageSurfaceStyle,
   showGlobalNotice,
   toggleDrawer,
 } = useLayoutShell()
@@ -62,7 +63,7 @@ useHomePaginationScrollBehavior(router)
       @close="closeSearch"
     />
 
-    <div class="lm-page-surface-layer" />
+    <div class="lm-page-surface-layer" :style="pageSurfaceStyle" />
 
     <div v-if="showGlobalNotice" class="lm-global-notice">
       <LmNotice />
@@ -90,10 +91,14 @@ useHomePaginationScrollBehavior(router)
 }
 
 .lm-page-surface-layer {
-  position: fixed;
+  // 用文档流内的 absolute 定位代替“fixed + JS 追踪 Hero 底部”：
+  // 边界直接锚在内容坐标上，滚动时自然跟随 Hero，
+  // 既不需要监听滚动，也不会因为移动 fixed 元素而产生累计布局偏移（CLS）。
+  // top 由内联样式提供（首页为 Hero 高度，其余页面为 0），SSR 阶段即已确定。
+  position: absolute;
   left: 0;
   right: 0;
-  top: var(--lm-page-surface-top, 0px);
+  top: 0;
   bottom: 0;
   z-index: var(--lm-z-page-surface);
   pointer-events: none;

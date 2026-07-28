@@ -1,7 +1,6 @@
 import type { CSSProperties, ShallowRef } from 'vue'
-import { useCssVar, useElementBounding } from '@vueuse/core'
-import { computed, onBeforeUnmount, watch } from 'vue'
-import { getDocumentElement, getWindow, prefersReducedMotion } from '../../shared/browser'
+import { computed } from 'vue'
+import { getWindow, prefersReducedMotion } from '../../shared/browser'
 import { useThemeConfig } from '../../shared/config'
 import { createBackgroundImageStyle, useBackgroundRuntime, useResolvedBackground } from '../background'
 
@@ -14,8 +13,6 @@ import { createBackgroundImageStyle, useBackgroundRuntime, useResolvedBackground
 export function useHeroStage(heroSection: Readonly<ShallowRef<HTMLElement | null>>) {
   const themeConfig = useThemeConfig()
   const heroBackground = useResolvedBackground('hero')
-  const { bottom } = useElementBounding(() => heroSection.value)
-  const pageSurfaceTop = useCssVar('--lm-page-surface-top', getDocumentElement())
 
   // Hero 在随机 API 图尚未就绪时应直接穿透全局背景。
   // 这样首屏不会先叠出一层与全局重复的静态图，背景边界也不会显脏。
@@ -101,21 +98,6 @@ export function useHeroStage(heroSection: Readonly<ShallowRef<HTMLElement | null
       behavior: prefersReducedMotion() ? 'auto' : 'smooth',
     })
   }
-
-  watch(
-    bottom,
-    (value) => {
-      if (typeof value !== 'number' || Number.isNaN(value))
-        return
-
-      pageSurfaceTop.value = `${Math.max(0, value)}px`
-    },
-    { immediate: true },
-  )
-
-  onBeforeUnmount(() => {
-    pageSurfaceTop.value = undefined
-  })
 
   return {
     baseImageStyle,

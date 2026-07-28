@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'vue'
 import { useCssVar } from '@vueuse/core'
 import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -16,7 +17,6 @@ export function useLayoutShell() {
   const themeConfig = useThemeConfig()
   const route = useRoute()
   const root = getDocumentElement()
-  const pageSurfaceTop = useCssVar('--lm-page-surface-top', root)
   const navbarOffset = useCssVar('--lm-navbar-offset', root)
 
   const navItems = computed(() => themeConfig.value.navbar.filter(item => item.text))
@@ -24,6 +24,13 @@ export function useLayoutShell() {
   const { isOpen: isSearchOpen, open: openSearch, close: closeSearch } = useSearchModal()
   const { visible } = useNavbarVisibility(themeConfig.value.navbarOptions?.autoHide ?? true)
   const isHomeLayout = computed(() => route.meta.layout === 'home')
+
+  // Surface 层的上边界只取决于“首页 Hero 舞台高度”这一配置语义，
+  // 因此直接用配置值生成内联样式，让 SSR 产物与水合后完全一致。
+  // 相比运行时测量 Hero bounding 再写 CSS 变量，这里没有首帧跳变，也不产生布局偏移。
+  const pageSurfaceStyle = computed<CSSProperties>(() => ({
+    top: isHomeLayout.value ? (themeConfig.value.hero.height || '100vh') : '0px',
+  }))
 
   const showGlobalNotice = computed(() => {
     const notice = themeConfig.value.notice
@@ -44,15 +51,6 @@ export function useLayoutShell() {
     { immediate: true },
   )
 
-  watch(
-    isHomeLayout,
-    (value) => {
-      if (!value)
-        pageSurfaceTop.value = '0px'
-    },
-    { immediate: true },
-  )
-
   return {
     closeDrawer,
     closeSearch,
@@ -61,6 +59,7 @@ export function useLayoutShell() {
     isSearchOpen,
     navItems,
     openSearch,
+    pageSurfaceStyle,
     showGlobalNotice,
     toggleDrawer,
   }
