@@ -1,5 +1,6 @@
 import { formatDate, useFrontmatter } from 'valaxy'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { resolveFrontmatterCover, resolveFrontmatterText } from '../../shared/frontmatter'
 
 /** 文章头部附加信息的展示项。 */
@@ -31,6 +32,7 @@ function isArticleInfoItem(item: ArticleInfoItem | false | '' | undefined): item
  */
 export function useArticleHeaderMeta() {
   const frontmatter = useFrontmatter()
+  const { t } = useI18n()
 
   const title = computed(() => {
     return resolveFrontmatterText(frontmatter.value.title)
@@ -77,15 +79,15 @@ export function useArticleHeaderMeta() {
     return [
       updatedDate.value && {
         icon: 'i-ri-history-line',
-        text: `更新于 ${updatedDate.value}`,
+        text: t('article.updatedOn', { date: updatedDate.value }),
       },
       wordCount.value && {
         icon: 'i-ri-file-text-line',
-        text: `本文字数: ${wordCount.value}`,
+        text: t('article.wordCount', { count: wordCount.value }),
       },
       readingTime.value > 0 && {
         icon: 'i-ri-book-open-line',
-        text: `阅读时长: ${readingTime.value}m`,
+        text: t('article.readingTime', { minutes: readingTime.value }),
       },
     ].filter(isArticleInfoItem)
   })

@@ -12,6 +12,13 @@ search:
   no_results_hint: 换个关键词或试试标签、分类名称
   error_hint: 本地搜索数据加载失败。
 
+article:
+  publishedOn: 发布于
+  updatedOn: 更新于 {date}
+  updatedLabel: 更新于
+  wordCount: '本文字数: {count}'
+  readingTime: '阅读时长: {minutes}m'
+
 comment:
   label: 评论区
 
@@ -37,6 +44,13 @@ footer:
 notice:
   label: 公告
 
+notFound:
+  eyebrow: 404 MHz / Signal Lost
+  title: 信号丢失
+  description: 这条连接没有收到回应，页面可能已经移动，也可能暂时藏进了背景噪声里。
+  diagnosticRoute: ROUTE NOT FOUND
+  diagnosticRetry: RETRY FROM HOME
+
 toc:
   label: 文章目录
   eyebrow: 本页目录
@@ -46,6 +60,13 @@ pagination:
   label: 分页
   previous: 上一页
   next: 下一页
+
+postList:
+  empty: 这里还没有文章。
+
+postNav:
+  previous: 上一篇
+  next: 下一篇
 
 pages:
   about:

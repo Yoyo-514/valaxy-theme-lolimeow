@@ -25,22 +25,22 @@ function goBack() {
     <section class="lm-not-found">
       <div class="lm-not-found__scene">
         <p class="lm-not-found__eyebrow">
-          404 MHz / Signal Lost
+          {{ t('notFound.eyebrow') }}
         </p>
 
-        <h1 class="lm-not-found__title" data-text="信号丢失">
-          信号丢失
+        <h1 class="lm-not-found__title" :data-text="t('notFound.title')">
+          {{ t('notFound.title') }}
         </h1>
 
         <p class="lm-not-found__description">
-          这条连接没有收到回应，页面可能已经移动，也可能暂时藏进了背景噪声里。
+          {{ t('notFound.description') }}
         </p>
 
         <div class="lm-not-found__diagnostic" aria-hidden="true">
           <span class="lm-not-found__dot" />
-          <span>ROUTE NOT FOUND</span>
+          <span>{{ t('notFound.diagnosticRoute') }}</span>
           <span class="lm-not-found__divider" />
-          <span>RETRY FROM HOME</span>
+          <span>{{ t('notFound.diagnosticRetry') }}</span>
         </div>
 
         <div class="lm-not-found__actions">

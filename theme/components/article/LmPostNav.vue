@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useFrontmatter, usePrevNext } from 'valaxy'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const frontmatter = useFrontmatter()
 const [prev, next] = usePrevNext()
+const { t } = useI18n()
 
 const navEnabled = computed(() => frontmatter.value.nav !== false)
 const prevPath = computed(() => prev.value?.path || '')
@@ -20,7 +22,7 @@ const hasPostNav = computed(() => navEnabled.value && (!!prevPath.value || !!nex
       :to="prevPath"
       class="lm-post-nav__item"
     >
-      <span class="lm-post-nav__label">Previous Article</span>
+      <span class="lm-post-nav__label">{{ t('postNav.previous') }}</span>
       <span class="lm-post-nav__title">{{ prevTitle }}</span>
     </RouterLink>
 
@@ -29,7 +31,7 @@ const hasPostNav = computed(() => navEnabled.value && (!!prevPath.value || !!nex
       :to="nextPath"
       class="lm-post-nav__item lm-post-nav__item--next"
     >
-      <span class="lm-post-nav__label">Next Article</span>
+      <span class="lm-post-nav__label">{{ t('postNav.next') }}</span>
       <span class="lm-post-nav__title">{{ nextTitle }}</span>
     </RouterLink>
   </footer>

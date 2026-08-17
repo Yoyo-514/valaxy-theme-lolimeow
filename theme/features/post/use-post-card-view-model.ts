@@ -1,6 +1,7 @@
 import type { Post } from 'valaxy'
 import type { MaybeRefOrGetter } from 'vue'
 import { computed, ref, toValue, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useThemeConfig } from '../../shared/config'
 import { normalizeExcerpt, normalizePostTitle } from './post-content'
 import { appendRetryQuery, appendSeedQuery, orderBySeed } from './post-cover'
@@ -51,6 +52,7 @@ export function usePostCardViewModel(
   post: MaybeRefOrGetter<Post>,
   index: MaybeRefOrGetter<number> = 0,
 ) {
+  const { t } = useI18n()
   const themeConfig = useThemeConfig()
   const postListConfig = computed(() => themeConfig.value.postList)
   const resolvedPost = computed(() => toValue(post))
@@ -132,7 +134,7 @@ export function usePostCardViewModel(
 
   const displayDate = computed(() => resolvedPost.value.updated ?? resolvedPost.value.date)
 
-  const dateLabel = computed(() => resolvedPost.value.updated ? 'Updated on' : 'Published on')
+  const dateLabel = computed(() => resolvedPost.value.updated ? t('article.updatedLabel') : t('article.publishedOn'))
 
   const tags = computed(() => resolvedPost.value.tags ?? [])
 

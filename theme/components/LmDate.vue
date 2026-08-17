@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { formatDate } from 'valaxy'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = withDefaults(defineProps<{
   date?: Date | number | string
@@ -8,8 +9,13 @@ const props = withDefaults(defineProps<{
   label?: string
 }>(), {
   inline: false,
-  label: 'Published on',
+  label: '',
 })
+
+const { t } = useI18n()
+
+// 未显式传入 label 时使用本地化发布日期标签。
+const resolvedLabel = computed(() => props.label || t('article.publishedOn'))
 
 const datetime = computed(() => formatDate(props.date || ''))
 const rootClass = computed(() => (props.inline ? 'lm-date lm-date--inline' : 'lm-date'))
@@ -20,7 +26,7 @@ const valueClass = computed(() => (props.inline ? 'lm-date__value lm-date__value
 <template>
   <dl :class="rootClass">
     <dt :class="labelClass">
-      {{ props.label }}
+      {{ resolvedLabel }}
     </dt>
     <dd :class="valueClass">
       <time :datetime="datetime">{{ datetime }}</time>

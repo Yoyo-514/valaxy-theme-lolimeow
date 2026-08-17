@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
 interface ArticleInfoItem {
   icon: string
   text: string
@@ -17,6 +19,8 @@ withDefaults(defineProps<{
   tags: () => [],
   cover: false,
 })
+
+const { t } = useI18n()
 </script>
 
 <template>
@@ -27,7 +31,7 @@ withDefaults(defineProps<{
     >
       <span class="lm-article-meta__info-item">
         <span class="lm-article-meta__info-icon i-ri-time-line" />
-        发布于
+        {{ t('article.publishedOn') }}
         <LmDate :date="publishedDate" inline />
       </span>
 

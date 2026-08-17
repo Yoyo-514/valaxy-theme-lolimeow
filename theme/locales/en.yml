@@ -12,6 +12,13 @@ search:
   no_results_hint: Try another keyword, tag, or category
   error_hint: Failed to load local search data.
 
+article:
+  publishedOn: Published on
+  updatedOn: Updated on {date}
+  updatedLabel: Updated on
+  wordCount: 'Words: {count}'
+  readingTime: 'Reading: {minutes}m'
+
 comment:
   label: Comments
 
@@ -37,6 +44,13 @@ footer:
 notice:
   label: Notice
 
+notFound:
+  eyebrow: 404 MHz / Signal Lost
+  title: Signal Lost
+  description: This link received no response. The page may have moved, or it may be hiding in the background noise.
+  diagnosticRoute: ROUTE NOT FOUND
+  diagnosticRetry: RETRY FROM HOME
+
 toc:
   label: Table of contents
   eyebrow: On this page
@@ -46,6 +60,13 @@ pagination:
   label: Pagination
   previous: Previous page
   next: Next page
+
+postList:
+  empty: No posts found.
+
+postNav:
+  previous: Previous Article
+  next: Next Article
 
 pages:
   about:

@@ -3,6 +3,7 @@ import type { Post } from 'valaxy'
 import { useElementSize } from '@vueuse/core'
 import { useSiteStore } from 'valaxy'
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { clampColumnCount, resolveGridColumnCount, resolveLengthToPx } from '../../features/home'
 import { getRootFontSize } from '../../shared/browser'
 import { useThemeConfig } from '../../shared/config'
@@ -17,6 +18,7 @@ const props = withDefaults(defineProps<{
   animateItems: false,
 })
 
+const { t } = useI18n()
 const themeConfig = useThemeConfig()
 const site = useSiteStore()
 
@@ -89,7 +91,7 @@ const gridStyle = computed(() => {
       v-else
       class="text-[var(--lm-c-text-secondary)] px-4 py-12 text-center border border-[var(--lm-c-border)] rounded-4 border-dashed bg-[color-mix(in_srgb,var(--lm-c-bg-glass)_72%,transparent)]"
     >
-      No posts found.
+      {{ t('postList.empty') }}
     </div>
   </section>
 </template>
