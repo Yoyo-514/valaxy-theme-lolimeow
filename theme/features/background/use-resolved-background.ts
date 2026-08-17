@@ -1,6 +1,6 @@
 import type { BackgroundScope, ResolvedBackground } from './types'
 import { useColorMode, useWindowSize } from '@vueuse/core'
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useThemeConfig } from '../../shared/config'
 import { resolveBackground } from './resolve-background'
 
@@ -17,12 +17,19 @@ export function useResolvedBackground(scope: BackgroundScope = 'app') {
   const themeConfig = useThemeConfig()
   const colorMode = useColorMode()
   const { width } = useWindowSize()
+  const isMounted = ref(false)
+
+  onMounted(() => {
+    isMounted.value = true
+  })
 
   return computed<ResolvedBackground>(() => resolveBackground({
     scope,
     background: themeConfig.value.background,
     heroCover: themeConfig.value.hero?.cover,
     isDark: colorMode.value === 'dark',
-    isMobile: width.value < 768,
+    // 水合前固定为桌面判定，与 SSR 产物保持一致；挂载后再响应真实视口宽度。
+    // 移动端访问者会在水合完成后切换变体，避免水合瞬间的判定漂移。
+    isMobile: isMounted.value && width.value < 768,
   }))
 }

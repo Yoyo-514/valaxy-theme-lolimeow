@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { getSessionStorage } from '../shared/browser'
 import { useThemeConfig } from '../shared/config'
@@ -8,6 +8,7 @@ const { t } = useI18n()
 const themeConfig = useThemeConfig()
 
 const isOpen = ref(true)
+const isMounted = ref(false)
 
 const enabled = computed(() => themeConfig.value.notice.enable)
 const closable = computed(() => themeConfig.value.notice.closable !== false)
@@ -20,24 +21,45 @@ const storageKey = computed(() => {
   return `lm-notice:dismissed:${encodeURIComponent(notice.value)}`
 })
 
+/** 根据会话存储判断公告是否已被关闭；存储不可读或不可关闭时按未关闭处理。 */
+function resolveDismissed(key: string, canClose: boolean) {
+  const sessionStorage = getSessionStorage()
+  if (!canClose || !sessionStorage)
+    return false
+
+  return sessionStorage.getItem(key) === '1'
+}
+
+/** 按当前公告与开关状态同步可见性。 */
+function applyOpenState() {
+  const key = storageKey.value
+
+  if (!key) {
+    isOpen.value = false
+    return
+  }
+
+  // 水合前不读 sessionStorage：SSR 与客户端首帧必须一致（公告默认可见），
+  // 否则已关闭公告的访问者会先看到公告水合、随后被移除，产生不一致与闪跳。
+  if (!isMounted.value) {
+    isOpen.value = true
+    return
+  }
+
+  isOpen.value = !resolveDismissed(key, closable.value)
+}
+
 watch(
   [storageKey, closable],
-  ([key, canClose]) => {
-    if (!key) {
-      isOpen.value = false
-      return
-    }
-
-    const sessionStorage = getSessionStorage()
-    if (!canClose || !sessionStorage) {
-      isOpen.value = true
-      return
-    }
-
-    isOpen.value = sessionStorage.getItem(key) !== '1'
-  },
+  applyOpenState,
   { immediate: true },
 )
+
+onMounted(() => {
+  isMounted.value = true
+  // 水合完成后才应用会话级已读状态；已关闭过的公告会在挂载后立即收起。
+  applyOpenState()
+})
 
 const visible = computed(() => enabled.value && Boolean(notice.value) && isOpen.value)
 

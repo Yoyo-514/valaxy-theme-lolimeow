@@ -12,10 +12,11 @@ const config = useValaxyConfig()
 const siteConfig = useSiteConfig()
 const themeConfig = useThemeConfig()
 
-const year = new Date().getFullYear()
+// 响应式年份：跨年时避免 SSR 与客户端求值时间不一致造成水合差异。
+const year = computed(() => new Date().getFullYear())
 
 const isThisYear = computed(() => {
-  return year === themeConfig.value.footer.since
+  return year.value === themeConfig.value.footer.since
 })
 
 const poweredHtml = computed(() => t('footer.powered', [`<a href="${pkg.repository}" target="_blank" rel="noopener">Valaxy</a> v${pkg.version}`]))
