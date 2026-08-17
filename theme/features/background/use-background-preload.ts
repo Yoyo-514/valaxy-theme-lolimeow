@@ -67,6 +67,12 @@ export function useBackgroundPreload(scope: BackgroundScope = 'app') {
       if (resolved.type !== 'image' || !resolved.imageUrl)
         continue
 
+      // 随机图 API 的响应内容每次可能不同，预加载无法稳定命中运行时实际使用的
+      // 图片，只会与首屏资源抢占带宽；随机静态图列表的首个候选仍是确定地址，
+      // 继续参与预加载。首屏的稳定回退图由运行时通过内联 background-image 加载。
+      if (resolved.random && resolved.apiImageUrls.includes(resolved.imageUrl))
+        continue
+
       const mediaQueries = urlToMediaQueries.get(resolved.imageUrl) ?? []
       mediaQueries.push(variant.media)
       urlToMediaQueries.set(resolved.imageUrl, mediaQueries)
