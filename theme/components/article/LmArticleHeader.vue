@@ -17,11 +17,12 @@ const {
     :class="{ 'lm-article-header--plain': !cover }"
   >
     <div v-if="cover" class="lm-article-header__cover">
-      <img
+      <LmImage
         :src="cover"
         alt=""
+        eager
         class="lm-article-header__cover-image"
-      >
+      />
 
       <div class="lm-article-header__cover-overlay">
         <div class="lm-article-header__cover-content">

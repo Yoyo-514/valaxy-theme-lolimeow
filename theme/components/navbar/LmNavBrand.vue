@@ -24,15 +24,15 @@ const showLogo = computed(() => navbarOptions.value.showFavicon !== false && Boo
     to="/"
     :aria-label="navbarTitle"
   >
-    <img
+    <LmImage
       v-if="showLogo"
       class="lm-nav-brand__logo"
       width="32"
       height="32"
+      eager
       alt="logo"
-      decoding="async"
       :src="navLogo"
-    >
+    />
     <span class="lm-nav-brand__title">{{ navbarTitle }}</span>
   </RouterLink>
 </template>

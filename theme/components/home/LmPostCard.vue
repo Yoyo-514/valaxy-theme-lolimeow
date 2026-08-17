@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { Post } from 'valaxy'
-import { computed, shallowRef, toRef } from 'vue'
+import type LmImage from '../LmImage.vue'
+import { computed, shallowRef, toRef, useTemplateRef, watchEffect } from 'vue'
 import { usePostCardMediaState, usePostCardViewModel } from '../../features/post'
 
 /** 文章卡片支持的图文排列方式。 */
@@ -35,7 +36,15 @@ const shouldReverse = computed(() => {
   return isReversed.value
 })
 
+// 封面统一由 LmImage 渲染；这里透过组件实例同步内部 img 元素引用，
+// 供 usePostCardMediaState 读取加载完成状态与观察视口邻近性。
+// 组件实例上暴露的 ref 会自动解包，因此 el 直接是元素或 null。
+const imageWrapper = useTemplateRef<InstanceType<typeof LmImage>>('imageWrapper')
 const imageElement = shallowRef<HTMLImageElement | null>(null)
+
+watchEffect(() => {
+  imageElement.value = imageWrapper.value?.el ?? null
+})
 
 const {
   imageLoaded,
@@ -67,20 +76,17 @@ const {
           aria-hidden="true"
         />
 
-        <img
+        <LmImage
           v-if="cover"
           :key="cover"
-          ref="imageElement"
+          ref="imageWrapper"
           :src="cover"
           alt=""
-          loading="lazy"
-          decoding="async"
-          fetchpriority="low"
           class="lm-post-card__image"
           :class="{ 'lm-post-card__image--visible': imageLoaded }"
           @load="handleImageLoad"
           @error="handleImageError"
-        >
+        />
       </div>
     </div>
 

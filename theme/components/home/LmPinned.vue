@@ -29,12 +29,12 @@ const {
           class="lm-pinned-card__media"
           :class="{ 'lm-pinned-card__media--fallback': !entry.img }"
         >
-          <img
+          <LmImage
             v-if="entry.img"
             :src="entry.img"
             :alt="entry.title"
             class="lm-pinned-card__image"
-          >
+          />
           <div v-else class="lm-pinned-card__fallback" aria-hidden="true">
             {{ getFallbackLabel(entry.title) }}
           </div>

@@ -18,14 +18,14 @@ const props = defineProps<{
     v-if="props.avatar"
     class="lm-hero-avatar-badge"
   >
-    <img
+    <LmImage
       class="lm-hero-avatar-image"
       width="96"
       height="96"
-      decoding="async"
+      eager
       :src="props.avatar"
       :alt="props.authorName"
-    >
+    />
   </div>
 
   <div class="lm-hero-identity-card">

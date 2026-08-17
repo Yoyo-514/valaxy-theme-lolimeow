@@ -22,12 +22,11 @@ const {
     <div class="lm-about-page__content">
       <section class="lm-about-profile" :aria-label="profileLabel">
         <div v-if="authorAvatar" class="lm-about-profile__avatar-wrap">
-          <img
+          <LmImage
             class="lm-about-profile__avatar"
             :src="authorAvatar"
             :alt="authorName"
-            loading="lazy"
-          >
+          />
         </div>
 
         <div class="lm-about-profile__body">

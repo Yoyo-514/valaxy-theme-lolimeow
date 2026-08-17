@@ -67,12 +67,12 @@ const icpInfo = computed(() => {
           :style="{ color: footerIcon.color }"
           rel="noopener"
         >
-          <img
+          <LmImage
             v-if="footerIcon.img"
             class="lm-footer__icon-img"
             :src="footerIcon.img"
             :alt="footerIcon.title || 'footer icon'"
-          >
+          />
           <span v-else :class="footerIcon.name" />
         </a>
 

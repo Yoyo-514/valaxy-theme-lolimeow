@@ -43,11 +43,11 @@ const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], stri
     v-bind="cardAttrs"
   >
     <div v-if="props.item.cover" class="lm-project-card__media" aria-hidden="true">
-      <img
+      <LmImage
         class="lm-project-card__media-image"
         :src="props.item.cover"
         :alt="props.item.name"
-      >
+      />
     </div>
     <div v-if="props.item.cover" class="lm-project-card__media-layer" aria-hidden="true" />
 
@@ -58,12 +58,12 @@ const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], stri
           :class="{ 'lm-project-card__icon--image': props.item.iconImg }"
           aria-hidden="true"
         >
-          <img
+          <LmImage
             v-if="props.item.iconImg"
             class="lm-project-card__icon-img"
             :src="props.item.iconImg"
             :alt="props.item.name"
-          >
+          />
           <span v-else-if="props.item.icon" :class="props.item.icon" />
           <span v-else class="i-ri-apps-2-line" />
         </span>

@@ -15,11 +15,12 @@ defineProps<{
     :class="{ 'lm-aggregate-header--plain': !cover }"
   >
     <div v-if="cover" class="lm-aggregate-header__cover">
-      <img
+      <LmImage
         :src="cover"
         alt=""
+        eager
         class="lm-aggregate-header__cover-image"
-      >
+      />
 
       <div class="lm-aggregate-header__cover-overlay">
         <div class="lm-aggregate-header__cover-content">

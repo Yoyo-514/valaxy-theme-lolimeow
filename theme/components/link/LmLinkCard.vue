@@ -18,13 +18,12 @@ defineProps<{
     <span class="lm-link-card__stripe" />
 
     <span class="lm-link-card__avatar-wrap">
-      <img
+      <LmImage
         v-if="item.avatar"
         class="lm-link-card__avatar"
         :src="item.avatar"
         :alt="item.name"
-        loading="lazy"
-      >
+      />
       <span v-else class="lm-link-card__avatar lm-link-card__avatar--fallback">
         {{ item.initials }}
       </span>
