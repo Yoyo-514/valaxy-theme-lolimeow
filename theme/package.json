@@ -29,8 +29,7 @@
   "module": "client/index.ts",
   "types": "types/index.d.ts",
   "dependencies": {
-    "@iconify-json/ant-design": "catalog:",
-    "@iconify-json/simple-icons": "catalog:",
+    "@iconify-json/ri": "catalog:",
     "@unhead/vue": "catalog:",
     "@vueuse/core": "catalog:"
   },
