@@ -15,15 +15,6 @@ export default defineTheme<ThemeConfig>((options) => {
       // valaxy 在构建前直接消费 vite.ssgOptions 做 SSG 页面级 HTML 后处理；
       // 必须注入在这里（插件的 config() hook 执行太晚，valaxy 已取值完毕）。
       ssgOptions: createLmSsgOptions(userSsgOptions),
-      optimizeDeps: {
-        include: [
-          '@braintree/sanitize-url',
-          'dayjs/plugin/advancedFormat',
-          'mermaid',
-          '@mermaid-js/parser',
-          'langium',
-        ],
-      },
       ssr: {
         noExternal: ['mermaid', '@mermaid-js/parser', 'langium'],
       },

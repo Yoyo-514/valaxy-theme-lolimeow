@@ -121,10 +121,8 @@ export const defaultThemeConfig: ThemeConfig = {
  */
 export function generateSafelist(themeConfig: ThemeConfig) {
   const { navbar, footer, ui } = themeConfig
-  const footerIcon = footer?.icon?.img
-    ?? footer?.icon?.name
-    ?? defaultThemeConfig.footer.icon?.img
-    ?? defaultThemeConfig.footer.icon?.name
+  // 只收集图标类名：footer.icon.img 是图片地址而非 UnoCSS 图标类，不参与 safelist。
+  const footerIcon = footer?.icon?.name ?? defaultThemeConfig.footer.icon?.name
 
   const safelist: string[] = []
 
