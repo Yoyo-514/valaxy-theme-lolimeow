@@ -114,3 +114,12 @@ export default defineValaxyConfig({
 | `size`             | 背景图尺寸            | `'cover'`         |
 | `fixed`            | 背景是否固定          | `true`            |
 | `overlayOpacity`   | 背景遮罩透明度        | `0.3`             |
+| `preload`          | 是否预加载首屏背景图  | `true`            |
+
+## 预加载策略
+
+主题会在页面 `<head>` 中预加载首屏背景图，让背景下载早于脚本水合开始：
+
+- 确定性地址（静态 `urls`、`light` / `dark` 单图）会输出 `<link rel="preload" as="image">`；
+- 随机图片 API 地址不参与预加载——其响应内容每次可能不同，预加载无法稳定命中运行时实际使用的图片，只会与首屏资源抢占带宽；
+- 若随机图 API 的响应头不允许缓存（`Cache-Control: no-store`），可设置 `preload: false` 整体关闭预加载。

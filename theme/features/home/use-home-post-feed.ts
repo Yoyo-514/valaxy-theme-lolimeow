@@ -5,6 +5,7 @@ import { useSiteConfig, useSiteStore } from 'valaxy'
 import { computed, onScopeDispose, ref, toValue, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useThemeConfig } from '../../shared/config'
+import { hashString } from '../../shared/utils'
 import { isHomePaginationPath } from '../navigation'
 import {
   captureActiveHomeHistoryEntryKey,
@@ -88,16 +89,19 @@ export function useHomePostFeed(
       : '0px'
   })
 
-  const feedIdentity = computed(() => JSON.stringify({
-    postIds: allPosts.value.map(post => String(post.path ?? '')),
-    itemsPerPage: itemsPerPage.value,
-    pagination: {
+  // 文章量大时避免全量 postIds 的 JSON.stringify 开销；对路径串做 32 位哈希即可。
+  // 哈希碰撞只会导致本次会话内的历史状态被误拒/误用，代价可控（非安全场景）。
+  const feedIdentity = computed(() => {
+    const postIdsHash = hashString(allPosts.value.map(post => String(post.path ?? '')).join('\u0000'))
+    const paginationIdentity = JSON.stringify({
       type: paginationType.value,
       animation: paginationAnimation.value,
       preload: infiniteScrollPreload.value,
       threshold: infiniteScrollThreshold.value,
-    },
-  }))
+    })
+
+    return `${postIdsHash}:${itemsPerPage.value}:${paginationIdentity}`
+  })
 
   const activeHomeHistoryEntryKey = ref(
     captureActiveHomeHistoryEntryKey(route.fullPath),

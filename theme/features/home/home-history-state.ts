@@ -101,6 +101,9 @@ function resolveHistoryEntryKey(
  * 新 push 条目不会继承它。若浏览器拒绝 replaceState，则使用 Router key/position 与当前 route/URL
  * 组合降级，减少不同位置复用同一 position 时的误命中，同时不改变浏览器历史栈。
  *
+ * 共存风险：私有 key 以附加字段写入 `history.state`，与其他也依赖 history.state 的第三方库
+ * 共存时依赖“只增不改”的约定；若第三方重写整个 state 对象，本 key 会丢失并退回降级键。
+ *
  * @param routeLocation - Vue Router 当前标准化路由位置，用于增强失败降级键的稳定性。
  * @returns 当前条目键；SSR 或历史状态不可识别时返回 undefined。
  */

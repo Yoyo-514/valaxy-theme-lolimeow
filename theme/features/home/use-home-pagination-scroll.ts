@@ -52,6 +52,12 @@ if (hotModule)
  *
  * 同一 Router 只安装一次；首页历史恢复通过显式导航代次与文章流握手，不使用固定超时。
  *
+ * @remarks
+ * 接管语义：本函数会覆盖 `router.options.scrollBehavior`。安装前的旧滚动行为
+ * 会保留为非首页导航的委托目标（无 savedPosition 时回退调用），但在本函数之后
+ * 安装的其它滚动行为提供方（用户站点配置或 addon）会完全替换主题的接管逻辑；
+ * WeakMap 保证同一 Router 上主题只安装一次，先到者生效。
+ *
  * @param router - 当前应用的 Vue Router 实例。
  */
 export function useHomePaginationScrollBehavior(router: Router) {

@@ -49,6 +49,17 @@ export default defineValaxyConfig({
 })
 ```
 
+::: warning 主色值校验
+`primary` 会被注入 SCSS 变量，主题只接受安全字符集（十六进制色、`rgb()` / `hsl()`、CSS 变量等）。包含分号、花括号或换行的非法值会被忽略并回退到默认色 `#66CCFF`。
+:::
+
+## Vite 配置注入
+
+主题会在构建时向 vite 配置注入以下内容，均与用户站点配置组合而非覆盖：
+
+- **SCSS 变量**：注入 `$lm-theme-primary`（取自 `ui.primary`）。用户配置的 `css.preprocessorOptions.scss.additionalData` 会拼接在主题注入之后，可用于覆盖主题变量。
+- **SSG 页面后处理**：注入 `vite.ssgOptions.onPageRendered`，在构建产物中移除 KaTeX 字体 preload（数学字体改由浏览器按需加载，避免无公式页面也预加载全部公式字体）。若用户配置了 `vite.ssgOptions.onPageRendered`，主题会先调用用户回调再执行过滤。
+
 ## 工具按钮图标
 
 可以为明暗切换按钮指定图标。
