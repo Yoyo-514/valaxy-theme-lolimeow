@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html  lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/images/favicon.ico">
+    <script>
+    ;(function () {
+      const prefersDark =
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+      const setting = localStorage.getItem('vueuse-color-scheme') || 'auto'
+      if (setting === 'dark' || (prefersDark && setting !== 'light'))
+        document.documentElement.classList.toggle('dark', true)
+    })()
+    </script>
+  <style type="text/css">
+    :root { color-scheme: light dark; --va-c-bg: #fff; }
+    html.dark { --va-c-bg: #000; }
+    html { background-color: var(--va-c-bg); }
+  </style><style id="valaxy-fouc">body{opacity:0!important}</style><style>body{transition:opacity .15s ease}</style><noscript><style>body{opacity:1!important}</style></noscript><script>(function foucGuardScript(maxDuration) {
+  var done = 0;
+  function reveal() {
+    if (done) return;
+    done = 1;
+    var s = document.getElementById("valaxy-fouc");
+    if (s) s.remove();
+  }
+  function check() {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      if (!links[i].sheet) return;
+    }
+    reveal();
+  }
+  new MutationObserver(check).observe(document.head, {
+    childList: true,
+    attributes: true,
+    attributeFilter: ["media", "rel"]
+  });
+  addEventListener("load", reveal);
+  if (maxDuration)
+    setTimeout(reveal, maxDuration);
+})(5000)</script>
+    <script>
+    const locale = localStorage.getItem('valaxy-locale') || 'zh-CN';
+    document.documentElement.setAttribute('lang', locale);
+    </script>
+    
+  <script type="module" crossorigin src="/assets/index._pe4jV_g.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime.hePW80VL.js">
+  <link rel="modulepreload" crossorigin href="/assets/framework.CSzCw9LZ.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/vue-i18n.Cqu3Nkcj.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/vue-router.Bgic7BfJ.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/dayjs.DhR-ZeKb.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/pinia.CBRbebOf.js">
+  <link rel="modulepreload" crossorigin href="/assets/theme.CSWW2TtS.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/nprogress.Dew4DlVv.js">
+  <link rel="stylesheet" crossorigin href="/assets/style.CjuwbMEu.css">
+<link rel="modulepreload" crossorigin href="/assets/theme.CSWW2TtS.js">
+<link rel="modulepreload" crossorigin href="/assets/notes.Cqw_2Y1p.js">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dev Notes - Valaxy Theme Lolimeow</title>
+<link rel="preload" as="image" href="/images/background1.webp" data-hid="lm-bg-preload:/images/background1.webp">
+<meta property="og:locale:alternate" content="en">
+<meta name="description" content="Valaxy Theme Lolimeow.">
+<meta property="og:description" content="Valaxy Theme Lolimeow.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:site_name" content="Valaxy Theme Lolimeow">
+<meta property="og:title" content="Dev Notes">
+<meta property="og:image" content="/images/favicon.ico">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lolimeow.yoyo514.top/">
+<link rel="icon" href="/images/favicon.ico" type="image/png">
+<meta name="generator" content="Valaxy 1.0.0-rc.6">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+  <div id="app"><!--[--><!--[--><!----><!--[--><!--]--><!----><!--]--><div class="min-h-screen antialiased relative isolate" data-v-ca1ef662><div class="pointer-events-none inset-0 fixed z-[var(--lm-z-base)] overflow-hidden" aria-hidden="true" data-v-ca1ef662 data-v-65f3ed57><div class="lm-bg-layer" style="background-color:var(--lm-c-bg-base);" data-v-65f3ed57></div><div class="lm-bg-layer" style="background-image:url(/images/background1.webp);background-position:center center;background-size:cover;background-attachment:fixed;" data-v-65f3ed57></div><!----><div class="lm-bg-layer" style="opacity:0.3;background:linear-gradient(180deg, var(--lm-c-overlay-base), var(--lm-c-overlay-tint));" data-v-65f3ed57></div></div><!----><div class="translate-y-0 transition-transform duration-250 ease-in-out inset-x-0 top-0 fixed z-[var(--lm-z-navbar)]" data-v-ca1ef662><div class="w-full" data-v-ca1ef662><nav class="lm-nav flex flex-col w-full transition-transform duration-250 ease-in-out relative" data-v-ca1ef662 data-v-06a3a0a4><div class="px-4 py-2 flex gap-3 w-full items-center sm:px-5" data-v-06a3a0a4><a href="/" class="lm-nav-brand" aria-label="My Blog" data-v-06a3a0a4 data-v-f23c5650><img src="/images/favicon.ico" alt="logo" width="32" height="32" loading="eager" decoding="async" class="lm-nav-brand__logo" data-v-f23c5650><span class="lm-nav-brand__title" data-v-f23c5650>My Blog</span></a><div class="text-sm leading-6 ml-auto hidden items-center md:flex md:gap-3.5 xl:gap-5" data-v-06a3a0a4><!--[--><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-de2e1688><a href="/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-de2e1688><!--[--><span class="lm-nav-link-content" data-v-de2e1688 data-v-8a569f6e><span class="i-ri-home-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>首页</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-de2e1688><a href="/archives/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-de2e1688><!--[--><span class="lm-nav-link-content" data-v-de2e1688 data-v-8a569f6e><span class="i-ri-archive-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>归档</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-de2e1688><a href="/categories/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-de2e1688><!--[--><span class="lm-nav-link-content" data-v-de2e1688 data-v-8a569f6e><span class="i-ri-folder-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>分类</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-de2e1688><a href="/tags/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-de2e1688><!--[--><span class="lm-nav-link-content" data-v-de2e1688 data-v-8a569f6e><span class="i-ri-price-tag-3-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>标签</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-de2e1688><a href="/projects/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-de2e1688><!--[--><span class="lm-nav-link-content" data-v-de2e1688 data-v-8a569f6e><span class="i-ri-apps-2-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>项目</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-de2e1688><a href="/links/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-de2e1688><!--[--><span class="lm-nav-link-content" data-v-de2e1688 data-v-8a569f6e><span class="i-ri-links-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>友链</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-de2e1688><a href="/about/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-de2e1688><!--[--><span class="lm-nav-link-content" data-v-de2e1688 data-v-8a569f6e><span class="i-ri-user-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>关于</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><!--]--></div><div class="lm-nav-tools" data-v-06a3a0a4 data-v-9e35a668><button type="button" class="lm-nav-tools__button" aria-label="打开搜索" data-v-9e35a668><div i-ri-search-line data-v-9e35a668></div></button><button type="button" class="lm-nav-tools__button" aria-label="切换深色模式" data-v-9e35a668><div class="i-ri-sun-line" data-v-9e35a668></div></button><button type="button" class="lm-nav-tools__menu-button" aria-expanded="false" aria-label="切换移动端导航" data-v-9e35a668><span class="lm-nav-tools__menu-lines" data-v-9e35a668><!--[--><span class="w-4 lm-nav-tools__menu-line" data-v-9e35a668></span><span class="w-4 lm-nav-tools__menu-line" data-v-9e35a668></span><span class="w-4 lm-nav-tools__menu-line" data-v-9e35a668></span><!--]--></span></button></div></div></nav><!----></div></div><!--[--><!----><!--]--><div class="lm-page-surface-layer" style="top:0px;" data-v-ca1ef662></div><!----><main class="w-full relative z-[var(--lm-z-content)]" data-v-ca1ef662><!--[--><div class="mx-auto px-4 max-w-3xl sm:px-6 xl:px-0 xl:max-w-5xl"><main><div w="full" flex="~"><!--[--><div class="content" flex="~ col grow" w="full" p="lt-md:0"><!--[--><!--]--><!--[--><!--]--><!--[--><div class="markdown-body pb-4 max-w-none prose dark:prose-invert"><article class="markdown-body"><!--[--><!--[--><p>How about writing some dev notes?</p><!--]--><!--[--><!--]--><!--]--><!----><!----></article></div><!--[--><!--]--><!--]--></div><!--[--><!--]--><!--[--><!--]--><!--[--><!--]--><!--[--><!--]--><!--[--><!--]--><!--]--></div><!--[--><!--]--></main></div><!--]--></main><div class="lm-helper-stage" data-v-ca1ef662 data-v-e736e8f9><!----></div><div class="relative z-[var(--lm-z-content)]" data-v-ca1ef662><footer class="lm-footer" data-v-ca1ef662 data-v-261cb458><div class="lm-footer__glow" aria-hidden="true" data-v-261cb458></div><div class="lm-footer__inner" data-v-261cb458><div class="lm-footer__copyright" data-v-261cb458><span class="lm-footer__year" data-v-261cb458> Copyright © <!--[-->2023 - <!--]--> 2026</span><a class="lm-footer__icon" title="" style="color:var(--lm-c-brand);" rel="noopener" data-v-261cb458><span class="i-ri-heart-fill" data-v-261cb458></span></a><span class="lm-footer__author" data-v-261cb458>Yoyo</span></div><div class="lm-footer__powered" data-v-261cb458><span data-v-261cb458>由 <a href="[object Object]" target="_blank" rel="noopener">Valaxy</a> v1.0.0-rc.6 驱动</span><span class="lm-footer__dot" aria-hidden="true" data-v-261cb458></span><span data-v-261cb458>主题 <a href="https://github.com/Yoyo-514/valaxy-theme-lolimeow" title="valaxy-theme-lolimeow" target="_blank" rel="noopener" data-v-261cb458>Lolimeow</a> v1.1.8</span></div><!----><!--[--><!--]--></div></footer></div></div><!--]--></div><script>window.__INITIAL_STATE__='{"pinia":{"app":{"showLoading":true}}}'</script><script type="application/ld+json" data-hid="schema-org-graph">{"@context":"https://schema.org","@graph":[{"@id":"https://lolimeow.yoyo514.top/#identity","@type":"Person","name":"Yoyo","url":"https://lolimeow.yoyo514.top/","image":{"@id":"https://lolimeow.yoyo514.top/#/schema/image/1"},"sameAs":["/atom.xml","https://im.qq.com","https://github.com/yourname","https://weibo.com","https://www.douban.com","https://music.163.com","https://www.zhihu.com","https://space.bilibili.com","https://weixin.qq.com/","https://twitter.com","https://web.telegram.org/",null]},{"@id":"https://lolimeow.yoyo514.top/#website","@type":"WebSite","dateModified":"2026-08-18T18:01:53.270Z","datePublished":"2026-08-18T18:01:53.270Z","inLanguage":"zh-CN","name":"Dev Notes","url":"https://lolimeow.yoyo514.top/","publisher":{"@id":"https://lolimeow.yoyo514.top/#identity"}},{"@id":"https://lolimeow.yoyo514.top/#webpage","@type":"WebPage","description":"Valaxy Theme Lolimeow.","name":"Dev Notes","url":"https://lolimeow.yoyo514.top/","about":{"@id":"https://lolimeow.yoyo514.top/#identity"},"isPartOf":{"@id":"https://lolimeow.yoyo514.top/#website"},"potentialAction":[{"@type":"ReadAction","target":["https://lolimeow.yoyo514.top/"]}]},{"@id":"https://lolimeow.yoyo514.top/#/schema/image/1","@type":"ImageObject","contentUrl":"https://lolimeow.yoyo514.top/images/avatar.jpg","inLanguage":"zh-CN","url":"https://lolimeow.yoyo514.top/images/avatar.jpg"}]}</script>
+  
+</body>
+</html>
