@@ -2,16 +2,15 @@ catalogMode: prefer
 
 cleanupUnusedCatalogs: true
 minimumReleaseAge: 0
-shamefullyHoist: true
 
-# publicHoistPattern:
-#   - vue
-#   - vue-router
-#   - vue-i18n
-#   - vite
-#   - unocss
-#   - vite-plugin-vue-layouts-next
-#   - '@iconify-json/ri'
+publicHoistPattern:
+  - vue
+  - vue-router
+  - vue-i18n
+  - vite
+  - unocss
+  - vite-plugin-vue-layouts-next
+  - '@iconify-json/ri'
 
 shellEmulator: true
 

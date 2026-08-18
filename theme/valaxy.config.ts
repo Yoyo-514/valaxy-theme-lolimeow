@@ -22,5 +22,12 @@ export default defineTheme<ThemeConfig>((options) => {
     unocss: {
       safelist: generateSafelist(options.config.themeConfig as ThemeConfig),
     },
+    unocssPresets: {
+      icons: {
+        collections: {
+          ri: () => import('@iconify-json/ri/icons.json').then(i => i.default),
+        },
+      },
+    },
   }
 })

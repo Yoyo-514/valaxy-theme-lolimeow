@@ -100,10 +100,10 @@ importers:
         version: 1.2.10
       valaxy:
         specifier: 'catalog:'
-        version: 1.0.0-rc.6(@babel/parser@7.29.8)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vue/compiler-dom@3.5.41)(axios@1.19.0(debug@4.4.3))(change-case@5.4.4)(esbuild@0.28.2)(eslint@10.8.1(jiti@2.7.0))(focus-trap@8.2.2)(rolldown@1.2.4)(rollup@4.62.4)(terser@5.48.0)(typescript@6.0.3)(vue-router@5.0.7(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.41(typescript@6.0.3)))(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3)))(vue@3.5.41(typescript@6.0.3))(yaml@2.9.0)
+        version: 1.0.0-rc.6(@babel/parser@7.29.8)(@types/markdown-it@14.2.0)(@types/node@26.2.0)(@vue/compiler-dom@3.5.41)(axios@1.19.0(debug@4.4.3))(change-case@5.4.4)(esbuild@0.28.2)(eslint@10.8.1(jiti@2.7.0))(focus-trap@8.2.2)(rolldown@1.2.4)(rollup@4.62.4)(terser@5.48.0)(typescript@6.0.3)(vue-router@5.0.7(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.41(typescript@6.0.3)))(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3)))(vue@3.5.41(typescript@6.0.3))(yaml@2.9.0)
       valaxy-addon-waline:
         specifier: 'catalog:'
-        version: 0.2.1(typescript@6.0.3)(valaxy@1.0.0-rc.6(@babel/parser@7.29.8)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vue/compiler-dom@3.5.41)(axios@1.19.0(debug@4.4.3))(change-case@5.4.4)(esbuild@0.28.2)(eslint@10.8.1(jiti@2.7.0))(focus-trap@8.2.2)(rolldown@1.2.4)(rollup@4.62.4)(terser@5.48.0)(typescript@6.0.3)(vue-router@5.0.7(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.41(typescript@6.0.3)))(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3)))(vue@3.5.41(typescript@6.0.3))(yaml@2.9.0))
+        version: 0.2.1(typescript@6.0.3)(valaxy@1.0.0-rc.6(@babel/parser@7.29.8)(@types/markdown-it@14.2.0)(@types/node@26.2.0)(@vue/compiler-dom@3.5.41)(axios@1.19.0(debug@4.4.3))(change-case@5.4.4)(esbuild@0.28.2)(eslint@10.8.1(jiti@2.7.0))(focus-trap@8.2.2)(rolldown@1.2.4)(rollup@4.62.4)(terser@5.48.0)(typescript@6.0.3)(vue-router@5.0.7(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.41(typescript@6.0.3)))(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3)))(vue@3.5.41(typescript@6.0.3))(yaml@2.9.0))
       valaxy-theme-lolimeow:
         specifier: workspace:*
         version: link:../theme
@@ -128,10 +128,10 @@ importers:
     devDependencies:
       valaxy:
         specifier: 'catalog:'
-        version: 1.0.0-rc.6(@babel/parser@7.29.8)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vue/compiler-dom@3.5.41)(axios@1.19.0(debug@4.4.3))(change-case@5.4.4)(esbuild@0.28.2)(eslint@10.8.1(jiti@2.7.0))(focus-trap@8.2.2)(rolldown@1.2.4)(rollup@4.62.4)(terser@5.48.0)(typescript@6.0.3)(vue-router@5.0.7(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.41(typescript@6.0.3)))(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3)))(vue@3.5.41(typescript@6.0.3))(yaml@2.9.0)
+        version: 1.0.0-rc.6(@babel/parser@7.29.8)(@types/markdown-it@14.2.0)(@types/node@26.2.0)(@vue/compiler-dom@3.5.41)(axios@1.19.0(debug@4.4.3))(change-case@5.4.4)(esbuild@0.28.2)(eslint@10.8.1(jiti@2.7.0))(focus-trap@8.2.2)(rolldown@1.2.4)(rollup@4.62.4)(terser@5.48.0)(typescript@6.0.3)(vue-router@5.0.7(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.41(typescript@6.0.3)))(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3)))(vue@3.5.41(typescript@6.0.3))(yaml@2.9.0)
       valaxy-addon-waline:
         specifier: 'catalog:'
-        version: 0.2.1(typescript@6.0.3)(valaxy@1.0.0-rc.6(@babel/parser@7.29.8)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vue/compiler-dom@3.5.41)(axios@1.19.0(debug@4.4.3))(change-case@5.4.4)(esbuild@0.28.2)(eslint@10.8.1(jiti@2.7.0))(focus-trap@8.2.2)(rolldown@1.2.4)(rollup@4.62.4)(terser@5.48.0)(typescript@6.0.3)(vue-router@5.0.7(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.41(typescript@6.0.3)))(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3)))(vue@3.5.41(typescript@6.0.3))(yaml@2.9.0))
+        version: 0.2.1(typescript@6.0.3)(valaxy@1.0.0-rc.6(@babel/parser@7.29.8)(@types/markdown-it@14.2.0)(@types/node@26.2.0)(@vue/compiler-dom@3.5.41)(axios@1.19.0(debug@4.4.3))(change-case@5.4.4)(esbuild@0.28.2)(eslint@10.8.1(jiti@2.7.0))(focus-trap@8.2.2)(rolldown@1.2.4)(rollup@4.62.4)(terser@5.48.0)(typescript@6.0.3)(vue-router@5.0.7(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.41(typescript@6.0.3)))(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3)))(vue@3.5.41(typescript@6.0.3))(yaml@2.9.0))
 
 packages:
 
@@ -1808,8 +1808,8 @@ packages:
   '@types/linkify-it@5.0.0':
     resolution: {integrity: sha512-sVDA58zAw4eWAffKOaQH5/5j3XeayukzDk+ewSsnv3p4yJEZHCCzMDiZM8e0OUrRvmpGZ85jf4yDHkHsgBNr9Q==}
 
-  '@types/markdown-it@14.1.2':
-    resolution: {integrity: sha512-promo4eFwuiW+TfGxhi+0x3czqTYJkG8qB17ZUJiVF10Xm7NLVRSLUsfRTU/6h1e24VvRnXCx+hG7li58lkzog==}
+  '@types/markdown-it@14.2.0':
+    resolution: {integrity: sha512-NoQ2yGlLWj4wpxMs+TYmRKk3thDrQ97agr7sFqfLsAlvoS8SNQuTrlObhFqG9iugdTtgOE9jpJ6FNM4ZGsa5xQ==}
 
   '@types/mdast@4.0.4':
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
@@ -2375,8 +2375,8 @@ packages:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
     engines: {node: 18 || 20 || >=22}
 
-  baseline-browser-mapping@2.11.14:
-    resolution: {integrity: sha512-JyJ954WzuIR8/FFzX0o5krdSTrBAkcCSRfWSleRsIHSWV+cZe2FI1PKggVkFke1hBldRs+LRxUczzE9iPmgZww==}
+  baseline-browser-mapping@2.11.15:
+    resolution: {integrity: sha512-FwMjJJ7HnyZpWe+oWxegG0fezZyBZUagI5LZEoO3GCbtbKNwRfMH9Ue5d5v01PNePBy1QSfPSDTTeVL0Hb9EzA==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -2881,8 +2881,8 @@ packages:
     engines: {node: '>=0.12.18'}
     hasBin: true
 
-  electron-to-chromium@1.5.408:
-    resolution: {integrity: sha512-SLoprcYpJ/OH2v2ps0+N5biv9H4/KBT3+YmmDew64TwK5y9j2wv7pMOFY7IorVkyMtEyLSCRlXKLsNlakeAlPw==}
+  electron-to-chromium@1.5.409:
+    resolution: {integrity: sha512-ChI4N44d0B4A6C8prnNjMOaGgE59fUyEVYcRYm2XEXIjMbbvF5i9UL1cblDbpGqiU0uS8FE8UcKxqZqTXdmzbQ==}
 
   emoji-regex@10.6.0:
     resolution: {integrity: sha512-toUI84YS5YmxW219erniWD0CIVOo46xGKColeNQRgOzDorgBi1v4D71/OFzgD9GO2UGKIv1C3Sp8DAn0+j5w7A==}
@@ -3606,8 +3606,8 @@ packages:
     resolution: {integrity: sha512-1LJ/negRKJxH0+ulOsJYEpUgzIs1DAOz9QctuS4In2LW/Ro3l8C4ej5al+5FU2hBGEOAY3R3SCnP6x8226JMIw==}
     engines: {node: ^22.22.2 || >=24.15.0}
 
-  jsdoc-type-pratt-parser@9.1.1:
-    resolution: {integrity: sha512-kojSbQb9iQM2bk2PmHiKa3reG0U4v2gN9U8D8+eCQq+4KM5ZXBUyBVeF8KmR0RiwqyrW4+uVWYWTOLnpsavnkw==}
+  jsdoc-type-pratt-parser@9.1.2:
+    resolution: {integrity: sha512-9EXymowgk1mb9RY1VxuwKc+AhaxfBk2CV0dWxgGM+l5RURTtiUoAx7MlKwcsiVcEXK5HEPa7FeH/tsRpqjEPRg==}
     engines: {node: ^22.22.2 || >=24.15.0}
 
   jsdom@28.1.0:
@@ -4082,8 +4082,8 @@ packages:
   mlly@1.8.2:
     resolution: {integrity: sha512-d+ObxMQFmbt10sretNDytwt85VrbkhhUA/JBGm1MPaWJ65Cl4wOgLaB1NYvJSZ0Ef03MMEU/0xpPMXUIQ29UfA==}
 
-  module-replacements@3.1.0:
-    resolution: {integrity: sha512-MSTNGqlp2q0seRlrAA/FK3SUkGnmPeexeKWuCjeJ7HobD2RCjk4f8ry8lJ+nUQFDVBAHSdC4TdjyJSaocnR7Uw==}
+  module-replacements@3.2.0:
+    resolution: {integrity: sha512-zaDcWtW+kLmYGWCMWAyQ8Je333BYmsBMB2X6q5MKBCI697l7OawNaC5TQqfgPVxhdXBA1AjumQjPMcHyJe1f2A==}
 
   mrmime@2.0.1:
     resolution: {integrity: sha512-Y3wQdFg2Va6etvQ5I82yUhGdsKrcYox6p7FfL1LbK2J4V01F9TGlepTIhnK24t7koZibmg82KGglhA1XK5IsLQ==}
@@ -5699,7 +5699,7 @@ snapshots:
   '@e18e/eslint-plugin@0.6.0(eslint@10.8.1(jiti@2.7.0))':
     dependencies:
       empathic: 2.0.1
-      module-replacements: 3.1.0
+      module-replacements: 3.2.0
       semver: 7.8.5
     optionalDependencies:
       eslint: 10.8.1(jiti@2.7.0)
@@ -6107,13 +6107,13 @@ snapshots:
 
   '@mdit-vue/plugin-component@3.0.2':
     dependencies:
-      '@types/markdown-it': 14.1.2
+      '@types/markdown-it': 14.2.0
       markdown-it: 14.3.0
 
   '@mdit-vue/plugin-frontmatter@3.0.2':
     dependencies:
       '@mdit-vue/types': 3.0.2
-      '@types/markdown-it': 14.1.2
+      '@types/markdown-it': 14.2.0
       gray-matter: 4.0.3
       markdown-it: 14.3.0
 
@@ -6680,7 +6680,7 @@ snapshots:
 
   '@types/linkify-it@5.0.0': {}
 
-  '@types/markdown-it@14.1.2':
+  '@types/markdown-it@14.2.0':
     dependencies:
       '@types/linkify-it': 5.0.0
       '@types/mdurl': 2.0.0
@@ -7434,7 +7434,7 @@ snapshots:
 
   balanced-match@4.0.4: {}
 
-  baseline-browser-mapping@2.11.14: {}
+  baseline-browser-mapping@2.11.15: {}
 
   bidi-js@1.0.3:
     dependencies:
@@ -7477,9 +7477,9 @@ snapshots:
 
   browserslist@4.28.8:
     dependencies:
-      baseline-browser-mapping: 2.11.14
+      baseline-browser-mapping: 2.11.15
       caniuse-lite: 1.0.30001809
-      electron-to-chromium: 1.5.408
+      electron-to-chromium: 1.5.409
       node-releases: 2.0.53
       update-browserslist-db: 1.3.1(browserslist@4.28.8)
 
@@ -7941,7 +7941,7 @@ snapshots:
 
   ejs@5.0.2: {}
 
-  electron-to-chromium@1.5.408: {}
+  electron-to-chromium@1.5.409: {}
 
   emoji-regex@10.6.0: {}
 
@@ -8203,7 +8203,7 @@ snapshots:
       '@eslint-community/regexpp': 4.12.2
       comment-parser: 1.4.8
       eslint: 10.8.1(jiti@2.7.0)
-      jsdoc-type-pratt-parser: 9.1.1
+      jsdoc-type-pratt-parser: 9.1.2
       refa: 0.12.1
       regexp-ast-analysis: 0.7.1
       scslre: 0.3.0
@@ -8763,7 +8763,7 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.9
 
-  jsdoc-type-pratt-parser@9.1.1:
+  jsdoc-type-pratt-parser@9.1.2:
     dependencies:
       '@types/estree': 1.0.9
 
@@ -8988,14 +8988,14 @@ snapshots:
       punycode.js: 2.3.1
       uc.micro: 2.1.0
 
-  markdown-it-anchor@9.2.1(@types/markdown-it@14.1.2)(markdown-it@14.3.0):
+  markdown-it-anchor@9.2.1(@types/markdown-it@14.2.0)(markdown-it@14.3.0):
     dependencies:
-      '@types/markdown-it': 14.1.2
+      '@types/markdown-it': 14.2.0
       markdown-it: 14.3.0
 
   markdown-it-async@2.2.0:
     dependencies:
-      '@types/markdown-it': 14.1.2
+      '@types/markdown-it': 14.2.0
       markdown-it: 14.3.0
 
   markdown-it-attrs@4.5.0(markdown-it@14.3.0):
@@ -9456,7 +9456,7 @@ snapshots:
       pkg-types: 1.3.1
       ufo: 1.6.4
 
-  module-replacements@3.1.0: {}
+  module-replacements@3.2.0: {}
 
   mrmime@2.0.1: {}
 
@@ -10386,14 +10386,14 @@ snapshots:
 
   uuid@14.0.1: {}
 
-  valaxy-addon-waline@0.2.1(typescript@6.0.3)(valaxy@1.0.0-rc.6(@babel/parser@7.29.8)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vue/compiler-dom@3.5.41)(axios@1.19.0(debug@4.4.3))(change-case@5.4.4)(esbuild@0.28.2)(eslint@10.8.1(jiti@2.7.0))(focus-trap@8.2.2)(rolldown@1.2.4)(rollup@4.62.4)(terser@5.48.0)(typescript@6.0.3)(vue-router@5.0.7(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.41(typescript@6.0.3)))(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3)))(vue@3.5.41(typescript@6.0.3))(yaml@2.9.0)):
+  valaxy-addon-waline@0.2.1(typescript@6.0.3)(valaxy@1.0.0-rc.6(@babel/parser@7.29.8)(@types/markdown-it@14.2.0)(@types/node@26.2.0)(@vue/compiler-dom@3.5.41)(axios@1.19.0(debug@4.4.3))(change-case@5.4.4)(esbuild@0.28.2)(eslint@10.8.1(jiti@2.7.0))(focus-trap@8.2.2)(rolldown@1.2.4)(rollup@4.62.4)(terser@5.48.0)(typescript@6.0.3)(vue-router@5.0.7(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.41(typescript@6.0.3)))(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3)))(vue@3.5.41(typescript@6.0.3))(yaml@2.9.0)):
     dependencies:
       '@waline/client': 3.4.1(typescript@6.0.3)
-      valaxy: 1.0.0-rc.6(@babel/parser@7.29.8)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vue/compiler-dom@3.5.41)(axios@1.19.0(debug@4.4.3))(change-case@5.4.4)(esbuild@0.28.2)(eslint@10.8.1(jiti@2.7.0))(focus-trap@8.2.2)(rolldown@1.2.4)(rollup@4.62.4)(terser@5.48.0)(typescript@6.0.3)(vue-router@5.0.7(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.41(typescript@6.0.3)))(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3)))(vue@3.5.41(typescript@6.0.3))(yaml@2.9.0)
+      valaxy: 1.0.0-rc.6(@babel/parser@7.29.8)(@types/markdown-it@14.2.0)(@types/node@26.2.0)(@vue/compiler-dom@3.5.41)(axios@1.19.0(debug@4.4.3))(change-case@5.4.4)(esbuild@0.28.2)(eslint@10.8.1(jiti@2.7.0))(focus-trap@8.2.2)(rolldown@1.2.4)(rollup@4.62.4)(terser@5.48.0)(typescript@6.0.3)(vue-router@5.0.7(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.41(typescript@6.0.3)))(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3)))(vue@3.5.41(typescript@6.0.3))(yaml@2.9.0)
     transitivePeerDependencies:
       - typescript
 
-  valaxy@1.0.0-rc.6(@babel/parser@7.29.8)(@types/markdown-it@14.1.2)(@types/node@26.2.0)(@vue/compiler-dom@3.5.41)(axios@1.19.0(debug@4.4.3))(change-case@5.4.4)(esbuild@0.28.2)(eslint@10.8.1(jiti@2.7.0))(focus-trap@8.2.2)(rolldown@1.2.4)(rollup@4.62.4)(terser@5.48.0)(typescript@6.0.3)(vue-router@5.0.7(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.41(typescript@6.0.3)))(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3)))(vue@3.5.41(typescript@6.0.3))(yaml@2.9.0):
+  valaxy@1.0.0-rc.6(@babel/parser@7.29.8)(@types/markdown-it@14.2.0)(@types/node@26.2.0)(@vue/compiler-dom@3.5.41)(axios@1.19.0(debug@4.4.3))(change-case@5.4.4)(esbuild@0.28.2)(eslint@10.8.1(jiti@2.7.0))(focus-trap@8.2.2)(rolldown@1.2.4)(rollup@4.62.4)(terser@5.48.0)(typescript@6.0.3)(vue-router@5.0.7(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.41(typescript@6.0.3)))(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3)))(vue@3.5.41(typescript@6.0.3))(yaml@2.9.0):
     dependencies:
       '@antfu/install-pkg': 1.1.0
       '@antfu/utils': 9.3.0
@@ -10434,7 +10434,7 @@ snapshots:
       katex: 0.16.47
       lru-cache: 11.5.2
       markdown-it: 14.3.0
-      markdown-it-anchor: 9.2.1(@types/markdown-it@14.1.2)(markdown-it@14.3.0)
+      markdown-it-anchor: 9.2.1(@types/markdown-it@14.2.0)(markdown-it@14.3.0)
       markdown-it-async: 2.2.0
       markdown-it-attrs: 4.5.0(markdown-it@14.3.0)
       markdown-it-container: 4.0.0
@@ -10646,7 +10646,7 @@ snapshots:
       '@shikijs/core': 3.23.0
       '@shikijs/transformers': 3.23.0
       '@shikijs/types': 3.23.0
-      '@types/markdown-it': 14.1.2
+      '@types/markdown-it': 14.2.0
       '@vitejs/plugin-vue': 6.0.8(vite@7.3.6(@types/node@26.2.0)(jiti@2.7.0)(lightningcss@1.33.0)(sass@1.102.0)(terser@5.48.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3))
       '@vue/devtools-api': 8.2.1
       '@vue/shared': 3.5.41
