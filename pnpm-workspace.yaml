@@ -28,32 +28,32 @@ packages:
   - docs
 
 overrides:
-  '@vue/compiler-core': 3.5.41
-  '@vue/compiler-dom': 3.5.41
-  '@vue/compiler-sfc': 3.5.41
-  '@vue/compiler-ssr': 3.5.41
-  '@vue/reactivity': 3.5.41
-  '@vue/runtime-core': 3.5.41
-  '@vue/runtime-dom': 3.5.41
-  '@vue/server-renderer': 3.5.41
-  '@vue/shared': 3.5.41
-  vue: 3.5.41
+  '@vue/compiler-core': 3.5.42
+  '@vue/compiler-dom': 3.5.42
+  '@vue/compiler-sfc': 3.5.42
+  '@vue/compiler-ssr': 3.5.42
+  '@vue/reactivity': 3.5.42
+  '@vue/runtime-core': 3.5.42
+  '@vue/runtime-dom': 3.5.42
+  '@vue/server-renderer': 3.5.42
+  '@vue/shared': 3.5.42
+  vue: 3.5.42
 
 catalog:
-  '@antfu/eslint-config': ^9.3.0
+  '@antfu/eslint-config': ^9.5.1
   '@iconify-json/ri': ^1.2.10
-  '@unhead/vue': ^3.3.2
-  '@unocss/eslint-plugin': ^66.7.5
+  '@unhead/vue': ^3.4.0
+  '@unocss/eslint-plugin': ^66.9.2
   '@vueuse/core': ^14.4.0
-  bumpp: ^12.2.1
-  eslint: ^10.8.1
+  bumpp: ^12.2.2
+  eslint: ^10.9.1
   eslint-plugin-format: ^2.0.1
   typescript: ^6.0.3
-  valaxy: 1.0.0-rc.6
+  valaxy: 1.0.0-rc.9
   valaxy-addon-waline: ^0.2.1
   vitepress: 2.0.0-alpha.17
-  vitest: ^4.1.10
-  vue-tsc: ^3.3.10
+  vitest: ^4.1.11
+  vue-tsc: ^3.3.11
 
 allowBuilds:
   '@parcel/watcher': true
