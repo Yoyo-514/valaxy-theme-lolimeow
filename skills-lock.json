@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "valaxy-theme": {
+      "source": "YunYouJun/valaxy",
+      "sourceType": "github",
+      "skillPath": "skills/valaxy-theme/SKILL.md",
+      "computedHash": "ffa1f63aa3cb0cd17fa2052caa7d1dd33fb6589819ff5fe57a7e4d363217683f"
+    }
+  }
+}

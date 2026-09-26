@@ -1,7 +1,16 @@
 catalogMode: prefer
-
 cleanupUnusedCatalogs: true
 minimumReleaseAge: 0
+minimumReleaseAgeExcludePrune: true
+
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  - chokidar
+  - langium
+  - semver
+  - valaxy-addon-waline
+  - cytoscape
+  - why-is-node-running
 
 publicHoistPattern:
   - vue
@@ -14,47 +23,39 @@ publicHoistPattern:
 
 shellEmulator: true
 
-trustPolicy: no-downgrade
-
-trustPolicyExclude:
-  - chokidar
-  - langium
-  - semver
-  - valaxy-addon-waline
-  - cytoscape
 packages:
   - theme
   - demo
   - docs
 
 overrides:
-  '@vue/compiler-core': 3.5.42
-  '@vue/compiler-dom': 3.5.42
-  '@vue/compiler-sfc': 3.5.42
-  '@vue/compiler-ssr': 3.5.42
-  '@vue/reactivity': 3.5.42
-  '@vue/runtime-core': 3.5.42
-  '@vue/runtime-dom': 3.5.42
-  '@vue/server-renderer': 3.5.42
-  '@vue/shared': 3.5.42
-  vue: 3.5.42
-
-catalog:
-  '@antfu/eslint-config': ^9.5.1
-  '@iconify-json/ri': ^1.2.10
-  '@unhead/vue': ^3.4.0
-  '@unocss/eslint-plugin': ^66.9.2
-  '@vueuse/core': ^14.4.0
-  bumpp: ^12.2.2
-  eslint: ^10.9.1
-  eslint-plugin-format: ^2.0.1
-  typescript: ^6.0.3
-  valaxy: 1.0.0-rc.9
-  valaxy-addon-waline: ^0.2.1
-  vitepress: 2.0.0-alpha.17
-  vitest: ^4.1.11
-  vue-tsc: ^3.3.11
+  '@vue/compiler-core': 3.5.43
+  '@vue/compiler-dom': 3.5.43
+  '@vue/compiler-sfc': 3.5.43
+  '@vue/compiler-ssr': 3.5.43
+  '@vue/reactivity': 3.5.43
+  '@vue/runtime-core': 3.5.43
+  '@vue/runtime-dom': 3.5.43
+  '@vue/server-renderer': 3.5.43
+  '@vue/shared': 3.5.43
+  vue: 3.5.43
 
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
+
+catalog:
+  '@antfu/eslint-config': ^9.5.1
+  '@iconify-json/ri': ^1.2.10
+  '@unhead/vue': ^3.4.1
+  '@unocss/eslint-plugin': ^66.10.5
+  '@vueuse/core': ^15.0.0
+  bumpp: ^12.3.0
+  eslint: ^10.11.0
+  eslint-plugin-format: ^2.0.1
+  typescript: ^6.0.3
+  valaxy: 1.0.0-rc.15
+  valaxy-addon-waline: ^0.2.1
+  vitepress: 2.0.0-alpha.17
+  vitest: ^5.0.2
+  vue-tsc: ^3.3.11

@@ -66,13 +66,10 @@ build/
 .claude/
 CLAUDE.md
 
-# serena
+# AI loacl
 .serena/
-
-# skill
-.agents/
-
 .spec-workflow
+.impeccable
 
 # pi
 .pi/
