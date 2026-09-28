@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { ArchiveGroup } from '../../features/archive'
+import { useArchiveTransitionLeave } from '../../features/archive'
 
 defineProps<{
   groups: ArchiveGroup[]
   selectedYear: string | null
+  isAccordionMode: boolean
   panelIdPrefix: string
   unknownYearLabel: string
   countLabel: string
@@ -12,108 +14,221 @@ defineProps<{
 const emit = defineEmits<{
   (e: 'selectYear', year: string): void
 }>()
+
+/** 将缺失年份的内部占位值转换为本地化展示文本。 */
+function displayYear(year: string, unknownYearLabel: string) {
+  return year === 'Unknown' ? unknownYearLabel : year
+}
+
+/** 获取当前时间线实例内稳定且唯一的年份面板 ID。 */
+function getPanelId(year: string, panelIdPrefix: string, mode: 'desktop' | 'mobile') {
+  return `${panelIdPrefix}-${mode}-panel-${encodeURIComponent(year)}`
+}
+
+/** 获取控制指定年份面板的按钮 ID。 */
+function getTriggerId(year: string, panelIdPrefix: string) {
+  return `${panelIdPrefix}-trigger-${encodeURIComponent(year)}`
+}
+
+const {
+  leave: handleMobileLeave,
+  releaseLeave: releaseMobileLeave,
+} = useArchiveTransitionLeave(() => 'grid-template-rows')
 </script>
 
 <template>
-  <div class="lm-archive-rail">
-    <section v-for="group in groups" :key="group.year" class="lm-archive-rail__year-group">
+  <div class="lm-archive-rail" :class="{ 'lm-archive-rail--accordion': isAccordionMode }">
+    <section
+      v-for="group in groups"
+      :key="group.year"
+      class="lm-archive-rail__block"
+      :class="{ 'lm-archive-rail__block--active': selectedYear === group.year }"
+    >
       <h2 class="lm-archive-rail__heading">
         <button
-          :id="`${panelIdPrefix}-trigger-${group.year}`"
+          :id="getTriggerId(group.year, panelIdPrefix)"
           type="button"
           class="lm-archive-rail__button"
-          :aria-controls="`${panelIdPrefix}-panel-${group.year}`"
+          :aria-controls="selectedYear === group.year ? getPanelId(group.year, panelIdPrefix, isAccordionMode ? 'mobile' : 'desktop') : undefined"
           :aria-expanded="selectedYear === group.year"
           @click="emit('selectYear', group.year)"
         >
-          <span class="lm-archive-rail__year">{{ group.year === 'Unknown' ? unknownYearLabel : group.year }}</span>
-          <span class="lm-archive-rail__meta">{{ group.count }} {{ countLabel }}</span>
-          <span class="lm-archive-rail__toggle i-ri-arrow-down-s-line" aria-hidden="true" />
+          <span class="lm-archive-rail__year">
+            {{ displayYear(group.year, unknownYearLabel) }}
+          </span>
+
+          <span class="lm-archive-rail__meta">
+            <span class="lm-archive-rail__count">{{ group.count }}</span>
+            <span class="lm-archive-rail__unit">{{ countLabel }}</span>
+          </span>
         </button>
       </h2>
-      <div
-        v-show="selectedYear === group.year"
-        :id="`${panelIdPrefix}-panel-${group.year}`"
-        class="lm-archive-rail__panel"
-        role="region"
-        :aria-labelledby="`${panelIdPrefix}-trigger-${group.year}`"
+
+      <Transition
+        name="lm-archive-rail-panel"
+        @leave="handleMobileLeave"
+        @after-leave="releaseMobileLeave"
+        @leave-cancelled="releaseMobileLeave"
       >
-        <LmArchiveEntryList :entries="group.entries" />
-      </div>
+        <div
+          v-if="isAccordionMode && selectedYear === group.year"
+          :id="getPanelId(group.year, panelIdPrefix, 'mobile')"
+          :key="group.year"
+          class="lm-archive-rail__mobile-panel"
+          role="region"
+          :aria-labelledby="getTriggerId(group.year, panelIdPrefix)"
+        >
+          <div class="lm-archive-rail__mobile-panel-clip">
+            <div class="lm-archive-rail__mobile-panel-content">
+              <LmArchiveEntryList :entries="group.entries" />
+            </div>
+          </div>
+        </div>
+      </Transition>
     </section>
   </div>
 </template>
 
 <style scoped lang="scss">
 .lm-archive-rail {
-  @apply grid min-w-0;
+  @apply flex flex-col gap-5;
 }
 
-.lm-archive-rail__year-group {
-  @apply grid min-w-0 gap-x-8 gap-y-4 border-b py-5 md:grid-cols-[10rem_minmax(0,1fr)];
-  border-color: var(--lm-c-primary-border-subtle);
-}
-
-.lm-archive-rail__year-group:last-child {
-  border-bottom: 0;
+.lm-archive-rail:not(.lm-archive-rail--accordion) {
+  position: sticky;
+  align-self: start;
+  top: calc(var(--lm-navbar-offset, 4.5rem) + 1rem);
 }
 
 .lm-archive-rail__heading {
-  @apply m-0 self-start;
+  margin: 0;
+}
+
+.lm-archive-rail__block {
+  @apply relative;
 }
 
 .lm-archive-rail__button {
-  @apply grid min-h-12 w-full grid-cols-[1fr_auto_auto] items-center gap-3 border-0 px-2 py-2 text-left;
-  border-radius: var(--lm-radius-sm);
-  color: var(--lm-c-text-primary);
+  @apply relative flex min-h-11 w-full items-center justify-between px-0 py-3 text-left transition-[color,transform] duration-220 ease-out;
   background: transparent;
-  transition:
-    color 0.2s ease,
-    background-color 0.2s ease;
+  border: 0;
 }
 
-.lm-archive-rail__year {
-  @apply text-2xl leading-8 font-800;
-  font-variant-numeric: tabular-nums;
-  overflow-wrap: anywhere;
-}
-
-.lm-archive-rail__meta {
-  @apply whitespace-nowrap text-sm font-500;
-  color: var(--lm-c-text-secondary);
-  font-variant-numeric: tabular-nums;
-}
-
-.lm-archive-rail__toggle {
-  @apply text-base;
-  transition: transform 0.2s ease;
-}
-
-.lm-archive-rail__button[aria-expanded='true'] .lm-archive-rail__toggle {
-  transform: rotate(180deg);
+.lm-archive-rail__button::before {
+  content: '';
+  @apply absolute rounded-full;
+  left: calc(100% + 0.9rem);
+  top: 1.05rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 2px solid var(--lm-c-primary-border);
+  background: var(--lm-c-primary-base);
+  box-shadow: 0 0 0 0.22rem var(--lm-c-primary-border);
 }
 
 .lm-archive-rail__button:hover,
 .lm-archive-rail__button:focus-visible {
+  transform: translateX(0.12rem);
+}
+
+.lm-archive-rail__year {
+  @apply inline-flex items-center text-lg leading-none font-800;
+  color: var(--lm-c-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.lm-archive-rail__meta {
+  @apply inline-flex items-baseline gap-1.5;
+}
+
+.lm-archive-rail__count {
+  @apply text-base leading-none font-800;
+  color: var(--lm-c-primary-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.lm-archive-rail__unit {
+  @apply text-[0.78rem] leading-none font-700;
+  color: var(--lm-c-text-muted);
+}
+
+.lm-archive-rail__block--active .lm-archive-rail__year {
+  color: var(--lm-c-primary-text);
+}
+
+.lm-archive-rail__button:hover .lm-archive-rail__year,
+.lm-archive-rail__button:focus-visible .lm-archive-rail__year {
   color: var(--lm-c-primary-text-hover);
-  background: var(--lm-c-primary-soft-hover);
 }
 
-.lm-archive-rail__panel {
+.lm-archive-rail__mobile-panel {
+  display: grid;
   min-width: 0;
+  grid-template-rows: minmax(0, 1fr);
+  opacity: 1;
 }
 
-@media (min-width: 768px) {
-  .lm-archive-rail__heading {
-    position: sticky;
-    top: calc(var(--lm-navbar-offset, 4.5rem) + 1rem);
-  }
+.lm-archive-rail-panel-enter-active,
+.lm-archive-rail-panel-leave-active {
+  transition:
+    grid-template-rows 0.2s ease,
+    opacity 0.18s ease;
+}
+
+.lm-archive-rail-panel-enter-from,
+.lm-archive-rail-panel-leave-to {
+  grid-template-rows: minmax(0, 0fr);
+  opacity: 0;
+}
+
+.lm-archive-rail__mobile-panel-clip {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.lm-archive-rail__mobile-panel-content {
+  @apply pt-3 pl-5 pr-1 pb-1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.lm-archive-rail--accordion {
+  @apply gap-2.5;
+}
+
+.lm-archive-rail--accordion .lm-archive-rail__button {
+  @apply pl-8 pr-0 py-3;
+}
+
+.lm-archive-rail--accordion .lm-archive-rail__button::before {
+  left: 0.63rem;
+}
+
+.lm-archive-rail--accordion .lm-archive-rail__button:hover,
+.lm-archive-rail--accordion .lm-archive-rail__button:focus-visible {
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lm-archive-rail__button,
-  .lm-archive-rail__toggle {
+  .lm-archive-rail__button {
+    transition-property: color;
+  }
+
+  .lm-archive-rail__button:hover,
+  .lm-archive-rail__button:focus-visible {
+    transform: none;
+  }
+
+  .lm-archive-rail-panel-enter-active,
+  .lm-archive-rail-panel-leave-active {
     transition: none;
+  }
+
+  .lm-archive-rail-panel-enter-from,
+  .lm-archive-rail-panel-leave-to {
+    grid-template-rows: minmax(0, 1fr);
+    opacity: 1;
   }
 }
 </style>
