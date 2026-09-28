@@ -201,8 +201,7 @@ function backToTop() {
   width: 3.5rem;
   height: 3.5rem;
 
-  filter: drop-shadow(0 14px 24px rgb(15 23 42 / 0.16))
-    drop-shadow(0 0 0 color-mix(in srgb, var(--lm-c-brand) 0%, transparent));
+  filter: drop-shadow(0 14px 24px rgb(15 23 42 / 0.16)) drop-shadow(0 0 0 var(--lm-c-primary-muted));
   transition:
     transform 220ms ease,
     filter 220ms ease;
@@ -211,14 +210,12 @@ function backToTop() {
 
 .lm-helper-paw:hover {
   transform: translateY(-2px) scale(1.018);
-  filter: drop-shadow(0 18px 28px rgb(15 23 42 / 0.18)) drop-shadow(0 0 8px var(--lm-c-brand-subtle));
+  filter: drop-shadow(0 18px 28px rgb(15 23 42 / 0.18)) drop-shadow(0 0 8px var(--lm-c-primary-soft));
 }
 
 .lm-helper-paw:focus-visible {
-  outline: none;
   transform: translateY(-2px) scale(1.018);
-  filter: drop-shadow(0 18px 28px rgb(15 23 42 / 0.18))
-    drop-shadow(0 0 10px color-mix(in srgb, var(--lm-c-brand) 12%, transparent));
+  filter: drop-shadow(0 18px 28px rgb(15 23 42 / 0.18)) drop-shadow(0 0 10px var(--lm-c-primary-soft));
 }
 
 .lm-helper-paw-svg {
@@ -232,7 +229,7 @@ function backToTop() {
 }
 
 .lm-helper-paw-progress {
-  fill: var(--lm-c-brand);
+  fill: var(--lm-c-primary-text);
   transition:
     y 260ms ease,
     height 260ms ease,
@@ -259,7 +256,7 @@ function backToTop() {
 
 .lm-helper-paw:hover .lm-helper-paw-outline,
 .lm-helper-paw:focus-visible .lm-helper-paw-outline {
-  stroke: color-mix(in srgb, var(--lm-c-brand) 40%, var(--lm-c-border-hover));
+  stroke: var(--lm-c-primary-border-strong);
 }
 
 .lm-helper-paw:hover .lm-helper-paw-arrow,

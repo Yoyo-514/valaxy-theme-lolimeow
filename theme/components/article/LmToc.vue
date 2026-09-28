@@ -82,7 +82,7 @@ watch(activeLink, async () => {
 
 .lm-toc__nav {
   @apply mt-5 min-h-0 flex flex-col gap-1.5 overflow-y-auto border-l pl-4 pr-2;
-  border-color: color-mix(in srgb, var(--lm-c-brand) 28%, var(--lm-c-border));
+  border-color: var(--lm-c-primary-border);
   overscroll-behavior: contain;
   --lm-scrollbar-size: 0.45rem;
 }
@@ -103,8 +103,9 @@ watch(activeLink, async () => {
     transition: background-color 0.2s ease;
   }
 
-  &:hover {
-    color: var(--lm-c-brand-strong);
+  &:hover,
+  &:focus-visible {
+    color: var(--lm-c-primary-text-hover);
   }
 }
 
@@ -114,11 +115,11 @@ watch(activeLink, async () => {
 }
 
 .lm-toc__link--active {
-  color: color-mix(in srgb, var(--lm-c-brand) 96%, var(--lm-c-text-secondary));
+  color: var(--lm-c-primary-text);
   font-weight: 700;
 
   &::before {
-    background: var(--lm-c-brand);
+    background: var(--lm-c-primary-base);
   }
 }
 </style>

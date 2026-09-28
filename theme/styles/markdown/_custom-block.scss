@@ -2,7 +2,7 @@
   .custom-block {
     margin: 1.2rem 0;
     border-radius: 0.5rem;
-    border: 1px solid color-mix(in srgb, var(--lm-c-brand) 10%, var(--lm-c-border));
+    border: 1px solid var(--lm-c-primary-border-subtle);
     box-shadow: none;
   }
 
@@ -30,10 +30,10 @@
   }
 
   .custom-block.info {
-    background: color-mix(in srgb, var(--lm-c-info-soft) 76%, transparent);
+    background: var(--lm-c-info-soft);
 
     .custom-block-title {
-      color: color-mix(in srgb, var(--lm-c-info) 72%, var(--lm-c-text-primary));
+      color: var(--lm-c-info-text);
 
       &::before {
         mask-image: var(--lm-icon-information);
@@ -43,10 +43,10 @@
   }
 
   .custom-block.tip {
-    background: color-mix(in srgb, var(--lm-c-success-soft) 72%, transparent);
+    background: var(--lm-c-success-soft);
 
     .custom-block-title {
-      color: color-mix(in srgb, var(--lm-c-success) 72%, var(--lm-c-text-primary));
+      color: var(--lm-c-success-text);
 
       &::before {
         mask-image: var(--lm-icon-checkbox-circle);
@@ -56,10 +56,10 @@
   }
 
   .custom-block.warning {
-    background: color-mix(in srgb, var(--lm-c-warning-soft) 76%, transparent);
+    background: var(--lm-c-warning-soft);
 
     .custom-block-title {
-      color: color-mix(in srgb, var(--lm-c-warning) 68%, var(--lm-c-text-primary));
+      color: var(--lm-c-warning-text);
 
       &::before {
         mask-image: var(--lm-icon-alert);
@@ -69,10 +69,10 @@
   }
 
   .custom-block.danger {
-    background: color-mix(in srgb, var(--lm-c-danger-soft) 76%, transparent);
+    background: var(--lm-c-danger-soft);
 
     .custom-block-title {
-      color: color-mix(in srgb, var(--lm-c-danger) 72%, var(--lm-c-text-primary));
+      color: var(--lm-c-danger-text);
 
       &::before {
         mask-image: var(--lm-icon-error-warning);

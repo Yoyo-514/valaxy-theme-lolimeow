@@ -29,7 +29,7 @@ export interface ResolvedLinkGroup {
 }
 
 /** 友链未配置强调色时采用的主题品牌色。 */
-const DEFAULT_ACCENT_COLOR = 'var(--lm-c-brand)'
+const DEFAULT_ACCENT_COLOR = 'var(--lm-c-primary-base)'
 
 /**
  * 提取友链名称的前两个 Unicode 字符作为头像占位文本。

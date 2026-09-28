@@ -109,9 +109,9 @@ const {
   top: 1.05rem;
   width: 0.7rem;
   height: 0.7rem;
-  border: 2px solid color-mix(in srgb, var(--lm-c-brand) 28%, white);
-  background: color-mix(in srgb, var(--lm-c-brand) 88%, white);
-  box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--lm-c-brand-soft) 36%, transparent);
+  border: 2px solid var(--lm-c-primary-border);
+  background: var(--lm-c-primary-base);
+  box-shadow: 0 0 0 0.22rem var(--lm-c-primary-border);
 }
 
 .lm-archive-rail__button:hover,
@@ -130,7 +130,7 @@ const {
 
 .lm-archive-rail__count {
   @apply text-base leading-none font-800;
-  color: color-mix(in srgb, var(--lm-c-brand) 96%, var(--lm-c-text-secondary));
+  color: var(--lm-c-primary-text);
 }
 
 .lm-archive-rail__unit {
@@ -138,10 +138,13 @@ const {
   color: var(--lm-c-text-muted);
 }
 
-.lm-archive-rail__block--active .lm-archive-rail__year,
+.lm-archive-rail__block--active .lm-archive-rail__year {
+  color: var(--lm-c-primary-text);
+}
+
 .lm-archive-rail__button:hover .lm-archive-rail__year,
 .lm-archive-rail__button:focus-visible .lm-archive-rail__year {
-  color: color-mix(in srgb, var(--lm-c-brand) 96%, var(--lm-c-text-secondary));
+  color: var(--lm-c-primary-text-hover);
 }
 
 .lm-archive-rail__mobile-panel {

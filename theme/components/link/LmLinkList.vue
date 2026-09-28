@@ -55,7 +55,7 @@ defineProps<{
   right: -0.35rem;
   bottom: 0.08rem;
   z-index: var(--lm-z-behind);
-  background: color-mix(in srgb, var(--lm-c-brand) 24%, transparent);
+  background: var(--lm-c-primary-soft-hover);
 }
 
 .lm-link-list__grid {

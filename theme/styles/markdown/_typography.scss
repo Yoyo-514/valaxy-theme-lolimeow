@@ -19,7 +19,7 @@
   mark {
     padding: 0.08rem 0.32rem;
     border-radius: 0.3rem;
-    background: color-mix(in srgb, var(--lm-c-warning) 26%, transparent);
+    background: var(--lm-c-warning-soft-hover);
     color: var(--lm-c-text-primary);
   }
 
@@ -57,7 +57,7 @@
   h2 {
     margin: 2.75rem 0 1rem;
     padding-bottom: 0.55rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--lm-c-brand) 12%, var(--lm-c-border));
+    border-bottom: 1px solid var(--lm-c-primary-border-subtle);
     font-size: clamp(1.6rem, 2.3vw, 2rem);
   }
 
@@ -93,9 +93,14 @@
       border-color 0.2s ease,
       background-color 0.2s ease;
 
-    &:hover {
+    &:hover,
+    &:focus-visible {
       color: var(--lm-c-link-hover);
       border-bottom-color: color-mix(in srgb, var(--lm-c-link-hover) 88%, transparent);
+      border-bottom-style: solid;
+      &:not(.header-anchor) {
+        background-color: var(--lm-c-primary-soft);
+      }
     }
   }
 
@@ -111,8 +116,8 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      color-mix(in srgb, var(--lm-c-brand) 24%, var(--lm-c-divider)) 18%,
-      color-mix(in srgb, var(--lm-c-brand) 24%, var(--lm-c-divider)) 82%,
+      var(--lm-c-primary-border) 18%,
+      var(--lm-c-primary-border) 82%,
       transparent 100%
     );
   }

@@ -33,7 +33,7 @@ export default defineValaxyConfig({
       icon: {
         enable: true,
         name: 'i-ri-heart-fill',
-        color: 'var(--lm-c-brand)',
+        color: 'var(--lm-c-primary-base)',
       },
     },
   },
@@ -98,14 +98,14 @@ export default defineValaxyConfig({
 
 ### `icon` 字段
 
-| 字段     | 说明                                      | 默认值              |
-| -------- | ----------------------------------------- | ------------------- |
-| `enable` | 是否显示页脚图标                          | `true`              |
-| `name`   | Iconify/UnoCSS 图标类名，与 `img` 二选一  | `i-ri-heart-fill`   |
-| `img`    | 图片地址，与 `name` 二选一                | -                   |
-| `color`  | 图标颜色，仅对 `name` 图标生效            | `var(--lm-c-brand)` |
-| `url`    | 点击图标时跳转的链接                      | -                   |
-| `title`  | 图标标题，也会作为图片图标的 `alt` 兜底值 | -                   |
+| 字段     | 说明                                      | 默认值                     |
+| -------- | ----------------------------------------- | -------------------------- |
+| `enable` | 是否显示页脚图标                          | `true`                     |
+| `name`   | Iconify/UnoCSS 图标类名，与 `img` 二选一  | `i-ri-heart-fill`          |
+| `img`    | 图片地址，与 `name` 二选一                | -                          |
+| `color`  | 图标颜色，仅对 `name` 图标生效            | `var(--lm-c-primary-base)` |
+| `url`    | 点击图标时跳转的链接                      | -                          |
+| `title`  | 图标标题，也会作为图片图标的 `alt` 兜底值 | -                          |
 
 ### `icp` 字段
 

@@ -65,9 +65,8 @@ const cloudRows = useTagCloud(() => props.items)
 
 .lm-tag-cloud__item:hover,
 .lm-tag-cloud__item:focus-visible {
-  color: var(--lm-c-brand-strong);
+  color: var(--lm-c-primary-text-hover);
   opacity: 1;
-  outline: none;
   transform: translate(var(--lm-tag-cloud-shift-x), calc(var(--lm-tag-cloud-shift-y) - 0.08rem));
 }
 
@@ -78,7 +77,7 @@ const cloudRows = useTagCloud(() => props.items)
 
 .lm-tag-cloud__item--active .lm-tag-cloud__name {
   text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--lm-c-brand) 70%, transparent);
+  text-decoration-color: var(--lm-c-primary-border-strong);
   text-decoration-thickness: 0.12em;
   text-underline-offset: 0.18em;
 }
@@ -97,7 +96,7 @@ const cloudRows = useTagCloud(() => props.items)
 }
 
 .lm-tag-cloud__item--active .lm-tag-cloud__count {
-  color: var(--lm-c-brand-strong);
+  color: var(--lm-c-primary-text);
   opacity: 0.86;
 }
 

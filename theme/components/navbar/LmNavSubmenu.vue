@@ -16,8 +16,8 @@ const { isActive, clearPending } = useNavActive()
       :key="child.link"
       class="lm-nav-submenu__item"
       :class="isActive(child.link)
-        ? 'text-[var(--lm-c-brand)] bg-[color-mix(in_srgb,var(--lm-c-brand-soft)_42%,transparent)]'
-        : 'text-[var(--lm-c-text-secondary)] hover:text-[var(--lm-c-brand)] hover:bg-[color-mix(in_srgb,var(--lm-c-brand-soft)_24%,transparent)]'"
+        ? 'text-[var(--lm-c-primary-text)] bg-[var(--lm-c-primary-soft)]'
+        : 'text-[var(--lm-c-text-secondary)]'"
       :to="child.link"
       :target="child.target"
       :aria-current="isActive(child.link) ? 'page' : undefined"
@@ -47,5 +47,11 @@ const { isActive, clearPending } = useNavActive()
   @apply flex min-h-9 items-center px-3 py-2 text-sm no-underline transition-[color,background-color] duration-180 ease-out;
 
   border-radius: var(--lm-radius-xs);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--lm-c-primary-text-hover);
+    background: var(--lm-c-primary-soft-hover);
+  }
 }
 </style>

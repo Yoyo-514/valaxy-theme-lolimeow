@@ -317,7 +317,7 @@ function leave(el: Element) {
     overflow: visible;
     background: var(--lm-c-bg-glass);
     color: var(--lm-c-text-primary);
-    border: 1px solid var(--lm-c-brand);
+    border: 1px solid var(--lm-c-primary-base);
   }
 }
 

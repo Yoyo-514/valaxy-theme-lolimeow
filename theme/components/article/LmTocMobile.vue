@@ -182,7 +182,7 @@ watch(visible, (isVisible) => {
 
 .lm-toc-mobile__trigger {
   @apply fixed bottom-5 right-4 z-[var(--lm-z-overlay-trigger)] inline-flex h-11 w-11 items-center justify-center rounded-full p-0 shadow-lg transition-transform duration-200 sm:right-6;
-  border: 1px solid color-mix(in srgb, var(--lm-c-brand) 16%, var(--lm-c-border));
+  border: 1px solid var(--lm-c-primary-border);
   background: color-mix(in srgb, var(--lm-surface-reading-bg) 92%, transparent);
   color: var(--lm-c-text-primary);
   backdrop-filter: blur(14px);
@@ -202,7 +202,7 @@ watch(visible, (isVisible) => {
 
 .lm-toc-mobile__trigger-icon {
   @apply text-lg;
-  color: var(--lm-c-brand);
+  color: var(--lm-c-primary-text);
 }
 
 .lm-toc-mobile__scrim {
@@ -213,7 +213,7 @@ watch(visible, (isVisible) => {
 
 .lm-toc-mobile__panel {
   @apply fixed inset-x-0 bottom-0 z-[var(--lm-z-overlay-panel)] mx-auto flex max-h-[72vh] w-full max-w-3xl flex-col overflow-hidden rounded-[8px];
-  border: 1px solid var(--lm-c-border-accent);
+  border: 1px solid var(--lm-c-primary-border-subtle);
   border-bottom: none;
   background: linear-gradient(
     180deg,
@@ -226,7 +226,7 @@ watch(visible, (isVisible) => {
 
 .lm-toc-mobile__panel-header {
   @apply flex items-start justify-between gap-4 px-5 pb-4 pt-5;
-  border-bottom: 1px solid color-mix(in srgb, var(--lm-c-brand) 10%, var(--lm-c-border));
+  border-bottom: 1px solid var(--lm-c-primary-border-subtle);
 }
 
 .lm-toc-mobile__eyebrow {
@@ -241,11 +241,13 @@ watch(visible, (isVisible) => {
 
 .lm-toc-mobile__close {
   @apply inline-flex h-9 w-9 items-center justify-center rounded-full border-none p-0 text-base transition-colors;
-  background: color-mix(in srgb, var(--lm-c-brand-soft) 52%, transparent);
+  background: var(--lm-c-primary-soft);
   color: var(--lm-c-text-secondary);
 
-  &:hover {
-    color: var(--lm-c-brand-strong);
+  &:hover,
+  &:focus-visible {
+    color: var(--lm-c-primary-text-hover);
+    background: var(--lm-c-primary-soft-hover);
   }
 }
 
@@ -272,8 +274,10 @@ watch(visible, (isVisible) => {
       transform 0.2s ease;
   }
 
-  &:hover {
-    color: var(--lm-c-brand-strong);
+  &:hover,
+  &:focus-visible {
+    color: var(--lm-c-primary-text-hover);
+    background: var(--lm-c-primary-soft-hover);
   }
 }
 
@@ -282,13 +286,13 @@ watch(visible, (isVisible) => {
 }
 
 .lm-toc-mobile__link--active {
-  background: color-mix(in srgb, var(--lm-c-brand-soft) 52%, transparent);
-  color: color-mix(in srgb, var(--lm-c-brand-strong) 72%, var(--lm-c-text-primary));
+  background: var(--lm-c-primary-soft);
+  color: var(--lm-c-primary-text);
   font-weight: 700;
 
   &::before {
     transform: translateY(-50%) scale(1.2);
-    background: var(--lm-c-brand);
+    background: var(--lm-c-primary-base);
   }
 }
 
@@ -345,7 +349,7 @@ watch(visible, (isVisible) => {
 
   .lm-toc-mobile__panel {
     @apply bottom-4;
-    border-bottom: 1px solid var(--lm-c-border-accent);
+    border-bottom: 1px solid var(--lm-c-primary-border-subtle);
   }
 }
 </style>

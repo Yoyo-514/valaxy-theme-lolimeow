@@ -105,13 +105,13 @@ const { t } = useI18n()
 .lm-article-meta__pill {
   @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-600;
   color: var(--lm-c-text-secondary);
-  background: var(--lm-c-brand-subtle);
-  border: 1px solid var(--lm-c-border-accent);
+  background: var(--lm-c-primary-soft);
+  border: 1px solid var(--lm-c-primary-border-subtle);
 }
 
 .lm-article-meta__pill--category {
-  color: var(--lm-c-brand-strong);
-  background: color-mix(in srgb, var(--lm-c-brand-soft) 80%, transparent);
+  color: var(--lm-c-primary-text);
+  background: var(--lm-c-primary-soft);
 }
 
 .lm-article-meta__pill--cover {
@@ -122,6 +122,6 @@ const { t } = useI18n()
 
 .lm-article-meta__pill--category.lm-article-meta__pill--cover {
   color: white;
-  background: color-mix(in srgb, var(--lm-c-brand) 18%, rgba(255, 255, 255, 0.08));
+  background: var(--lm-c-primary-soft-hover);
 }
 </style>

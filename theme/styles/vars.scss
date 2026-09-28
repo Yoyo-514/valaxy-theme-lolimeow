@@ -1,14 +1,12 @@
 @use 'sass:map';
+@use './palette' as palette;
 
-$lm-c-brand: #66ccff !default;
+// 可配置色相：由 node 插件按 themeConfig.ui.colors 注入覆盖。
+$lm-colors: () !default;
+$lm-tokens: () !default;
 
 // common
 $common: (
-  // 主题色
-  'c-brand': $lm-c-brand,
-  'c-brand-strong': color-mix(in srgb, #000 28%, var(--lm-c-brand)),
-  'c-brand-subtle': color-mix(in srgb, var(--lm-c-brand) 10%, transparent),
-  'c-border-accent': color-mix(in srgb, var(--lm-c-brand) 14%, var(--lm-c-border)),
   // 模糊原子层级
   'blur-sm': 12px,
   'blur-md': 16px,
@@ -40,47 +38,33 @@ $common: map.merge((), $common);
 
 // palette
 $light: (
-  'c-brand-soft': color-mix(in srgb, var(--lm-c-brand) 14%, white),
-  'c-brand-border': color-mix(in srgb, var(--lm-c-brand) 44%, white),
   // 文字
   'c-text-primary': #111111,
   'c-text-secondary': #48484a,
-  'c-text-muted': #8e8e93,
+  'c-text-muted': #6e6e73,
 
   // 背景
   'c-bg-base': #f2f2f7,
   'c-bg-glass': rgba(249, 251, 255, 0.82),
   'c-bg-glass-hover': rgba(255, 255, 255, 0.9),
   // 覆盖整页背景图的基础 overlay
-  'c-overlay-base': color-mix(in srgb, var(--lm-c-brand) 8%, rgba(242, 247, 255, 0.9)),
+  'c-overlay-base': color-mix(in srgb, var(--lm-c-primary-base) 8%, rgba(242, 247, 255, 0.9)),
   // 品牌氛围层
-  'c-overlay-tint': color-mix(in srgb, var(--lm-c-brand) 24%, transparent),
+  'c-overlay-tint': color-mix(in srgb, var(--lm-c-primary-base) 24%, transparent),
   // 边框 & 分隔线
   'c-border': rgba(0, 0, 0, 0.08),
   'c-border-hover': rgba(0, 0, 0, 0.12),
   'c-divider': rgba(0, 0, 0, 0.06),
   // 链接
-  'c-link': var(--lm-c-brand-strong),
-  'c-link-hover': var(--lm-c-brand),
+  'c-link': var(--lm-c-primary-text),
+  'c-link-hover': var(--lm-c-primary-text-hover),
   // 行内代码
-  'c-code-inline-text': var(--lm-c-brand-strong),
-  'c-code-inline-bg': color-mix(in srgb, var(--lm-c-brand) 16%, transparent),
-  // 状态色
-  'c-success': #34c759,
-  'c-success-soft': #e6f9ec,
-  'c-warning': #ffcc00,
-  'c-warning-soft': #fff8e0,
-  'c-danger': #ff3b30,
-  'c-danger-soft': #ffecec,
-  'c-info': color-mix(in srgb, #fff 18%, var(--lm-c-brand)),
-  'c-info-soft': color-mix(in srgb, var(--lm-c-info) 14%, white),
+  'c-code-inline-text': var(--lm-c-primary-text),
+  'c-code-inline-bg': var(--lm-c-primary-soft)
 ) !default;
-$light: map.merge((), $light);
+$light: map.merge(palette.palette($lm-colors, 'light', map.get($light, 'c-bg-base'), $lm-tokens), $light);
 
 $dark: (
-  'c-brand-strong': color-mix(in srgb, #fff 24%, var(--lm-c-brand)),
-  'c-brand-soft': color-mix(in srgb, var(--lm-c-brand) 18%, #050814),
-  'c-brand-border': color-mix(in srgb, var(--lm-c-brand) 72%, transparent),
   // 文字
   'c-text-primary': #f9fafb,
   'c-text-secondary': #c7c7cc,
@@ -91,30 +75,21 @@ $dark: (
   'c-bg-glass': rgba(5, 8, 22, 0.82),
   'c-bg-glass-hover': rgba(15, 18, 32, 0.9),
   // 覆盖整页背景图的基础 overlay
-  'c-overlay-base': color-mix(in srgb, var(--lm-c-brand) 8%, rgba(4, 8, 24, 0.84)),
+  'c-overlay-base': color-mix(in srgb, var(--lm-c-primary-base) 8%, rgba(4, 8, 24, 0.84)),
   // 品牌氛围层
-  'c-overlay-tint': color-mix(in srgb, var(--lm-c-brand) 28%, transparent),
+  'c-overlay-tint': color-mix(in srgb, var(--lm-c-primary-base) 28%, transparent),
   // 边框 & 分隔线
   'c-border': rgba(255, 255, 255, 0.08),
   'c-border-hover': rgba(255, 255, 255, 0.15),
   'c-divider': rgba(255, 255, 255, 0.06),
   // 链接
-  'c-link': var(--lm-c-brand),
-  'c-link-hover': var(--lm-c-brand-strong),
+  'c-link': var(--lm-c-primary-text),
+  'c-link-hover': var(--lm-c-primary-text-hover),
   // 行内代码
-  'c-code-inline-text': var(--lm-c-brand),
-  'c-code-inline-bg': color-mix(in srgb, var(--lm-c-brand) 20%, transparent),
-  // 状态色
-  'c-success': #30d158,
-  'c-success-soft': #0b2814,
-  'c-warning': #ffd60a,
-  'c-warning-soft': #2b2305,
-  'c-danger': #ff453a,
-  'c-danger-soft': #2a0b0b,
-  'c-info': color-mix(in srgb, #fff 24%, var(--lm-c-brand)),
-  'c-info-soft': color-mix(in srgb, var(--lm-c-info) 18%, #051320),
+  'c-code-inline-text': var(--lm-c-primary-text),
+  'c-code-inline-bg': var(--lm-c-primary-soft)
 ) !default;
-$dark: map.merge((), $dark);
+$dark: map.merge(palette.palette($lm-colors, 'dark', map.get($dark, 'c-bg-base'), $lm-tokens), $dark);
 
 $z-index: (
   // 组件内部原子层级

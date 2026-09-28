@@ -110,12 +110,12 @@ function toggleNode(node: CategoryNode) {
 
 .lm-category-tree--nested {
   @apply mt-4 pl-4 md:pl-5;
-  border-left: 1px solid color-mix(in srgb, var(--lm-c-brand) 12%, var(--lm-c-border));
+  border-left: 1px solid var(--lm-c-primary-border-subtle);
 }
 
 .lm-category-tree__node {
   @apply border-b pb-4 md:pb-5;
-  border-color: color-mix(in srgb, var(--lm-c-brand) 10%, var(--lm-c-border));
+  border-color: var(--lm-c-primary-border-subtle);
 }
 
 .lm-category-tree__node:last-child {
@@ -144,8 +144,7 @@ function toggleNode(node: CategoryNode) {
 
 .lm-category-tree__trigger:hover,
 .lm-category-tree__trigger:focus-visible {
-  background: color-mix(in srgb, var(--lm-c-brand) 8%, transparent);
-  outline: none;
+  background: var(--lm-c-primary-soft-hover);
 }
 
 .lm-category-tree__trigger-main {
@@ -155,12 +154,12 @@ function toggleNode(node: CategoryNode) {
 .lm-category-tree__toggle {
   @apply mt-1.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-sm transition-transform duration-220 ease-out;
   color: var(--lm-c-text-secondary);
-  background: var(--lm-c-brand-subtle);
+  background: var(--lm-c-primary-soft);
 }
 
 .lm-category-tree__toggle--open {
   transform: rotate(90deg);
-  color: var(--lm-c-brand);
+  color: var(--lm-c-primary-text);
 }
 
 .lm-category-tree__stats {
@@ -175,7 +174,7 @@ function toggleNode(node: CategoryNode) {
 .lm-category-tree__stats-item::before {
   content: '';
   @apply inline-block h-1.5 w-1.5 rounded-full;
-  background: color-mix(in srgb, var(--lm-c-brand) 60%, transparent);
+  background: var(--lm-c-primary-border-strong);
 }
 
 .lm-category-tree__entries {

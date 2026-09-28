@@ -70,7 +70,7 @@ watch(
 
 .lm-tag-index__panel {
   @apply grid gap-4 border-t pt-5 md:grid-cols-[minmax(8rem,13rem)_minmax(0,1fr)] md:gap-7;
-  border-color: var(--lm-c-border-accent);
+  border-color: var(--lm-c-primary-border-subtle);
 }
 
 .lm-tag-index__head {

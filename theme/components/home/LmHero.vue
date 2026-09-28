@@ -172,7 +172,7 @@ const showSocialIcons = computed(() => themeConfig.value.hero.showSocialIcons &&
 
 .lm-hero-scroll-down:hover,
 .lm-hero-scroll-down:focus-visible {
-  color: var(--lm-c-brand);
+  color: var(--lm-c-primary-text-hover);
 }
 
 .lm-hero-scroll-down__icon {

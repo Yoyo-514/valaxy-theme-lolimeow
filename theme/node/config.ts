@@ -1,4 +1,5 @@
 import type { ThemeConfig } from '../types'
+import { DEFAULT_COLORS } from './colors'
 
 /**
  * Default Config
@@ -9,7 +10,7 @@ export const defaultThemeConfig: ThemeConfig = {
   },
 
   ui: {
-    primary: '#66CCFF',
+    colors: { ...DEFAULT_COLORS },
   },
 
   background: {
@@ -96,7 +97,7 @@ export const defaultThemeConfig: ThemeConfig = {
     icon: {
       enable: true,
       name: 'i-ri-heart-fill',
-      color: 'var(--lm-c-brand)',
+      color: 'var(--lm-c-primary-base)',
       url: '',
       title: '',
     },

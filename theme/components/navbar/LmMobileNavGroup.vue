@@ -33,8 +33,8 @@ function toggleSubmenu() {
       type="button"
       class="lm-mobile-nav-item"
       :class="active
-        ? 'text-[var(--lm-c-brand)] bg-[color-mix(in_srgb,var(--lm-c-brand-soft)_42%,transparent)]'
-        : 'text-[var(--lm-c-text-secondary)] hover:text-[var(--lm-c-brand)]'"
+        ? 'text-[var(--lm-c-primary-text)] bg-[var(--lm-c-primary-soft)]'
+        : 'text-[var(--lm-c-text-secondary)]'"
       :aria-expanded="hasChildren ? expanded : undefined"
       :aria-haspopup="hasChildren ? 'menu' : undefined"
       @click="hasChildren ? toggleSubmenu() : emit('navigate', props.item)"
@@ -61,8 +61,8 @@ function toggleSubmenu() {
           type="button"
           class="lm-mobile-nav-subitem"
           :class="isActive(child.link)
-            ? 'text-[var(--lm-c-brand)] bg-[color-mix(in_srgb,var(--lm-c-brand-soft)_36%,transparent)]'
-            : 'text-[var(--lm-c-text-secondary)] hover:text-[var(--lm-c-brand)]'"
+            ? 'text-[var(--lm-c-primary-text)] bg-[var(--lm-c-primary-soft)]'
+            : 'text-[var(--lm-c-text-secondary)]'"
           role="menuitem"
           @click="emit('navigate', child)"
         >
@@ -81,6 +81,12 @@ function toggleSubmenu() {
 .lm-mobile-nav-item,
 .lm-mobile-nav-subitem {
   @apply w-full text-sm no-underline inline-flex items-center transition-[color,background-color] duration-180 ease-out;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--lm-c-primary-text-hover);
+    background: var(--lm-c-primary-soft-hover);
+  }
 }
 
 .lm-mobile-nav-item {

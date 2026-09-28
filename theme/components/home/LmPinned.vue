@@ -76,7 +76,7 @@ const {
   @apply grid grid-flow-col auto-cols-[minmax(15rem,1fr)] gap-4 overflow-x-auto pb-1 snap-x snap-proximity md:auto-cols-[minmax(17.5rem,1fr)];
   --lm-scrollbar-size: 0.5rem;
   --lm-scrollbar-thumb: color-mix(in srgb, var(--lm-c-border-hover) 52%, transparent);
-  --lm-scrollbar-thumb-hover: color-mix(in srgb, var(--lm-c-brand) 45%, var(--lm-c-border-hover));
+  --lm-scrollbar-thumb-hover: var(--lm-c-primary-border-strong);
 }
 
 .lm-pinned-card {
@@ -98,22 +98,18 @@ const {
 .lm-pinned-card:hover,
 .lm-pinned-card:focus-visible {
   transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--lm-c-brand) 30%, var(--lm-c-border-hover));
+  border-color: var(--lm-c-primary-border);
 }
 
 .lm-pinned-card__media {
   @apply relative min-h-[14.5rem] overflow-hidden md:min-h-[15.75rem];
-  background: color-mix(in srgb, var(--lm-c-brand-soft) 10%, var(--lm-c-bg-glass));
+  background: var(--lm-c-bg-glass);
 }
 
 .lm-pinned-card__media--fallback {
   background:
-    radial-gradient(circle at 18% 20%, color-mix(in srgb, var(--lm-c-brand) 22%, transparent), transparent 36%),
-    linear-gradient(
-      145deg,
-      color-mix(in srgb, var(--lm-c-brand-soft) 26%, transparent),
-      color-mix(in srgb, var(--lm-c-bg-glass) 88%, white)
-    );
+    radial-gradient(circle at 18% 20%, var(--lm-c-primary-soft-hover), transparent 36%),
+    linear-gradient(145deg, var(--lm-c-primary-soft-hover), color-mix(in srgb, var(--lm-c-bg-glass) 88%, white));
 }
 
 .lm-pinned-card__image {
@@ -165,14 +161,14 @@ const {
 
 .lm-pinned-card__title {
   @apply m-0 max-w-full text-[1.02rem] leading-[1.35] font-700 md:text-[1.08rem];
-  color: color-mix(in srgb, white 96%, var(--lm-c-brand-soft));
+  color: white;
   text-shadow: 0 2px 10px rgb(15 23 42 / 0.28);
   transition: transform 300ms ease;
 }
 
 .lm-pinned-card__desc {
   @apply m-0 line-clamp-2 max-w-[92%] text-sm leading-6;
-  color: color-mix(in srgb, white 90%, var(--lm-c-brand-soft));
+  color: rgb(255 255 255 / 0.9);
   text-shadow: 0 2px 12px rgb(15 23 42 / 0.22);
 }
 

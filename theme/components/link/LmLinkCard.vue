@@ -60,7 +60,6 @@ defineProps<{
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--lm-link-accent) 14%, transparent), transparent 52%),
     color-mix(in srgb, var(--lm-surface-reading-bg) 78%, transparent);
-  outline: none;
   transform: translateY(-0.12rem);
 }
 

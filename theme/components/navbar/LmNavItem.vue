@@ -22,7 +22,7 @@ const { active, children, hasChildren, itemActive } = useNavItemState(itemRef)
       type="button"
       class="lm-nav-item"
       :class="active
-        ? 'text-[var(--lm-c-brand)] opacity-92'
+        ? 'text-[var(--lm-c-primary-text)] opacity-92'
         : 'text-[var(--lm-c-text-secondary)] opacity-86'"
       aria-haspopup="menu"
       aria-expanded="false"
@@ -39,7 +39,7 @@ const { active, children, hasChildren, itemActive } = useNavItemState(itemRef)
       v-else
       class="lm-nav-item"
       :class="active
-        ? 'text-[var(--lm-c-brand)] opacity-92'
+        ? 'text-[var(--lm-c-primary-text)] opacity-92'
         : 'text-[var(--lm-c-text-secondary)] opacity-86'"
       :to="props.item.link"
       :target="props.item.target"
@@ -72,7 +72,12 @@ const { active, children, hasChildren, itemActive } = useNavItemState(itemRef)
 }
 
 .lm-nav-item {
-  @apply inline-flex items-center border-0 bg-transparent p-0 font-inherit no-underline transition-[color,opacity] duration-220 ease-in-out hover:text-[var(--lm-c-brand-strong)] cursor-pointer;
+  @apply inline-flex items-center border-0 bg-transparent p-0 font-inherit no-underline transition-[color,opacity] duration-220 ease-in-out cursor-pointer;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--lm-c-primary-text-hover);
+  }
 }
 
 .lm-nav-item__chevron {

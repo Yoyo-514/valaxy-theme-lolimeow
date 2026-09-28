@@ -22,7 +22,7 @@ const props = defineProps<{
       rel="noopener noreferrer"
       :aria-label="item.name"
       :title="item.name"
-      :style="{ '--lm-hero-social-color': item.color || 'var(--lm-c-brand)' }"
+      :style="{ '--lm-hero-social-color': item.color || 'var(--lm-c-primary-base)' }"
     >
       <div
         v-if="item.icon"

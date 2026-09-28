@@ -86,12 +86,21 @@ const hamburgerLines = computed(() => {
 }
 
 .lm-nav-tools__button {
-  @apply inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--lm-c-border)] bg-[var(--lm-c-bg-glass)] text-[var(--lm-c-text-primary)] transition-[border-color,background-color,transform] duration-220 ease-out hover:border-[var(--lm-c-brand)] hover:-translate-y-0.25;
+  @apply inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--lm-c-border)] bg-[var(--lm-c-bg-glass)] text-[var(--lm-c-text-primary)] transition-[border-color,background-color,transform] duration-220 ease-out;
 }
 
 .lm-nav-tools__menu-button {
-  @apply inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--lm-c-border)] text-[var(--lm-c-text-primary)] transition-[border-color,background-color,transform] duration-220 ease-out hover:border-[var(--lm-c-brand)] hover:-translate-y-0.25 md:hidden;
+  @apply inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--lm-c-border)] text-[var(--lm-c-text-primary)] transition-[border-color,background-color,transform] duration-220 ease-out md:hidden;
   background: color-mix(in srgb, var(--lm-c-bg-glass) 72%, transparent);
+}
+
+.lm-nav-tools__button,
+.lm-nav-tools__menu-button {
+  &:hover,
+  &:focus-visible {
+    border-color: var(--lm-c-primary-border-strong);
+    transform: translateY(-0.0625rem);
+  }
 }
 
 .lm-nav-tools__menu-lines {

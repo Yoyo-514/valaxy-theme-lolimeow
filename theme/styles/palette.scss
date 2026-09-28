@@ -1,0 +1,211 @@
+@use 'sass:color';
+@use 'sass:math';
+@use 'sass:map';
+
+// 基础色阶仅作为素材，组件使用按实际背景调校的语义角色。
+$lightness: (
+  50: 97.5%,
+  100: 94.5%,
+  200: 89.5%,
+  300: 83%,
+  400: 75%,
+  500: 67%,
+  600: 58.5%,
+  700: 50.5%,
+  800: 43%,
+  900: 37%,
+  950: 28%,
+);
+$chroma: (
+  50: 0.18,
+  100: 0.32,
+  200: 0.55,
+  300: 0.8,
+  400: 1,
+  500: 1.05,
+  600: 1.05,
+  700: 0.95,
+  800: 0.85,
+  900: 0.72,
+  950: 0.6,
+);
+
+@function -srgb($value) {
+  @return color.to-space(color.to-gamut($value, $space: rgb, $method: local-minde), rgb);
+}
+
+@function -channel-luminance($value) {
+  $v: math.div($value, 255);
+  @if $v <= 0.04045 {
+    @return math.div($v, 12.92);
+  }
+  @return math.pow(math.div($v + 0.055, 1.055), 2.4);
+}
+
+@function -luminance($value) {
+  $c: -srgb($value);
+  @return 0.2126 * -channel-luminance(color.channel($c, 'red', $space: rgb)) + 0.7152 *
+    -channel-luminance(color.channel($c, 'green', $space: rgb)) + 0.0722 *
+    -channel-luminance(color.channel($c, 'blue', $space: rgb));
+}
+
+@function contrast($a, $b) {
+  $a: -luminance($a);
+  $b: -luminance($b);
+  @return math.div(math.max($a, $b) + 0.05, math.min($a, $b) + 0.05);
+}
+
+@function -shift($value, $amount) {
+  $light: math.clamp(0%, color.channel($value, 'lightness', $space: oklch) + $amount, 100%);
+  @return -srgb(color.change($value, $lightness: $light, $space: oklch));
+}
+
+// 从原色向可读方向寻找最近亮度；留出余量，不把固定档位当成对比度保证。
+@function -readable($value, $background) {
+  $direction: 1%;
+  @if -luminance($background) > 0.18 {
+    $direction: -1%;
+  }
+  @for $i from 0 through 100 {
+    $candidate: -shift($value, $direction * $i);
+    @if contrast($candidate, $background) >= 4.8 {
+      @return $candidate;
+    }
+  }
+  @return #000;
+}
+
+@function -foreground($solid, $hover) {
+  $dark: math.min(contrast(#000, $solid), contrast(#000, $hover));
+  $light: math.min(contrast(#fff, $solid), contrast(#fff, $hover));
+  @if $dark > $light {
+    @return #000;
+  }
+  @return #fff;
+}
+
+@function -scale($name, $base) {
+  $out: ();
+  $c: color.channel($base, 'chroma', $space: oklch);
+  $h: color.channel($base, 'hue', $space: oklch);
+  @each $step, $l in $lightness {
+    $out: map.set($out, 'c-#{$name}-#{$step}', -srgb(oklch($l ($c * map.get($chroma, $step)) $h)));
+  }
+  @return $out;
+}
+
+/// 覆盖在派生后合并，实心文字依据最终填充重新计算。
+@function roles($name, $base, $mode, $background, $overrides: ()) {
+  $text: -readable($base, $background);
+  $hover-shift: -7%;
+  $solid-shift: -4%;
+  $alpha: (
+    muted: 0.04,
+    soft: 0.14,
+    soft-hover: 0.23,
+    border-subtle: 0.16,
+    border: 0.28,
+    border-strong: 0.5,
+  );
+  @if $mode == 'dark' {
+    $hover-shift: 8%;
+    $solid-shift: 4%;
+    $alpha: (
+      muted: 0.06,
+      soft: 0.12,
+      soft-hover: 0.2,
+      border-subtle: 0.18,
+      border: 0.34,
+      border-strong: 0.56,
+    );
+  }
+
+  $text-hover: -shift($text, $hover-shift);
+  // 默认天依蓝文字单独调校；原色和色阶保持品牌身份。
+  @if $base == #66ccff {
+    @if $mode == 'light' {
+      $text: #0074b0;
+      $text-hover: #00456b;
+    } @else {
+      $text: #66ccff;
+      $text-hover: #a3e0ff;
+    }
+  }
+
+  $values: (
+    solid: $base,
+    solid-hover: -shift($base, $solid-shift),
+    text: $text,
+    text-hover: $text-hover,
+  );
+  @each $role, $opacity in $alpha {
+    $values: map.set($values, $role, color.change($base, $alpha: $opacity, $space: rgb));
+  }
+  $values: map.merge($values, $overrides);
+  $solid: map.get($values, 'solid');
+  // 覆盖填充后，默认悬停随之派生。
+  @if not map.has-key($overrides, 'solid-hover') {
+    $values: map.set($values, 'solid-hover', -shift($solid, $solid-shift));
+  }
+  $hover: map.get($values, 'solid-hover');
+  $on-solid: -foreground($solid, $hover);
+  // 收敛跨越黑/白文字切换点的悬停，保持同一前景可读。
+  @if not map.has-key($overrides, 'solid-hover') and not map.has-key($overrides, 'on-solid') {
+    @for $i from 1 through 8 {
+      @if math.min(contrast($on-solid, $solid), contrast($on-solid, $hover)) < 4.5 {
+        $hover: color.mix($solid, $hover, 50%);
+        $on-solid: -foreground($solid, $hover);
+      }
+    }
+    $values: map.set($values, 'solid-hover', $hover);
+  }
+  @if not map.has-key($overrides, 'on-solid') {
+    $values: map.set($values, 'on-solid', $on-solid);
+  }
+  @if not map.has-key($overrides, 'text-hover') and map.has-key($overrides, 'text') {
+    $values: map.set($values, 'text-hover', -shift(map.get($values, 'text'), $hover-shift));
+  }
+  @if not map.has-key($overrides, 'focus-ring') {
+    $values: map.set($values, 'focus-ring', map.get($values, 'text'));
+  }
+
+  @each $role in ('text', 'text-hover', 'focus-ring') {
+    @if contrast(map.get($values, $role), $background) < 4.5 {
+      $config-role: map.get(
+        (
+          'text': 'text',
+          'text-hover': 'textHover',
+          'focus-ring': 'focusRing',
+        ),
+        $role
+      );
+      @warn 'lolimeow: themeConfig.ui.tokens.#{$mode}.#{$name}.#{$config-role} has contrast below 4.5:1 on the default surface.';
+    }
+  }
+  @if math.min(
+      contrast(map.get($values, 'on-solid'), $solid),
+      contrast(map.get($values, 'on-solid'), map.get($values, 'solid-hover'))
+    ) <
+    4.5
+  {
+    @warn 'lolimeow: themeConfig.ui.tokens.#{$mode}.#{$name}.onSolid has contrast below 4.5:1 on solid or solidHover.';
+  }
+
+  $out: map.set(-scale($name, $base), 'c-#{$name}-base', $base);
+  @each $role, $value in $values {
+    $out: map.set($out, 'c-#{$name}-#{$role}', $value);
+  }
+  @return $out;
+}
+
+@function palette($colors, $mode, $background, $tokens: ()) {
+  $out: ();
+  @each $name, $base in $colors {
+    $overrides: map.get($tokens, $mode, $name);
+    @if $overrides == null {
+      $overrides: ();
+    }
+    $out: map.merge($out, roles($name, $base, $mode, $background, $overrides));
+  }
+  @return $out;
+}

@@ -39,7 +39,7 @@ export interface ResolvedProjectGroup {
 }
 
 /** 项目未配置强调色时采用的主题品牌色。 */
-const DEFAULT_ACCENT_COLOR = 'var(--lm-c-brand)'
+const DEFAULT_ACCENT_COLOR = 'var(--lm-c-primary-base)'
 
 /** 项目未配置或配置未知状态时采用的默认活跃状态。 */
 const DEFAULT_STATUS: ProjectStatus = 'active'

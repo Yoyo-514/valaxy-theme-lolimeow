@@ -1,11 +1,26 @@
 @use './layout' as *;
 @use './markdown/index' as *;
 
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--lm-c-primary-focus-ring);
+  outline-offset: 3px;
+}
+
+::selection {
+  color: var(--lm-c-primary-on-solid);
+  background: var(--lm-c-primary-solid);
+}
+
+input,
+textarea {
+  caret-color: var(--lm-c-primary-text);
+}
+
 #nprogress {
   pointer-events: none;
 
   .bar {
-    background: var(--lm-c-brand);
+    background: var(--lm-c-primary-base);
     opacity: 0.75;
     position: fixed;
     z-index: var(--lm-z-progress);

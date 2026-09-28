@@ -1,27 +1,7 @@
 import type { ResolvedValaxyOptions } from 'valaxy'
 import type { Plugin, UserConfig } from 'vite'
 import type { ThemeConfig } from '../types'
-
-/** 主题 primary 色的默认值。 */
-const DEFAULT_PRIMARY = '#66CCFF'
-
-/** SCSS 变量值允许的字符白名单；排除分号、花括号与换行，防止配置值注入任意 SCSS。 */
-const SCSS_VALUE_SAFE_RE = /^[a-z0-9#(),.%\s-]+$/i
-
-/**
- * 将主题配置中的 primary 色规范为可安全注入 SCSS 的字符串。
- *
- * @param value - 主题配置的 ui.primary 原始值。
- * @returns 通过白名单校验的颜色字符串；非法值回退到默认主题色。
- */
-function resolvePrimaryColor(value: unknown): string {
-  const raw = typeof value === 'string' ? value.trim() : ''
-
-  if (!raw || !SCSS_VALUE_SAFE_RE.test(raw))
-    return DEFAULT_PRIMARY
-
-  return raw
-}
+import { resolveThemeColorsScss } from './colors'
 
 /**
  * valaxy 通过 `declare module 'vite'` 扩展了 `UserConfig.ssgOptions`，
@@ -86,16 +66,20 @@ export function themePlugin(options: ResolvedValaxyOptions<ThemeConfig>): Plugin
 
     config(userConfig: UserConfig) {
       const scssOptions = userConfig.css?.preprocessorOptions?.scss ?? {}
-      const userAdditionalData = typeof scssOptions.additionalData === 'string'
-        ? scssOptions.additionalData
-        : ''
+      const userAdditionalData = scssOptions.additionalData
+      const themeAdditionalData = resolveThemeColorsScss(themeConfig.ui)
 
       return {
         css: {
           preprocessorOptions: {
             scss: {
-              // 主题注入在前、用户 additionalData 在后：用户可覆盖 $lm-theme-primary。
-              additionalData: `$lm-theme-primary: ${resolvePrimaryColor(themeConfig.ui?.primary)} !default;\n${userAdditionalData}`,
+              // 使用函数避免 Vite 再次拼接字符串；保留用户回调与 source map。
+              additionalData: (source: string, filename: string) => {
+                const themedSource = themeAdditionalData + source
+                if (typeof userAdditionalData === 'function')
+                  return userAdditionalData(themedSource, filename)
+                return `${themeAdditionalData + (userAdditionalData ?? '')}\n${source}`
+              },
             },
           },
         },

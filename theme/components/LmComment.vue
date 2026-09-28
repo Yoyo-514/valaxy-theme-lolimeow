@@ -54,7 +54,7 @@ const providerComponent = computed(() => {
 
 .lm-comment__content {
   @apply w-full border-t pt-4;
-  border-color: color-mix(in srgb, var(--lm-c-brand) 16%, var(--lm-c-border));
+  border-color: var(--lm-c-primary-border);
 }
 
 .lm-comment__body {

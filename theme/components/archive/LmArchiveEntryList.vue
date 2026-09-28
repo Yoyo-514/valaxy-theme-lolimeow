@@ -41,7 +41,7 @@ function formatEntryDate(date?: string | number | Date) {
 
 .lm-archive-entry-list__item {
   @apply border-b py-4;
-  border-color: color-mix(in srgb, var(--lm-c-brand) 8%, var(--lm-c-border));
+  border-color: var(--lm-c-primary-border-subtle);
 }
 
 .lm-archive-entry-list__item:first-child {
@@ -63,8 +63,9 @@ function formatEntryDate(date?: string | number | Date) {
   transition: color 0.2s ease;
 }
 
-.lm-archive-entry-list__title:hover {
-  color: var(--lm-c-brand-strong);
+.lm-archive-entry-list__title:hover,
+.lm-archive-entry-list__title:focus-visible {
+  color: var(--lm-c-primary-text-hover);
 }
 
 .lm-archive-entry-list__meta {

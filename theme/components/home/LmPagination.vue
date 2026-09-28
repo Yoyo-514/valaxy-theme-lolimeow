@@ -116,9 +116,9 @@ onMounted(() => {
 }
 
 .lm-pagination__page.is-current {
-  color: var(--lm-c-brand);
-  border-color: color-mix(in srgb, var(--lm-c-brand) 36%, var(--lm-c-border));
-  background: color-mix(in srgb, var(--lm-c-brand) 14%, transparent);
+  color: var(--lm-c-primary-text);
+  border-color: var(--lm-c-primary-border-strong);
+  background: var(--lm-c-primary-soft);
   pointer-events: none;
 }
 
@@ -141,7 +141,7 @@ onMounted(() => {
 }
 
 .lm-pagination__mobile-current {
-  color: var(--lm-c-brand);
+  color: var(--lm-c-primary-text);
 }
 
 .lm-pagination__mobile-separator {

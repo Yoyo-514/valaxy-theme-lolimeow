@@ -2,8 +2,8 @@
   blockquote {
     margin: 0.75rem 0;
     padding: 0.25rem 1.1rem;
-    border-left: 3px solid color-mix(in srgb, var(--lm-c-brand) 52%, white);
-    background: color-mix(in srgb, var(--lm-c-brand-soft) 68%, transparent);
+    border-left: 3px solid var(--lm-c-primary-border-strong);
+    background: var(--lm-c-primary-soft);
 
     p,
     ul,
@@ -39,7 +39,7 @@
     color: var(--lm-c-text-primary);
 
     &::marker {
-      color: color-mix(in srgb, var(--lm-c-brand) 42%, var(--lm-c-text-muted));
+      color: var(--lm-c-primary-text);
     }
   }
 
@@ -54,7 +54,7 @@
   }
 
   input[type='checkbox'] {
-    accent-color: var(--lm-c-brand-strong);
+    accent-color: var(--lm-c-primary-text);
   }
 
   .contains-task-list,

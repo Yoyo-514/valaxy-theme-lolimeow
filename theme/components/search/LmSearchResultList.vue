@@ -47,15 +47,15 @@ const emit = defineEmits<{
 .lm-search-result {
   @apply flex w-full cursor-pointer flex-col rounded-3 border px-3.5 py-3 text-left transition-[border-color,background-color,transform] duration-180 ease-out;
   color: var(--lm-c-text-primary);
-  border-color: color-mix(in srgb, var(--lm-c-brand) 10%, var(--lm-c-border));
+  border-color: var(--lm-c-primary-border-subtle);
   background: color-mix(in srgb, var(--lm-c-bg-glass) 42%, transparent);
 }
 
 .lm-search-result:hover,
 .lm-search-result--active {
-  border-color: color-mix(in srgb, var(--lm-c-brand) 34%, var(--lm-c-border));
+  border-color: var(--lm-c-primary-border-strong);
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--lm-c-brand) 11%, transparent), transparent 56%),
+    linear-gradient(135deg, var(--lm-c-primary-soft), transparent 56%),
     color-mix(in srgb, var(--lm-c-bg-glass) 64%, transparent);
   transform: translateY(-0.05rem);
 }
@@ -70,7 +70,7 @@ const emit = defineEmits<{
 }
 
 .lm-search-result__highlight {
-  color: var(--lm-c-brand);
+  color: var(--lm-c-primary-text);
   font-weight: 800;
 }
 

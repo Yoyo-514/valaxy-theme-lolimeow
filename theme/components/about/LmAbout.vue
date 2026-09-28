@@ -64,16 +64,16 @@ const {
 .lm-about-profile {
   @apply relative grid gap-5 overflow-hidden rounded-5 border p-5 sm:grid-cols-[6.5rem_minmax(0,1fr)] sm:p-6;
   color: var(--lm-c-text-primary);
-  border-color: color-mix(in srgb, var(--lm-c-brand) 16%, var(--lm-c-border));
+  border-color: var(--lm-c-primary-border);
   background:
-    radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--lm-c-brand) 12%, transparent), transparent 32%),
+    radial-gradient(circle at 10% 0%, var(--lm-c-primary-soft), transparent 32%),
     color-mix(in srgb, var(--lm-surface-reading-bg) 84%, transparent);
 }
 
 .lm-about-profile__avatar-wrap {
   @apply h-24 w-24 overflow-hidden rounded-5 border p-1 sm:h-26 sm:w-26;
-  border-color: color-mix(in srgb, var(--lm-c-brand) 28%, var(--lm-c-border));
-  background: var(--lm-c-brand-subtle);
+  border-color: var(--lm-c-accent-border);
+  background: var(--lm-c-accent-soft);
 }
 
 .lm-about-profile__avatar {

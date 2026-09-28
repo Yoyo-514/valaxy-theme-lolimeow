@@ -71,7 +71,9 @@ export default defineValaxyConfig({
   theme: 'lolimeow',
   themeConfig: {
     ui: {
-      primary: '#66CCFF',
+      colors: {
+        primary: '#66CCFF',
+      },
     },
   },
 })

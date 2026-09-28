@@ -120,7 +120,7 @@ const {
   top: 0.5rem;
   bottom: 0.5rem;
   width: 1px;
-  background: color-mix(in srgb, var(--lm-c-brand) 16%, var(--lm-c-border));
+  background: var(--lm-c-primary-border);
 }
 
 .lm-archive__shell--accordion {

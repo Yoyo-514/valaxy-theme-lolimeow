@@ -120,7 +120,7 @@ const icpInfo = computed(() => {
 
 .lm-footer__glow {
   @apply pointer-events-none absolute left-1/2 top-0 h-px w-[min(34rem,72vw)] -translate-x-1/2;
-  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--lm-c-brand) 58%, transparent), transparent);
+  background: linear-gradient(90deg, transparent, var(--lm-c-primary-border-strong), transparent);
 }
 
 .lm-footer__inner {
@@ -131,7 +131,7 @@ const icpInfo = computed(() => {
   @apply relative inline-flex flex-wrap items-center justify-center gap-2.5 rounded-full px-4 py-1.5;
   color: var(--lm-c-text-secondary);
   background:
-    radial-gradient(circle at 18% 0%, color-mix(in srgb, var(--lm-c-brand) 14%, transparent), transparent 42%),
+    radial-gradient(circle at 18% 0%, var(--lm-c-primary-soft), transparent 42%),
     color-mix(in srgb, var(--lm-c-bg-glass) 28%, transparent);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--lm-c-border) 58%, transparent);
 }
@@ -168,12 +168,12 @@ const icpInfo = computed(() => {
 
 .lm-footer__powered :deep(a:hover),
 .lm-footer__icp:hover {
-  color: var(--lm-c-text-primary);
+  color: var(--lm-c-primary-text-hover);
 }
 
 .lm-footer__dot {
   @apply h-1 w-1 rounded-full;
-  background: color-mix(in srgb, var(--lm-c-brand) 70%, transparent);
+  background: var(--lm-c-primary-border-strong);
 }
 
 .lm-footer__icp {

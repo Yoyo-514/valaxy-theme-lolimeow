@@ -37,23 +37,23 @@ const statusLabel = computed(() => {
 }
 
 .lm-link-status--checking {
-  background: var(--lm-c-brand);
+  background: var(--lm-c-info-solid);
   box-shadow:
-    0 0 0 0.16rem color-mix(in srgb, var(--lm-c-brand) 18%, transparent),
+    0 0 0 0.16rem var(--lm-c-info-soft-hover),
     0 0.15rem 0.45rem color-mix(in srgb, #000 16%, transparent);
 }
 
 .lm-link-status--online {
-  background: #35c46f;
+  background: var(--lm-c-success-solid);
   box-shadow:
-    0 0 0 0.16rem color-mix(in srgb, #35c46f 18%, transparent),
+    0 0 0 0.16rem var(--lm-c-success-soft-hover),
     0 0.15rem 0.45rem color-mix(in srgb, #000 16%, transparent);
 }
 
 .lm-link-status--offline {
-  background: #ff6b6b;
+  background: var(--lm-c-danger-solid);
   box-shadow:
-    0 0 0 0.16rem color-mix(in srgb, #ff6b6b 18%, transparent),
+    0 0 0 0.16rem var(--lm-c-danger-soft-hover),
     0 0.15rem 0.45rem color-mix(in srgb, #000 16%, transparent);
 }
 </style>

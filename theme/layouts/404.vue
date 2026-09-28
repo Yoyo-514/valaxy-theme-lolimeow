@@ -73,8 +73,8 @@ function goBack() {
   height: 24rem;
   pointer-events: none;
   background:
-    radial-gradient(circle at 30% 34%, color-mix(in srgb, var(--lm-c-brand) 16%, transparent), transparent 34%),
-    radial-gradient(circle at 68% 48%, color-mix(in srgb, var(--lm-c-brand-soft) 30%, transparent), transparent 38%);
+    radial-gradient(circle at 30% 34%, var(--lm-c-primary-soft), transparent 34%),
+    radial-gradient(circle at 68% 48%, var(--lm-c-primary-soft-hover), transparent 38%);
   opacity: 0.74;
   filter: blur(22px);
 }
@@ -85,7 +85,7 @@ function goBack() {
 
 .lm-not-found__eyebrow {
   @apply m-0 text-xs font-700 uppercase tracking-[0.32em];
-  color: var(--lm-c-brand-strong);
+  color: var(--lm-c-primary-text);
 }
 
 .lm-not-found__title {
@@ -93,7 +93,7 @@ function goBack() {
   letter-spacing: -0.04em;
   text-shadow:
     0 2px 18px rgb(15 23 42 / 0.1),
-    -0.045em 0 color-mix(in srgb, var(--lm-c-brand) 38%, transparent),
+    -0.045em 0 var(--lm-c-primary-border-strong),
     0.045em 0 color-mix(in srgb, #ff7aa8 28%, transparent);
 }
 
@@ -107,7 +107,7 @@ function goBack() {
 }
 
 .lm-not-found__title::before {
-  color: color-mix(in srgb, var(--lm-c-brand) 76%, white);
+  color: var(--lm-c-primary-text);
   filter: blur(1.5px);
   transform: translate(-0.07em, 0.02em);
   clip-path: inset(0 0 54% 0);
@@ -127,16 +127,16 @@ function goBack() {
 .lm-not-found__diagnostic {
   @apply mt-7 inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border px-4 py-2 text-xs font-600 tracking-[0.18em];
   color: var(--lm-c-text-muted);
-  border-color: color-mix(in srgb, var(--lm-c-brand) 12%, var(--lm-c-border));
+  border-color: var(--lm-c-primary-border-subtle);
   background:
-    repeating-linear-gradient(0deg, color-mix(in srgb, var(--lm-c-brand) 8%, transparent) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(0deg, var(--lm-c-primary-muted) 0 1px, transparent 1px 4px),
     color-mix(in srgb, var(--lm-surface-reading-bg) 58%, transparent);
 }
 
 .lm-not-found__dot {
   @apply h-2 w-2 rounded-full;
-  background: var(--lm-c-brand);
-  box-shadow: 0 0 0 0.24rem color-mix(in srgb, var(--lm-c-brand) 16%, transparent);
+  background: var(--lm-c-primary-base);
+  box-shadow: 0 0 0 0.24rem var(--lm-c-primary-soft);
 }
 
 .lm-not-found__divider {
@@ -151,21 +151,21 @@ function goBack() {
 .lm-not-found__action {
   @apply inline-flex items-center justify-center rounded-full border px-5 py-2.5 text-sm font-600 no-underline transition-[border-color,background-color,color,transform,box-shadow] duration-250 ease-out;
   color: var(--lm-c-text-secondary);
-  border-color: color-mix(in srgb, var(--lm-c-brand) 18%, var(--lm-c-border));
+  border-color: var(--lm-c-primary-border);
   background: color-mix(in srgb, var(--lm-surface-reading-bg) 68%, transparent);
 }
 
 .lm-not-found__action:hover,
 .lm-not-found__action:focus-visible {
-  color: var(--lm-c-text-primary);
-  border-color: color-mix(in srgb, var(--lm-c-brand) 42%, var(--lm-c-border));
+  color: var(--lm-c-primary-text-hover);
+  border-color: var(--lm-c-primary-border-strong);
   box-shadow: 0 10px 24px rgb(15 23 42 / 0.08);
   transform: translateY(-2px);
 }
 
 .lm-not-found__action--primary {
-  color: color-mix(in srgb, var(--lm-c-brand-strong) 78%, var(--lm-c-text-primary));
-  background: color-mix(in srgb, var(--lm-c-brand) 14%, transparent);
+  color: var(--lm-c-primary-text);
+  background: var(--lm-c-primary-soft);
 }
 
 @media (max-width: 640px) {

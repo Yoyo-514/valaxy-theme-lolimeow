@@ -124,7 +124,7 @@ function closeNotice() {
   position: absolute;
   inset: 0 auto 0 0;
   width: 4px;
-  background: linear-gradient(180deg, var(--lm-c-brand), color-mix(in srgb, var(--lm-c-brand) 28%, white));
+  background: var(--lm-c-primary-base);
   opacity: 0.9;
 }
 
@@ -135,21 +135,21 @@ function closeNotice() {
   width: 8rem;
   height: 8rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--lm-c-brand) 12%, transparent);
+  background: var(--lm-c-primary-soft);
   filter: blur(18px);
   pointer-events: none;
 }
 
 .lm-notice__icon {
   @include lm-surface-nav(
-    color-mix(in srgb, var(--lm-c-brand) 16%, var(--lm-c-bg-glass)),
-    color-mix(in srgb, var(--lm-c-brand) 24%, transparent),
+    var(--lm-c-primary-soft),
+    var(--lm-c-primary-border-subtle),
     0 8px 18px rgb(15 23 42 / 0.06),
     10px
   );
 
   @apply relative z-[var(--lm-z-raised)] inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full;
-  color: var(--lm-c-brand);
+  color: var(--lm-c-primary-text);
 }
 
 .lm-notice__content {
@@ -173,7 +173,7 @@ function closeNotice() {
 .lm-notice__close:hover,
 .lm-notice__close:focus-visible {
   color: var(--lm-c-text-primary);
-  background: color-mix(in srgb, var(--lm-c-brand) 12%, transparent);
+  background: var(--lm-c-primary-soft);
   transform: translateY(-1px);
 }
 </style>

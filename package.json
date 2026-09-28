@@ -15,6 +15,7 @@
     "check:vue-overrides": "node ./scripts/check-vue-overrides.mjs",
     "fix:vue-overrides": "node ./scripts/check-vue-overrides.mjs --write",
     "lint": "eslint .",
+    "test:colors": "vitest run tests/theme-colors.test.ts",
     "release": "cd theme && git add -A && bumpp --all",
     "typecheck": "node ./scripts/typecheck.mjs"
   },

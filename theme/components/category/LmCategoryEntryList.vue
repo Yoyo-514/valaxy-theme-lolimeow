@@ -37,7 +37,7 @@ function formatEntryDate(date?: string | number | Date) {
 
 .lm-category-entry-list__item {
   @apply grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 rounded-4 px-3 py-2;
-  background: color-mix(in srgb, var(--lm-c-brand-soft) 18%, transparent);
+  background: var(--lm-c-primary-soft-hover);
 }
 
 .lm-category-entry-list__link {
@@ -48,8 +48,9 @@ function formatEntryDate(date?: string | number | Date) {
     transform 0.2s ease;
 }
 
-.lm-category-entry-list__link:hover {
-  color: var(--lm-c-brand-strong);
+.lm-category-entry-list__link:hover,
+.lm-category-entry-list__link:focus-visible {
+  color: var(--lm-c-primary-text-hover);
   transform: translateX(0.08rem);
 }
 

@@ -17,7 +17,7 @@ defineProps<{
       rel="noopener noreferrer"
       :title="item.name"
       :aria-label="item.name"
-      :style="{ '--lm-about-social-color': item.color || 'var(--lm-c-brand)' }"
+      :style="{ '--lm-about-social-color': item.color || 'var(--lm-c-primary-base)' }"
     >
       <span
         v-if="item.icon"
@@ -45,7 +45,6 @@ defineProps<{
 .lm-about-socials__item:focus-visible {
   border-color: color-mix(in srgb, var(--lm-about-social-color) 42%, var(--lm-c-border));
   background: color-mix(in srgb, var(--lm-about-social-color) 13%, transparent);
-  outline: none;
   transform: translateY(-0.08rem);
 }
 

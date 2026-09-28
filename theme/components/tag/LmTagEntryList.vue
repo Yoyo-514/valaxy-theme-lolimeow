@@ -37,7 +37,7 @@ function formatEntryDate(date?: string | number | Date) {
 
 .lm-tag-entry-list__item {
   @apply grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 gap-y-1 border-b pb-3;
-  border-color: color-mix(in srgb, var(--lm-c-brand) 8%, var(--lm-c-border));
+  border-color: var(--lm-c-primary-border-subtle);
 }
 
 .lm-tag-entry-list__item:last-child {
@@ -50,8 +50,9 @@ function formatEntryDate(date?: string | number | Date) {
   transition: color 0.2s ease;
 }
 
-.lm-tag-entry-list__link:hover {
-  color: var(--lm-c-brand-strong);
+.lm-tag-entry-list__link:hover,
+.lm-tag-entry-list__link:focus-visible {
+  color: var(--lm-c-primary-text-hover);
 }
 
 .lm-tag-entry-list__date {

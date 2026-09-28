@@ -21,7 +21,9 @@ const options = computed(() => waline.value?.options)
 <style lang="scss" scoped>
 .lm-waline {
   @apply w-full;
-  --lm-waline-surface-border: var(--lm-c-border-accent);
+  --waline-theme-color: var(--lm-c-primary-text);
+  --waline-active-color: var(--lm-c-primary-text-hover);
+  --lm-waline-surface-border: var(--lm-c-primary-border-subtle);
   --lm-waline-surface-bg: color-mix(in srgb, var(--lm-surface-reading-bg) 72%, transparent);
 }
 
@@ -86,15 +88,22 @@ const options = computed(() => waline.value?.options)
 }
 
 :deep(.wl-card) {
-  border-bottom-color: color-mix(in srgb, var(--lm-c-brand) 92%, white);
+  border-bottom-color: var(--lm-c-primary-base);
 }
 
 :deep(.wl-card .wl-quote) {
-  border-inline-start-color: color-mix(in srgb, var(--lm-c-brand-strong) 32%, white);
+  border-inline-start-color: var(--lm-c-primary-border);
 }
 
 :deep(.wl-btn.primary) {
-  border-color: color-mix(in srgb, var(--lm-c-brand) 62%, white);
-  background: color-mix(in srgb, var(--lm-c-brand) 92%, white);
+  border-color: var(--lm-c-primary-border-strong);
+  background: var(--lm-c-primary-solid);
+  color: var(--lm-c-primary-on-solid);
+}
+
+:deep(.wl-btn.primary:hover),
+:deep(.wl-btn.primary:focus-visible) {
+  background: var(--lm-c-primary-solid-hover);
+  color: var(--lm-c-primary-on-solid);
 }
 </style>

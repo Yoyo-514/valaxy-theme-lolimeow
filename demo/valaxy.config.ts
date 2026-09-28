@@ -12,7 +12,9 @@ export default defineConfig<ThemeConfig>({
 
   themeConfig: {
     ui: {
-      primary: '#66CCFF',
+      colors: {
+        primary: '#66CCFF',
+      },
     },
 
     // 背景图

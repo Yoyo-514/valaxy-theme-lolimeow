@@ -113,7 +113,7 @@ const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], stri
 <style scoped lang="scss">
 .lm-project-card {
   @apply relative flex min-h-[13.5rem] overflow-hidden rounded-4 no-underline transition-[box-shadow,transform] duration-240 ease-out;
-  --lm-project-accent: var(--lm-c-brand);
+  --lm-project-accent: var(--lm-c-primary-base);
   color: var(--lm-c-text-primary);
   background: color-mix(in srgb, var(--lm-surface-reading-bg) 80%, transparent);
   box-shadow:
@@ -205,11 +205,11 @@ const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], stri
 }
 
 .lm-project-card__status--active {
-  color: var(--lm-c-success);
+  color: var(--lm-c-success-text);
 }
 
 .lm-project-card__status--wip {
-  color: var(--lm-c-warning);
+  color: var(--lm-c-warning-text);
 }
 
 .lm-project-card__status--archived {
@@ -221,12 +221,12 @@ const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], stri
   text-shadow: 0 1px 6px rgb(0 0 0 / 0.28);
 }
 
-.lm-project-card--with-cover .lm-project-card__status--active {
-  color: #b8ffcf;
+.lm-project-card--with-cover .lm-project-card__status--active::before {
+  background: var(--lm-c-success-solid);
 }
 
-.lm-project-card--with-cover .lm-project-card__status--wip {
-  color: #ffe39a;
+.lm-project-card--with-cover .lm-project-card__status--wip::before {
+  background: var(--lm-c-warning-solid);
 }
 
 .lm-project-card__body {

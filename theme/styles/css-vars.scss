@@ -1,5 +1,6 @@
 @use './vars' as * with (
-  $lm-c-brand: $lm-theme-primary
+  $lm-colors: $lm-theme-colors,
+  $lm-tokens: $lm-theme-tokens
 );
 @use 'valaxy/client/styles/mixins/index.scss' as * with (
   $namespace: 'lm'
@@ -24,17 +25,15 @@
   --lm-scrollbar-size: 0.55rem;
   --lm-scrollbar-radius: var(--lm-radius-full);
   --lm-scrollbar-track: color-mix(in srgb, var(--lm-c-bg-glass) 18%, transparent);
-  --lm-scrollbar-thumb: color-mix(in srgb, var(--lm-c-brand) 36%, var(--lm-c-border));
-  --lm-scrollbar-thumb-hover: color-mix(in srgb, var(--lm-c-brand) 62%, var(--lm-c-border-hover));
-  --lm-scrollbar-thumb-active: color-mix(in srgb, var(--lm-c-brand-strong) 72%, var(--lm-c-brand));
-  --va-code-block-bg: color-mix(in srgb, var(--lm-c-brand-soft) 68%, transparent);
-  --va-code-copy-code-border-color: color-mix(in srgb, var(--lm-c-brand-border) 60%, transparent);
+  --lm-scrollbar-thumb: var(--lm-c-primary-border);
+  --lm-scrollbar-thumb-hover: var(--lm-c-primary-border-strong);
+  --lm-scrollbar-thumb-active: var(--lm-c-primary-base);
+  --va-code-block-bg: var(--lm-c-primary-muted);
+  --va-code-copy-code-border-color: var(--lm-c-primary-border-subtle);
   --va-code-copy-code-bg: color-mix(in srgb, var(--lm-c-bg-glass) 70%, transparent);
-  --va-code-copy-code-hover-border-color: var(--lm-c-brand-border);
-  --va-code-copy-code-hover-bg: color-mix(in srgb, var(--lm-c-brand) 42%, transparent);
+  --va-code-copy-code-hover-border-color: var(--lm-c-primary-border);
+  --va-code-copy-code-hover-bg: var(--lm-c-primary-soft-hover);
   --va-code-copy-code-active-text: var(--lm-c-text-primary);
-  --va-icon-copy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' height='20' width='20' stroke='%230060df' stroke-width='2' class='h-6 w-6' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2'/%3E%3C/svg%3E");
-  --va-icon-copied: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' height='20' width='20' stroke='%230060df' stroke-width='2' class='h-6 w-6' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4'/%3E%3C/svg%3E");
 
   @include set-css-var-from-map($common);
   @include set-css-var-from-map($z-index);
@@ -49,14 +48,7 @@ html.dark {
   --lm-surface-panel-bg: color-mix(in srgb, var(--lm-c-bg-glass) 86%, transparent);
   --lm-surface-reading-bg: color-mix(in srgb, var(--lm-c-bg-glass) 97%, var(--lm-c-bg-base));
   --lm-scrollbar-track: color-mix(in srgb, var(--lm-c-bg-glass) 14%, transparent);
-  --lm-scrollbar-thumb: color-mix(in srgb, var(--lm-c-brand) 42%, var(--lm-c-border));
-  --lm-scrollbar-thumb-hover: color-mix(in srgb, var(--lm-c-brand) 68%, var(--lm-c-border-hover));
-  --lm-scrollbar-thumb-active: color-mix(in srgb, var(--lm-c-brand) 86%, white);
-  --va-code-copy-code-border-color: color-mix(in srgb, var(--lm-c-brand-border) 70%, transparent);
   --va-code-copy-code-bg: color-mix(in srgb, var(--lm-c-bg-glass) 90%, transparent);
-  --va-code-copy-code-hover-bg: color-mix(in srgb, var(--lm-c-brand) 36%, transparent);
-  --va-icon-copy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' height='20' width='20' stroke='%2366ccff' stroke-width='2' class='h-6 w-6' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2'/%3E%3C/svg%3E");
-  --va-icon-copied: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' height='20' width='20' stroke='%2366ccff' stroke-width='2' class='h-6 w-6' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4'/%3E%3C/svg%3E");
 
   @include set-css-var-from-map($dark);
 }

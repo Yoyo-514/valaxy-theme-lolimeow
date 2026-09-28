@@ -168,7 +168,7 @@ const {
     box-shadow 240ms ease;
 
   &:hover {
-    border-color: color-mix(in srgb, var(--lm-c-brand) 28%, var(--lm-c-border));
+    border-color: var(--lm-c-primary-border);
     transform: translateY(-2px);
   }
 }
@@ -184,7 +184,7 @@ const {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 18% 22%, var(--lm-c-brand-subtle), transparent 40%),
+    radial-gradient(circle at 18% 22%, var(--lm-c-primary-soft), transparent 40%),
     linear-gradient(135deg, transparent 0 62%, rgba(255, 255, 255, 0.08) 62% 100%);
   opacity: 0.8;
 }
@@ -219,7 +219,7 @@ const {
   background: linear-gradient(
     115deg,
     color-mix(in srgb, var(--lm-c-bg-glass) 92%, white) 0%,
-    color-mix(in srgb, var(--lm-c-brand-soft) 20%, var(--lm-c-bg-glass)) 100%
+    color-mix(in srgb, var(--lm-c-primary-soft) 40%, var(--lm-c-bg-glass)) 100%
   );
 }
 
@@ -260,7 +260,7 @@ const {
 .lm-post-card__tag {
   @apply rounded-full px-2 py-0.5 text-xs;
   color: var(--lm-c-text-secondary);
-  background: var(--lm-c-brand-subtle);
+  background: var(--lm-c-primary-soft);
 }
 
 .lm-post-card__excerpt {
