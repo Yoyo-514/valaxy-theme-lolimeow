@@ -1,5 +1,5 @@
 export * from './archive'
+export * from './archive-transition'
 export * from './types'
 export * from './use-archive-groups'
 export * from './use-archive-timeline-state'
-export * from './use-archive-transition-leave'

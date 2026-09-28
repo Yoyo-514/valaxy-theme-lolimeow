@@ -132,6 +132,29 @@ function displayName(name: string) {
   @apply grid min-w-0 gap-3 pb-3 pl-8 pr-2;
 }
 
+// 支持自动尺寸插值的浏览器使用原生过渡，其余浏览器保留原生展开行为。
+@supports (interpolate-size: allow-keywords) and selector(details::details-content) {
+  .lm-category-tree__disclosure {
+    interpolate-size: allow-keywords;
+  }
+
+  .lm-category-tree__disclosure::details-content {
+    block-size: 0;
+    opacity: 0;
+    overflow: clip;
+    transition:
+      block-size 0.18s ease-out,
+      opacity 0.12s ease-out,
+      content-visibility 0.18s allow-discrete;
+  }
+
+  .lm-category-tree__disclosure[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+    transition-duration: 0.22s, 0.16s, 0.22s;
+  }
+}
+
 @media (max-width: 767px) {
   .lm-category-tree__trigger {
     @apply grid-cols-[1.25rem_minmax(0,1fr)] gap-x-2;
@@ -148,7 +171,8 @@ function displayName(name: string) {
 
 @media (prefers-reduced-motion: reduce) {
   .lm-category-tree__toggle,
-  .lm-category-tree__trigger {
+  .lm-category-tree__trigger,
+  .lm-category-tree__disclosure::details-content {
     transition: none;
   }
 }

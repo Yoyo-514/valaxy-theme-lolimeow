@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ArchiveGroup } from '../../features/archive'
-import { useArchiveTransitionLeave } from '../../features/archive'
+import { disableLeavingArchivePanel, enableArchivePanel } from '../../features/archive'
 
 defineProps<{
   groups: ArchiveGroup[]
@@ -29,11 +29,6 @@ function getPanelId(year: string, panelIdPrefix: string, mode: 'desktop' | 'mobi
 function getTriggerId(year: string, panelIdPrefix: string) {
   return `${panelIdPrefix}-trigger-${encodeURIComponent(year)}`
 }
-
-const {
-  leave: handleMobileLeave,
-  releaseLeave: releaseMobileLeave,
-} = useArchiveTransitionLeave(() => 'grid-template-rows')
 </script>
 
 <template>
@@ -66,9 +61,9 @@ const {
 
       <Transition
         name="lm-archive-rail-panel"
-        @leave="handleMobileLeave"
-        @after-leave="releaseMobileLeave"
-        @leave-cancelled="releaseMobileLeave"
+        @before-leave="disableLeavingArchivePanel"
+        @before-enter="enableArchivePanel"
+        @leave-cancelled="enableArchivePanel"
       >
         <div
           v-if="isAccordionMode && selectedYear === group.year"

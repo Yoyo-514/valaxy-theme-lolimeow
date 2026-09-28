@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ArchiveGroup } from '../../features/archive'
 import { useId } from 'vue'
-import { useArchiveTimelineState, useArchiveTransitionLeave } from '../../features/archive'
+import { disableLeavingArchivePanel, enableArchivePanel, useArchiveTimelineState } from '../../features/archive'
 
 const props = defineProps<{
   groups: ArchiveGroup[]
@@ -29,13 +29,6 @@ function getDesktopPanelId(year: string) {
 function getTriggerId(year: string) {
   return `${panelIdPrefix}-trigger-${encodeURIComponent(year)}`
 }
-
-const {
-  leave: handleDesktopLeave,
-  releaseLeave: releaseDesktopLeave,
-} = useArchiveTransitionLeave(() => {
-  return selectionChange.value === 'replace' ? 'opacity' : 'transform'
-})
 </script>
 
 <template>
@@ -65,9 +58,9 @@ const {
       >
         <Transition
           :name="selectionChange === 'replace' ? 'lm-archive-panel-swap' : 'lm-archive-panel'"
-          @leave="handleDesktopLeave"
-          @after-leave="releaseDesktopLeave"
-          @leave-cancelled="releaseDesktopLeave"
+          @before-leave="disableLeavingArchivePanel"
+          @before-enter="enableArchivePanel"
+          @leave-cancelled="enableArchivePanel"
         >
           <section
             v-if="selectedGroup"
