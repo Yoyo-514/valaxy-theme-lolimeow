@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { TagCloudSourceItem } from '../../features/tag'
-import { useTagCloud } from '../../features/tag'
+import { useTemplateRef } from 'vue'
+import { usePackedTagCloud } from '../../features/tag/use-packed-tag-cloud'
 
 const props = defineProps<{
   items: TagCloudSourceItem[]
@@ -11,68 +12,74 @@ const emit = defineEmits<{
   (e: 'select', id: string): void
 }>()
 
-const cloudRows = useTagCloud(() => props.items)
+const container = useTemplateRef<HTMLElement>('cloud')
+const { items: cloudItems, packed } = usePackedTagCloud(() => props.items, container)
 </script>
 
 <template>
-  <div class="lm-tag-cloud">
-    <div
-      v-for="row in cloudRows"
-      :key="row.id"
-      class="lm-tag-cloud__row"
+  <div
+    ref="cloud"
+    class="lm-tag-cloud"
+    :class="{ 'lm-tag-cloud--packed': packed }"
+    :style="packed ? { height: `${packed.height}px` } : undefined"
+  >
+    <button
+      v-for="item in cloudItems"
+      :key="item.id"
+      type="button"
+      class="lm-tag-cloud__item"
+      :class="{ 'lm-tag-cloud__item--active': item.id === activeId }"
+      :data-tag-id="item.id"
+      :style="{
+        fontSize: item.fontSize,
+        fontWeight: item.fontWeight,
+        left: packed ? `${packed.positions[item.id].left}px` : undefined,
+        top: packed ? `${packed.positions[item.id].top}px` : undefined,
+      }"
+      :aria-pressed="item.id === activeId"
+      :aria-label="`${item.name}, ${item.count}`"
+      @click="emit('select', item.id)"
     >
-      <button
-        v-for="item in row.items"
-        :key="item.id"
-        type="button"
-        class="lm-tag-cloud__item"
-        :class="{ 'lm-tag-cloud__item--active': item.id === activeId }"
-        :style="{
-          '--lm-tag-cloud-font-size': item.fontSize,
-          '--lm-tag-cloud-font-weight': item.fontWeight,
-          '--lm-tag-cloud-opacity': item.opacity,
-          '--lm-tag-cloud-shift-x': item.shiftX,
-          '--lm-tag-cloud-shift-y': item.shiftY,
-        }"
-        :aria-pressed="item.id === activeId"
-        :aria-label="`${item.name}, ${item.count}`"
-        @click="emit('select', item.id)"
-      >
-        <span class="lm-tag-cloud__name">{{ item.name }}</span>
-        <span class="lm-tag-cloud__count">{{ item.count }}</span>
-      </button>
-    </div>
+      <span class="lm-tag-cloud__name">{{ item.name }}</span>
+      <span class="lm-tag-cloud__count" aria-hidden="true">{{ item.count }}</span>
+    </button>
   </div>
 </template>
 
 <style scoped lang="scss">
 .lm-tag-cloud {
-  @apply flex min-h-40 flex-col items-center justify-center gap-2.5 py-3 text-center;
+  @apply relative mx-auto flex min-h-30 w-full max-w-3xl flex-wrap items-center justify-center gap-x-5 gap-y-2 py-3 text-center;
 }
 
-.lm-tag-cloud__row {
-  @apply flex flex-wrap items-baseline justify-center gap-x-5 gap-y-2;
+.lm-tag-cloud--packed {
+  display: block;
+  padding: 0;
 }
 
 .lm-tag-cloud__item {
-  @apply relative inline-flex items-baseline border-0 bg-transparent px-1 py-0.5 leading-none transition-[color,opacity,transform] duration-200 ease-out;
+  @apply relative inline-flex min-h-6 max-w-full items-center border-0 bg-transparent p-0;
+  line-height: 1.1;
   color: var(--lm-c-text-secondary);
-  font-size: var(--lm-tag-cloud-font-size);
-  font-weight: var(--lm-tag-cloud-font-weight);
-  opacity: var(--lm-tag-cloud-opacity);
-  transform: translate(var(--lm-tag-cloud-shift-x), var(--lm-tag-cloud-shift-y));
+  font-family: inherit;
+  transition: color 0.15s ease;
+}
+
+.lm-tag-cloud--packed .lm-tag-cloud__item {
+  position: absolute;
 }
 
 .lm-tag-cloud__item:hover,
 .lm-tag-cloud__item:focus-visible {
   color: var(--lm-c-primary-text-hover);
-  opacity: 1;
-  transform: translate(var(--lm-tag-cloud-shift-x), calc(var(--lm-tag-cloud-shift-y) - 0.08rem));
 }
 
 .lm-tag-cloud__item--active {
   color: var(--lm-c-text-primary);
-  opacity: 1;
+}
+
+.lm-tag-cloud__name {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .lm-tag-cloud__item--active .lm-tag-cloud__name {
@@ -83,30 +90,18 @@ const cloudRows = useTagCloud(() => props.items)
 }
 
 .lm-tag-cloud__count {
-  @apply pointer-events-none absolute inline-flex items-center justify-center text-[0.5em] font-800 transition-opacity duration-200 ease-out;
-  top: -0.35em;
-  right: -0.75em;
-  color: var(--lm-c-text-muted);
+  @apply pointer-events-none absolute text-xs font-700;
+  top: -0.25rem;
+  right: -0.5rem;
+  color: var(--lm-c-text-secondary);
   opacity: 0;
+  font-variant-numeric: tabular-nums;
+  transition: opacity 0.15s ease;
 }
 
 .lm-tag-cloud__item:hover .lm-tag-cloud__count,
-.lm-tag-cloud__item:focus-visible .lm-tag-cloud__count {
-  opacity: 0.72;
-}
-
+.lm-tag-cloud__item:focus-visible .lm-tag-cloud__count,
 .lm-tag-cloud__item--active .lm-tag-cloud__count {
-  color: var(--lm-c-primary-text);
-  opacity: 0.86;
-}
-
-@media (max-width: 639px) {
-  .lm-tag-cloud {
-    @apply min-h-32 gap-2;
-  }
-
-  .lm-tag-cloud__row {
-    @apply gap-x-4;
-  }
+  opacity: 1;
 }
 </style>

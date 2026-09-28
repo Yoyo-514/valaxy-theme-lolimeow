@@ -32,15 +32,4 @@ export interface TagCloudSourceItem {
 export interface TagCloudViewItem extends TagCloudSourceItem {
   fontSize: string
   fontWeight: number
-  opacity: number
-  shiftX: string
-  shiftY: string
-}
-
-/**
- * 标签云的一行布局结果。
- */
-export interface TagCloudRow {
-  id: string
-  items: TagCloudViewItem[]
 }

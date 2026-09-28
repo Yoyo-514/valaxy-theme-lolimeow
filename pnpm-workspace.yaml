@@ -47,10 +47,12 @@ allowBuilds:
 catalog:
   '@antfu/eslint-config': ^9.5.1
   '@iconify-json/ri': ^1.2.10
+  '@types/d3-cloud': 1.2.9
   '@unhead/vue': ^3.4.1
   '@unocss/eslint-plugin': ^66.10.5
   '@vueuse/core': ^15.0.0
   bumpp: ^12.3.0
+  d3-cloud: 1.2.9
   eslint: ^10.11.0
   eslint-plugin-format: ^2.0.1
   typescript: ^6.0.3

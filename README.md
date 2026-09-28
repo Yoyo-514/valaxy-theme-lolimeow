@@ -100,7 +100,7 @@ export default defineValaxyConfig({
 
 - Archive timeline rail with responsive accordion behavior.
 - Click-to-expand category tree for nested browsing.
-- Capsule-style tag cloud with click-to-filter article results.
+- Compact, weighted tag cloud powered by d3-cloud, with keyboard-accessible click-to-filter results.
 - Friend-link cards with Markdown preface, optional comments, and avatar-corner status hints.
 
 ### Themed Reading And Comments

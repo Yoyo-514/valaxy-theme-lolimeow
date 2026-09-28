@@ -79,19 +79,17 @@ export {
 } from '../features/search'
 
 export type {
-  TagCloudRow,
   TagCloudSourceItem,
   TagCloudViewItem,
   TagEntry,
   TagGroup,
 } from '../features/tag'
 export {
-  buildTagCloudRows,
+  buildTagCloudItems,
   buildTagGroups,
   countTaggedPosts,
   createTagId,
   normalizeTags,
-  useTagCloud,
   useTagGroups,
 } from '../features/tag'
 

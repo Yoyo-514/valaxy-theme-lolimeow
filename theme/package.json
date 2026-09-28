@@ -30,8 +30,10 @@
   "types": "types/index.d.ts",
   "dependencies": {
     "@iconify-json/ri": "catalog:",
+    "@types/d3-cloud": "catalog:",
     "@unhead/vue": "catalog:",
-    "@vueuse/core": "catalog:"
+    "@vueuse/core": "catalog:",
+    "d3-cloud": "catalog:"
   },
   "devDependencies": {
     "valaxy": "catalog:",
