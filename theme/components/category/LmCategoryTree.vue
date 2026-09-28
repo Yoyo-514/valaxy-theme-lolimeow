@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { CategoryNode } from '../../features/category'
-import { ref } from 'vue'
 
 const props = withDefaults(defineProps<{
   nodes: CategoryNode[]
@@ -14,57 +13,24 @@ const props = withDefaults(defineProps<{
   emptyLabel: '',
 })
 
-const expandedPaths = ref(new Set<string>())
-
 /** 将未分类节点的内部名称转换为本地化展示文本。 */
 function displayName(name: string) {
   return name === 'Uncategorized' ? props.uncategorizedLabel : name
 }
-
-/** 判断指定分类节点当前是否展开。 */
-function isExpanded(node: CategoryNode) {
-  return expandedPaths.value.has(node.fullPath)
-}
-
-/** 切换指定分类节点的展开状态。 */
-function toggleNode(node: CategoryNode) {
-  const nextPaths = new Set(expandedPaths.value)
-
-  if (nextPaths.has(node.fullPath))
-    nextPaths.delete(node.fullPath)
-  else
-    nextPaths.add(node.fullPath)
-
-  expandedPaths.value = nextPaths
-}
 </script>
 
 <template>
-  <div v-if="nodes.length" class="lm-category-tree" :class="{ 'lm-category-tree--nested': depth > 0 }">
-    <section
+  <ul v-if="nodes.length" class="lm-category-tree" :class="{ 'lm-category-tree--nested': depth > 0 }">
+    <li
       v-for="node in nodes"
       :key="node.fullPath"
       class="lm-category-tree__node"
     >
-      <header class="lm-category-tree__head">
-        <p v-if="node.parentPath" class="lm-category-tree__breadcrumb">
-          {{ node.parentPath }}
-        </p>
-
-        <button
-          class="lm-category-tree__trigger"
-          type="button"
-          :aria-expanded="isExpanded(node)"
-          @click="toggleNode(node)"
-        >
-          <span class="lm-category-tree__trigger-main">
-            <span class="lm-category-tree__toggle" :class="{ 'lm-category-tree__toggle--open': isExpanded(node) }">
-              <span class="i-ri-arrow-right-s-line" />
-            </span>
-
-            <span class="lm-category-tree__title">
-              {{ displayName(node.name) }}
-            </span>
+      <details class="lm-category-tree__disclosure">
+        <summary class="lm-category-tree__trigger">
+          <span class="lm-category-tree__toggle i-ri-arrow-right-s-line" aria-hidden="true" />
+          <span class="lm-category-tree__title">
+            {{ displayName(node.name) }}
           </span>
 
           <span class="lm-category-tree__stats">
@@ -75,153 +41,115 @@ function toggleNode(node: CategoryNode) {
               {{ node.childCount }} {{ childCountLabel }}
             </span>
           </span>
-        </button>
-      </header>
+        </summary>
 
-      <Transition name="lm-category-tree-expand">
-        <div v-if="isExpanded(node)" class="lm-category-tree__panel">
-          <div v-if="node.entries.length" class="lm-category-tree__entries">
-            <LmCategoryEntryList :entries="node.entries" />
-          </div>
-
-          <div v-if="node.children.length" class="lm-category-tree__children">
-            <LmCategoryTree
-              :nodes="node.children"
-              :depth="depth + 1"
-              :post-count-label="postCountLabel"
-              :child-count-label="childCountLabel"
-              :uncategorized-label="uncategorizedLabel"
-            />
-          </div>
+        <div class="lm-category-tree__panel">
+          <LmCategoryEntryList v-if="node.entries.length" :entries="node.entries" />
+          <LmCategoryTree
+            v-if="node.children.length"
+            :nodes="node.children"
+            :depth="depth + 1"
+            :post-count-label="postCountLabel"
+            :child-count-label="childCountLabel"
+            :uncategorized-label="uncategorizedLabel"
+          />
         </div>
-      </Transition>
-    </section>
-  </div>
+      </details>
+    </li>
+  </ul>
 
-  <div v-else-if="emptyLabel && depth === 0" class="lm-category-tree__empty lm-empty-state">
-    {{ emptyLabel }}
-  </div>
+  <LmAggregateEmpty v-else-if="emptyLabel && depth === 0" class="lm-category-tree__empty" :label="emptyLabel" />
 </template>
 
 <style scoped lang="scss">
 .lm-category-tree {
-  @apply grid gap-4 md:gap-5;
+  @apply m-0 grid min-w-0 list-none p-0;
 }
 
 .lm-category-tree--nested {
-  @apply mt-4 pl-4 md:pl-5;
-  border-left: 1px solid var(--lm-c-primary-border-subtle);
+  @apply pl-3;
+  border-inline-start: 1px solid var(--lm-c-primary-border-subtle);
 }
 
 .lm-category-tree__node {
-  @apply border-b pb-4 md:pb-5;
+  @apply min-w-0 border-b py-2;
   border-color: var(--lm-c-primary-border-subtle);
 }
 
 .lm-category-tree__node:last-child {
-  @apply border-b-0 pb-0;
-}
-
-.lm-category-tree__head {
-  @apply flex flex-col gap-2;
-}
-
-.lm-category-tree__breadcrumb {
-  @apply m-0 text-xs leading-5 font-700 uppercase tracking-[0.14em];
-  color: var(--lm-c-text-muted);
+  @apply border-b-0;
 }
 
 .lm-category-tree__title {
-  @apply text-xl leading-8 font-800 md:text-2xl;
+  @apply min-w-0 text-lg leading-7 font-700 sm:text-xl sm:leading-8;
   color: var(--lm-c-text-primary);
+  overflow-wrap: anywhere;
+}
+
+.lm-category-tree--nested .lm-category-tree__title {
+  @apply text-base leading-7 font-600;
 }
 
 .lm-category-tree__trigger {
-  @apply flex w-full cursor-pointer items-start justify-between gap-4 rounded-4 border-0 bg-transparent px-2 py-2 text-left transition-colors duration-220 ease-out;
+  @apply grid min-h-14 cursor-pointer grid-cols-[1.25rem_minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 px-2 py-3 text-left;
+  list-style: none;
+  border-radius: var(--lm-radius-sm);
   color: inherit;
-  font: inherit;
+  transition: background-color 0.2s ease;
+}
+
+.lm-category-tree__trigger::-webkit-details-marker {
+  display: none;
 }
 
 .lm-category-tree__trigger:hover,
 .lm-category-tree__trigger:focus-visible {
-  background: var(--lm-c-primary-soft-hover);
-}
-
-.lm-category-tree__trigger-main {
-  @apply flex min-w-0 items-start gap-2.5;
-}
-
-.lm-category-tree__toggle {
-  @apply mt-1.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-sm transition-transform duration-220 ease-out;
-  color: var(--lm-c-text-secondary);
   background: var(--lm-c-primary-soft);
 }
 
-.lm-category-tree__toggle--open {
+.lm-category-tree__toggle {
+  @apply inline-block h-5 w-5;
+  color: var(--lm-c-text-secondary);
+  transition: transform 0.2s ease;
+}
+
+.lm-category-tree__disclosure[open] > .lm-category-tree__trigger > .lm-category-tree__toggle {
   transform: rotate(90deg);
   color: var(--lm-c-primary-text);
 }
 
 .lm-category-tree__stats {
-  @apply flex shrink-0 flex-wrap justify-end gap-x-3 gap-y-1 text-sm leading-6 self-center;
+  @apply flex flex-wrap justify-end gap-x-4 gap-y-1 text-sm leading-6;
   color: var(--lm-c-text-secondary);
+  font-variant-numeric: tabular-nums;
 }
 
 .lm-category-tree__stats-item {
-  @apply inline-flex items-center gap-1.5;
-}
-
-.lm-category-tree__stats-item::before {
-  content: '';
-  @apply inline-block h-1.5 w-1.5 rounded-full;
-  background: var(--lm-c-primary-border-strong);
-}
-
-.lm-category-tree__entries {
-  @apply mt-3;
-}
-
-.lm-category-tree__children {
-  @apply mt-4;
+  white-space: nowrap;
 }
 
 .lm-category-tree__panel {
-  overflow: hidden;
-}
-
-.lm-category-tree-expand-enter-active,
-.lm-category-tree-expand-leave-active {
-  transition:
-    opacity 280ms ease,
-    transform 280ms ease,
-    max-height 280ms ease;
-}
-
-.lm-category-tree-expand-enter-from,
-.lm-category-tree-expand-leave-to {
-  max-height: 0;
-  opacity: 0;
-  transform: translateY(-0.25rem);
-}
-
-.lm-category-tree-expand-enter-to,
-.lm-category-tree-expand-leave-from {
-  max-height: 42rem;
-  opacity: 1;
-  transform: translateY(0);
+  @apply grid min-w-0 gap-3 pb-3 pl-8 pr-2;
 }
 
 @media (max-width: 767px) {
-  .lm-category-tree__title {
-    @apply text-lg leading-7;
-  }
-
   .lm-category-tree__trigger {
-    @apply flex-col gap-2;
+    @apply grid-cols-[1.25rem_minmax(0,1fr)] gap-x-2;
   }
 
   .lm-category-tree__stats {
-    @apply justify-start pl-7;
+    @apply col-start-2 justify-start text-xs;
+  }
+
+  .lm-category-tree__panel {
+    @apply pl-3 pr-0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-category-tree__toggle,
+  .lm-category-tree__trigger {
+    transition: none;
   }
 }
 </style>

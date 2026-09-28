@@ -28,30 +28,12 @@ const stats = computed(() => {
 </script>
 
 <template>
-  <section class="lm-archives-page">
-    <LmAggregateHeader
-      :title="pageTitle"
-      :cover="pageCover"
-      :stats="stats"
+  <LmAggregatePage class="lm-archives-page" :title="pageTitle" :cover="pageCover" :stats="stats">
+    <LmArchiveTimeline
+      :groups="groups"
+      :empty-label="t('pages.archives.empty')"
+      :unknown-year-label="t('pages.archives.unknownYear')"
+      :count-label="t('pages.archives.countLabel')"
     />
-
-    <div class="lm-archives-page__content">
-      <LmArchiveTimeline
-        :groups="groups"
-        :empty-label="t('pages.archives.empty')"
-        :unknown-year-label="t('pages.archives.unknownYear')"
-        :count-label="t('pages.archives.countLabel')"
-      />
-    </div>
-  </section>
+  </LmAggregatePage>
 </template>
-
-<style scoped lang="scss">
-.lm-archives-page {
-  @apply flex flex-col pb-12 sm:pb-16;
-}
-
-.lm-archives-page__content {
-  @apply mx-auto w-full max-w-5xl px-4 sm:px-6 xl:px-0;
-}
-</style>

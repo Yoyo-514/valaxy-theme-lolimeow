@@ -13,54 +13,39 @@ const {
 </script>
 
 <template>
-  <section class="lm-about-page">
-    <LmAggregateHeader
-      :title="pageTitle"
-      :cover="pageCover"
-    />
-
-    <div class="lm-about-page__content">
-      <section class="lm-about-profile" :aria-label="profileLabel">
-        <div v-if="authorAvatar" class="lm-about-profile__avatar-wrap">
-          <LmImage
-            class="lm-about-profile__avatar"
-            :src="authorAvatar"
-            :alt="authorName"
-          />
-        </div>
-
-        <div class="lm-about-profile__body">
-          <h2 class="lm-about-profile__name">
-            {{ authorName }}
-          </h2>
-
-          <p v-if="description" class="lm-about-profile__description">
-            {{ description }}
-          </p>
-
-          <LmAboutSocialLinks
-            v-if="socialLinks.length"
-            :items="socialLinks"
-          />
-        </div>
-      </section>
-
-      <div class="lm-about-page__body markdown-body prose dark:prose-invert">
-        <slot />
+  <LmAggregatePage class="lm-about-page" :title="pageTitle" :cover="pageCover">
+    <section class="lm-about-profile" :aria-label="profileLabel">
+      <div v-if="authorAvatar" class="lm-about-profile__avatar-wrap">
+        <LmImage
+          class="lm-about-profile__avatar"
+          :src="authorAvatar"
+          :alt="authorName"
+        />
       </div>
+
+      <div class="lm-about-profile__body">
+        <h2 class="lm-about-profile__name">
+          {{ authorName }}
+        </h2>
+
+        <p v-if="description" class="lm-about-profile__description">
+          {{ description }}
+        </p>
+
+        <LmAboutSocialLinks
+          v-if="socialLinks.length"
+          :items="socialLinks"
+        />
+      </div>
+    </section>
+
+    <div class="lm-about-page__body lm-aggregate-body markdown-body prose dark:prose-invert">
+      <slot />
     </div>
-  </section>
+  </LmAggregatePage>
 </template>
 
 <style scoped lang="scss">
-.lm-about-page {
-  @apply flex flex-col pb-12 sm:pb-16;
-}
-
-.lm-about-page__content {
-  @apply mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 sm:px-6 xl:px-0;
-}
-
 .lm-about-profile {
   @apply relative grid gap-5 overflow-hidden rounded-5 border p-5 sm:grid-cols-[6.5rem_minmax(0,1fr)] sm:p-6;
   color: var(--lm-c-text-primary);
@@ -91,13 +76,5 @@ const {
 .lm-about-profile__description {
   @apply m-0 mt-2 max-w-2xl text-sm leading-7 sm:text-base;
   color: var(--lm-c-text-secondary);
-}
-
-.lm-about-page__body {
-  @apply max-w-none;
-}
-
-.lm-about-page__body:empty {
-  @apply hidden;
 }
 </style>

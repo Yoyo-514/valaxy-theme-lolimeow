@@ -15,9 +15,7 @@ defineProps<{
       :key="group.title"
       class="lm-link-list__section"
     >
-      <h2 class="lm-link-list__title">
-        {{ group.title }}
-      </h2>
+      <LmAggregateSectionHeader :title="group.title" />
 
       <div class="lm-link-list__grid">
         <LmLinkCard
@@ -30,9 +28,7 @@ defineProps<{
     </section>
   </div>
 
-  <div v-else class="lm-link-list__empty lm-empty-state">
-    {{ emptyLabel }}
-  </div>
+  <LmAggregateEmpty v-else class="lm-link-list__empty" :label="emptyLabel" />
 </template>
 
 <style scoped lang="scss">
@@ -42,20 +38,6 @@ defineProps<{
 
 .lm-link-list__section {
   @apply grid gap-5;
-}
-
-.lm-link-list__title {
-  @apply relative isolate m-0 inline-flex w-fit text-2xl leading-8 font-900;
-  color: var(--lm-c-text-primary);
-}
-
-.lm-link-list__title::after {
-  content: '';
-  @apply absolute left-0 h-2.5 rounded-full;
-  right: -0.35rem;
-  bottom: 0.08rem;
-  z-index: var(--lm-z-behind);
-  background: var(--lm-c-primary-soft-hover);
 }
 
 .lm-link-list__grid {

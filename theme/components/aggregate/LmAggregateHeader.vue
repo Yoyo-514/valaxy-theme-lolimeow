@@ -38,8 +38,7 @@ defineProps<{
 
     <div
       v-else
-      class="lm-aggregate-header__content"
-      :class="{ 'lm-aggregate-header__content--plain': !cover }"
+      class="lm-aggregate-header__content lm-aggregate-container"
     >
       <LmAggregateMeta
         :title="title"
@@ -60,10 +59,6 @@ defineProps<{
 
 .lm-aggregate-header__content {
   @apply flex flex-col;
-}
-
-.lm-aggregate-header__content--plain {
-  @apply mx-auto max-w-5xl px-4 text-left sm:px-6 xl:px-0;
 }
 
 .lm-aggregate-header__cover {

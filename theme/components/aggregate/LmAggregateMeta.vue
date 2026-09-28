@@ -33,25 +33,28 @@ withDefaults(defineProps<{
 
 <style scoped lang="scss">
 .lm-aggregate-meta {
-  @apply flex flex-col justify-center items-center;
+  @apply flex min-w-0 flex-col items-center gap-3 text-center;
 }
 
 .lm-aggregate-meta__title {
   @apply m-0 text-3xl leading-[1.12] tracking-tight font-extrabold md:text-5xl md:leading-14;
   color: var(--lm-c-text-primary);
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 .lm-aggregate-meta__stats {
-  @apply mt-3 mb-0 flex flex-wrap gap-x-3 gap-y-1.5 p-0 list-none;
+  @apply m-0 flex flex-wrap justify-center gap-x-4 gap-y-1.5 p-0 list-none;
 }
 
 .lm-aggregate-meta__item {
-  @apply inline-flex items-baseline gap-1.5;
+  @apply inline-flex items-baseline gap-1.5 whitespace-nowrap;
 }
 
 .lm-aggregate-meta__value {
-  @apply text-[1.4rem] leading-none font-800;
+  @apply text-base leading-6 font-700;
   color: var(--lm-c-text-primary);
+  font-variant-numeric: tabular-nums;
 }
 
 .lm-aggregate-meta__label {

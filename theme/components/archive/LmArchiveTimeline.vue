@@ -88,9 +88,7 @@ const {
     </div>
   </div>
 
-  <div v-else class="lm-archive__empty lm-empty-state">
-    {{ emptyLabel }}
-  </div>
+  <LmAggregateEmpty v-else class="lm-archive__empty" :label="emptyLabel" />
 </template>
 
 <style scoped lang="scss">

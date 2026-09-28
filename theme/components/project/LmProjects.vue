@@ -36,40 +36,14 @@ const stats = computed(() => {
 </script>
 
 <template>
-  <section class="lm-projects-page">
-    <LmAggregateHeader
-      :title="pageTitle"
-      :cover="pageCover"
-      :stats="stats"
-    />
-
-    <div class="lm-projects-page__content">
-      <div class="lm-projects-page__body markdown-body prose dark:prose-invert">
-        <slot />
-      </div>
-
-      <LmProjectList
-        :groups="groups"
-        :empty-label="t('pages.projects.empty')"
-      />
+  <LmAggregatePage class="lm-projects-page" :title="pageTitle" :cover="pageCover" :stats="stats">
+    <div class="lm-projects-page__body lm-aggregate-body markdown-body prose dark:prose-invert">
+      <slot />
     </div>
-  </section>
+
+    <LmProjectList
+      :groups="groups"
+      :empty-label="t('pages.projects.empty')"
+    />
+  </LmAggregatePage>
 </template>
-
-<style scoped lang="scss">
-.lm-projects-page {
-  @apply flex flex-col pb-12 sm:pb-16;
-}
-
-.lm-projects-page__content {
-  @apply mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 sm:px-6 xl:px-0;
-}
-
-.lm-projects-page__body {
-  @apply max-w-none;
-}
-
-.lm-projects-page__body:empty {
-  @apply hidden;
-}
-</style>

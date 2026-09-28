@@ -43,24 +43,17 @@ watch(
         :key="activeGroup.id"
         class="lm-tag-index__panel"
       >
-        <header class="lm-tag-index__head">
-          <h2 class="lm-tag-index__title">
-            {{ activeGroup.name }}
-          </h2>
-
-          <p class="lm-tag-index__meta">
-            {{ activeGroup.count }} {{ postCountLabel }}
-          </p>
-        </header>
+        <LmAggregateSectionHeader
+          :title="activeGroup.name"
+          :meta="`${activeGroup.count} ${postCountLabel}`"
+        />
 
         <LmTagEntryList :entries="activeGroup.entries" />
       </section>
     </Transition>
   </div>
 
-  <div v-else class="lm-tag-index__empty lm-empty-state">
-    {{ emptyLabel }}
-  </div>
+  <LmAggregateEmpty v-else class="lm-tag-index__empty" :label="emptyLabel" />
 </template>
 
 <style scoped lang="scss">
@@ -71,20 +64,6 @@ watch(
 .lm-tag-index__panel {
   @apply grid gap-4 border-t pt-5 md:grid-cols-[minmax(8rem,13rem)_minmax(0,1fr)] md:gap-7;
   border-color: var(--lm-c-primary-border-subtle);
-}
-
-.lm-tag-index__head {
-  @apply min-w-0;
-}
-
-.lm-tag-index__title {
-  @apply m-0 break-words text-2xl leading-8 font-900 md:text-3xl md:leading-10;
-  color: var(--lm-c-text-primary);
-}
-
-.lm-tag-index__meta {
-  @apply mt-1.5 mb-0 text-sm leading-6 font-700;
-  color: var(--lm-c-text-muted);
 }
 
 .lm-tag-index-panel-enter-active,

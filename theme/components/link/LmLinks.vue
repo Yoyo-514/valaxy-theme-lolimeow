@@ -32,41 +32,15 @@ const stats = computed(() => {
 </script>
 
 <template>
-  <section class="lm-links-page">
-    <LmAggregateHeader
-      :title="pageTitle"
-      :cover="pageCover"
-      :stats="stats"
-    />
-
-    <div class="lm-links-page__content">
-      <div class="lm-links-page__body markdown-body prose dark:prose-invert">
-        <slot />
-      </div>
-
-      <LmLinkList
-        :groups="groups"
-        :empty-label="t('pages.links.empty')"
-        :status-check="statusCheck"
-      />
+  <LmAggregatePage class="lm-links-page" :title="pageTitle" :cover="pageCover" :stats="stats">
+    <div class="lm-links-page__body lm-aggregate-body markdown-body prose dark:prose-invert">
+      <slot />
     </div>
-  </section>
+
+    <LmLinkList
+      :groups="groups"
+      :empty-label="t('pages.links.empty')"
+      :status-check="statusCheck"
+    />
+  </LmAggregatePage>
 </template>
-
-<style scoped lang="scss">
-.lm-links-page {
-  @apply flex flex-col pb-12 sm:pb-16;
-}
-
-.lm-links-page__content {
-  @apply mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 sm:px-6 xl:px-0;
-}
-
-.lm-links-page__body {
-  @apply max-w-none;
-}
-
-.lm-links-page__body:empty {
-  @apply hidden;
-}
-</style>

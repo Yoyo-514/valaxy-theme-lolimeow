@@ -20,52 +20,60 @@ function formatEntryDate(date?: string | number | Date) {
       class="lm-category-entry-list__item"
     >
       <RouterLink class="lm-category-entry-list__link" :to="entry.path">
-        {{ entry.title }}
-      </RouterLink>
+        <span class="lm-category-entry-list__title">{{ entry.title }}</span>
 
-      <time class="lm-category-entry-list__date" :datetime="formatEntryDate(entry.date)">
-        {{ formatEntryDate(entry.date) }}
-      </time>
+        <time class="lm-category-entry-list__date" :datetime="formatEntryDate(entry.date)">
+          {{ formatEntryDate(entry.date) }}
+        </time>
+      </RouterLink>
     </li>
   </ul>
 </template>
 
 <style scoped lang="scss">
 .lm-category-entry-list {
-  @apply m-0 grid list-none gap-2 p-0;
+  @apply m-0 grid min-w-0 list-none p-0;
 }
 
 .lm-category-entry-list__item {
-  @apply grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 rounded-4 px-3 py-2;
-  background: var(--lm-c-primary-soft-hover);
+  min-width: 0;
 }
 
 .lm-category-entry-list__link {
-  @apply min-w-0 text-sm leading-6 font-700 no-underline;
+  @apply grid min-h-11 min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 px-2 py-2 text-sm leading-6 no-underline;
+  border-radius: var(--lm-radius-sm);
   color: var(--lm-c-text-primary);
   transition:
     color 0.2s ease,
-    transform 0.2s ease;
+    background-color 0.2s ease;
+}
+
+.lm-category-entry-list__title {
+  overflow-wrap: anywhere;
 }
 
 .lm-category-entry-list__link:hover,
 .lm-category-entry-list__link:focus-visible {
   color: var(--lm-c-primary-text-hover);
-  transform: translateX(0.08rem);
+  background: var(--lm-c-primary-soft);
 }
 
 .lm-category-entry-list__date {
-  @apply text-[0.72rem] leading-none font-700 uppercase tracking-[0.12em];
-  color: var(--lm-c-text-muted);
+  @apply text-xs leading-5;
+  color: var(--lm-c-text-secondary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 @media (max-width: 639px) {
-  .lm-category-entry-list__item {
+  .lm-category-entry-list__link {
     @apply grid-cols-1 items-start gap-x-0;
   }
+}
 
-  .lm-category-entry-list__date {
-    @apply mt-0.5;
+@media (prefers-reduced-motion: reduce) {
+  .lm-category-entry-list__link {
+    transition: none;
   }
 }
 </style>

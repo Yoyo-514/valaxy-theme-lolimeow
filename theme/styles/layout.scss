@@ -10,10 +10,14 @@ html {
   color: var(--lm-c-text-primary);
 }
 
-.lm-empty-state {
-  @apply rounded-6 border border-dashed px-5 py-12 text-center text-sm leading-7;
+.lm-aggregate-container {
+  @apply mx-auto w-full max-w-5xl px-4 sm:px-6 xl:px-0;
+}
 
-  border-color: var(--lm-c-primary-border-subtle);
-  color: var(--lm-c-text-secondary);
-  background: var(--lm-surface-empty-bg);
+.lm-aggregate-body {
+  @apply min-w-0 max-w-none;
+}
+
+.lm-aggregate-body:empty {
+  display: none;
 }

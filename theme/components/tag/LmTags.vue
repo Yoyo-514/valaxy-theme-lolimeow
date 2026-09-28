@@ -32,29 +32,11 @@ const stats = computed(() => {
 </script>
 
 <template>
-  <section class="lm-tags-page">
-    <LmAggregateHeader
-      :title="pageTitle"
-      :cover="pageCover"
-      :stats="stats"
+  <LmAggregatePage class="lm-tags-page" :title="pageTitle" :cover="pageCover" :stats="stats">
+    <LmTagIndex
+      :groups="groups"
+      :empty-label="t('pages.tags.empty')"
+      :post-count-label="t('pages.tags.postCountLabel')"
     />
-
-    <div class="lm-tags-page__content">
-      <LmTagIndex
-        :groups="groups"
-        :empty-label="t('pages.tags.empty')"
-        :post-count-label="t('pages.tags.postCountLabel')"
-      />
-    </div>
-  </section>
+  </LmAggregatePage>
 </template>
-
-<style scoped lang="scss">
-.lm-tags-page {
-  @apply flex flex-col pb-12 sm:pb-16;
-}
-
-.lm-tags-page__content {
-  @apply mx-auto w-full max-w-5xl px-4 sm:px-6 xl:px-0;
-}
-</style>
