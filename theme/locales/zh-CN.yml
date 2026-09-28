@@ -77,6 +77,8 @@ pages:
     title: 归档
     empty: 这里还没有可展示的归档文章。
     unknownYear: 未标注年份
+    unknownDate: 未标注日期
+    month: '{month} 月'
     countLabel: 篇
     stats:
       posts: 文章

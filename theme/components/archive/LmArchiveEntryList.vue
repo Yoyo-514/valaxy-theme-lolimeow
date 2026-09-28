@@ -1,75 +1,96 @@
 <script setup lang="ts">
 import type { ArchiveEntry } from '../../features/archive'
-import { formatDate } from 'valaxy'
+import { useSiteConfig } from 'valaxy'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { buildArchiveMonths } from '../../features/archive'
 
-defineProps<{
+const props = defineProps<{
   entries: ArchiveEntry[]
 }>()
 
-/** 将归档条目的日期格式化为列表展示文本。 */
-function formatEntryDate(date?: string | number | Date) {
-  return formatDate(date ?? '')
-}
+const { t } = useI18n()
+const site = useSiteConfig()
+const months = computed(() => buildArchiveMonths(props.entries, site.value.timezone))
 </script>
 
 <template>
-  <ol class="lm-archive-entry-list">
-    <li
-      v-for="entry in entries"
-      :key="entry.path"
-      class="lm-archive-entry-list__item"
-    >
-      <time class="lm-archive-entry-list__date" :datetime="formatEntryDate(entry.date)">
-        {{ formatEntryDate(entry.date) }}
-      </time>
-
-      <RouterLink class="lm-archive-entry-list__title" :to="entry.path">
-        {{ entry.title }}
-      </RouterLink>
-
-      <p v-if="entry.categories.length" class="lm-archive-entry-list__meta">
-        {{ entry.categories.join(' / ') }}
-      </p>
-    </li>
-  </ol>
+  <div class="lm-archive-entry-list">
+    <section v-for="group in months" :key="group.month" class="lm-archive-entry-list__month">
+      <h3 class="lm-archive-entry-list__month-title">
+        {{ group.month === 'Unknown' ? t('pages.archives.unknownDate') : t('pages.archives.month', { month: Number(group.month.slice(5)) }) }}
+      </h3>
+      <ol class="lm-archive-entry-list__entries">
+        <li v-for="entry in group.entries" :key="entry.path">
+          <RouterLink class="lm-archive-entry-list__link" :to="entry.path">
+            <time v-if="entry.calendarDate" class="lm-archive-entry-list__date" :datetime="entry.calendarDate">
+              {{ entry.calendarDate.slice(5) }}
+            </time>
+            <span v-else class="lm-archive-entry-list__date">—</span>
+            <span class="lm-archive-entry-list__body">
+              <span class="lm-archive-entry-list__title">{{ entry.title }}</span>
+              <span v-if="entry.categories.length" class="lm-archive-entry-list__meta">{{ entry.categories.join(' / ') }}</span>
+            </span>
+          </RouterLink>
+        </li>
+      </ol>
+    </section>
+  </div>
 </template>
 
 <style scoped lang="scss">
 .lm-archive-entry-list {
-  @apply m-0 flex list-none flex-col p-0;
+  @apply grid min-w-0 gap-8;
 }
 
-.lm-archive-entry-list__item {
-  @apply border-b py-4;
-  border-color: var(--lm-c-primary-border-subtle);
+.lm-archive-entry-list__month-title {
+  @apply m-0 mb-2 px-2 text-sm leading-7 font-700;
+  color: var(--lm-c-text-secondary);
+  font-variant-numeric: tabular-nums;
 }
 
-.lm-archive-entry-list__item:first-child {
-  @apply pt-1;
+.lm-archive-entry-list__entries {
+  @apply m-0 grid list-none p-0;
 }
 
-.lm-archive-entry-list__item:last-child {
-  @apply border-b-0 pb-0;
+.lm-archive-entry-list__link {
+  @apply grid min-h-12 grid-cols-[3.5rem_minmax(0,1fr)] items-baseline gap-3 px-2 py-3 no-underline;
+  border-radius: var(--lm-radius-sm);
+  color: var(--lm-c-text-primary);
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.lm-archive-entry-list__link:hover,
+.lm-archive-entry-list__link:focus-visible {
+  color: var(--lm-c-primary-text-hover);
+  background: var(--lm-c-primary-soft-hover);
 }
 
 .lm-archive-entry-list__date {
-  @apply text-xs font-700 uppercase tracking-[0.14em];
-  color: var(--lm-c-text-muted);
+  @apply text-sm;
+  color: var(--lm-c-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.lm-archive-entry-list__body {
+  @apply grid min-w-0 gap-1;
+  overflow-wrap: anywhere;
 }
 
 .lm-archive-entry-list__title {
-  @apply mt-2 block text-base leading-7 font-700 no-underline;
-  color: var(--lm-c-text-primary);
-  transition: color 0.2s ease;
-}
-
-.lm-archive-entry-list__title:hover,
-.lm-archive-entry-list__title:focus-visible {
-  color: var(--lm-c-primary-text-hover);
+  @apply text-base leading-7 font-600;
 }
 
 .lm-archive-entry-list__meta {
-  @apply mt-1.5 mb-0 text-sm leading-6;
+  @apply text-xs leading-5;
   color: var(--lm-c-text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-archive-entry-list__link {
+    transition: none;
+  }
 }
 </style>

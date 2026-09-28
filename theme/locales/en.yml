@@ -77,6 +77,8 @@ pages:
     title: Archives
     empty: No archive entries are available yet.
     unknownYear: Unknown Year
+    unknownDate: Undated
+    month: 'Month {month}'
     countLabel: posts
     stats:
       posts: Posts

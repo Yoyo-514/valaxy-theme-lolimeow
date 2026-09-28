@@ -1,4 +1,4 @@
-import { useSiteStore } from 'valaxy'
+import { useSiteConfig, useSiteStore } from 'valaxy'
 import { computed } from 'vue'
 import { buildArchiveGroups } from './archive'
 
@@ -9,8 +9,9 @@ import { buildArchiveGroups } from './archive'
  */
 export function useArchiveGroups() {
   const site = useSiteStore()
+  const config = useSiteConfig()
 
-  const groups = computed(() => buildArchiveGroups(site.postList ?? []))
+  const groups = computed(() => buildArchiveGroups(site.postList ?? [], config.value.timezone))
   const totalPosts = computed(() => groups.value.reduce((total, group) => total + group.count, 0))
 
   return {

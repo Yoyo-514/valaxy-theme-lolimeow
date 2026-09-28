@@ -1,5 +1,5 @@
 import type { ArchiveGroup } from './types'
-import { useWindowSize } from '@vueuse/core'
+import { useMounted, useWindowSize } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
 
 /** Archive 时间线切换为折叠模式的视口宽度，单位为像素。 */
@@ -17,10 +17,11 @@ type ArchiveSelectionChange = 'idle' | 'expand' | 'collapse' | 'replace'
  */
 export function useArchiveTimelineState(getGroups: () => ArchiveGroup[]) {
   const { width } = useWindowSize()
+  const mounted = useMounted()
   const selectedYear = ref<string | null>(null)
   const selectionChange = ref<ArchiveSelectionChange>('idle')
   const groups = computed(() => getGroups())
-  const isAccordionMode = computed(() => width.value < ARCHIVE_ACCORDION_BREAKPOINT)
+  const isAccordionMode = computed(() => mounted.value && width.value < ARCHIVE_ACCORDION_BREAKPOINT)
 
   /**
    * 校验年份是否仍存在于当前归档分组。
