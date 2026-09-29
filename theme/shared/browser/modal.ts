@@ -1,5 +1,6 @@
 import type { Ref } from 'vue'
 import type { BodyScrollRelease, BodyScrollReleaseOptions } from './body-scroll-lock'
+import { isFocusable, tabbable } from 'tabbable'
 import { nextTick, onBeforeUnmount, watch } from 'vue'
 import { lockBodyScroll } from './body-scroll-lock'
 import { cancelBrowserAnimationFrame, getDocument, requestBrowserAnimationFrame } from './runtime'
@@ -8,24 +9,6 @@ import { cancelBrowserAnimationFrame, getDocument, requestBrowserAnimationFrame 
 export type { BodyScrollReleaseOptions } from './body-scroll-lock'
 /** @internal */
 export { lockBodyScroll } from './body-scroll-lock'
-
-/** 浮层内可通过键盘聚焦的元素选择器。 */
-const FOCUSABLE_SELECTOR = [
-  'a[href]',
-  'area[href]',
-  'button:not([disabled])',
-  'input:not([disabled]):not([type="hidden"])',
-  'select:not([disabled])',
-  'textarea:not([disabled])',
-  'iframe',
-  'object',
-  'embed',
-  '[contenteditable]:not([contenteditable="false"])',
-  '[tabindex]:not([tabindex="-1"])',
-].join(',')
-
-/** 可恢复焦点的交互元素选择器，额外允许显式声明 `tabindex="-1"` 的元素。 */
-const RESTORABLE_FOCUS_SELECTOR = `${FOCUSABLE_SELECTOR},[tabindex="-1"]`
 
 /** 单个已激活浮层的焦点域。 */
 interface ModalFocusScope {
@@ -75,58 +58,6 @@ function resolveHtmlElement(element: Element | null, currentDocument: Document) 
   return HtmlElement && element instanceof HtmlElement ? element as HTMLElement : null
 }
 
-/**
- * 判断元素当前是否可见且未被禁用或惰性容器包裹。
- *
- * @param element - 待判断的 HTML 元素。
- * @returns 元素当前可接收焦点时返回 `true`。
- */
-function isAvailableFocusTarget(element: HTMLElement) {
-  const currentWindow = element.ownerDocument.defaultView
-  if (!currentWindow || element.hidden || element.matches(':disabled') || element.closest('[inert]'))
-    return false
-
-  const style = currentWindow.getComputedStyle(element)
-  return style.display !== 'none'
-    && style.visibility !== 'hidden'
-    && element.getClientRects().length > 0
-}
-
-/**
- * 判断元素是否可由脚本可靠聚焦。
- *
- * @param element - 待判断的初始焦点元素。
- * @returns 元素具备原生或显式 tabindex 聚焦语义时返回 `true`。
- */
-function isProgrammaticallyFocusable(element: HTMLElement) {
-  return element.matches(RESTORABLE_FOCUS_SELECTOR) && isAvailableFocusTarget(element)
-}
-
-/**
- * 获取焦点域内当前可参与 Tab 顺序的元素。
- *
- * @param container - 浮层焦点域容器。
- * @returns 正 tabindex 优先、其后按 DOM 顺序排列的可聚焦元素。
- */
-function getFocusableElements(container: HTMLElement) {
-  return Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR))
-    .map((element, domIndex) => ({ domIndex, element }))
-    .filter(({ element }) => element.tabIndex >= 0 && isAvailableFocusTarget(element))
-    .sort((left, right) => {
-      const leftHasPositiveTabIndex = left.element.tabIndex > 0
-      const rightHasPositiveTabIndex = right.element.tabIndex > 0
-
-      if (leftHasPositiveTabIndex && rightHasPositiveTabIndex)
-        return left.element.tabIndex - right.element.tabIndex || left.domIndex - right.domIndex
-      if (leftHasPositiveTabIndex)
-        return -1
-      if (rightHasPositiveTabIndex)
-        return 1
-      return left.domIndex - right.domIndex
-    })
-    .map(({ element }) => element)
-}
-
 /** 获取焦点域当前或最近一次挂载的容器元素。 */
 function resolveScopeContainer(scope: ModalFocusScope) {
   const container = scope.container.value
@@ -147,10 +78,10 @@ function focusScope(scope: ModalFocusScope) {
     return
 
   const preferredTarget = container.querySelector<HTMLElement>('[data-modal-initial-focus]')
-  const target = preferredTarget && isProgrammaticallyFocusable(preferredTarget)
+  const target = preferredTarget && isFocusable(preferredTarget)
     ? preferredTarget
-    : getFocusableElements(container)[0]
-      ?? (isProgrammaticallyFocusable(container) ? container : undefined)
+    : tabbable(container)[0]
+      ?? (isFocusable(container) ? container : undefined)
 
   target?.focus({ preventScroll: true })
 }
@@ -200,10 +131,10 @@ function handleModalKeydown(event: KeyboardEvent) {
   if (event.key !== 'Tab')
     return
 
-  const focusableElements = getFocusableElements(container)
+  const focusableElements = tabbable(container)
   if (!focusableElements.length) {
     event.preventDefault()
-    if (isProgrammaticallyFocusable(container))
+    if (isFocusable(container))
       container.focus({ preventScroll: true })
     return
   }
@@ -253,7 +184,7 @@ async function restoreFocusAfterRender(
     const topScope = getTopFocusScope()
     if (topScope) {
       const topContainer = resolveScopeContainer(topScope)
-      if (topContainer && scope.restoreTarget && topContainer.contains(scope.restoreTarget) && isAvailableFocusTarget(scope.restoreTarget)) {
+      if (topContainer && scope.restoreTarget && topContainer.contains(scope.restoreTarget) && isFocusable(scope.restoreTarget)) {
         scope.restoreTarget.focus({ preventScroll: true })
         return
       }
@@ -266,8 +197,7 @@ async function restoreFocusAfterRender(
     if (target
       && target.ownerDocument === scope.document
       && scope.document.contains(target)
-      && target.matches(RESTORABLE_FOCUS_SELECTOR)
-      && isAvailableFocusTarget(target)) {
+      && isFocusable(target)) {
       target.focus({ preventScroll: true })
     }
   }

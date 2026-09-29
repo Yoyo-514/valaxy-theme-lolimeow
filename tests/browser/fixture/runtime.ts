@@ -5,6 +5,7 @@ import { createBackgroundRotationScheduler } from '../../../theme/features/backg
 import { preloadImage } from '../../../theme/features/background/image-loader'
 import { useMottoPlayback } from '../../../theme/features/hero/motto/use-motto-playback'
 import { useMottoSource } from '../../../theme/features/hero/motto/use-motto-source'
+import { OverlayFixture } from './overlays'
 
 const pixel = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="1" height="1"/%3E'
 const background: ResolvedBackground = {
@@ -66,6 +67,7 @@ createApp({
     }
 
     return () => h('main', [
+      h(OverlayFixture),
       h('button', { onClick: () => scheduler.schedule(background, 1) }, 'Start rotation'),
       h('button', { onClick: scheduler.stop }, 'Stop rotation'),
       h('output', { id: 'commits' }, String(commits.value)),

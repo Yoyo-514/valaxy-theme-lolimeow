@@ -33,7 +33,8 @@
     "@types/d3-cloud": "catalog:",
     "@unhead/vue": "catalog:",
     "@vueuse/core": "catalog:",
-    "d3-cloud": "catalog:"
+    "d3-cloud": "catalog:",
+    "tabbable": "catalog:"
   },
   "devDependencies": {
     "valaxy": "catalog:",
@@ -42,7 +43,7 @@
   "peerDependencies": {
     "valaxy": "1.0.0-rc.16",
     "vue": "^3.5.41",
-    "vue-router": "^5.0.0",
-    "vue-i18n": "^11.4.12"
+    "vue-i18n": "^11.4.12",
+    "vue-router": "^5.0.0"
   }
 }

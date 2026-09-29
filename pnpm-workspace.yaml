@@ -45,6 +45,7 @@ catalog:
   eslint: ^10.11.0
   eslint-plugin-format: ^2.0.1
   knip: ^6.38.0
+  tabbable: ^6.5.0
   typescript: ^6.0.3
   unocss: 66.10.5
   valaxy: 1.0.0-rc.16
