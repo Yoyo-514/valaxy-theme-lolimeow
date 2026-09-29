@@ -12,22 +12,27 @@
     "docs:build": "pnpm -C docs run build",
     "docs:dev": "pnpm -C docs run dev",
     "docs:serve": "pnpm -C docs run serve",
-    "check:vue-overrides": "node ./scripts/check-vue-overrides.mjs",
-    "fix:vue-overrides": "node ./scripts/check-vue-overrides.mjs --write",
     "lint": "eslint .",
     "test:colors": "vitest run tests/theme-colors.test.ts",
     "release": "cd theme && git add -A && bumpp --all",
-    "typecheck": "node ./scripts/typecheck.mjs"
+    "typecheck": "node ./scripts/typecheck.mjs",
+    "test": "vitest run",
+    "test:browser": "playwright test",
+    "check:unused": "node scripts/check-unused.mjs"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:",
+    "@playwright/test": "catalog:",
     "@unocss/eslint-plugin": "catalog:",
     "bumpp": "catalog:",
     "eslint": "catalog:",
     "eslint-plugin-format": "catalog:",
+    "knip": "catalog:",
     "typescript": "catalog:",
-    "valaxy-theme-lolimeow": "workspace:*",
+    "unocss": "catalog:",
+    "valaxy": "catalog:",
     "vitest": "catalog:",
+    "vue": "catalog:",
     "vue-tsc": "catalog:"
   }
 }

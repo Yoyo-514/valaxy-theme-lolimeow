@@ -74,3 +74,5 @@ CLAUDE.md
 # pi
 .pi/
 .playwright-mcp
+playwright-report/
+test-results/

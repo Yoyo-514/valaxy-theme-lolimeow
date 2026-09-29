@@ -25,26 +25,11 @@ jobs:
       - name: Install
         run: pnpm install
 
+      - name: Unit tests
+        run: pnpm test
+
       - name: Lint
         run: pnpm run lint
-
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v6
-        with:
-          version: 10
-      - uses: actions/setup-node@v6
-        with:
-          node-version: lts/*
-          cache: pnpm
-
-      - name: Install
-        run: pnpm install
-
-      - name: Typecheck
-        run: pnpm run typecheck
 
   # check windows build
   build:
@@ -77,5 +62,13 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Build:demo
-        run: pnpm run build:demo
+      - name: Typecheck generated declarations and source
+        run: pnpm run typecheck
+
+      - name: Install Chromium
+        if: runner.os == 'Linux'
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Browser tests
+        if: runner.os == 'Linux'
+        run: pnpm run test:browser

@@ -1,0 +1,48 @@
+import { expect, test } from '@playwright/test'
+
+test('article outline tracks headings without widening the page', async ({ page }) => {
+  const errors: string[] = []
+  page.on('pageerror', error => errors.push(error.message))
+  page.on('console', (message) => {
+    if (/hydration|recursive updates/i.test(message.text()))
+      errors.push(message.text())
+  })
+  await page.setViewportSize({ width: 1280, height: 800 })
+  await page.goto('/posts/demo')
+  const links = page.locator('.lm-toc__link')
+  await expect(links.first()).toBeVisible()
+  const count = await links.count()
+  await links.nth(count - 1).click()
+  await expect(links.nth(count - 1)).toHaveClass(/lm-toc__link--active/)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  expect(errors).toEqual([])
+})
+
+test('mobile TOC restores focus and releases scrolling before heading navigation', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/posts/demo')
+  const trigger = page.locator('.lm-toc-mobile__trigger')
+  await trigger.click()
+  await expect(page.locator('.lm-toc-mobile__panel')).toBeVisible()
+  await expect(page.locator('body')).toHaveCSS('position', 'fixed')
+  await page.keyboard.press('Escape')
+  await expect(trigger).toBeFocused()
+  await trigger.click()
+  await page.locator('.lm-toc-mobile__link').last().click()
+  await expect(page.locator('.lm-toc-mobile__panel')).toHaveCount(0)
+  await expect(page.locator('body')).not.toHaveCSS('position', 'fixed')
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+})
+
+test('search contains keyboard focus and restores the trigger on Escape', async ({ page }) => {
+  await page.goto('/')
+  const trigger = page.locator('.lm-nav-tools__button').filter({ has: page.locator('[i-ri-search-line]') })
+  await trigger.click()
+  const input = page.locator('.lm-search-header__input')
+  await expect(input).toBeFocused()
+  await page.keyboard.press('Shift+Tab')
+  expect(await page.locator('.lm-search-shell__panel').evaluate(el => el.contains(document.activeElement))).toBe(true)
+  await page.keyboard.press('Escape')
+  await expect(trigger).toBeFocused()
+  await expect(page.locator('body')).not.toHaveCSS('position', 'fixed')
+})
