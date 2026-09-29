@@ -2,7 +2,7 @@ import type { CSSProperties, Ref } from 'vue'
 import type { BackgroundScope, ResolvedBackground } from './types'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { getWindow, useReducedMotion } from '../../shared/browser'
-import { cacheBackgroundImage, getCachedBackgroundImage, getStableFallbackImage } from './background-cache'
+import { cacheBackgroundImage, getCachedBackgroundImage } from './background-cache'
 import { getBackgroundCacheKey, shouldUseTransparentFallback } from './background-image'
 import { createBackgroundRotationScheduler } from './background-rotation'
 import { createBackgroundTransition } from './background-transition'
@@ -39,6 +39,7 @@ export function useBackgroundRuntime(
   const hasLoaded = ref(false)
   const usingFallback = ref(false)
   let requestId = 0
+  let initialLoad: AbortController | undefined
 
   const placeholderStyle = computed<CSSProperties>(() => {
     const resolved = resolvedBackground.value
@@ -79,6 +80,7 @@ export function useBackgroundRuntime(
   watch(
     () => resolvedBackground.value,
     async (next) => {
+      initialLoad?.abort()
       requestId += 1
       const currentRequestId = requestId
       rotation.stop()
@@ -94,7 +96,7 @@ export function useBackgroundRuntime(
 
       const cacheKey = getBackgroundCacheKey(scope, next)
       const cachedUrl = getCachedBackgroundImage(cacheKey)
-      const fallbackImageUrl = getStableFallbackImage(scope, next)
+      const fallbackImageUrl = next.fallbackImageUrl
       const transparentUntilLoaded = shouldUseTransparentFallback(next, options)
 
       if (cachedUrl) {
@@ -120,9 +122,11 @@ export function useBackgroundRuntime(
       }
 
       isLoading.value = true
+      const controller = new AbortController()
+      initialLoad = controller
 
       try {
-        const loadedUrl = await preloadImage(next.imageUrl)
+        const loadedUrl = await preloadImage(next.imageUrl, controller.signal)
 
         if (currentRequestId !== requestId)
           return
@@ -141,6 +145,7 @@ export function useBackgroundRuntime(
       }
       finally {
         if (currentRequestId === requestId) {
+          initialLoad = undefined
           isLoading.value = false
           rotation.schedule(next, currentRequestId)
         }
@@ -150,6 +155,7 @@ export function useBackgroundRuntime(
   )
 
   onBeforeUnmount(() => {
+    initialLoad?.abort()
     requestId += 1
     rotation.stop()
     transition.dispose()

@@ -2,10 +2,10 @@
 export type BackgroundScope = 'app' | 'hero'
 
 /** 解析后的背景展示类型。 */
-export type BackgroundKind = 'image' | 'gradient' | 'color'
+type BackgroundKind = 'image' | 'gradient' | 'color'
 
 /** 背景配置的来源，用于区分 Hero、全局背景与最终兜底。 */
-export type BackgroundSource = 'hero' | 'background' | 'fallback'
+type BackgroundSource = 'hero' | 'background' | 'fallback'
 
 /**
  * 主题背景经过配置、色彩模式与设备宽度等条件解析后的统一结果。

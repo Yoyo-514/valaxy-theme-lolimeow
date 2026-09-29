@@ -1,5 +1,3 @@
-import type { BackgroundScope, ResolvedBackground } from './types'
-
 /** 已成功显示背景图的模块级 LRU 缓存容量。 */
 const LOADED_IMAGE_CACHE_CAPACITY = 64
 
@@ -7,6 +5,8 @@ const LOADED_IMAGE_CACHE_CAPACITY = 64
  * 基于 `Map` 插入顺序实现的最近最少使用缓存。
  *
  * 读取已有条目时会将其刷新为最新使用项；容量不足时淘汰最早使用项。
+ * @internal
+ * @remarks size、has、delete、clear 暂无调用；刻意保留完整缓存接口，便于维护。
  */
 class LRUCache<K, V> {
   /** 缓存可容纳的最大条目数。 */
@@ -99,26 +99,6 @@ class LRUCache<K, V> {
 /** 跨背景运行时实例共享的已成功显示图片缓存。 */
 const loadedImageCache = new LRUCache<string, string>(LOADED_IMAGE_CACHE_CAPACITY)
 
-/** 跨背景运行时实例共享的 hydration 稳定回退图片缓存。 */
-const sessionFallbackCache = new Map<string, string>()
-
-/**
- * 生成稳定回退图片的模块级缓存键。
- *
- * @param scope - 背景生效范围。
- * @param background - 当前解析后的背景。
- * @returns 由范围、来源、随机模式及回退候选组成的稳定键。
- */
-function getFallbackCacheKey(scope: BackgroundScope, background: ResolvedBackground) {
-  return [
-    scope,
-    background.source,
-    background.random ? 'random' : 'stable',
-    background.fallbackImageUrl,
-    background.staticImageUrls.join('|'),
-  ].join(':')
-}
-
 /**
  * 读取已成功显示过的背景图片，并刷新其 LRU 使用顺序。
  *
@@ -137,37 +117,4 @@ export function getCachedBackgroundImage(cacheKey: string): string | undefined {
  */
 export function cacheBackgroundImage(cacheKey: string, imageUrl: string): void {
   loadedImageCache.set(cacheKey, imageUrl)
-}
-
-/**
- * 获取 SSR 与 hydration 前后保持一致的静态回退图片。
- *
- * 随机模式不会在运行时重新挑选回退图，而是沿用解析结果中的稳定候选；
- * 真正的随机选择由客户端预加载和轮换流程负责。
- *
- * @param scope - 背景生效范围。
- * @param background - 当前解析后的背景。
- * @returns 稳定回退图片地址；不存在回退候选时返回空字符串。
- */
-export function getStableFallbackImage(
-  scope: BackgroundScope,
-  background: ResolvedBackground,
-): string {
-  if (!background.fallbackImageUrl && !background.staticImageUrls.length)
-    return ''
-
-  const cacheKey = getFallbackCacheKey(scope, background)
-  const cachedFallback = sessionFallbackCache.get(cacheKey)
-
-  if (cachedFallback)
-    return cachedFallback
-
-  // hydration 前后的首屏 fallback 必须稳定一致。
-  // 真正的随机切换交给 mounted 后的预加载与轮换流程处理。
-  const fallbackImage = background.fallbackImageUrl
-
-  if (fallbackImage)
-    sessionFallbackCache.set(cacheKey, fallbackImage)
-
-  return fallbackImage
 }

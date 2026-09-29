@@ -38,7 +38,7 @@ export function pickFirstUrl(urls?: string[]) {
  * @param urls - 待随机选择的图片地址列表。
  * @returns 随机命中的有效地址；没有候选时返回空字符串。
  */
-export function pickRandomUrl(urls?: string[]) {
+function pickRandomUrl(urls?: string[]) {
   const candidates = normalizeUrls(urls)
 
   if (!candidates.length)
@@ -81,7 +81,7 @@ export function getBackgroundCacheKey(scope: BackgroundScope, background: Resolv
  * @param url - 原始图片地址。
  * @returns 带 `_ts` 查询参数的地址；空地址返回空字符串。
  */
-export function withCacheBust(url: string) {
+function withCacheBust(url: string) {
   if (!url)
     return ''
 
