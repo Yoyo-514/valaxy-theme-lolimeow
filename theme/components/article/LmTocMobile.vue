@@ -181,7 +181,8 @@ watch(visible, (isVisible) => {
 }
 
 .lm-toc-mobile__trigger {
-  @apply fixed bottom-5 right-4 z-[var(--lm-z-overlay-trigger)] inline-flex h-11 w-11 items-center justify-center rounded-full p-0 shadow-lg transition-transform duration-200 sm:right-6;
+  @apply fixed right-4 z-[var(--lm-z-overlay-trigger)] inline-flex h-11 w-11 items-center justify-center rounded-full p-0 shadow-lg transition-transform duration-200 sm:right-6;
+  bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
   border: 1px solid var(--lm-c-primary-border);
   background: color-mix(in srgb, var(--lm-surface-reading-bg) 92%, transparent);
   color: var(--lm-c-text-primary);

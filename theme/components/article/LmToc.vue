@@ -10,11 +10,18 @@ const navRef = ref<HTMLElement>()
 watch(activeLink, async () => {
   await nextTick()
 
-  const activeItem = navRef.value?.querySelector<HTMLElement>('.lm-toc__link--active')
-  activeItem?.scrollIntoView({
-    block: 'nearest',
-    inline: 'nearest',
-  })
+  const nav = navRef.value
+  const activeItem = nav?.querySelector<HTMLElement>('.lm-toc__link--active')
+  if (!nav?.clientHeight || !activeItem)
+    return
+
+  // 只滚动目录自身；scrollIntoView 会连带滚动页面，窄桌面下还可能横向挪动视口。
+  const bounds = nav.getBoundingClientRect()
+  const itemBounds = activeItem.getBoundingClientRect()
+  const offset = itemBounds.top < bounds.top
+    ? itemBounds.top - bounds.top
+    : Math.max(0, itemBounds.bottom - bounds.bottom)
+  nav.scrollTop += offset
 })
 </script>
 
@@ -90,6 +97,7 @@ watch(activeLink, async () => {
 .lm-toc__link {
   @apply relative py-1 text-[0.98rem] leading-7 no-underline transition-colors duration-200 ease-out;
   color: var(--lm-c-text-secondary);
+  overflow-wrap: anywhere;
 
   &::before {
     content: '';

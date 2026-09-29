@@ -5,5 +5,8 @@
         <RouterView />
       </LmArticle>
     </div>
+    <template #overlay>
+      <LmTocMobile />
+    </template>
   </Layout>
 </template>

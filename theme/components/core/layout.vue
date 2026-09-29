@@ -63,7 +63,7 @@ useHomePaginationScrollBehavior(router)
       @close="closeSearch"
     />
 
-    <div class="lm-page-surface-layer" :style="pageSurfaceStyle" />
+    <div class="lm-page-surface-layer" :style="pageSurfaceStyle" aria-hidden="true" />
 
     <div v-if="showGlobalNotice" class="lm-global-notice">
       <LmNotice />
@@ -73,11 +73,12 @@ useHomePaginationScrollBehavior(router)
       <slot />
     </main>
 
+    <!-- 浮层与正文、页脚同级，避免被正文的层叠上下文限制。 -->
+    <slot name="overlay" />
+
     <LmHelper />
 
-    <div v-if="!hideFooter" class="relative z-[var(--lm-z-content)]">
-      <LmFooter />
-    </div>
+    <LmFooter v-if="!hideFooter" />
   </div>
 </template>
 
@@ -91,9 +92,7 @@ useHomePaginationScrollBehavior(router)
 }
 
 .lm-page-surface-layer {
-  // 用文档流内的 absolute 定位代替“fixed + JS 追踪 Hero 底部”：
-  // 边界直接锚在内容坐标上，滚动时自然跟随 Hero，
-  // 既不需要监听滚动，也不会因为移动 fixed 元素而产生累计布局偏移（CLS）。
+  // 外层只定义阅读区域边界；首页从 Hero 底部开始，其余页面覆盖整个壳层。
   // top 由内联样式提供（首页为 Hero 高度，其余页面为 0），SSR 阶段即已确定。
   position: absolute;
   left: 0;
@@ -103,7 +102,18 @@ useHomePaginationScrollBehavior(router)
   z-index: var(--lm-z-page-surface);
   pointer-events: none;
 
-  background: color-mix(in srgb, var(--lm-c-bg-glass) 62%, transparent);
-  backdrop-filter: blur(6px) saturate(1.04);
+  // 模糊只占一个视口，避免长文章产生巨大的滤镜合成层和边缘绘制缝隙。
+  // sticky 直接跟随文档滚动，无需 JS 测量；短页面限制在外层高度内。
+  &::before {
+    content: '';
+    display: block;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100%;
+    background: color-mix(in srgb, var(--lm-c-bg-glass) 62%, transparent);
+    backdrop-filter: blur(6px) saturate(1.04);
+  }
 }
 </style>
