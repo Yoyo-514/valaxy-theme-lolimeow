@@ -17,6 +17,7 @@ export interface RateLimitOptions {
 }
 
 /** 限流函数暴露的生命周期控制能力。 */
+/** @internal */
 export interface RateLimitedControls<T = unknown> {
   /** 取消待执行调用并清理计时器。 */
   cancel: () => void

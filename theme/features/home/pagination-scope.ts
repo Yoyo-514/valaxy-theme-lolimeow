@@ -1,7 +1,7 @@
 import { normalizePageNumber, normalizePageSize } from './pagination-normalization'
 
 /** 首页文章流在主题和站点均未配置时采用的默认每页文章数。 */
-export const DEFAULT_HOME_PAGE_SIZE = 10
+const DEFAULT_HOME_PAGE_SIZE = 10
 
 /** 计算分页作用域所需的原始输入。 */
 export interface PaginationScopeOptions {

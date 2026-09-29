@@ -1,14 +1,13 @@
 <script lang="ts" setup>
 import type { NavItem } from '../../types'
 import { computed } from 'vue'
-import { useNavActive, useNavItemState } from '../../features/navigation'
+import { useNavItemState } from '../../features/navigation'
 
 const props = defineProps<{
   item: NavItem
 }>()
 
 const itemRef = computed(() => props.item)
-const { clearPending } = useNavActive()
 const { active, children, hasChildren, itemActive } = useNavItemState(itemRef)
 </script>
 
@@ -45,7 +44,6 @@ const { active, children, hasChildren, itemActive } = useNavItemState(itemRef)
       :target="props.item.target"
       :aria-current="itemActive ? 'page' : undefined"
       rel="noopener"
-      @click="clearPending"
     >
       <LmNavLinkContent :item="props.item" />
     </AppLink>

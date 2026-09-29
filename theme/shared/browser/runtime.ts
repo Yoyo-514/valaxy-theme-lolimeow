@@ -3,11 +3,13 @@
  *
  * @returns 两个浏览器全局对象均可用时返回 `true`，SSR/SSG 环境返回 `false`。
  */
+/** @internal */
 export function isBrowser() {
   return typeof window !== 'undefined' && typeof document !== 'undefined'
 }
 
 /** 浏览器 `window` 对象的非空类型，用于统一描述运行时窗口依赖。 */
+/** @internal */
 export type BrowserWindow = NonNullable<ReturnType<typeof getWindow>>
 
 /** 浏览器定时器标识类型，保持与 DOM `setTimeout` 返回值一致。 */
@@ -156,6 +158,7 @@ function toggleElementClass(element: Element | undefined, className: string, for
  * @param className - 待切换的 CSS 类名。
  * @param force - 指定时强制添加或移除；省略时按当前状态切换。
  */
+/** @internal */
 export function toggleDocumentClass(className: string, force?: boolean) {
   // 主题级状态类同时写到 html/body，兼容 Valaxy 与第三方样式的不同挂载点。
   toggleElementClass(getDocumentElement(), className, force)
@@ -167,6 +170,7 @@ export function toggleDocumentClass(className: string, force?: boolean) {
  *
  * @param className - 待移除的 CSS 类名。
  */
+/** @internal */
 export function removeDocumentClass(className: string) {
   getDocumentElement()?.classList.remove(className)
   getDocumentBody()?.classList.remove(className)

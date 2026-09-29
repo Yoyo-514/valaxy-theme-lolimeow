@@ -23,16 +23,7 @@ $common: (
   'radius-sm': 8px,
   'radius-md': 12px,
   'radius-lg': 16px,
-  'radius-full': 9999px,
-
-  // 间距
-  'spacing-2': 2px,
-  'spacing-4': 4px,
-  'spacing-8': 8px,
-  'spacing-12': 12px,
-  'spacing-16': 16px,
-  'spacing-24': 24px,
-  'spacing-32': 32px
+  'radius-full': 9999px
 ) !default;
 $common: map.merge((), $common);
 
@@ -104,17 +95,13 @@ $z-index: (
   'z-floating': 20,
   // 全局覆盖层
   'z-dropdown': 100,
-  'z-sticky': 200,
   'z-navbar': 300,
   'z-drawer-backdrop': calc(var(--lm-z-navbar) - 1),
   'z-overlay-trigger': 350,
   'z-overlay-scrim': 380,
   'z-overlay-panel': 390,
-  'z-sidebar': 400,
   'z-drawer': 500,
   'z-modal': 600,
-  'z-toast': 700,
-  'z-tooltip': 800,
   'z-progress': 1024
 ) !default;
 $z-index: map.merge((), $z-index);

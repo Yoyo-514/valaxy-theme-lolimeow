@@ -1,7 +1,7 @@
 import type { HitokotoSentenceType } from '../../types'
 
 /** Hitokoto API 返回的 Hero 一言所需字段。 */
-export interface HitokotoResponse {
+interface HitokotoResponse {
   /** 一言正文。 */
   hitokoto?: string
   /** 作品或出处名称。 */

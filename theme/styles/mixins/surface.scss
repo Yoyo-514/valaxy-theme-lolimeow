@@ -49,15 +49,3 @@
 ) {
   @include lm-glass($blur, $background, $border-color, $shadow);
 }
-
-/**
- * 长文本阅读 surface
- *
- * 正文容器不应该和首页卡片使用同一配方。
- * 这里刻意减弱透明感，优先保证连续阅读时的对比度稳定。
- */
-@mixin lm-surface-reading {
-  background: var(--lm-surface-reading-bg);
-  border: 1px solid var(--lm-surface-reading-border);
-  box-shadow: var(--lm-surface-reading-shadow);
-}

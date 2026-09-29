@@ -7,7 +7,7 @@ import { normalizePostTitle, resolvePostTimestamp } from './post-content'
  * @param post - 待检查的 Valaxy 文章。
  * @returns 文章有路径且未显式隐藏时返回 `true`。
  */
-export function isVisiblePost(post: Post) {
+function isVisiblePost(post: Post) {
   return Boolean(post.path) && post.hide !== true
 }
 

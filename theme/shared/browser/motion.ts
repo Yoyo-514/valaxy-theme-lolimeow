@@ -2,6 +2,7 @@ import { onBeforeUnmount, onMounted, readonly, ref } from 'vue'
 import { getWindow } from './runtime'
 
 /** 系统“减少动态效果”偏好使用的唯一媒体查询。 */
+/** @internal */
 export const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)'
 
 /**

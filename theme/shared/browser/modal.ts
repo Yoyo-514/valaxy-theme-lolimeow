@@ -4,7 +4,9 @@ import { nextTick, onBeforeUnmount, watch } from 'vue'
 import { lockBodyScroll } from './body-scroll-lock'
 import { cancelBrowserAnimationFrame, getDocument, requestBrowserAnimationFrame } from './runtime'
 
+/** @internal */
 export type { BodyScrollReleaseOptions } from './body-scroll-lock'
+/** @internal */
 export { lockBodyScroll } from './body-scroll-lock'
 
 /** 浮层内可通过键盘聚焦的元素选择器。 */

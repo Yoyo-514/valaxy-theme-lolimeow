@@ -6,7 +6,7 @@ const props = defineProps<{
   items: NavItem[]
 }>()
 
-const { isActive, clearPending } = useNavActive()
+const { isActive } = useNavActive()
 </script>
 
 <template>
@@ -23,7 +23,6 @@ const { isActive, clearPending } = useNavActive()
       :aria-current="isActive(child.link) ? 'page' : undefined"
       role="menuitem"
       rel="noopener"
-      @click="clearPending"
     >
       <LmNavLinkContent :item="child" />
     </AppLink>

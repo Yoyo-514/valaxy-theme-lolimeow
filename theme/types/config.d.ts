@@ -13,7 +13,6 @@ import type { UserUI } from './ui'
 
 export namespace LolimeowTheme {
   export type Config = ThemeConfig
-  export type Sidebar = any
 }
 
 export interface ThemeConfig extends DefaultTheme.Config {
