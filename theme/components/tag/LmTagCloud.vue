@@ -20,8 +20,8 @@ const { items: cloudItems, packed } = usePackedTagCloud(() => props.items, conta
   <div
     ref="cloud"
     class="lm-tag-cloud"
-    :class="{ 'lm-tag-cloud--packed': packed }"
-    :style="packed ? { height: `${packed.height}px` } : undefined"
+    :class="{ 'lm-tag-cloud--packed': packed, 'lm-tag-cloud--small': cloudItems.length <= 3 }"
+    :style="packed ? { minHeight: `${packed.height}px` } : undefined"
   >
     <button
       v-for="item in cloudItems"
@@ -33,8 +33,7 @@ const { items: cloudItems, packed } = usePackedTagCloud(() => props.items, conta
       :style="{
         fontSize: item.fontSize,
         fontWeight: item.fontWeight,
-        left: packed ? `${packed.positions[item.id].left}px` : undefined,
-        top: packed ? `${packed.positions[item.id].top}px` : undefined,
+        transform: packed?.positions[item.id] ? `translate(${packed.positions[item.id].x}px, ${packed.positions[item.id].y}px)` : undefined,
       }"
       :aria-pressed="item.id === activeId"
       :aria-label="`${item.name}, ${item.count}`"
@@ -48,12 +47,11 @@ const { items: cloudItems, packed } = usePackedTagCloud(() => props.items, conta
 
 <style scoped lang="scss">
 .lm-tag-cloud {
-  @apply relative mx-auto flex min-h-30 w-full max-w-3xl flex-wrap items-center justify-center gap-x-5 gap-y-2 py-3 text-center;
+  @apply relative mx-auto flex min-h-48 w-full max-w-3xl flex-wrap content-start items-center justify-center gap-x-5 gap-y-2 py-3 text-center;
 }
 
-.lm-tag-cloud--packed {
-  display: block;
-  padding: 0;
+.lm-tag-cloud--small {
+  min-height: 7.5rem;
 }
 
 .lm-tag-cloud__item {
@@ -62,10 +60,6 @@ const { items: cloudItems, packed } = usePackedTagCloud(() => props.items, conta
   color: var(--lm-c-text-secondary);
   font-family: inherit;
   transition: color 0.15s ease;
-}
-
-.lm-tag-cloud--packed .lm-tag-cloud__item {
-  position: absolute;
 }
 
 .lm-tag-cloud__item:hover,

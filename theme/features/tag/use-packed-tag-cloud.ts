@@ -13,8 +13,8 @@ interface CloudWord extends cloud.Word {
 }
 
 interface CloudPosition {
-  left: number
-  top: number
+  x: number
+  y: number
 }
 
 /** d3-cloud 只计算位置；标签始终由 Vue 渲染为可访问的原生按钮。 */
@@ -33,15 +33,16 @@ export function usePackedTagCloud(
   async function arrange() {
     const current = ++revision
     layout?.stop()
-    packed.value = undefined
     await nextTick()
     const element = container.value
-    if (disposed || current !== revision || !createCloud || !element || !items.value.length)
+    if (disposed || current !== revision || !createCloud || !element)
       return
 
     const width = element.clientWidth
-    if (width < 64)
+    if (!items.value.length || width < 64) {
+      packed.value = undefined
       return
+    }
 
     const font = getComputedStyle(element).fontFamily
     const buttons = new Map(Array.from(element.querySelectorAll<HTMLButtonElement>('[data-tag-id]'))
@@ -58,10 +59,14 @@ export function usePackedTagCloud(
     const area = words.reduce((sum, word) => sum + (word.buttonWidth + 12) * (word.buttonHeight + 8), 0)
     const desiredWidth = Math.max(Math.sqrt(area * 3), ...words.map(word => word.buttonWidth + 32))
     const availableWidth = Math.floor(Math.min(width - 16, 720, desiredWidth) / 32) * 32
-    if (words.some(word => word.buttonWidth + 16 > availableWidth))
+    if (words.some(word => word.buttonWidth + 16 > availableWidth)) {
+      packed.value = undefined
       return
+    }
 
     const height = Math.max(180, Math.ceil(area / availableWidth * 2))
+    // 自然换行仍占据文档流；最小高度变化不能反过来改变按钮的测量原点。
+    const flowHeight = Math.max(...Array.from(buttons.values(), button => button.offsetTop + button.offsetHeight)) + 12
 
     layout = createCloud<CloudWord>()
       .size([availableWidth, height])
@@ -87,29 +92,37 @@ export function usePackedTagCloud(
           width: word.buttonWidth,
           height: word.buttonHeight,
         }))
-        // d3-cloud 可能省略无法排入的词，将这些词接在云团下方，保留完整内容。
+        // d3-cloud 不保证排入每个词；遗漏的词接在下方，不能丢失标签。
         const placedIds = new Set(placed.map(word => word.item.id))
-        for (const word of words.filter(word => !placedIds.has(word.item.id))) {
+        let nextTop = Math.max(0, ...rectangles.map(rect => rect.top + rect.height)) + 8
+        for (const word of words) {
+          if (placedIds.has(word.item.id))
+            continue
           rectangles.push({
             id: word.item.id,
             left: -word.buttonWidth / 2,
-            top: Math.max(0, ...rectangles.map(rect => rect.top + rect.height)) + 4,
+            top: nextTop,
             width: word.buttonWidth,
             height: word.buttonHeight,
           })
+          nextTop += word.buttonHeight + 8
         }
-
         const left = Math.min(...rectangles.map(rect => rect.left))
         const right = Math.max(...rectangles.map(rect => rect.left + rect.width))
         const top = Math.min(...rectangles.map(rect => rect.top))
         const bottom = Math.max(...rectangles.map(rect => rect.top + rect.height))
-        const packedHeight = Math.max(120, bottom - top + 24)
+        const packedHeight = Math.max(items.value.length <= 3 ? 120 : 192, flowHeight, bottom - top + 24)
+
+        // 按钮始终留在文档流中占位；transform 只改变视觉位置。
         packed.value = {
           height: packedHeight,
-          positions: Object.fromEntries(rectangles.map(rect => [rect.id, {
-            left: rect.left - left + (width - (right - left)) / 2,
-            top: rect.top - top + (packedHeight - (bottom - top)) / 2,
-          }])),
+          positions: Object.fromEntries(rectangles.map((rect) => {
+            const button = buttons.get(rect.id)!
+            return [rect.id, {
+              x: rect.left - left + (width - (right - left)) / 2 - button.offsetLeft,
+              y: rect.top - top + (packedHeight - (bottom - top)) / 2 - button.offsetTop,
+            }]
+          })),
         }
       })
     layout.start()
