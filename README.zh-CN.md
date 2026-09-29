@@ -136,6 +136,23 @@ pnpm lint
 pnpm typecheck
 ```
 
+兼容版本：Valaxy `1.0.0-rc.16`、Vue `^3.5.41`、Vue Router `^5.0.0`、Vue I18n `^11.4.12`。
+
+构建会生成 Valaxy 类型声明，首次运行 typecheck 前请先构建。浏览器测试使用生产预览和源码测试页：
+
+```bash
+pnpm test
+pnpm check:unused
+pnpm exec playwright install chromium
+pnpm build
+pnpm test:browser
+pnpm -C theme pack
+```
+
+主题按源码发布：`components/`、`layouts/`、`pages/` 是框架入口；`features/` 按功能组织，较大的功能再分为 `background/runtime`、`hero/motto`、`home/history`、`home/pagination` 和 `navigation/drawer`。`shared/` 存放浏览器和通用工具，`node/` 负责配置与构建，测试分为 `tests/unit` 和 `tests/browser`。
+
+浏览器 API 从 `valaxy-theme-lolimeow/client` 导入，Node 配置与类型从根入口导入。`features/` 内部路径随实现调整，站点扩展优先使用公开 client 入口。
+
 ## 致谢
 
 - [Valaxy](https://github.com/YunYouJun/valaxy)

@@ -142,6 +142,23 @@ pnpm lint
 pnpm typecheck
 ```
 
+Compatible versions: Valaxy `1.0.0-rc.16`, Vue `^3.5.41`, Vue Router `^5.0.0`, and Vue I18n `^11.4.12`.
+
+Build before the first typecheck to generate Valaxy declarations. Browser checks use the production preview and source fixtures:
+
+```bash
+pnpm test
+pnpm check:unused
+pnpm exec playwright install chromium
+pnpm build
+pnpm test:browser
+pnpm -C theme pack
+```
+
+The theme ships source. Framework entries live in `components/`, `layouts/`, and `pages/`. Larger features use `background/runtime`, `hero/motto`, `home/history`, `home/pagination`, and `navigation/drawer` subdirectories. Shared browser utilities live in `shared/`; configuration and build code live in `node/`. Tests are grouped under `tests/unit` and `tests/browser`.
+
+Import browser APIs from `valaxy-theme-lolimeow/client` and Node configuration or types from the root entry. Internal `features/` paths can change; site extensions should prefer the public client entry.
+
 ## Acknowledgements
 
 - [Valaxy](https://github.com/YunYouJun/valaxy)
