@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { waitForHydration } from './helpers'
 
 test('article outline tracks headings without widening the page', async ({ page }) => {
   const errors: string[] = []
@@ -9,6 +10,7 @@ test('article outline tracks headings without widening the page', async ({ page 
   })
   await page.setViewportSize({ width: 1280, height: 800 })
   await page.goto('/posts/demo')
+  await waitForHydration(page)
   const links = page.locator('.lm-toc__link')
   await expect(links.first()).toBeVisible()
   const count = await links.count()
@@ -21,6 +23,7 @@ test('article outline tracks headings without widening the page', async ({ page 
 test('mobile TOC restores focus and releases scrolling before heading navigation', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/posts/demo')
+  await waitForHydration(page)
   const trigger = page.locator('.lm-toc-mobile__trigger')
   await trigger.click()
   await expect(page.locator('.lm-toc-mobile__panel')).toBeVisible()
@@ -36,6 +39,7 @@ test('mobile TOC restores focus and releases scrolling before heading navigation
 
 test('search contains keyboard focus and restores the trigger on Escape', async ({ page }) => {
   await page.goto('/')
+  await waitForHydration(page)
   const trigger = page.locator('.lm-nav-tools__button').filter({ has: page.locator('[i-ri-search-line]') })
   await trigger.click()
   const input = page.locator('.lm-search-header__input')
@@ -49,6 +53,7 @@ test('search contains keyboard focus and restores the trigger on Escape', async 
 
 test('returning from a post restores the home reading position', async ({ page }) => {
   await page.goto('/')
+  await waitForHydration(page)
   const card = page.locator('.lm-post-card').nth(3)
   await card.scrollIntoViewIfNeeded()
   const position = await page.evaluate(() => window.scrollY)
@@ -64,6 +69,7 @@ for (const reducedMotion of ['reduce', 'no-preference'] as const) {
     await page.setViewportSize({ width: 390, height: 844 })
     await page.emulateMedia({ reducedMotion })
     await page.goto('/')
+    await waitForHydration(page)
     await page.locator('.lm-nav-tools__menu-button').click()
     const drawer = page.locator('.lm-mobile-nav-panel')
     await expect(drawer).toBeVisible()

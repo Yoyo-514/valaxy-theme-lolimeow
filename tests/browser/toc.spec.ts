@@ -1,8 +1,10 @@
 import { expect, test } from '@playwright/test'
+import { waitForHydration } from './helpers'
 
 test('selecting the current hash scrolls again and wheel input cancels the animation', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 })
   await page.goto('/posts/demo')
+  await waitForHydration(page)
   const link = page.locator('.lm-toc__link').filter({ hasText: /^Code$/ })
   await link.click()
   const heading = page.locator('.markdown-body #code')
@@ -27,6 +29,7 @@ for (const width of [1280, 390]) {
       await page.setViewportSize({ width, height: 800 })
       await page.emulateMedia({ reducedMotion })
       await page.goto('/posts/demo')
+      await waitForHydration(page)
       const mobile = width < 1280
       const links = page.locator(mobile ? '.lm-toc-mobile__link' : '.lm-toc__link')
       if (mobile) {

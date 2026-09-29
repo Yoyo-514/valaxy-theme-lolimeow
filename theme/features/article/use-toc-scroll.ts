@@ -28,6 +28,17 @@ export function useTocScroll() {
       cancel()
   }
 
+  function finish() {
+    // 最后一帧滚动还会派发 scroll 事件；等事件及响应式更新完成后再解锁。
+    frame = requestBrowserAnimationFrame(() => {
+      frame = requestBrowserAnimationFrame(() => {
+        frame = undefined
+        releaseNavbar?.()
+        releaseNavbar = undefined
+      })
+    })
+  }
+
   async function handleClick(event: MouseEvent) {
     if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)
       return
@@ -41,10 +52,15 @@ export function useTocScroll() {
 
     event.preventDefault()
     cancel()
+    releaseNavbar = lockNavbarScrollReaction()
     const request = generation
     const failure = await router.push({ hash })
-    if (request !== generation || (failure && !isNavigationFailure(failure, NavigationFailureType.duplicated)))
+    if (request !== generation)
       return
+    if (failure && !isNavigationFailure(failure, NavigationFailureType.duplicated)) {
+      cancel()
+      return
+    }
 
     // 使用文章标题的样式偏移，保持目标位于导航栏下方。
     const start = currentWindow.scrollY
@@ -54,10 +70,9 @@ export function useTocScroll() {
       currentWindow.document.documentElement.scrollHeight - currentWindow.innerHeight,
     ))
     heading.focus({ preventScroll: true })
-    releaseNavbar = lockNavbarScrollReaction({ timeoutMs: SCROLL_DURATION + 100 })
-
     if (reducedMotion.value) {
       currentWindow.scrollTo({ top: target, behavior: 'instant' })
+      finish()
       return
     }
 
@@ -66,7 +81,10 @@ export function useTocScroll() {
       const progress = Math.min(1, (now - started) / SCROLL_DURATION)
       const eased = 1 - (1 - progress) ** 3
       currentWindow.scrollTo({ top: start + (target - start) * eased, behavior: 'instant' })
-      frame = progress < 1 ? requestBrowserAnimationFrame(step) : undefined
+      if (progress < 1)
+        frame = requestBrowserAnimationFrame(step)
+      else
+        finish()
     }
     frame = requestBrowserAnimationFrame(step)
   }
