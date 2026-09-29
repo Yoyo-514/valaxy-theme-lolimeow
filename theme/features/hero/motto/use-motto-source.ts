@@ -2,7 +2,7 @@ import type { Ref } from 'vue'
 import type { Hero } from '../../../types'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { isAbortError } from '../../../shared/browser'
-import { fetchHitokoto } from '../hitokoto'
+import { fetchHitokoto } from './hitokoto'
 
 /** 管理配置签名与一言来源；挂载前保留配置文案，取消后不接纳旧响应。 */
 export function useMottoSource(hero: Readonly<Ref<Hero>>, mounted: Readonly<Ref<boolean>>) {

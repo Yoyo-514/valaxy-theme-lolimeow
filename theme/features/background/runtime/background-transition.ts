@@ -1,5 +1,5 @@
 import type { Ref } from 'vue'
-import type { BrowserAnimationFrame, BrowserTimeout } from '../../shared/browser'
+import type { BrowserAnimationFrame, BrowserTimeout } from '../../../shared/browser'
 import { ref } from 'vue'
 import {
   cancelBrowserAnimationFrame,
@@ -8,7 +8,7 @@ import {
   prefersReducedMotion,
   requestBrowserAnimationFrame,
   setBrowserTimeout,
-} from '../../shared/browser'
+} from '../../../shared/browser'
 
 /** 进场图片挂载后开始显示的延迟，单位为毫秒。 */
 const IMAGE_REVEAL_DELAY = 16

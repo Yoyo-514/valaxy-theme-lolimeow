@@ -1,8 +1,8 @@
-import type { BrowserTimeout } from '../../shared/browser'
-import type { BackgroundScope, ResolvedBackground } from './types'
-import { clearBrowserTimeout, getDocument, getWindow, setBrowserTimeout } from '../../shared/browser'
+import type { BrowserTimeout } from '../../../shared/browser'
+import type { BackgroundScope, ResolvedBackground } from '../types'
+import { clearBrowserTimeout, getDocument, getWindow, setBrowserTimeout } from '../../../shared/browser'
+import { getBackgroundCacheKey, getRotationCandidate } from '../background-image'
 import { cacheBackgroundImage } from './background-cache'
-import { getBackgroundCacheKey, getRotationCandidate } from './background-image'
 import { preloadImage } from './image-loader'
 
 /** 随机背景轮换允许的最短间隔，单位为毫秒。 */

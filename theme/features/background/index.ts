@@ -1,5 +1,5 @@
 export { createBackgroundImageStyle } from './background-image'
+export * from './runtime/use-background-preload'
+export * from './runtime/use-background-runtime'
 export * from './types'
-export * from './use-background-preload'
-export * from './use-background-runtime'
 export * from './use-resolved-background'

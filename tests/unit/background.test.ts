@@ -1,6 +1,6 @@
-import type { ResolveBackgroundOptions } from '../theme/features/background/resolve-background'
+import type { ResolveBackgroundOptions } from '../../theme/features/background/resolve-background'
 import { describe, expect, it } from 'vitest'
-import { resolveBackground } from '../theme/features/background/resolve-background'
+import { resolveBackground } from '../../theme/features/background/resolve-background'
 
 function resolve(options: Partial<ResolveBackgroundOptions> = {}) {
   return resolveBackground({ scope: 'app', background: {}, isDark: false, isMobile: false, ...options })

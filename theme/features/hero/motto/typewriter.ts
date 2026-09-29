@@ -1,7 +1,7 @@
-import type { BrowserTimeout } from '../../shared/browser'
-import type { TypewriterRenderOptions } from './types'
+import type { BrowserTimeout } from '../../../shared/browser'
+import type { TypewriterRenderOptions } from '../types'
 import { onBeforeUnmount, ref, watch } from 'vue'
-import { clearBrowserTimeout, getWindow, setBrowserTimeout, useReducedMotion } from '../../shared/browser'
+import { clearBrowserTimeout, getWindow, setBrowserTimeout, useReducedMotion } from '../../../shared/browser'
 
 /**
  * 创建供 Hero 文案复用的逐字渲染状态。

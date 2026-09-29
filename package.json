@@ -13,7 +13,7 @@
     "docs:dev": "pnpm -C docs run dev",
     "docs:serve": "pnpm -C docs run serve",
     "lint": "eslint .",
-    "test:colors": "vitest run tests/theme-colors.test.ts",
+    "test:colors": "vitest run tests/unit/theme-colors.test.ts",
     "release": "cd theme && git add -A && bumpp --all",
     "typecheck": "node ./scripts/typecheck.mjs",
     "test": "vitest run",

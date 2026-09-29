@@ -1,8 +1,8 @@
-import type { BackgroundScope } from './types'
+import type { BackgroundScope } from '../types'
 import { useHead } from '@unhead/vue'
 import { computed } from 'vue'
-import { useThemeConfig } from '../../shared/config'
-import { resolveBackground } from './resolve-background'
+import { useThemeConfig } from '../../../shared/config'
+import { resolveBackground } from '../resolve-background'
 
 /** 预加载候选的环境组合与对应的媒体查询条件。 */
 interface PreloadVariant {

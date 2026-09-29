@@ -7,8 +7,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { useThemeConfig } from '../../shared/config'
 import { hashString } from '../../shared/utils'
 import { isHomePaginationPath } from '../navigation'
-import { captureActiveHomeHistoryEntryKey, getHomeHistoryState } from './home-history-state'
-import { resolvePageSize, resolvePaginationScope } from './pagination-scope'
+import { captureActiveHomeHistoryEntryKey, getHomeHistoryState } from './history/home-history-state'
+import { resolvePageSize, resolvePaginationScope } from './pagination/pagination-scope'
 
 /**
  * 构建首页文章流的分页、无限滚动、公告与动画响应式状态。

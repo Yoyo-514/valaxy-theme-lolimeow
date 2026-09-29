@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { createHomeHistoryState } from '../theme/features/home/home-history-state'
-import { createHomeScrollTasks } from '../theme/features/home/home-scroll-task'
-import { lockBodyScroll } from '../theme/shared/browser/body-scroll-lock'
+import { createHomeHistoryState } from '../../theme/features/home/history/home-history-state'
+import { createHomeScrollTasks } from '../../theme/features/home/history/home-scroll-task'
+import { lockBodyScroll } from '../../theme/shared/browser/body-scroll-lock'
 
 function deferred<T>() {
   let resolve!: (value: T) => void

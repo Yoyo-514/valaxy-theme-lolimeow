@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildTagCloudItems } from '../theme/features/tag/tag-cloud'
+import { buildTagCloudItems } from '../../theme/features/tag/tag-cloud'
 
 describe('tag cloud weights', () => {
   it('ranks tags by usage and gives equal counts equal emphasis', () => {

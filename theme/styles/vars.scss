@@ -22,7 +22,6 @@ $common: (
   'radius-xs': 4px,
   'radius-sm': 8px,
   'radius-md': 12px,
-  'radius-lg': 16px,
   'radius-full': 9999px
 ) !default;
 $common: map.merge((), $common);
@@ -37,7 +36,6 @@ $light: (
   // 背景
   'c-bg-base': #f2f2f7,
   'c-bg-glass': rgba(249, 251, 255, 0.82),
-  'c-bg-glass-hover': rgba(255, 255, 255, 0.9),
   // 覆盖整页背景图的基础 overlay
   'c-overlay-base': color-mix(in srgb, var(--lm-c-primary-base) 8%, rgba(242, 247, 255, 0.9)),
   // 品牌氛围层
@@ -64,7 +62,6 @@ $dark: (
   // 背景
   'c-bg-base': #0b0b10,
   'c-bg-glass': rgba(5, 8, 22, 0.82),
-  'c-bg-glass-hover': rgba(15, 18, 32, 0.9),
   // 覆盖整页背景图的基础 overlay
   'c-overlay-base': color-mix(in srgb, var(--lm-c-primary-base) 8%, rgba(4, 8, 24, 0.84)),
   // 品牌氛围层

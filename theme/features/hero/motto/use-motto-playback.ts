@@ -4,7 +4,7 @@ import type { Hero } from '../../../types'
 import type { useMottoSource } from './use-motto-source'
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { clearBrowserTimeout, setBrowserTimeout } from '../../../shared/browser'
-import { useTypewriter } from '../typewriter'
+import { useTypewriter } from './typewriter'
 
 /** 文本播放仅持有索引、逐字渲染和下一次播放定时器；网络请求由来源层处理。 */
 export function useMottoPlayback(

@@ -1,14 +1,14 @@
-import type { UI } from '../theme/types'
+import type { UI } from '../../theme/types'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
-import { DEFAULT_COLORS, resolveThemeColorsScss } from '../theme/node/colors'
-import { themePlugin } from '../theme/node/plugins'
+import { DEFAULT_COLORS, resolveThemeColorsScss } from '../../theme/node/colors'
+import { themePlugin } from '../../theme/node/plugins'
 
 // 使用 Valaxy 实际依赖的 Sass，验证真正的配置 → 编译 → CSS 链路。
-const require = createRequire(new URL('../theme/package.json', import.meta.url))
+const require = createRequire(new URL('../../theme/package.json', import.meta.url))
 const sass = createRequire(require.resolve('valaxy'))('sass')
-const root = fileURLToPath(new URL('../', import.meta.url))
+const root = fileURLToPath(new URL('../../', import.meta.url))
 
 function compile(ui: UI = {}, warnings?: string[]) {
   const source = `${resolveThemeColorsScss(ui)}

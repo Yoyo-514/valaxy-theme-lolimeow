@@ -1,4 +1,4 @@
-import type { HitokotoSentenceType } from '../../types'
+import type { HitokotoSentenceType } from '../../../types'
 
 /** Hitokoto API 返回的 Hero 一言所需字段。 */
 interface HitokotoResponse {

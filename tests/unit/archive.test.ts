@@ -1,6 +1,6 @@
 import type { Post } from 'valaxy'
 import { describe, expect, it } from 'vitest'
-import { buildArchiveGroups, buildArchiveMonths, resolveArchiveDate, resolveArchiveYear } from '../theme/features/archive/archive'
+import { buildArchiveGroups, buildArchiveMonths, resolveArchiveDate, resolveArchiveYear } from '../../theme/features/archive/archive'
 
 describe('archive calendar', () => {
   it('groups visible posts by year and month without changing the source', () => {

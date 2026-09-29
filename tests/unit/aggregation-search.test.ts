@@ -1,8 +1,8 @@
 import type { Post } from 'valaxy'
 import { describe, expect, it } from 'vitest'
-import { buildCategoryTree } from '../theme/features/category/category'
-import { collectQueryRanges, createHighlightParts, mergeRanges } from '../theme/features/search/highlight'
-import { buildTagGroups, countTaggedPosts } from '../theme/features/tag/tag'
+import { buildCategoryTree } from '../../theme/features/category/category'
+import { collectQueryRanges, createHighlightParts, mergeRanges } from '../../theme/features/search/highlight'
+import { buildTagGroups, countTaggedPosts } from '../../theme/features/tag/tag'
 
 describe('post aggregation', () => {
   const posts = Object.freeze([

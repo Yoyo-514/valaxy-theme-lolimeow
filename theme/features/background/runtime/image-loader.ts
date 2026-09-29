@@ -1,4 +1,4 @@
-import { getWindow } from '../../shared/browser'
+import { getWindow } from '../../../shared/browser'
 
 /** 创建可由异常名称稳定识别的图片加载取消错误。 */
 function createImageAbortError(): Error {

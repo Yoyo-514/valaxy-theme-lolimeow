@@ -1,5 +1,5 @@
 import type { Router, RouterScrollBehavior } from 'vue-router'
-import { isHomePaginationPath, lockNavbarScrollReaction } from '../navigation'
+import { isHomePaginationPath, lockNavbarScrollReaction } from '../../navigation'
 import { getHomeHistoryState } from './home-history-state'
 import { createHomeScrollTasks } from './home-scroll-task'
 
