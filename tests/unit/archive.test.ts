@@ -49,4 +49,11 @@ describe('archive calendar', () => {
     for (const value of [undefined, '', 'invalid', new Date(Number.NaN)])
       expect(resolveArchiveDate(value)).toBeUndefined()
   })
+
+  it('uses UTC when the site leaves its timezone empty', () => {
+    const groups = buildArchiveGroups([{ path: '/boundary', date: '2025-12-31T23:30:00Z' }], '')
+    expect(groups[0].year).toBe('2025')
+    expect(groups[0].entries[0].calendarDate).toBe('2025-12-31')
+    expect(buildArchiveMonths(groups[0].entries, '')[0].month).toBe('2025-12')
+  })
 })

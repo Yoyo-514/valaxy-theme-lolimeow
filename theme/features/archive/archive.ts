@@ -38,7 +38,7 @@ export function resolveArchiveDate(value: ArchiveEntry['date'], timezone = 'UTC'
     return undefined
 
   const parts = new Intl.DateTimeFormat('en-CA', {
-    timeZone: timezone,
+    timeZone: timezone || 'UTC',
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
