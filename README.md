@@ -121,9 +121,12 @@ Useful references for development:
 
 ## Addons
 
-| Addon                                                     | Usage        |
-| --------------------------------------------------------- | ------------ |
-| [valaxy-addon-waline](https://github.com/walinejs/waline) | Comment area |
+| Addon                                                               | Usage                                            |
+| ------------------------------------------------------------------- | ------------------------------------------------ |
+| [valaxy-addon-waline](https://github.com/walinejs/waline)           | Comment area                                     |
+| [valaxy-addon-mermaid](https://valaxy.site/addons/official/mermaid) | Optional diagrams, loaded on pages that use them |
+
+With Valaxy `1.0.0-rc.16` or later, Mermaid requires installing `valaxy-addon-mermaid` and adding `addonMermaid()` to your site's `addons`. See [plugin setup](./docs/guide/comments-plugins.md#使用-mermaid). Existing Mermaid fences remain compatible.
 
 ## Development
 

@@ -12,7 +12,11 @@
   "dependencies": {
     "@iconify-json/ri": "catalog:",
     "valaxy": "catalog:",
+    "valaxy-addon-mermaid": "catalog:",
     "valaxy-addon-waline": "catalog:",
     "valaxy-theme-lolimeow": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "catalog:"
   }
 }

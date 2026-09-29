@@ -44,6 +44,32 @@ export default defineValaxyConfig({
 })
 ```
 
+## 使用 Mermaid
+
+Valaxy 从 `1.0.0-rc.16` 起将 Mermaid 拆为可选插件。需要图表的站点安装并启用插件；不使用图表的站点无需安装。
+
+```bash
+pnpm add valaxy-addon-mermaid
+```
+
+在站点 `valaxy.config.ts` 的 `addons` 中加入 `addonMermaid()`，保留已有插件：
+
+```ts
+import { defineValaxyConfig } from 'valaxy'
+import { addonMermaid } from 'valaxy-addon-mermaid'
+
+export default defineValaxyConfig({
+  theme: 'lolimeow',
+  addons: [addonMermaid()],
+})
+```
+
+原有的 `mermaid` 代码块无需修改。只升级 Valaxy、未启用插件时，图表会显示为源码。
+
+插件在图表组件挂载后动态加载 Mermaid，普通页面无需加载渲染器，SSG 也不会初始化它。图表文章中的图表会在页面挂载时开始渲染，并非滚动进入视口后才加载。主题不再强制预构建或内联 Mermaid 及其解析依赖。
+
+默认提供放大查看、缩放和平移，详见 [官方 Mermaid 插件说明](https://valaxy.site/addons/official/mermaid)。
+
 ## SSR 兼容注意事项
 
 插件通常依赖浏览器环境。建议优先使用 Valaxy addon 的官方接入方式，不要在主题配置文件顶层直接访问浏览器 API。

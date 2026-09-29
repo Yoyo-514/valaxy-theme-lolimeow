@@ -115,9 +115,12 @@ README 只保留最小安装与主题概览。完整使用说明与按模块拆�
 
 ## 插件
 
-| 插件                                                      | 用途   |
-| --------------------------------------------------------- | ------ |
-| [valaxy-addon-waline](https://github.com/walinejs/waline) | 评论区 |
+| 插件                                                                | 用途                             |
+| ------------------------------------------------------------------- | -------------------------------- |
+| [valaxy-addon-waline](https://github.com/walinejs/waline)           | 评论区                           |
+| [valaxy-addon-mermaid](https://valaxy.site/addons/official/mermaid) | 可选图表，仅在使用图表的页面加载 |
+
+使用 Valaxy `1.0.0-rc.16` 及以上版本时，Mermaid 需要单独安装 `valaxy-addon-mermaid`，并在站点 `addons` 中加入 `addonMermaid()`。详见 [插件接入说明](./docs/guide/comments-plugins.md#使用-mermaid)，已有 Mermaid 代码块无需修改。
 
 ## 开发
 

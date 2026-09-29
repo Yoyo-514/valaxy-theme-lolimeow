@@ -1,5 +1,6 @@
 import type { ThemeConfig } from 'valaxy-theme-lolimeow'
 import { defineConfig } from 'valaxy'
+import { addonMermaid } from 'valaxy-addon-mermaid'
 // @ts-expect-error - `valaxy-addon-waline` 仅提供源码与导出映射，CI 下 `vue-tsc` 可能无法正确解析包根类型
 import { addonWaline } from 'valaxy-addon-waline'
 
@@ -206,6 +207,7 @@ export default defineConfig<ThemeConfig>({
     },
   },
   addons: [
+    addonMermaid(),
     addonWaline({
       serverURL: 'https://waline.yoyo514.top',
       pageview: true,

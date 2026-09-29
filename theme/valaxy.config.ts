@@ -15,9 +15,6 @@ export default defineTheme<ThemeConfig>((options) => {
       // valaxy 在构建前直接消费 vite.ssgOptions 做 SSG 页面级 HTML 后处理；
       // 必须注入在这里（插件的 config() hook 执行太晚，valaxy 已取值完毕）。
       ssgOptions: createLmSsgOptions(userSsgOptions),
-      ssr: {
-        noExternal: ['mermaid', '@mermaid-js/parser', 'langium'],
-      },
     },
     unocss: {
       safelist: generateSafelist(options.config.themeConfig as ThemeConfig),

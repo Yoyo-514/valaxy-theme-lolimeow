@@ -83,17 +83,6 @@ export function themePlugin(options: ResolvedValaxyOptions<ThemeConfig>): Plugin
             },
           },
         },
-
-        // mermaid 等重型依赖在 SSR 场景需要预构建与内联处理。
-        optimizeDeps: {
-          include: [
-            '@braintree/sanitize-url',
-            'dayjs/plugin/advancedFormat',
-            'mermaid',
-            '@mermaid-js/parser',
-            'langium',
-          ],
-        },
       }
     },
 
