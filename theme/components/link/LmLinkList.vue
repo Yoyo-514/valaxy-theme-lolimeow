@@ -41,6 +41,7 @@ defineProps<{
 }
 
 .lm-link-list__grid {
-  @apply grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3;
+  @apply grid items-stretch gap-4;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
 }
 </style>

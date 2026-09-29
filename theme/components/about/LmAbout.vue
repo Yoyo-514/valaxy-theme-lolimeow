@@ -14,7 +14,7 @@ const {
 
 <template>
   <LmAggregatePage class="lm-about-page" :title="pageTitle" :cover="pageCover">
-    <section class="lm-about-profile" :aria-label="profileLabel">
+    <section class="lm-about-profile" :class="{ 'lm-about-profile--with-avatar': authorAvatar }" :aria-label="profileLabel">
       <div v-if="authorAvatar" class="lm-about-profile__avatar-wrap">
         <LmImage
           class="lm-about-profile__avatar"
@@ -47,12 +47,16 @@ const {
 
 <style scoped lang="scss">
 .lm-about-profile {
-  @apply relative grid gap-5 overflow-hidden rounded-5 border p-5 sm:grid-cols-[6.5rem_minmax(0,1fr)] sm:p-6;
+  @apply relative grid gap-5 overflow-hidden rounded-5 border p-5 sm:p-6;
   color: var(--lm-c-text-primary);
   border-color: var(--lm-c-primary-border);
   background:
     radial-gradient(circle at 10% 0%, var(--lm-c-primary-soft), transparent 32%),
     color-mix(in srgb, var(--lm-surface-reading-bg) 84%, transparent);
+}
+
+.lm-about-profile--with-avatar {
+  @apply sm:grid-cols-[6.5rem_minmax(0,1fr)];
 }
 
 .lm-about-profile__avatar-wrap {
@@ -67,6 +71,7 @@ const {
 
 .lm-about-profile__body {
   @apply flex min-w-0 flex-col justify-center;
+  overflow-wrap: anywhere;
 }
 
 .lm-about-profile__name {

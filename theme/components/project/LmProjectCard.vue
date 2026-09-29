@@ -10,17 +10,6 @@ const props = defineProps<{
 const { t } = useI18n()
 
 const primaryAction = computed(() => props.item.actions[0])
-const cardTag = computed(() => primaryAction.value ? 'a' : 'article')
-const cardAttrs = computed(() => {
-  if (!primaryAction.value)
-    return {}
-
-  return {
-    href: primaryAction.value.url,
-    rel: 'noopener noreferrer',
-    target: '_blank',
-  }
-})
 
 /** 项目动作类型对应的卡片按钮图标类名。 */
 const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], string> = {
@@ -32,15 +21,13 @@ const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], stri
 </script>
 
 <template>
-  <component
-    :is="cardTag"
+  <article
     class="lm-project-card"
     :class="{
       'lm-project-card--featured': props.item.featured,
       'lm-project-card--with-cover': props.item.cover,
     }"
     :style="{ '--lm-project-accent': props.item.color }"
-    v-bind="cardAttrs"
   >
     <div v-if="props.item.cover" class="lm-project-card__media" aria-hidden="true">
       <LmImage
@@ -75,14 +62,23 @@ const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], stri
 
       <div class="lm-project-card__body">
         <h3 class="lm-project-card__title">
-          {{ props.item.name }}
+          <a
+            v-if="primaryAction"
+            class="lm-project-card__primary-link"
+            :href="primaryAction.url"
+            target="_blank"
+            rel="noopener noreferrer"
+          >{{ props.item.name }}</a>
+          <template v-else>
+            {{ props.item.name }}
+          </template>
         </h3>
         <p v-if="props.item.desc" class="lm-project-card__desc">
           {{ props.item.desc }}
         </p>
       </div>
 
-      <div v-if="props.item.tags.length" class="lm-project-card__tags" aria-hidden="true">
+      <div v-if="props.item.tags.length" class="lm-project-card__tags">
         <span
           v-for="tag in props.item.tags"
           :key="tag"
@@ -100,14 +96,13 @@ const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], stri
           :href="action.url"
           target="_blank"
           rel="noopener noreferrer"
-          @click.stop
         >
           <span :class="actionIconMap[action.type]" aria-hidden="true" />
           <span>{{ t(`pages.projects.actions.${action.type}`) }}</span>
         </a>
       </div>
     </div>
-  </component>
+  </article>
 </template>
 
 <style scoped lang="scss">
@@ -121,7 +116,8 @@ const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], stri
     0 8px 20px rgb(15 23 42 / 0.06);
 }
 
-.lm-project-card:hover {
+.lm-project-card:hover,
+.lm-project-card:focus-within {
   box-shadow:
     inset 0 0 0 1px color-mix(in srgb, var(--lm-project-accent) 18%, var(--lm-c-border-hover)),
     0 12px 26px rgb(15 23 42 / 0.1);
@@ -231,6 +227,24 @@ const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], stri
 
 .lm-project-card__body {
   @apply grid gap-1.5;
+  overflow-wrap: anywhere;
+}
+
+.lm-project-card__primary-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.lm-project-card__primary-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.lm-project-card__primary-link:focus-visible::after {
+  outline: 2px solid var(--lm-c-primary-border-strong);
+  outline-offset: -3px;
+  border-radius: var(--lm-radius-md);
 }
 
 .lm-project-card__title {
@@ -274,7 +288,7 @@ const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], stri
 }
 
 .lm-project-card__action {
-  @apply inline-flex min-h-7 items-center gap-1.5 p-0 text-xs font-750 no-underline transition-[color,transform] duration-180 ease-out;
+  @apply relative inline-flex min-h-8 items-center gap-1.5 p-0 text-xs font-750 no-underline transition-[color,transform] duration-180 ease-out;
   color: var(--lm-c-text-secondary);
   background: transparent;
 }
@@ -291,5 +305,18 @@ const actionIconMap: Record<ResolvedProjectItem['actions'][number]['type'], stri
 
 .lm-project-card--with-cover .lm-project-card__action:hover {
   color: white;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-project-card,
+  .lm-project-card:hover,
+  .lm-project-card:focus-within,
+  .lm-project-card__media-image,
+  .lm-project-card:hover .lm-project-card__media-image,
+  .lm-project-card__action,
+  .lm-project-card__action:hover {
+    transition: none;
+    transform: none;
+  }
 }
 </style>

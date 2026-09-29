@@ -3,7 +3,7 @@ import { useSiteConfig, useValaxyConfig } from 'valaxy'
 import pkg from 'valaxy/package.json'
 import { capitalize, computed } from 'vue'
 
-import { useI18n } from 'vue-i18n'
+import { I18nT, useI18n } from 'vue-i18n'
 import { useThemeConfig } from '../shared/config'
 
 const { t } = useI18n()
@@ -19,7 +19,6 @@ const isThisYear = computed(() => {
   return year.value === themeConfig.value.footer.since
 })
 
-const poweredHtml = computed(() => t('footer.powered', [`<a href="${pkg.repository}" target="_blank" rel="noopener">Valaxy</a> v${pkg.version}`]))
 const footerIcon = computed(() => themeConfig.value.footer.icon!)
 const showFooterIcon = computed(() => Boolean(footerIcon.value.enable && (footerIcon.value.name || footerIcon.value.img)))
 const authorName = computed(() => siteConfig.value.author?.name || '')
@@ -81,7 +80,9 @@ const icpInfo = computed(() => {
       </div>
 
       <div v-if="themeConfig.footer.powered" class="lm-footer__powered">
-        <span v-html="poweredHtml" />
+        <I18nT keypath="footer.powered" tag="span" scope="global">
+          <span><a :href="pkg.homepage" target="_blank" rel="noopener noreferrer">Valaxy</a> v{{ pkg.version }}</span>
+        </I18nT>
         <span class="lm-footer__dot" aria-hidden="true" />
         <span>
           {{ t('footer.theme') }}

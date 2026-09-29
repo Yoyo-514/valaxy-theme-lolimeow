@@ -39,6 +39,7 @@ defineProps<{
 }
 
 .lm-project-list__grid {
-  @apply grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3;
+  @apply grid items-stretch gap-4;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
 }
 </style>

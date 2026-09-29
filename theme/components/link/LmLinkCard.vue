@@ -15,8 +15,6 @@ defineProps<{
     rel="noopener noreferrer"
     :style="{ '--lm-link-accent': item.color }"
   >
-    <span class="lm-link-card__stripe" />
-
     <span class="lm-link-card__avatar-wrap">
       <LmImage
         v-if="item.avatar"
@@ -37,10 +35,10 @@ defineProps<{
     <span class="lm-link-card__body">
       <span class="lm-link-card__name">{{ item.name }}</span>
       <span v-if="item.blog" class="lm-link-card__blog">{{ item.blog }}</span>
-      <span class="lm-link-card__desc">{{ item.desc }}</span>
+      <span v-if="item.desc" class="lm-link-card__desc">{{ item.desc }}</span>
     </span>
 
-    <span class="lm-link-card__arrow i-ri-arrow-right-up-line" />
+    <span class="lm-link-card__arrow i-ri-arrow-right-up-line" aria-hidden="true" />
   </a>
 </template>
 
@@ -61,11 +59,6 @@ defineProps<{
     linear-gradient(135deg, color-mix(in srgb, var(--lm-link-accent) 14%, transparent), transparent 52%),
     color-mix(in srgb, var(--lm-surface-reading-bg) 78%, transparent);
   transform: translateY(-0.12rem);
-}
-
-.lm-link-card__stripe {
-  @apply absolute left-0 top-0 h-full w-1;
-  background: var(--lm-link-accent);
 }
 
 .lm-link-card__avatar-wrap {
@@ -89,16 +82,19 @@ defineProps<{
 }
 
 .lm-link-card__name {
-  @apply truncate text-base leading-6 font-900;
+  @apply text-base leading-6 font-900;
+  overflow-wrap: anywhere;
 }
 
 .lm-link-card__blog {
-  @apply mt-0.5 truncate text-xs leading-5 font-700;
+  @apply mt-0.5 text-xs leading-5 font-700;
+  overflow-wrap: anywhere;
   color: color-mix(in srgb, var(--lm-link-accent) 72%, var(--lm-c-text-secondary));
 }
 
 .lm-link-card__desc {
-  @apply mt-1.5 line-clamp-2 text-sm leading-6;
+  @apply mt-1.5 text-sm leading-6;
+  overflow-wrap: anywhere;
   color: var(--lm-c-text-secondary);
 }
 
@@ -121,6 +117,18 @@ defineProps<{
   .lm-link-card__avatar-wrap,
   .lm-link-card__avatar {
     @apply h-16 w-16;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-link-card,
+  .lm-link-card:hover,
+  .lm-link-card:focus-visible,
+  .lm-link-card__arrow,
+  .lm-link-card:hover .lm-link-card__arrow,
+  .lm-link-card:focus-visible .lm-link-card__arrow {
+    transition: none;
+    transform: none;
   }
 }
 </style>
