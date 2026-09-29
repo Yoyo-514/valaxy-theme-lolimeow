@@ -101,23 +101,15 @@ export function mergeRanges(ranges: readonly (readonly [number, number])[], maxL
     .filter(([start, end]) => start <= end)
     .sort((a, b) => a[0] - b[0])
 
-  return normalizedRanges.reduce<Array<[number, number]>>((mergedRanges, [start, end]) => {
-    const lastRange = mergedRanges[mergedRanges.length - 1]
-
+  const mergedRanges: Array<[number, number]> = []
+  for (const [start, end] of normalizedRanges) {
+    const lastRange = mergedRanges.at(-1)
     if (!lastRange || start > lastRange[1] + 1)
-      return [...mergedRanges, [start, end]]
-
-    return [
-      ...mergedRanges.slice(0, -1),
-      [lastRange[0], Math.max(lastRange[1], end)],
-    ]
-  }, [])
-}
-
-/** UI 高亮分片归并过程中的游标与已生成分片。 */
-interface HighlightPartState {
-  cursor: number
-  parts: LmSearchHighlightPart[]
+      mergedRanges.push([start, end])
+    else
+      lastRange[1] = Math.max(lastRange[1], end)
+  }
+  return mergedRanges
 }
 
 /**
@@ -138,26 +130,15 @@ export function createHighlightParts(
   if (!mergedRanges.length)
     return [{ text, highlighted: false }]
 
-  const { cursor, parts } = mergedRanges.reduce<HighlightPartState>((state, [start, end]) => {
-    const plainPart = state.cursor < start
-      ? [{ text: text.slice(state.cursor, start), highlighted: false }]
-      : []
-
-    return {
-      cursor: end + 1,
-      parts: [
-        ...state.parts,
-        ...plainPart,
-        { text: text.slice(start, end + 1), highlighted: true },
-      ],
-    }
-  }, { cursor: 0, parts: [] })
-
-  if (cursor >= text.length)
-    return parts
-
-  return [
-    ...parts,
-    { text: text.slice(cursor), highlighted: false },
-  ]
+  let cursor = 0
+  const parts: LmSearchHighlightPart[] = []
+  for (const [start, end] of mergedRanges) {
+    if (cursor < start)
+      parts.push({ text: text.slice(cursor, start), highlighted: false })
+    parts.push({ text: text.slice(start, end + 1), highlighted: true })
+    cursor = end + 1
+  }
+  if (cursor < text.length)
+    parts.push({ text: text.slice(cursor), highlighted: false })
+  return parts
 }

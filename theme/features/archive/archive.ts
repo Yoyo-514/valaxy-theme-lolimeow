@@ -81,30 +81,29 @@ function createArchiveEntry(post: Post, timezone: string): ArchiveEntry {
 }
 
 /**
- * 将文章追加到对应年份的归档分组，并返回新的映射。
+ * 将文章追加到本次构建拥有的年份分组映射。
  *
  * @param mapped - 已构建的年份分组映射。
  * @param post - 待追加的 Valaxy 文章。
- * @returns 包含当前文章的新年份分组映射。
+ * @returns 包含当前文章的年份分组映射。
  */
 function appendArchiveGroup(mapped: Map<string, ArchiveGroup>, post: Post, timezone: string) {
   const entry = createArchiveEntry(post, timezone)
   const year = entry.calendarDate?.slice(0, 4) ?? 'Unknown'
   const existingGroup = mapped.get(year)
-  const nextGroup: ArchiveGroup = existingGroup
-    ? {
-        ...existingGroup,
-        count: existingGroup.count + 1,
-        entries: [...existingGroup.entries, entry],
-      }
-    : {
-        year,
-        sortKey: year === 'Unknown' ? Number.NEGATIVE_INFINITY : Number(year),
-        count: 1,
-        entries: [entry],
-      }
-
-  return new Map(mapped).set(year, nextGroup)
+  if (existingGroup) {
+    existingGroup.entries.push(entry)
+    existingGroup.count += 1
+  }
+  else {
+    mapped.set(year, {
+      year,
+      sortKey: year === 'Unknown' ? Number.NEGATIVE_INFINITY : Number(year),
+      count: 1,
+      entries: [entry],
+    })
+  }
+  return mapped
 }
 
 /**

@@ -86,27 +86,20 @@ function createTaggedEntries(post: Post): TaggedEntry[] {
 }
 
 /**
- * 将标签文章关联追加到对应标签分组，并返回新的映射。
+ * 将标签文章关联追加到本次构建拥有的分组映射。
  *
  * @param mapped - 已构建的标签分组映射。
  * @param taggedEntry - 待追加的标签文章关联。
- * @returns 包含当前关联的新标签分组映射。
+ * @returns 包含当前关联的标签分组映射。
  */
 function appendTaggedEntry(mapped: Map<string, MutableTagGroup>, taggedEntry: TaggedEntry) {
   const { tag, entry } = taggedEntry
   const existing = mapped.get(tag)
-  const nextGroup: MutableTagGroup = existing
-    ? {
-        ...existing,
-        entries: [...existing.entries, entry],
-      }
-    : {
-        id: createTagId(tag),
-        name: tag,
-        entries: [entry],
-      }
-
-  return new Map(mapped).set(tag, nextGroup)
+  if (existing)
+    existing.entries.push(entry)
+  else
+    mapped.set(tag, { id: createTagId(tag), name: tag, entries: [entry] })
+  return mapped
 }
 
 /**

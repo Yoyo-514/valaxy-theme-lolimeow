@@ -14,11 +14,6 @@ interface MutableCategoryNode {
   children: Map<string, MutableCategoryNode>
 }
 
-/** 分类路径归约过程中的当前节点状态。 */
-interface CategoryPathState {
-  current: MutableCategoryNode
-}
-
 /**
  * 判断分类名称是否属于未分类兜底项。
  *
@@ -151,20 +146,13 @@ function getOrCreateCategoryChild(parent: MutableCategoryNode, name: string, seg
 function appendCategoryPath(root: MutableCategoryNode, post: Post) {
   const segments = normalizeCategorySegments(post.categories)
   const entry = createPostEntry(post)
-  const { current } = segments.reduce<CategoryPathState>((state, segment, index) => {
-    const nextSegments = segments.slice(0, index + 1)
-    const next = getOrCreateCategoryChild(state.current, segment, nextSegments)
-
+  let current = root
+  for (const [index, segment] of segments.entries()) {
+    current = getOrCreateCategoryChild(current, segment, segments.slice(0, index + 1))
     // 每一层都累计文章数，父级 total 表示该分类树下的文章总量。
-    next.total += 1
-
-    return {
-      ...state,
-      current: next,
-    }
-  }, { current: root })
-
-  current.entries = [...current.entries, entry]
+    current.total += 1
+  }
+  current.entries.push(entry)
   return root
 }
 
