@@ -53,7 +53,6 @@ useHomePaginationScrollBehavior(router)
           :open="isDrawerOpen"
           :items="navItems"
           @close="closeDrawer"
-          @open-search="openSearch"
         />
       </div>
     </div>

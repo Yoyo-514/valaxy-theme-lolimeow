@@ -58,3 +58,18 @@ test('returning from a post restores the home reading position', async ({ page }
   await expect(page.locator('.lm-post-card').nth(3)).toBeVisible()
   await expect.poll(async () => Math.abs(await page.evaluate(() => window.scrollY) - position)).toBeLessThan(5)
 })
+
+for (const reducedMotion of ['reduce', 'no-preference'] as const) {
+  test(`mobile drawer navigates after closing (${reducedMotion})`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.emulateMedia({ reducedMotion })
+    await page.goto('/')
+    await page.locator('.lm-nav-tools__menu-button').click()
+    const drawer = page.locator('.lm-mobile-nav-panel')
+    await expect(drawer).toBeVisible()
+    await drawer.getByRole('button', { name: '归档' }).click()
+    await expect(page).toHaveURL(/\/archives\/?$/)
+    await expect(drawer).toHaveCount(0)
+    await expect(page.locator('body')).not.toHaveCSS('position', 'fixed')
+  })
+}
