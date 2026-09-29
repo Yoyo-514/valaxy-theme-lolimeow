@@ -75,7 +75,6 @@ function onSelect(event: MouseEvent) {
 
   deactivate({
     restoreFocus: false,
-    restoreScroll: false,
   })
   handleClick(event)
   closePanel()

@@ -3,7 +3,7 @@ import { useOutline } from 'valaxy'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { createThrottledFunction, getDocument, getDocumentElement, getRootFontSize, getWindow } from '../../shared/browser'
 import { clamp } from '../../shared/utils'
-import { lockNavbarScrollReaction } from '../navigation'
+import { useTocScroll } from './use-toc-scroll'
 
 /** 目录链接中用于定位页面标题元素的哈希前缀。 */
 const HASH_PREFIX_RE = /^#/
@@ -98,28 +98,15 @@ function resolveActiveLink(items: TocItem[], scrollTop: number, currentDocument:
  * @returns 供桌面与移动目录组件共享的响应式状态和点击处理函数。
  */
 export function useArticleTocState() {
-  const { headers, handleClick: originalHandleClick } = useOutline()
+  const { headers } = useOutline()
   const activeLink = ref('')
+  const handleClick = useTocScroll()
 
   const items = computed<TocItem[]>(() => {
     // 组件只展示两级目录，深层标题仍参与 Valaxy 大纲但不挤压侧栏层级。
     return flattenTocItems(headers.value || []).filter(item => item.depth <= 1)
   })
   const visible = computed(() => items.value.length >= 2)
-
-  /**
-   * 处理目录项点击，并在 Valaxy 执行页面滚动期间抑制导航栏闪烁。
-   *
-   * @param event - 目录链接的鼠标点击事件。
-   */
-  function handleClick(event: MouseEvent) {
-    // 点击目录会主动滚动页面，短暂锁住导航栏滚动响应可避免头部闪烁。
-    lockNavbarScrollReaction({
-      deferFrames: 2,
-      timeoutMs: 420,
-    })
-    originalHandleClick(event)
-  }
 
   /** 根据当前滚动位置同步激活目录链接，并处理空目录与非浏览器环境。 */
   function updateActiveLink() {
