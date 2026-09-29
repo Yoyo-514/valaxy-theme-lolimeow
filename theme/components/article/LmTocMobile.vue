@@ -2,11 +2,11 @@
 import { useMediaQuery } from '@vueuse/core'
 import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useArticleTocState } from '../../features/article'
+import { useArticleToc } from '../../features/article/toc-context'
 import { hasActiveModalFocusScope, useModalFocusTrap } from '../../shared/browser'
 
 const { t } = useI18n()
-const { items, visible, activeLink, handleClick } = useArticleTocState()
+const { items, visible, activeLink, handleClick } = useArticleToc()
 const open = ref(false)
 const panelRef = ref<HTMLElement>()
 const isDesktopToc = useMediaQuery('(min-width: 1280px)')

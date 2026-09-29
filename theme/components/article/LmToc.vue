@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useArticleTocState } from '../../features/article'
+import { useArticleToc } from '../../features/article/toc-context'
 
 const { t } = useI18n()
-const { items, visible, activeLink, handleClick } = useArticleTocState()
+const { items, visible, activeLink, handleClick } = useArticleToc()
 const navRef = ref<HTMLElement>()
 
 watch(activeLink, async () => {

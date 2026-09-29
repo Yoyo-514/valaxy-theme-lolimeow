@@ -1,7 +1,7 @@
 import type { MenuItem } from 'valaxy'
 import { useOutline } from 'valaxy'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
-import { createThrottledFunction, getDocument, getDocumentElement, getWindow } from '../../shared/browser'
+import { createThrottledFunction, getDocument, getDocumentElement, getRootFontSize, getWindow } from '../../shared/browser'
 import { clamp } from '../../shared/utils'
 import { lockNavbarScrollReaction } from '../navigation'
 
@@ -37,11 +37,9 @@ function getActiveScrollOffset() {
   if (!currentWindow || !root)
     return 160
 
-  const rawOffset = currentWindow.getComputedStyle(root)
-    .getPropertyValue('--lm-navbar-offset')
-    .trim()
-  const parsedOffset = Number.parseFloat(rawOffset)
-  const navbarOffset = Number.isFinite(parsedOffset) ? parsedOffset : 72
+  const rawOffset = currentWindow.getComputedStyle(root).getPropertyValue('--lm-navbar-offset').trim()
+  const parsed = Number.parseFloat(rawOffset)
+  const navbarOffset = Number.isFinite(parsed) ? parsed * (rawOffset.endsWith('rem') ? getRootFontSize() : 1) : 72
   // 激活线放在视口上方阅读区域内，比单纯贴着导航栏更符合阅读进度感知。
   const readingLineOffset = clamp(currentWindow.innerHeight * 0.18, ACTIVE_LINE_MIN, ACTIVE_LINE_MAX)
 
