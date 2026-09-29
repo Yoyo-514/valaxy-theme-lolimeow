@@ -90,10 +90,7 @@ function resolvePrimaryImageUrl(
   if (random)
     return pickFirstUrl(candidates.apiImageUrls) || pickFirstUrl(candidates.staticImageUrls)
 
-  return pickFirstUrl(candidates.staticImageUrls)
-    || preferredUrl
-    || alternateUrl
-    || ''
+  return resolveStableFallbackUrl(candidates, preferredUrl, alternateUrl)
 }
 
 /**
@@ -240,21 +237,11 @@ function resolveGlobalImageBackground(
  */
 function createGradientBackground(gradientValue: string): ResolvedBackground {
   return {
+    ...createColorBackground(),
     type: 'gradient',
     source: 'background',
-    imageUrl: '',
-    fallbackImageUrl: '',
-    staticImageUrls: [],
-    apiImageUrls: [],
-    rotationEnabled: false,
-    rotationInterval: DEFAULT_ROTATION_INTERVAL,
-    random: false,
     gradientValue,
     colorValue: '',
-    overlayOpacity: 0,
-    position: DEFAULT_BACKGROUND_POSITION,
-    size: DEFAULT_BACKGROUND_SIZE,
-    fixed: true,
   }
 }
 
