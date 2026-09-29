@@ -109,7 +109,7 @@ export default defineConfig<ThemeConfig>({
               desc: 'A cute and clean Valaxy theme for personal blogs.',
               link: 'https://lolimeow.yoyo514.top/',
               repo: 'https://github.com/Yoyo-514/valaxy-theme-lolimeow',
-              docs: 'https://lolimeow.yoyo514.top/',
+              docs: 'https://lolimeow.yoyo514.top/docs/',
               cover: '/images/background2.webp',
               iconImg: '/images/favicon.ico',
               color: '#66CCFF',
