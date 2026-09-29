@@ -88,7 +88,7 @@ export default defineValaxyConfig({
 
 - Auto-hide navbar with scroll-lock coordination for anchor jumps and pagination changes.
 - Uneven or classic mobile drawer styles.
-- A cat-head back-to-top control fills with reading progress, gently tilts its ears on hover, respects reduced motion, and sits above the mobile TOC button.
+- A cat-head back-to-top control fills with reading progress, gently lifts on hover, respects reduced motion, and sits above the mobile TOC button.
 
 ### Local Search Modal
 
