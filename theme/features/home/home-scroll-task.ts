@@ -1,6 +1,5 @@
 import type { RouterScrollBehavior } from 'vue-router'
 import { nextTick } from 'vue'
-import { settleHomeHistoryRestoration } from './home-history-state'
 
 type RouterScrollResult = Awaited<ReturnType<RouterScrollBehavior>>
 
@@ -21,7 +20,7 @@ interface PendingScrollTask {
 }
 
 /** 管理单个 Router 的可取消滚动任务；导航代次由调用方维护。 */
-export function createHomeScrollTasks(getNavigationGeneration: () => number) {
+export function createHomeScrollTasks(getNavigationGeneration: () => number, settleHomeHistoryRestoration: (generation: number) => boolean) {
   let activeScrollTask: PendingScrollTask | undefined
 
   /**

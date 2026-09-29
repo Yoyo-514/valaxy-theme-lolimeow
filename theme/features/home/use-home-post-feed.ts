@@ -7,12 +7,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useThemeConfig } from '../../shared/config'
 import { hashString } from '../../shared/utils'
 import { isHomePaginationPath } from '../navigation'
-import {
-  captureActiveHomeHistoryEntryKey,
-  consumeHomeHistoryPageCount,
-  homeHistoryRestorationState,
-  saveHomeHistoryPageCount,
-} from './home-history-state'
+import { captureActiveHomeHistoryEntryKey, getHomeHistoryState } from './home-history-state'
 import { resolvePageSize, resolvePaginationScope } from './pagination-scope'
 
 /**
@@ -31,6 +26,7 @@ export function useHomePostFeed(
   const site = useSiteStore()
   const route = useRoute()
   const router = useRouter()
+  const { consumeHomeHistoryPageCount, homeHistoryRestorationState, saveHomeHistoryPageCount } = getHomeHistoryState(router)
   const innerInfiniteScrollTrigger = ref<HTMLElement | null>(null)
   // 允许组件传入自有触发点；未传入时由 composable 暴露内部默认触发点。
   const resolvedInfiniteScrollTrigger = infiniteScrollTrigger ?? innerInfiniteScrollTrigger

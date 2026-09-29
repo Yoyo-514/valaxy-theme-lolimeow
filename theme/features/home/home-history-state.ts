@@ -1,3 +1,4 @@
+import type { Router } from 'vue-router'
 import { readonly, shallowRef } from 'vue'
 
 /** 首页历史恢复状态允许保留的最大条目数。 */
@@ -23,19 +24,6 @@ interface HomeHistoryRestorationState {
   /** 当前代次对应的标准化路由位置。 */
   routeLocation: string
 }
-
-/** 当前浏览器会话内按历史条目隔离的首页状态。 */
-const homeHistoryStates = new Map<string, HomeHistoryState>()
-
-/** 首页文章流与滚动行为共享的恢复握手源。 */
-const homeHistoryRestorationSource = shallowRef<HomeHistoryRestorationState>({
-  generation: 0,
-  pending: false,
-  routeLocation: '',
-})
-
-/** 供首页文章流只读监听的历史恢复握手状态。 */
-export const homeHistoryRestorationState = readonly(homeHistoryRestorationSource)
 
 /**
  * 创建只需在当前页面会话内保持唯一的历史条目键。
@@ -137,117 +125,156 @@ export function captureActiveHomeHistoryEntryKey(routeLocation?: string): string
   }
 }
 
-/**
- * 开始一轮目标首页导航的恢复握手。
- *
- * @remarks
- * 新代次会自然使旧代次的完成信号失效；文章流据此立即暂停 IntersectionObserver 增页。
- *
- * @param routeLocation - 目标首页的标准化路由位置。
- * @returns 本轮恢复代次，供 scrollBehavior 精确完成对应握手。
- */
-export function beginHomeHistoryRestoration(routeLocation: string) {
-  const generation = homeHistoryRestorationSource.value.generation + 1
+/** 每个 Router 独立持有历史缓存和恢复握手，避免 SSR 请求或多应用相互影响。 */
+export function createHomeHistoryState() {
+  /** 当前浏览器会话内按历史条目隔离的首页状态。 */
+  const homeHistoryStates = new Map<string, HomeHistoryState>()
 
-  homeHistoryRestorationSource.value = {
-    generation,
-    pending: true,
-    routeLocation,
-  }
-
-  return generation
-}
-
-/**
- * 完成或取消指定代次的首页历史恢复握手。
- *
- * @param generation - 开始恢复时取得的代次。
- * @returns 仅当前仍待处理的同代次被释放时返回 true。
- */
-export function settleHomeHistoryRestoration(generation: number) {
-  const currentState = homeHistoryRestorationSource.value
-
-  if (!currentState.pending || currentState.generation !== generation)
-    return false
-
-  homeHistoryRestorationSource.value = {
-    ...currentState,
+  /** 首页文章流与滚动行为共享的恢复握手源。 */
+  const homeHistoryRestorationSource = shallowRef<HomeHistoryRestorationState>({
+    generation: 0,
     pending: false,
-  }
-
-  return true
-}
-
-/**
- * 以最近使用顺序保存首页状态，并将缓存容量限制在固定上限内。
- *
- * @param entryKey - 当前首页历史条目键。
- * @param state - 当前文章流身份与可见页数。
- */
-function setHomeHistoryState(entryKey: string, state: HomeHistoryState) {
-  homeHistoryStates.delete(entryKey)
-  homeHistoryStates.set(entryKey, state)
-
-  while (homeHistoryStates.size > MAX_HOME_HISTORY_ENTRIES) {
-    const oldestEntryKey = homeHistoryStates.keys().next().value
-
-    if (oldestEntryKey === undefined)
-      break
-
-    homeHistoryStates.delete(oldestEntryKey)
-  }
-}
-
-/**
- * 在文章流创建或历史条目切换期间读取可恢复状态。
- *
- * 同一浏览器历史条目的主题 key 保持稳定，push 会得到新条目键；刷新后内存缓存为空。
- * 文章流身份不一致时会清理该条目，避免恢复过期或不兼容的列表状态。
- *
- * @param entryKey - 当前浏览器历史条目键。
- * @param feedIdentity - 当前文章稳定 ID、顺序与分页关键配置组成的身份。
- * @returns 可恢复的可见页数；不满足恢复条件时返回 undefined。
- */
-export function consumeHomeHistoryPageCount(
-  entryKey: string | undefined,
-  feedIdentity: string,
-): number | undefined {
-  if (!entryKey)
-    return undefined
-
-  const state = homeHistoryStates.get(entryKey)
-
-  if (!state)
-    return undefined
-
-  if (state.feedIdentity !== feedIdentity) {
-    homeHistoryStates.delete(entryKey)
-    return undefined
-  }
-
-  setHomeHistoryState(entryKey, state)
-  return state.visiblePageCount
-}
-
-/**
- * 将首页无限滚动进度持续写入当前激活的历史条目。
- *
- * @param entryKey - 当前激活的首页历史条目键。
- * @param feedIdentity - 当前文章流身份。
- * @param visiblePageCount - 当前已经展开的页数。
- */
-export function saveHomeHistoryPageCount(
-  entryKey: string | undefined,
-  feedIdentity: string,
-  visiblePageCount: number,
-) {
-  if (!entryKey)
-    return
-
-  const normalizedPageCount = Math.max(1, Math.floor(visiblePageCount))
-
-  setHomeHistoryState(entryKey, {
-    feedIdentity,
-    visiblePageCount: normalizedPageCount,
+    routeLocation: '',
   })
+
+  /** 供首页文章流只读监听的历史恢复握手状态。 */
+  const homeHistoryRestorationState = readonly(homeHistoryRestorationSource)
+
+  /**
+   * 开始一轮目标首页导航的恢复握手。
+   *
+   * @remarks
+   * 新代次会自然使旧代次的完成信号失效；文章流据此立即暂停 IntersectionObserver 增页。
+   *
+   * @param routeLocation - 目标首页的标准化路由位置。
+   * @returns 本轮恢复代次，供 scrollBehavior 精确完成对应握手。
+   */
+  function beginHomeHistoryRestoration(routeLocation: string) {
+    const generation = homeHistoryRestorationSource.value.generation + 1
+
+    homeHistoryRestorationSource.value = {
+      generation,
+      pending: true,
+      routeLocation,
+    }
+
+    return generation
+  }
+
+  /**
+   * 完成或取消指定代次的首页历史恢复握手。
+   *
+   * @param generation - 开始恢复时取得的代次。
+   * @returns 仅当前仍待处理的同代次被释放时返回 true。
+   */
+  function settleHomeHistoryRestoration(generation: number) {
+    const currentState = homeHistoryRestorationSource.value
+
+    if (!currentState.pending || currentState.generation !== generation)
+      return false
+
+    homeHistoryRestorationSource.value = {
+      ...currentState,
+      pending: false,
+    }
+
+    return true
+  }
+
+  /**
+   * 以最近使用顺序保存首页状态，并将缓存容量限制在固定上限内。
+   *
+   * @param entryKey - 当前首页历史条目键。
+   * @param state - 当前文章流身份与可见页数。
+   */
+  function setHomeHistoryState(entryKey: string, state: HomeHistoryState) {
+    homeHistoryStates.delete(entryKey)
+    homeHistoryStates.set(entryKey, state)
+
+    while (homeHistoryStates.size > MAX_HOME_HISTORY_ENTRIES) {
+      const oldestEntryKey = homeHistoryStates.keys().next().value
+
+      if (oldestEntryKey === undefined)
+        break
+
+      homeHistoryStates.delete(oldestEntryKey)
+    }
+  }
+
+  /**
+   * 在文章流创建或历史条目切换期间读取可恢复状态。
+   *
+   * 同一浏览器历史条目的主题 key 保持稳定，push 会得到新条目键；刷新后内存缓存为空。
+   * 文章流身份不一致时会清理该条目，避免恢复过期或不兼容的列表状态。
+   *
+   * @param entryKey - 当前浏览器历史条目键。
+   * @param feedIdentity - 当前文章稳定 ID、顺序与分页关键配置组成的身份。
+   * @returns 可恢复的可见页数；不满足恢复条件时返回 undefined。
+   */
+  function consumeHomeHistoryPageCount(
+    entryKey: string | undefined,
+    feedIdentity: string,
+  ): number | undefined {
+    if (!entryKey)
+      return undefined
+
+    const state = homeHistoryStates.get(entryKey)
+
+    if (!state)
+      return undefined
+
+    if (state.feedIdentity !== feedIdentity) {
+      homeHistoryStates.delete(entryKey)
+      return undefined
+    }
+
+    setHomeHistoryState(entryKey, state)
+    return state.visiblePageCount
+  }
+
+  /**
+   * 将首页无限滚动进度持续写入当前激活的历史条目。
+   *
+   * @param entryKey - 当前激活的首页历史条目键。
+   * @param feedIdentity - 当前文章流身份。
+   * @param visiblePageCount - 当前已经展开的页数。
+   */
+  function saveHomeHistoryPageCount(
+    entryKey: string | undefined,
+    feedIdentity: string,
+    visiblePageCount: number,
+  ) {
+    if (!entryKey)
+      return
+
+    const normalizedPageCount = Math.max(1, Math.floor(visiblePageCount))
+
+    setHomeHistoryState(entryKey, {
+      feedIdentity,
+      visiblePageCount: normalizedPageCount,
+    })
+  }
+
+  return {
+    homeHistoryRestorationState,
+    beginHomeHistoryRestoration,
+    settleHomeHistoryRestoration,
+    consumeHomeHistoryPageCount,
+    saveHomeHistoryPageCount,
+  }
+}
+
+const hot = (import.meta as ImportMeta & { hot?: { data: Record<string, unknown> } }).hot
+const histories = (hot?.data.lolimeowHomeHistories ?? new WeakMap()) as WeakMap<Router, ReturnType<typeof createHomeHistoryState>>
+if (hot)
+  hot.data.lolimeowHomeHistories = histories
+
+/** 与滚动控制器共享同一个 Router 所属实例，并跨 HMR 保留该实例。 */
+export function getHomeHistoryState(router: Router) {
+  let history = histories.get(router)
+  if (!history) {
+    history = createHomeHistoryState()
+    histories.set(router, history)
+  }
+  return history
 }

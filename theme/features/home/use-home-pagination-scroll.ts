@@ -1,10 +1,6 @@
 import type { Router, RouterScrollBehavior } from 'vue-router'
 import { isHomePaginationPath, lockNavbarScrollReaction } from '../navigation'
-import {
-  beginHomeHistoryRestoration,
-  homeHistoryRestorationState,
-  settleHomeHistoryRestoration,
-} from './home-history-state'
+import { getHomeHistoryState } from './home-history-state'
 import { createHomeScrollTasks } from './home-scroll-task'
 
 /** 单个 Router 的稳定滚动行为控制器。 */
@@ -46,13 +42,13 @@ export function useHomePaginationScrollBehavior(router: Router) {
   if (homePaginationScrollControllers.has(router))
     return
 
+  const { beginHomeHistoryRestoration, homeHistoryRestorationState, settleHomeHistoryRestoration } = getHomeHistoryState(router)
   const previousScrollBehavior = router.options.scrollBehavior
   let releaseNavbarScrollLock: ReturnType<typeof lockNavbarScrollReaction> | undefined
   let navigationGeneration = 0
-  const { cancelActiveScrollTask, coordinateScrollResult } = createHomeScrollTasks(() => navigationGeneration)
+  const { cancelActiveScrollTask, coordinateScrollResult } = createHomeScrollTasks(() => navigationGeneration, settleHomeHistoryRestoration)
 
-  const routeNavigationGenerations = new WeakMap<object, number>()
-  const routeHomeRestorationGenerations = new WeakMap<object, number>()
+  const routeGenerations = new WeakMap<object, { navigation: number, restoration?: number }>()
 
   /** 释放当前导航栏锁。 */
   const releaseActiveNavbarScrollLock = () => {
@@ -74,7 +70,8 @@ export function useHomePaginationScrollBehavior(router: Router) {
 
   router.beforeEach((to) => {
     const currentNavigationGeneration = beginNavigationGeneration()
-    routeNavigationGenerations.set(to, currentNavigationGeneration)
+    const generations = { navigation: currentNavigationGeneration, restoration: undefined as number | undefined }
+    routeGenerations.set(to, generations)
 
     const pendingHomeGeneration = homeHistoryRestorationState.value.pending
       ? homeHistoryRestorationState.value.generation
@@ -85,53 +82,27 @@ export function useHomePaginationScrollBehavior(router: Router) {
 
     if (isHomePaginationPath(to.path)) {
       const homeRestorationGeneration = beginHomeHistoryRestoration(to.fullPath)
-      routeHomeRestorationGenerations.set(to, homeRestorationGeneration)
+      generations.restoration = homeRestorationGeneration
     }
   })
+
+  /** 导航失败和异常共用清理出口；旧代次不能取消新导航。 */
+  function finishFailedNavigation(to: object) {
+    const generations = routeGenerations.get(to)
+    if (generations?.navigation === navigationGeneration) {
+      cancelActiveScrollTask()
+      releaseActiveNavbarScrollLock()
+    }
+    if (generations?.restoration !== undefined)
+      settleHomeHistoryRestoration(generations.restoration)
+    routeGenerations.delete(to)
+  }
 
   router.afterEach((to, _from, failure) => {
-    if (!failure)
-      return
-
-    const failedNavigationGeneration = routeNavigationGenerations.get(to)
-
-    if (failedNavigationGeneration === navigationGeneration) {
-      cancelActiveScrollTask()
-      releaseActiveNavbarScrollLock()
-    }
-
-    const failedHomeGeneration = routeHomeRestorationGenerations.get(to)
-
-    if (failedHomeGeneration !== undefined)
-      settleHomeHistoryRestoration(failedHomeGeneration)
+    if (failure)
+      finishFailedNavigation(to)
   })
-
-  /**
-   * 收敛导航守卫、异步组件或滚动行为抛出的未捕获错误。
-   *
-   * 仅错误目标仍属于当前导航代次时清理全局副作用；旧导航迟到的错误只移除自身映射，
-   * 不得取消新导航的滚动任务、首页恢复握手或导航栏锁。
-   *
-   * @param _error - Router 捕获的原始导航错误，此处只负责收敛关联副作用。
-   * @param to - 发生错误时正在进入的标准化路由。
-   */
-  router.onError((_error, to) => {
-    const failedNavigationGeneration = routeNavigationGenerations.get(to)
-
-    if (failedNavigationGeneration === navigationGeneration) {
-      cancelActiveScrollTask()
-
-      const failedHomeGeneration = routeHomeRestorationGenerations.get(to)
-
-      if (failedHomeGeneration !== undefined)
-        settleHomeHistoryRestoration(failedHomeGeneration)
-
-      releaseActiveNavbarScrollLock()
-    }
-
-    routeNavigationGenerations.delete(to)
-    routeHomeRestorationGenerations.delete(to)
-  })
+  router.onError((_error, to) => finishFailedNavigation(to))
 
   /**
    * 处理首页分页滚动定位，并将非首页导航委托给安装前的滚动行为。
@@ -146,7 +117,7 @@ export function useHomePaginationScrollBehavior(router: Router) {
     from,
     savedPosition,
   ) {
-    const taskGeneration = routeNavigationGenerations.get(to) ?? beginNavigationGeneration()
+    const taskGeneration = routeGenerations.get(to)?.navigation ?? beginNavigationGeneration()
 
     if (taskGeneration !== navigationGeneration)
       return false
@@ -155,7 +126,7 @@ export function useHomePaginationScrollBehavior(router: Router) {
     releaseActiveNavbarScrollLock()
 
     const homeRestorationGeneration = isHomePaginationPath(to.path)
-      ? routeHomeRestorationGenerations.get(to) ?? beginHomeHistoryRestoration(to.fullPath)
+      ? routeGenerations.get(to)?.restoration ?? beginHomeHistoryRestoration(to.fullPath)
       : undefined
 
     if (savedPosition) {

@@ -46,3 +46,15 @@ test('search contains keyboard focus and restores the trigger on Escape', async 
   await expect(trigger).toBeFocused()
   await expect(page.locator('body')).not.toHaveCSS('position', 'fixed')
 })
+
+test('returning from a post restores the home reading position', async ({ page }) => {
+  await page.goto('/')
+  const card = page.locator('.lm-post-card').nth(3)
+  await card.scrollIntoViewIfNeeded()
+  const position = await page.evaluate(() => window.scrollY)
+  await card.click()
+  await expect(page).toHaveURL(/\/posts\//)
+  await page.goBack()
+  await expect(page.locator('.lm-post-card').nth(3)).toBeVisible()
+  await expect.poll(async () => Math.abs(await page.evaluate(() => window.scrollY) - position)).toBeLessThan(5)
+})
