@@ -28,7 +28,7 @@ export const OverlayFixture = defineComponent({
   setup() {
     const first = ref(false)
     const second = ref(false)
-    return () => h('div', { style: { minHeight: '2400px' } }, [
+    return () => h('div', [
       h('button', { style: { position: 'fixed', bottom: '10px', left: '10px' }, onClick: () => { first.value = true } }, 'Open first modal'),
       h(Dialog, { open: first.value, label: 'First', onClose: () => { first.value = false } }, {
         default: () => [
