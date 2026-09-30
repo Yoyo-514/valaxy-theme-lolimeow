@@ -27,6 +27,9 @@ catalogs:
     '@vueuse/core':
       specifier: ^15.0.0
       version: 15.0.0
+    '@waline/client':
+      specifier: 3.4.1
+      version: 3.4.1
     bumpp:
       specifier: ^12.3.0
       version: 12.3.0
@@ -162,6 +165,9 @@ importers:
       '@vueuse/core':
         specifier: 'catalog:'
         version: 15.0.0(vue@3.5.43(typescript@6.0.3))
+      '@waline/client':
+        specifier: 'catalog:'
+        version: 3.4.1(typescript@6.0.3)
       d3-cloud:
         specifier: 'catalog:'
         version: 1.2.9

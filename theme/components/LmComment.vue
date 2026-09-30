@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { useIntersectionObserver } from '@vueuse/core'
 import { useAddonConfig, useFrontmatter, useSiteConfig } from 'valaxy'
-import { computed, defineAsyncComponent } from 'vue'
+import { computed, defineAsyncComponent, ref, useTemplateRef, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 
 type CommentProvider = 'waline'
 
@@ -11,6 +13,17 @@ const { t } = useI18n()
 const siteConfig = useSiteConfig()
 const frontmatter = useFrontmatter()
 const waline = useAddonConfig('valaxy-addon-waline')
+const route = useRoute()
+const section = useTemplateRef<HTMLElement>('section')
+const activated = ref(false)
+
+watch(() => route.path, () => {
+  activated.value = false
+})
+useIntersectionObserver(section, ([entry]) => {
+  if (entry?.isIntersecting)
+    activated.value = true
+}, { rootMargin: '400px 0px' })
 
 const provider = computed<CommentProvider | ''>(() => {
   if (waline.value)
@@ -36,12 +49,14 @@ const providerComponent = computed(() => {
 <template>
   <section
     v-if="enabled"
+    :key="route.path"
+    ref="section"
     class="lm-comment comment"
     :aria-label="t('comment.label')"
   >
     <div class="lm-comment__content">
       <div class="lm-comment__body">
-        <component :is="providerComponent" />
+        <component :is="providerComponent" :active="activated" />
       </div>
     </div>
   </section>
@@ -58,6 +73,6 @@ const providerComponent = computed(() => {
 }
 
 .lm-comment__body {
-  @apply w-full;
+  @apply min-h-80 w-full;
 }
 </style>

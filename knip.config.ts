@@ -20,7 +20,6 @@ export default {
       // Valaxy 自动发现组件、布局、页面和 setup；公开入口供站点消费。
       entry: ['valaxy.config.ts', 'components/**/*.vue', 'layouts/**/*.vue', 'pages/**/*.vue', 'styles/index.ts'],
       project: ['**/*.{ts,vue}'],
-      ignoreDependencies: ['valaxy-addon-waline'],
     },
     'demo': { entry: ['*.config.ts', 'pages/**/*.vue'], project: ['*.ts', '**/*.vue'], ignoreDependencies: ['@iconify-json/ri'] },
     'docs': { project: ['.vitepress/**/*.{ts,vue}'] },

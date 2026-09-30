@@ -53,6 +53,7 @@
     "@types/d3-cloud": "catalog:",
     "@unhead/vue": "catalog:",
     "@vueuse/core": "catalog:",
+    "@waline/client": "catalog:",
     "d3-cloud": "catalog:",
     "tabbable": "catalog:"
   },

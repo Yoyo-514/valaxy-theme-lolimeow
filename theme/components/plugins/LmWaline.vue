@@ -1,20 +1,50 @@
 <script setup lang="ts">
 // cspell:ignore waline
+import type { WalineOptions } from 'valaxy-addon-waline/types/index.ts'
+import { commentCount } from '@waline/client/comment'
+import { pageviewCount } from '@waline/client/pageview'
 import { useAddonConfig } from 'valaxy'
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 
-type WalineAddonOptions = {
-  serverURL: string
-} & Record<string, unknown>
+defineProps<{ active: boolean }>()
 
-const waline = useAddonConfig<WalineAddonOptions>('valaxy-addon-waline')
+const waline = useAddonConfig<WalineOptions>('valaxy-addon-waline')
+const route = useRoute()
+const abortCounts: (() => void)[] = []
 
-const options = computed(() => waline.value?.options)
+// 计数在进入页面时执行；评论挂载后关闭插件的重复计数。
+const options = computed(() => waline.value?.options
+  ? { ...waline.value.options, pageview: false, comment: false }
+  : undefined)
+
+onMounted(() => {
+  const config = waline.value?.options
+  if (!config)
+    return
+
+  const path = config.path || route.path.replace(/\/$/, '')
+  if (config.pageview) {
+    abortCounts.push(pageviewCount({
+      serverURL: config.serverURL,
+      path,
+      selector: typeof config.pageview === 'string' ? config.pageview : undefined,
+    }))
+  }
+  if (config.comment) {
+    abortCounts.push(commentCount({
+      serverURL: config.serverURL,
+      path,
+      selector: typeof config.comment === 'string' ? config.comment : undefined,
+    }))
+  }
+})
+onBeforeUnmount(() => abortCounts.forEach(abort => abort()))
 </script>
 
 <template>
   <div v-if="options" class="lm-waline">
-    <WalineClient w="full" :options="options" />
+    <WalineClient v-if="active" w="full" :options="options" />
   </div>
 </template>
 

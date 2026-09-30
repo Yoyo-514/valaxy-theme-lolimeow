@@ -40,6 +40,7 @@ catalog:
   '@unhead/vue': ^3.4.2
   '@unocss/eslint-plugin': ^66.10.5
   '@vueuse/core': ^15.0.0
+  '@waline/client': 3.4.1
   bumpp: ^12.3.0
   d3-cloud: 1.2.9
   eslint: ^10.11.0
