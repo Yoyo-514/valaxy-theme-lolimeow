@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html  lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/images/favicon.ico">
+    <script>
+    ;(function () {
+      const prefersDark =
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+      const setting = localStorage.getItem('vueuse-color-scheme') || 'auto'
+      if (setting === 'dark' || (prefersDark && setting !== 'light'))
+        document.documentElement.classList.toggle('dark', true)
+    })()
+    </script>
+  <style type="text/css">
+    :root { color-scheme: light dark; --va-c-bg: #fff; }
+    html.dark { --va-c-bg: #000; }
+    html { background-color: var(--va-c-bg); }
+  </style><style id="valaxy-fouc">body{opacity:0!important}</style><style>body{transition:opacity .15s ease}</style><noscript><style>body{opacity:1!important}</style></noscript><script>(function foucGuardScript(maxDuration) {
+  var done = 0;
+  function reveal() {
+    if (done) return;
+    done = 1;
+    var s = document.getElementById("valaxy-fouc");
+    if (s) s.remove();
+  }
+  function check() {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      if (!links[i].sheet) return;
+    }
+    reveal();
+  }
+  new MutationObserver(check).observe(document.head, {
+    childList: true,
+    attributes: true,
+    attributeFilter: ["media", "rel"]
+  });
+  addEventListener("load", reveal);
+  if (maxDuration)
+    setTimeout(reveal, maxDuration);
+})(5000)</script>
+    <script>
+    const locale = localStorage.getItem('valaxy-locale') || 'zh-CN';
+    document.documentElement.setAttribute('lang', locale);
+    </script>
+    
+  <script type="module" crossorigin src="/assets/index.-abKEqBU.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime.C0FnF6B9.js">
+  <link rel="modulepreload" crossorigin href="/assets/framework.KU-TEUNn.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/vue-i18n.CMxH-xSH.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/vue-router.DxoipxDY.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/dayjs.tPloXd-7.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/pinia.C_-y9Y6N.js">
+  <link rel="modulepreload" crossorigin href="/assets/theme.C1YJnu35.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/nprogress.BgGF4EE2.js">
+  <link rel="stylesheet" crossorigin href="/assets/style.jaUmGr_w.css">
+<link rel="modulepreload" crossorigin href="/assets/theme.C1YJnu35.js">
+<link rel="modulepreload" crossorigin href="/assets/tag-cloud.NQft3sLU.js">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Valaxy Theme Lolimeow</title>
+<link rel="preload" as="image" href="/images/background1.webp" data-hid="lm-bg-preload:/images/background1.webp">
+<meta property="og:locale:alternate" content="en">
+<meta name="description" content="Valaxy Theme Lolimeow.">
+<meta property="og:description" content="Valaxy Theme Lolimeow.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:site_name" content="Valaxy Theme Lolimeow">
+<meta property="og:title" content="Valaxy Theme Lolimeow">
+<meta property="og:image" content="https://lolimeow.yoyo514.top/images/favicon.ico">
+<meta property="og:image:alt" content="Valaxy Theme Lolimeow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lolimeow.yoyo514.top/examples/tag-cloud">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Valaxy Theme Lolimeow.">
+<meta name="twitter:image" content="https://lolimeow.yoyo514.top/images/favicon.ico">
+<meta name="twitter:title" content="Valaxy Theme Lolimeow">
+<link rel="icon" href="/images/favicon.ico" type="image/png">
+<meta name="generator" content="Valaxy 1.0.0-rc.16">
+<link rel="canonical" href="https://lolimeow.yoyo514.top/examples/tag-cloud">
+</head>
+<body>
+  <div id="app"><!--[--><!--[--><!----><!--[--><!--]--><!----><!--]--><div class="min-h-screen antialiased relative isolate" data-v-b27cd233><div class="pointer-events-none inset-0 fixed z-[var(--lm-z-base)] overflow-hidden" aria-hidden="true" data-v-b27cd233 data-v-65f3ed57><div class="lm-bg-layer" style="background-color:var(--lm-c-bg-base);" data-v-65f3ed57></div><div class="lm-bg-layer" style="background-image:url(/images/background1.webp);background-position:center center;background-size:cover;background-attachment:fixed;" data-v-65f3ed57></div><!----><div class="lm-bg-layer" style="opacity:0.3;background:linear-gradient(180deg, var(--lm-c-overlay-base), var(--lm-c-overlay-tint));" data-v-65f3ed57></div></div><!----><div class="translate-y-0 transition-transform duration-250 ease-in-out inset-x-0 top-0 fixed z-[var(--lm-z-navbar)]" data-v-b27cd233><div class="w-full" data-v-b27cd233><nav class="lm-nav flex flex-col w-full transition-transform duration-250 ease-in-out relative" data-v-b27cd233 data-v-06a3a0a4><div class="px-4 py-2 flex gap-3 w-full items-center sm:px-5" data-v-06a3a0a4><a href="/" class="lm-nav-brand" aria-label="My Blog" data-v-06a3a0a4 data-v-f23c5650><img src="/images/favicon.ico" alt="logo" width="32" height="32" loading="eager" decoding="async" class="lm-nav-brand__logo" data-v-f23c5650><span class="lm-nav-brand__title" data-v-f23c5650>My Blog</span></a><div class="text-sm leading-6 ml-auto hidden items-center md:flex md:gap-3.5 xl:gap-5" data-v-06a3a0a4><!--[--><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-1db3c1e9><a href="/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-1db3c1e9><!--[--><span class="lm-nav-link-content" data-v-1db3c1e9 data-v-8a569f6e><span class="i-ri-home-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>首页</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-1db3c1e9><a href="/archives/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-1db3c1e9><!--[--><span class="lm-nav-link-content" data-v-1db3c1e9 data-v-8a569f6e><span class="i-ri-archive-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>归档</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-1db3c1e9><a href="/categories/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-1db3c1e9><!--[--><span class="lm-nav-link-content" data-v-1db3c1e9 data-v-8a569f6e><span class="i-ri-folder-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>分类</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-1db3c1e9><a href="/tags/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-1db3c1e9><!--[--><span class="lm-nav-link-content" data-v-1db3c1e9 data-v-8a569f6e><span class="i-ri-price-tag-3-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>标签</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-1db3c1e9><a href="/projects/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-1db3c1e9><!--[--><span class="lm-nav-link-content" data-v-1db3c1e9 data-v-8a569f6e><span class="i-ri-apps-2-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>项目</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-1db3c1e9><a href="/links/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-1db3c1e9><!--[--><span class="lm-nav-link-content" data-v-1db3c1e9 data-v-8a569f6e><span class="i-ri-links-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>友链</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-1db3c1e9><a href="/about/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-1db3c1e9><!--[--><span class="lm-nav-link-content" data-v-1db3c1e9 data-v-8a569f6e><span class="i-ri-user-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>关于</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><!--]--></div><div class="lm-nav-tools" data-v-06a3a0a4 data-v-377cb833><button type="button" class="lm-nav-tools__button" aria-label="打开搜索" data-v-377cb833><div i-ri-search-line data-v-377cb833></div></button><button type="button" class="lm-nav-tools__button" aria-label="切换深色模式" data-v-377cb833><div class="i-ri-sun-line" data-v-377cb833></div></button><button type="button" class="lm-nav-tools__menu-button" aria-expanded="false" aria-label="切换移动端导航" data-v-377cb833><span class="lm-nav-tools__menu-lines" data-v-377cb833><!--[--><span class="w-4 lm-nav-tools__menu-line" data-v-377cb833></span><span class="w-4 lm-nav-tools__menu-line" data-v-377cb833></span><span class="w-4 lm-nav-tools__menu-line" data-v-377cb833></span><!--]--></span></button></div></div></nav><!----></div></div><!--[--><!----><!--]--><div class="lm-page-surface-layer" style="top:0px;" aria-hidden="true" data-v-b27cd233></div><!----><main class="w-full relative z-[var(--lm-z-content)]" data-v-b27cd233><!--[--><div class="mx-auto px-4 max-w-3xl sm:px-6 xl:px-0 xl:max-w-5xl"><section class="lm-aggregate-page" data-v-dd2e221a data-v-8819dc60><header class="lm-aggregate-header lm-aggregate-header--plain" data-v-8819dc60 data-v-7e8b7414><div class="lm-aggregate-header__content lm-aggregate-container" data-v-7e8b7414><div class="lm-aggregate-meta" data-v-7e8b7414 data-v-8f3f9ceb><h1 class="lm-aggregate-meta__title" data-v-8f3f9ceb>词云排布示例</h1><!----></div></div></header><div class="lm-aggregate-page__content lm-aggregate-container" data-v-8819dc60><!--[--><p data-v-dd2e221a>切换标签数量，检查词云聚拢、长词换行与键盘操作。</p><div class="tag-cloud-examples__controls" data-v-dd2e221a><!--[--><button type="button" aria-pressed="false" data-v-dd2e221a>1 个标签</button><button type="button" aria-pressed="false" data-v-dd2e221a>3 个标签</button><button type="button" aria-pressed="true" data-v-dd2e221a>7 个标签</button><button type="button" aria-pressed="false" data-v-dd2e221a>50 个标签</button><button type="button" aria-pressed="false" data-v-dd2e221a>长标签</button><button type="button" aria-pressed="false" data-v-dd2e221a>空词云</button><!--]--></div><div class="lm-tag-cloud" style="" data-v-dd2e221a data-v-c8e3b0ab><!--[--><button type="button" class="lm-tag-cloud__item" data-tag-id="example-0" style="font-size:2.5rem;font-weight:900;" aria-pressed="false" aria-label="Valaxy, 8" data-v-c8e3b0ab><span class="lm-tag-cloud__name" data-v-c8e3b0ab>Valaxy</span><span class="lm-tag-cloud__count" aria-hidden="true" data-v-c8e3b0ab>8</span></button><button type="button" class="lm-tag-cloud__item" data-tag-id="example-1" style="font-size:2.5rem;font-weight:900;" aria-pressed="false" aria-label="Vue, 7" data-v-c8e3b0ab><span class="lm-tag-cloud__name" data-v-c8e3b0ab>Vue</span><span class="lm-tag-cloud__count" aria-hidden="true" data-v-c8e3b0ab>7</span></button><button type="button" class="lm-tag-cloud__item" data-tag-id="example-2" style="font-size:1.875rem;font-weight:800;" aria-pressed="false" aria-label="TypeScript, 6" data-v-c8e3b0ab><span class="lm-tag-cloud__name" data-v-c8e3b0ab>TypeScript</span><span class="lm-tag-cloud__count" aria-hidden="true" data-v-c8e3b0ab>6</span></button><button type="button" class="lm-tag-cloud__item" data-tag-id="example-3" style="font-size:1.875rem;font-weight:800;" aria-pressed="false" aria-label="Markdown, 5" data-v-c8e3b0ab><span class="lm-tag-cloud__name" data-v-c8e3b0ab>Markdown</span><span class="lm-tag-cloud__count" aria-hidden="true" data-v-c8e3b0ab>5</span></button><button type="button" class="lm-tag-cloud__item" data-tag-id="example-4" style="font-size:1.5rem;font-weight:700;" aria-pressed="false" aria-label="设计, 4" data-v-c8e3b0ab><span class="lm-tag-cloud__name" data-v-c8e3b0ab>设计</span><span class="lm-tag-cloud__count" aria-hidden="true" data-v-c8e3b0ab>4</span></button><button type="button" class="lm-tag-cloud__item" data-tag-id="example-5" style="font-size:1.5rem;font-weight:700;" aria-pressed="false" aria-label="生活, 3" data-v-c8e3b0ab><span class="lm-tag-cloud__name" data-v-c8e3b0ab>生活</span><span class="lm-tag-cloud__count" aria-hidden="true" data-v-c8e3b0ab>3</span></button><button type="button" class="lm-tag-cloud__item" data-tag-id="example-6" style="font-size:1.25rem;font-weight:600;" aria-pressed="false" aria-label="随笔, 2" data-v-c8e3b0ab><span class="lm-tag-cloud__name" data-v-c8e3b0ab>随笔</span><span class="lm-tag-cloud__count" aria-hidden="true" data-v-c8e3b0ab>2</span></button><!--]--></div><p role="status" data-v-dd2e221a> 当前选择：未选择</p><!--]--></div></section></div><!--]--></main><!-- 浮层与正文、页脚同级，避免被正文的层叠上下文限制。 --><!--[--><!--]--><div class="lm-helper-stage" data-v-b27cd233 data-v-6d4efede><!----></div><footer class="lm-footer" data-v-b27cd233 data-v-31cf4360><div class="lm-footer__glow" aria-hidden="true" data-v-31cf4360></div><div class="lm-footer__inner" data-v-31cf4360><div class="lm-footer__copyright" data-v-31cf4360><span class="lm-footer__year" data-v-31cf4360> Copyright © <!--[-->2023 - <!--]--> 2026</span><a class="lm-footer__icon" title="" style="color:var(--lm-c-primary-base);" rel="noopener" data-v-31cf4360><span class="i-ri-heart-fill" data-v-31cf4360></span></a><span class="lm-footer__author" data-v-31cf4360>Yoyo</span></div><div class="lm-footer__powered" data-v-31cf4360><span data-v-31cf4360>由 <span data-v-31cf4360><a href="https://valaxy.site" target="_blank" rel="noopener noreferrer" data-v-31cf4360>Valaxy</a> v1.0.0-rc.16</span> 驱动</span><span class="lm-footer__dot" aria-hidden="true" data-v-31cf4360></span><span data-v-31cf4360>主题 <a href="https://github.com/Yoyo-514/valaxy-theme-lolimeow" title="valaxy-theme-lolimeow" target="_blank" rel="noopener" data-v-31cf4360>Lolimeow</a> v1.2.0</span></div><!----><!--[--><!--]--></div></footer></div><!--]--></div><script>window.__INITIAL_STATE__='{"pinia":{"app":{"showLoading":true}}}'</script><script type="application/ld+json" data-hid="schema-org-graph">{"@context":"https://schema.org","@graph":[{"@id":"https://lolimeow.yoyo514.top/#identity","@type":"Person","name":"Yoyo","url":"https://lolimeow.yoyo514.top/","image":{"@id":"https://lolimeow.yoyo514.top/#/schema/image/1"},"sameAs":["/atom.xml","https://im.qq.com","https://github.com/yourname","https://weibo.com","https://www.douban.com","https://music.163.com","https://www.zhihu.com","https://space.bilibili.com","https://weixin.qq.com/","https://twitter.com","https://web.telegram.org/",null]},{"@id":"https://lolimeow.yoyo514.top/#website","@type":"WebSite","inLanguage":"zh-CN","url":"https://lolimeow.yoyo514.top/","publisher":{"@id":"https://lolimeow.yoyo514.top/#identity"}},{"@id":"https://lolimeow.yoyo514.top/examples/tag-cloud#webpage","@type":"WebPage","description":"Valaxy Theme Lolimeow.","url":"https://lolimeow.yoyo514.top/examples/tag-cloud","isPartOf":{"@id":"https://lolimeow.yoyo514.top/#website"},"potentialAction":[{"@type":"ReadAction","target":["https://lolimeow.yoyo514.top/examples/tag-cloud"]}]},{"@id":"https://lolimeow.yoyo514.top/#/schema/image/1","@type":"ImageObject","contentUrl":"https://lolimeow.yoyo514.top/images/avatar.jpg","inLanguage":"zh-CN","url":"https://lolimeow.yoyo514.top/images/avatar.jpg"}]}</script>
+  <div id="valaxy-teleports"></div>
+  
+</body>
+</html>
