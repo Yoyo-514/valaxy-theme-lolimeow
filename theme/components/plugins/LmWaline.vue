@@ -1,15 +1,16 @@
 <script setup lang="ts">
 // cspell:ignore waline
-import type { WalineOptions } from 'valaxy-addon-waline/types/index.ts'
+import type { LmWalineOptions } from '../../features/comment/waline-options'
 import { commentCount } from '@waline/client/comment'
 import { pageviewCount } from '@waline/client/pageview'
 import { useAddonConfig } from 'valaxy'
-import { computed, onBeforeUnmount, onMounted } from 'vue'
+import { computed, defineAsyncComponent, onBeforeUnmount, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
 defineProps<{ active: boolean }>()
 
-const waline = useAddonConfig<WalineOptions>('valaxy-addon-waline')
+const WalineClient = defineAsyncComponent(() => import('./LmWalineClient.vue'))
+const waline = useAddonConfig<LmWalineOptions>('valaxy-addon-waline')
 const route = useRoute()
 const abortCounts: (() => void)[] = []
 
