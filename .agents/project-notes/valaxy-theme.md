@@ -42,6 +42,13 @@
 - 评论外层按路由重新挂载，切页后重新计算计数路径与激活状态。**页面浏览计数只有 `LmWaline.vue` 一个所有者**，`LmWalineClient.vue` 不得再计数，否则会出现重复上报。
 - 验证计数时，dev 一旦加载启用评论的文章就会向真实服务 POST 一次 `/api/article`；这是对外部服务的写入，需先获得授权，并只做最小次数的观察。
 - demo 当前配置了线上评论服务。既有 `tests/browser/comment.spec.ts` 会触发浏览量 POST；未经授权不要运行它或浏览启用评论的文章。评论回归使用明确授权的测试服务，不伪造接口、不通过替换函数掩盖失败。
+- Waline 组件的 props 类型比 `WalineInitOptions` 窄：`highlighter`、`imageUploader`、`texRenderer` 不收 `boolean` 形式（运行时支持），只能在绑定处按组件类型收口；`cdn`、`types` 要在绑定前剥掉，否则会变成 DOM 属性。
+
+## Mermaid 插件适配
+
+- `valaxy-addon-mermaid@0.1.1` 的根元素是 `figure.diagram-card`，旧内核的 `.mermaid` 已不存在。图表配色交给 `appearance` / `config`，主题只把 `--lm-*` 接到外壳变量 `--va-mermaid-*`；变量写在 `.markdown-body figure.diagram-card` 下才压得过插件的 scoped 样式。
+- 外壳 accent 用 `--lm-c-primary-text`。插件按钮底色是 accent 混合 8%，直接拿 `-primary-base` 当强调色，浅色模式下对比只有 1.76:1（卡片底）/ 1.68:1（按钮底），过不了 WCAG。
+- 图表调色做过又撤了：套主题色板反而更难认，固定 `theme` 还会让 `appearance` 失效。若重做：`color-mix()` 值在浏览器里是 `color(srgb … / a)`，Mermaid 解析不了，要先探针读 `color` 归一成 `rgb()`；setup 里访问 `document` 前加 SSR 守卫；不要从插件导入 helper 或类型，插件可选，会让未启用的站点构建失败。
 
 ## 依赖升级后的工程注意事项
 

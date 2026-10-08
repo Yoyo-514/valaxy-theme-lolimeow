@@ -88,13 +88,19 @@
     overflow: hidden;
   }
 
-  .mermaid {
-    display: block;
-    padding: 1rem;
-    border: 1px solid var(--lm-c-primary-border-subtle);
-    border-radius: 0.75rem;
-    background: color-mix(in srgb, var(--lm-surface-reading-bg) 78%, transparent);
+  // valaxy-addon-mermaid 的根元素是 figure.diagram-card（旧内核的 .mermaid 已不再出现）。
+  // 外壳外观按插件文档使用 --va-mermaid-* 变量；图表内的元素交给 appearance 与 config。
+  // accent 用模式自适应的 -primary-text：插件按钮底色是 accent 混合 8%，-primary-base 在浅色下只有 1.76:1。
+  figure.diagram-card {
+    --va-mermaid-bg: color-mix(in srgb, var(--lm-surface-reading-bg) 78%, transparent);
+    --va-mermaid-panel: var(--lm-c-primary-muted);
+    --va-mermaid-text: var(--lm-c-text-primary);
+    --va-mermaid-muted: var(--lm-c-text-secondary);
+    --va-mermaid-accent: var(--lm-c-primary-text);
+    --va-mermaid-border: var(--lm-c-primary-border-subtle);
+    --va-mermaid-grid: var(--lm-c-border);
+    --va-mermaid-radius: 0.75rem;
+
     box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
-    overflow-x: auto;
   }
 }

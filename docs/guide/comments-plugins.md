@@ -70,6 +70,14 @@ export default defineValaxyConfig({
 
 默认提供放大查看、缩放和平移，详见 [官方 Mermaid 插件说明](https://valaxy.site/addons/official/mermaid)。
 
+图表本身的配色由插件决定：`appearance: 'default'` 使用 Mermaid 自带的明暗主题，`'soft'` 使用圆角节点和蓝色主题。要改色就在 `config` 里传 Mermaid 配置，或按插件文档写站点的 `setup/mermaid.ts`：
+
+```ts
+addonMermaid({ config: { themeVariables: { primaryColor: '#ffb3d9' } } })
+```
+
+图表卡片与查看器的外观取自主题 Design Token：主题把它们接到插件的 `--va-mermaid-*` 变量（`bg`、`panel`、`text`、`muted`、`accent`、`border`、`grid`、`radius`）。要调整就在站点样式里覆盖同名变量；自定义选择器请用插件的类名，根元素是 `figure.diagram-card`。
+
 ## SSR 兼容注意事项
 
 插件通常依赖浏览器环境。建议优先使用 Valaxy addon 的官方接入方式，不要在主题配置文件顶层直接访问浏览器 API。
