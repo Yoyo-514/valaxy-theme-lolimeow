@@ -17,6 +17,7 @@ dist-ssr
 *.local
 
 temp/
+.vitest
 
 # local env files
 .env.local
