@@ -51,8 +51,27 @@ cover: /images/cover.webp
 | `top`          | `number`                              | 置顶权重，数字越大越靠前     |
 | `draft`        | `boolean`                             | 是否为草稿，通常仅开发时展示 |
 | `hide`         | `'index'` / `boolean`                 | 是否隐藏文章                 |
-| `readingTime`  | `number`                              | 阅读时间，通常由统计功能生成 |
-| `wordCount`    | `string`                              | 字数统计，通常由统计功能生成 |
+
+## 组件封面
+
+从 Valaxy `1.1.0` 起，文章可以用 Vue 组件作为封面。将组件放到站点的 `components/covers/` 目录，例如 `ReadingCover.vue`：
+
+```yaml
+coverComponent: ReadingCover
+coverProps:
+  heading: 留一点时间，慢慢读。
+cover: /images/cover.webp
+```
+
+- `coverComponent` 是组件文件名，不含 `.vue`；`coverProps` 会作为属性传入组件。
+- 组件会收到 `context: 'card' | 'page'` 和 `src`（`cover` 图片地址）。
+- 列表卡片中的组件只作视觉预览，不接受鼠标和键盘交互。请只在 `context === 'page'` 时显示按钮等控件。
+- 文章页将组件封面与标题、元信息分开展示，不会用标题遮罩挡住组件的交互区域。
+- `cover` 可选。图片渲染在组件**下层**：正常时由组件盖住，组件加载或渲染失败时露出图片作为回退；两者会同时存在，所以组件背景建议用不透明或与图片协调的底色。
+- 列表卡片只把文章自己设置的 `cover` 当作底层图片，不会把主题按配置补充的随机封面叠在组件下面；未设置 `cover` 时卡片只有组件本身。
+- 未设置 `coverComponent` 时，继续使用原有图片封面与列表图片重试逻辑。
+
+组件需要支持服务端渲染，浏览器 API 请放在挂载后使用。示例见演示站的「组件封面与脚注预览」。
 
 ## 页面 layout
 

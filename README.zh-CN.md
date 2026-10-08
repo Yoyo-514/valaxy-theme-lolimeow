@@ -136,7 +136,7 @@ pnpm lint
 pnpm typecheck
 ```
 
-兼容版本：Valaxy `1.0.0-rc.16`、Vue `^3.5.41`、Vue Router `^5.0.0`、Vue I18n `^11.4.12`。
+支持 Valaxy `1.x`，最低版本为 `1.1.0`，需要 Node.js `>=22.12.0`。
 
 构建会生成 Valaxy 类型声明，首次运行 typecheck 前请先构建。浏览器测试使用生产预览和源码测试页：
 

@@ -142,7 +142,7 @@ pnpm lint
 pnpm typecheck
 ```
 
-Compatible versions: Valaxy `1.0.0-rc.16`, Vue `^3.5.41`, Vue Router `^5.0.0`, and Vue I18n `^11.4.12`.
+Supports Valaxy `1.x` starting from `1.1.0`. Node.js `>=22.12.0` is required.
 
 Build before the first typecheck to generate Valaxy declarations. Browser checks use the production preview and source fixtures:
 

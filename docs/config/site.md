@@ -105,6 +105,28 @@ export default defineSiteConfig({
 })
 ```
 
+## 文章统计
+
+字数和阅读时长由 Valaxy 的 `statistics` 选项提供，**默认关闭**。关闭时，主题不会在文章头部展示「本文字数」和「阅读时长」。
+
+```ts
+import { defineSiteConfig } from 'valaxy'
+
+export default defineSiteConfig({
+  statistics: {
+    enable: true,
+    readTime: {
+      speed: {
+        cn: 300,
+        en: 100,
+      },
+    },
+  },
+})
+```
+
+开启后，Valaxy 会在构建时为每篇文章写入 `wordCount` 与 `readingTime`，主题读取这两个字段并展示在文章头部。`readTime.speed` 可调整阅读速度估算。
+
 ## 评论开关
 
 站点级评论开关由 `siteConfig.comment` 控制。具体评论服务可通过 Valaxy 插件配置。
