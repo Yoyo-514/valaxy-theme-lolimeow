@@ -7,14 +7,24 @@ export type LmWalineOptions = Omit<WalineInitOptions, 'emoji' | 'el'> & {
   emoji?: string[]
 }
 
+/** Waline 组件的 emoji 属性只接受表情数组。 */
+type WalineEmojiList = Exclude<WalineInitOptions['emoji'], boolean | undefined>
+
 /** 插件的内置表情组与自定义目录可以同时使用；空 types 表示不加载内置组。 */
 export function resolveWalineEmoji({
   cdn = '//unpkg.com/',
   types = ['bilibili', 'qq', 'weibo'],
   emoji = [],
-}: Pick<LmWalineOptions, 'cdn' | 'types' | 'emoji'>): WalineInitOptions['emoji'] {
+}: Pick<LmWalineOptions, 'cdn' | 'types' | 'emoji'>): WalineEmojiList {
   return [
     ...types.map(type => `${cdn}@waline/emojis/${type}/`),
     ...emoji.map(url => `${url}/`),
-  ] as WalineInitOptions['emoji']
+  ] as WalineEmojiList
+}
+
+/** 剥离插件独有字段，得到可以直接传给 Waline 组件的选项。 */
+export function resolveWalineClientOptions(options: LmWalineOptions): Omit<LmWalineOptions, 'cdn' | 'types'> {
+  // cdn / types 只用于组装表情地址，Waline 组件不接受这两个字段。
+  const { cdn: _cdn, types: _types, ...clientOptions } = options
+  return clientOptions
 }

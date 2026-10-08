@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { resolveWalineEmoji } from '../../theme/features/comment/waline-options'
+import { resolveWalineClientOptions, resolveWalineEmoji } from '../../theme/features/comment/waline-options'
 
 describe('waline emoji options', () => {
   it('keeps the addon default groups', () => {
@@ -26,5 +26,13 @@ describe('waline emoji options', () => {
   it('keeps custom-only groups and default groups with an empty custom list', () => {
     expect(resolveWalineEmoji({ types: [], emoji: ['https://emoji.example/custom'] })).toEqual(['https://emoji.example/custom/'])
     expect(resolveWalineEmoji({ emoji: [] })).toEqual(resolveWalineEmoji({}))
+  })
+})
+
+describe('waline client options', () => {
+  it('strips the addon-only fields before binding them to the component', () => {
+    const options = { serverURL: 'https://waline.example', path: '/posts/demo', cdn: 'https://cdn.example/', types: ['qq'] }
+    expect(resolveWalineClientOptions(options)).toEqual({ serverURL: 'https://waline.example', path: '/posts/demo' })
+    expect(options.cdn).toBe('https://cdn.example/')
   })
 })
