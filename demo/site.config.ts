@@ -103,6 +103,10 @@ export default defineSiteConfig({
     // },
   ],
 
+  statistics: {
+    enable: true,
+  },
+
   comment: {
     enable: true,
   },
