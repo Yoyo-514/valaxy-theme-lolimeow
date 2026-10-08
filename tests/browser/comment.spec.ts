@@ -7,6 +7,9 @@ function isCommentList(request: Request) {
   return url.pathname.endsWith('/api/comment') && url.searchParams.get('type') !== 'count'
 }
 
+/** 视口外多远算「接近评论区」：LmComment.vue 的 rootMargin 是 400px，这里取视口外 200px。 */
+const COMMENT_PRELOAD_OFFSET = 200
+
 for (const width of [412, 1350]) {
   test(`comments load near the viewport without delaying or repeating pageviews at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 823 })
@@ -23,10 +26,10 @@ for (const width of [412, 1350]) {
     expect(requests.filter(request => request.url().includes('/emojis') || request.url().includes('@waline/emojis'))).toHaveLength(0)
 
     // 在预加载距离内、尚未进入视口时触发评论。
-    await page.locator('.lm-comment').evaluate(element => window.scrollTo({
-      top: scrollY + element.getBoundingClientRect().top - innerHeight - 200,
+    await page.locator('.lm-comment').evaluate((element, offset) => window.scrollTo({
+      top: scrollY + element.getBoundingClientRect().top - innerHeight - offset,
       behavior: 'instant',
-    }))
+    }), COMMENT_PRELOAD_OFFSET)
     await expect(page.locator('[data-waline]')).toBeAttached()
     await expect.poll(() => requests.filter(isCommentList).length).toBe(1)
     expect(decodeURIComponent(requests.find(isCommentList)!.url())).toContain('/posts/demo')
@@ -52,9 +55,7 @@ test('article navigation resets comment activation and uses the new counter path
   await expect(page).toHaveURL(new RegExp(`${path}/?$`))
   await expect.poll(() => requests.filter(request => new URL(request.url()).pathname.endsWith('/api/article')
     && request.method() === 'POST' && request.postDataJSON().path === path).length).toBe(1)
-  const distance = await page.locator('.lm-comment').evaluate(element => element.getBoundingClientRect().top - innerHeight)
-  if (distance > 400)
-    await expect(page.locator('[data-waline]')).toHaveCount(0)
+  // 评论的懒激活由上面的视口用例覆盖；这里关注换文章后的计数与重新激活。
   await page.locator('.lm-comment').scrollIntoViewIfNeeded()
   await expect.poll(() => requests.some(request => isCommentList(request) && decodeURIComponent(request.url()).includes(path!))).toBe(true)
 

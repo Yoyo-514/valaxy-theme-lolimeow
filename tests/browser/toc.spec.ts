@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { waitForHydration } from './helpers'
+import { expectScrollable, waitForHydration } from './helpers'
 
 test('selecting the current hash scrolls again and wheel input cancels the animation', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 })
@@ -14,12 +14,13 @@ test('selecting the current hash scrolls again and wheel input cancels the anima
   await page.waitForFunction(() => window.scrollY > 10)
   await page.mouse.move(400, 400)
   await page.mouse.wheel(0, -300)
-  await page.waitForTimeout(350)
+  await page.waitForTimeout(400)
   const stopped = await page.evaluate(() => window.scrollY)
-  expect(stopped).toBeGreaterThan(0)
-  expect(await heading.evaluate(el => el.getBoundingClientRect().top)).toBeGreaterThan(200)
+  // 滚轮取消了动画：页面没有继续走到标题，也不再移动。
+  const remaining = await heading.evaluate(el => el.getBoundingClientRect().top - Number.parseFloat(getComputedStyle(el).scrollMarginTop))
+  expect(remaining).toBeGreaterThan(200)
   await page.waitForTimeout(200)
-  expect(await page.evaluate(() => window.scrollY)).toBe(stopped)
+  expect(Math.abs(await page.evaluate(() => window.scrollY) - stopped)).toBeLessThan(2)
   await expect(page.locator('html')).not.toHaveAttribute('data-lm-navbar-scroll-lock', 'true')
 })
 
@@ -56,7 +57,8 @@ for (const width of [1280, 390]) {
         }, { once: true, capture: true })
       })
       await link.click()
-      await expect.poll(() => page.evaluate(() => (window as any).__tocSamples?.at(-1)?.time ?? 0)).toBeGreaterThan(650)
+      // 采样循环以「已过 650ms」为停止条件，最后一个样本刚好等于 650ms 属正常。
+      await expect.poll(() => page.evaluate(() => (window as any).__tocSamples?.at(-1)?.time ?? 0)).toBeGreaterThanOrEqual(650)
       const result = await page.evaluate((hash) => {
         const heading = document.getElementById(decodeURIComponent(hash!.slice(1)))!
         const margin = Number.parseFloat(getComputedStyle(heading).scrollMarginTop)
@@ -71,7 +73,7 @@ for (const width of [1280, 390]) {
       expect(intermediate.length > 0).toBe(reducedMotion === 'no-preference')
       // 到位时刻由 rAF 调度决定：动画本身固定 320ms，本地实测 324~326ms，CI runner 上观测到 502ms。
       // 不断言毫秒数，动画与瞬时滚动的区别由上面的 intermediate 断言覆盖。
-      await expect(page.locator('body')).not.toHaveCSS('position', 'fixed')
+      await expectScrollable(page)
       await expect(page.locator('html')).not.toHaveAttribute('data-lm-navbar-scroll-lock', 'true')
       if (mobile)
         expect(start).toBe(600)

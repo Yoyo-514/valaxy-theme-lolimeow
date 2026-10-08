@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { expectScrollable, expectScrollLocked } from './helpers'
 
 test.use({ baseURL: 'http://127.0.0.1:4176' })
 
@@ -7,7 +8,7 @@ test('nested modals keep focus and restore the original trigger after non-LIFO r
   await page.evaluate(() => window.scrollTo(0, 500))
   const trigger = page.getByRole('button', { name: 'Open first modal' })
   await trigger.click()
-  await expect(page.locator('body')).toHaveCSS('position', 'fixed')
+  await expectScrollLocked(page)
   const openSecond = page.getByRole('button', { name: 'Open second modal' })
   await expect(openSecond).toBeFocused()
   await page.keyboard.press('Tab')
@@ -17,9 +18,9 @@ test('nested modals keep focus and restore the original trigger after non-LIFO r
   await page.getByRole('button', { name: 'Remove first modal' }).click()
   await expect(page.getByRole('dialog', { name: 'First', exact: true })).toHaveCount(0)
   expect(await page.getByRole('dialog', { name: 'Second' }).evaluate(el => el.contains(document.activeElement))).toBe(true)
-  await expect(page.locator('body')).toHaveCSS('position', 'fixed')
+  await expectScrollLocked(page)
   await page.keyboard.press('Escape')
   await expect(trigger).toBeFocused()
-  await expect(page.locator('body')).not.toHaveCSS('position', 'fixed')
   expect(await page.evaluate(() => window.scrollY)).toBe(500)
+  await expectScrollable(page)
 })
