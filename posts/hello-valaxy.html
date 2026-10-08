@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html  lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/images/favicon.ico">
+    <script>
+    ;(function () {
+      const prefersDark =
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+      const setting = localStorage.getItem('vueuse-color-scheme') || 'auto'
+      if (setting === 'dark' || (prefersDark && setting !== 'light'))
+        document.documentElement.classList.toggle('dark', true)
+    })()
+    </script>
+  <style type="text/css">
+    :root { color-scheme: light dark; --va-c-bg: #fff; }
+    html.dark { --va-c-bg: #000; }
+    html { background-color: var(--va-c-bg); }
+  </style><style id="valaxy-fouc">body{opacity:0!important}</style><style>body{transition:opacity .15s ease}</style><noscript><style>body{opacity:1!important}</style></noscript><script>(function foucGuardScript(maxDuration) {
+  var done = 0;
+  function reveal() {
+    if (done) return;
+    done = 1;
+    var s = document.getElementById("valaxy-fouc");
+    if (s) s.remove();
+  }
+  function check() {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      if (!links[i].sheet) return;
+    }
+    reveal();
+  }
+  new MutationObserver(check).observe(document.head, {
+    childList: true,
+    attributes: true,
+    attributeFilter: ["media", "rel"]
+  });
+  addEventListener("load", reveal);
+  if (maxDuration)
+    setTimeout(reveal, maxDuration);
+})(5000)</script>
+    <script>
+    const locale = localStorage.getItem('valaxy-locale') || 'zh-CN';
+    document.documentElement.setAttribute('lang', locale);
+    </script>
+    
+  <script type="module" crossorigin src="/assets/index.BcTzz2b9.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime.C0FnF6B9.js">
+  <link rel="modulepreload" crossorigin href="/assets/framework.CPl-uO3K.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/vue-i18n.BrAWxoL0.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/vue-router.D0MVCIcD.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/dayjs.tPloXd-7.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/pinia.DARhMr1p.js">
+  <link rel="modulepreload" crossorigin href="/assets/theme.DJhD1cGi.js">
+  <link rel="modulepreload" crossorigin href="/assets/chunks/nprogress.DrYwK3ou.js">
+  <link rel="stylesheet" crossorigin href="/assets/style.D101LkIs.css">
+<link rel="modulepreload" crossorigin href="/assets/theme.DJhD1cGi.js">
+<link rel="modulepreload" crossorigin href="/assets/hello-valaxy.hXmbCnCH.js">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hello, Valaxy! - Valaxy Theme Lolimeow</title>
+<link rel="preload" as="image" href="/images/background1.webp" data-hid="lm-bg-preload:/images/background1.webp">
+<meta property="og:locale:alternate" content="en">
+<meta name="description" content="Valaxy Theme Lolimeow.">
+<meta property="og:description" content="Valaxy Theme Lolimeow.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:site_name" content="Valaxy Theme Lolimeow">
+<meta property="og:title" content="Hello, Valaxy!">
+<meta property="og:image" content="https://lolimeow.yoyo514.top/images/favicon.ico">
+<meta property="og:image:alt" content="Hello, Valaxy!">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lolimeow.yoyo514.top/posts/hello-valaxy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="Valaxy Theme Lolimeow.">
+<meta name="twitter:image" content="https://lolimeow.yoyo514.top/images/favicon.ico">
+<meta name="twitter:title" content="Hello, Valaxy!">
+<link rel="icon" href="/images/favicon.ico" type="image/png">
+<meta name="generator" content="Valaxy 1.1.0">
+<link rel="canonical" href="https://lolimeow.yoyo514.top/posts/hello-valaxy">
+</head>
+<body>
+  <div id="app"><!--[--><!--[--><!----><!--[--><!--]--><!----><!--]--><div class="min-h-screen antialiased relative isolate" data-v-b27cd233><div class="pointer-events-none inset-0 fixed z-[var(--lm-z-base)] overflow-hidden" aria-hidden="true" data-v-b27cd233 data-v-65f3ed57><div class="lm-bg-layer" style="background-color:var(--lm-c-bg-base);" data-v-65f3ed57></div><div class="lm-bg-layer" style="background-image:url(/images/background1.webp);background-position:center center;background-size:cover;background-attachment:fixed;" data-v-65f3ed57></div><!----><div class="lm-bg-layer" style="opacity:0.3;background:linear-gradient(180deg, var(--lm-c-overlay-base), var(--lm-c-overlay-tint));" data-v-65f3ed57></div></div><!----><div class="translate-y-0 transition-transform duration-250 ease-in-out inset-x-0 top-0 fixed z-[var(--lm-z-navbar)]" data-v-b27cd233><div class="w-full" data-v-b27cd233><nav class="lm-nav flex flex-col w-full transition-transform duration-250 ease-in-out relative" data-v-b27cd233 data-v-06a3a0a4><div class="px-4 py-2 flex gap-3 w-full items-center sm:px-5" data-v-06a3a0a4><a href="/" class="lm-nav-brand" aria-label="My Blog" data-v-06a3a0a4 data-v-f23c5650><img src="/images/favicon.ico" alt="logo" width="32" height="32" loading="eager" decoding="async" class="lm-nav-brand__logo" data-v-f23c5650><span class="lm-nav-brand__title" data-v-f23c5650>My Blog</span></a><div class="text-sm leading-6 ml-auto hidden items-center md:flex md:gap-3.5 xl:gap-5" data-v-06a3a0a4><!--[--><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-1db3c1e9><a href="/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-1db3c1e9><!--[--><span class="lm-nav-link-content" data-v-1db3c1e9 data-v-8a569f6e><span class="i-ri-home-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>首页</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-1db3c1e9><a href="/archives/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-1db3c1e9><!--[--><span class="lm-nav-link-content" data-v-1db3c1e9 data-v-8a569f6e><span class="i-ri-archive-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>归档</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-1db3c1e9><a href="/categories/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-1db3c1e9><!--[--><span class="lm-nav-link-content" data-v-1db3c1e9 data-v-8a569f6e><span class="i-ri-folder-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>分类</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-1db3c1e9><a href="/tags/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-1db3c1e9><!--[--><span class="lm-nav-link-content" data-v-1db3c1e9 data-v-8a569f6e><span class="i-ri-price-tag-3-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>标签</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-1db3c1e9><a href="/projects/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-1db3c1e9><!--[--><span class="lm-nav-link-content" data-v-1db3c1e9 data-v-8a569f6e><span class="i-ri-apps-2-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>项目</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-1db3c1e9><a href="/links/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-1db3c1e9><!--[--><span class="lm-nav-link-content" data-v-1db3c1e9 data-v-8a569f6e><span class="i-ri-links-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>友链</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><div class="lm-nav-item-shell" data-v-06a3a0a4 data-v-1db3c1e9><a href="/about/" class="va-link lm-nav-item text-[var(--lm-c-text-secondary)] opacity-86" rel="noopener" data-v-1db3c1e9><!--[--><span class="lm-nav-link-content" data-v-1db3c1e9 data-v-8a569f6e><span class="i-ri-user-line lm-nav-link-content__icon" data-v-8a569f6e></span><span class="lm-nav-link-content__text" data-v-8a569f6e>关于</span><!----><!--[--><!--]--></span><!--]--></a><!----></div><!--]--></div><div class="lm-nav-tools" data-v-06a3a0a4 data-v-377cb833><button type="button" class="lm-nav-tools__button" aria-label="打开搜索" data-v-377cb833><div i-ri-search-line data-v-377cb833></div></button><button type="button" class="lm-nav-tools__button" aria-label="切换深色模式" data-v-377cb833><div class="i-ri-sun-line" data-v-377cb833></div></button><button type="button" class="lm-nav-tools__menu-button" aria-expanded="false" aria-label="切换移动端导航" data-v-377cb833><span class="lm-nav-tools__menu-lines" data-v-377cb833><!--[--><span class="w-4 lm-nav-tools__menu-line" data-v-377cb833></span><span class="w-4 lm-nav-tools__menu-line" data-v-377cb833></span><span class="w-4 lm-nav-tools__menu-line" data-v-377cb833></span><!--]--></span></button></div></div></nav><!----></div></div><!--[--><!----><!--]--><div class="lm-page-surface-layer" style="top:0px;" aria-hidden="true" data-v-b27cd233></div><!----><main class="w-full relative z-[var(--lm-z-content)]" data-v-b27cd233><!--[--><div class="w-full"><article class="lm-article" data-v-3489c726><header class="lm-article-header lm-article-header--plain" data-v-3489c726 data-v-0cf8b244><!----><div class="lm-article-header__content--plain lm-article-header__content" data-v-0cf8b244><h1 class="lm-article-header__title" data-v-0cf8b244>Hello, Valaxy!</h1><div data-v-0cf8b244 data-v-85c79b95><div class="lm-article-meta__info-row" data-v-85c79b95><span class="lm-article-meta__info-item" data-v-85c79b95><span class="lm-article-meta__info-icon i-ri-time-line" data-v-85c79b95></span> 发布于 <dl class="lm-date lm-date--inline" data-v-85c79b95 data-v-2c934656><dt class="lm-date__label lm-date__label--inline" data-v-2c934656>发布于</dt><dd class="lm-date__value lm-date__value--inline" data-v-2c934656><time datetime="2022-03-22" data-v-2c934656>2022-03-22</time></dd></dl></span><!--[--><span class="lm-article-meta__info-item" data-v-85c79b95><span class="i-ri-history-line lm-article-meta__info-icon" data-v-85c79b95></span> 更新于 2022-03-23</span><span class="lm-article-meta__info-item" data-v-85c79b95><span class="i-ri-file-text-line lm-article-meta__info-icon" data-v-85c79b95></span> 本文字数: 61</span><span class="lm-article-meta__info-item" data-v-85c79b95><span class="i-ri-book-open-line lm-article-meta__info-icon" data-v-85c79b95></span> 阅读时长: 1m</span><!--]--></div><div class="lm-article-meta__taxonomy-row--plain lm-article-meta__taxonomy-row" data-v-85c79b95><!--[--><span class="lm-article-meta__pill lm-article-meta__pill--category" data-v-85c79b95><span class="i-ri-folder-2-line" data-v-85c79b95></span> Valaxy Notes</span><!--]--><!--[--><span class="lm-article-meta__pill" data-v-85c79b95>valaxy</span><span class="lm-article-meta__pill" data-v-85c79b95>笔记</span><!--]--></div></div></div></header><div class="lm-article__content-stack" data-v-3489c726><div class="lm-article__content-main" data-v-3489c726><div class="lm-article__reading" data-v-3489c726><div class="markdown-body pb-4 max-w-none prose dark:prose-invert" data-v-3489c726><!--[--><main><div w="full" flex="~"><!--[--><div class="content" flex="~ col grow" w="full" p="lt-md:0"><!--[--><!--]--><!--[--><!--]--><!--[--><div class="markdown-body pb-4 max-w-none prose dark:prose-invert"><article class="markdown-body"><!--[--><!--[--><h2 id="hello-valaxy" tabindex="-1">Hello, Valaxy! <a class="header-anchor" href="#hello-valaxy" aria-label="Permalink to &quot;Hello, Valaxy!&quot;">​</a></h2><p>English</p><p><strong>English Bold</strong></p><div class="language-ts"><button title="Copy code" class="copy"></button><span class="lang">ts</span><pre class="shiki shiki-themes github-light github-dark vp-code"><code v-pre><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">import</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> type</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> { ThemeConfig } </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">from</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> &#39;valaxy-theme-starter&#39;</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">import</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> { defineConfig } </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">from</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;"> &#39;valaxy&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">export</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> default</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;"> defineConfig</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">ThemeConfig</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&gt;({</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">  // your theme name</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">  // valaxy-theme-yun name is &#39;yun&#39;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">  theme: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&#39;starter&#39;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">  themeConfig: {</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    banner: {</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      enable: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;">true</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      title: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&#39;云游君的小站&#39;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    },</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">  },</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">})</span></span></code></pre><button class="code-block-unfold-btn"></button></div><!--]--><!--[--><!--]--><!--]--><!----><!----></article></div><!--[--><!--]--><!--]--></div><!--[--><!--]--><!--[--><!--]--><!--[--><!--]--><!--[--><!--]--><!--[--><!--]--><!--]--></div><!--[--><!--]--></main><!--]--></div></div><footer class="lm-post-nav" data-v-3489c726 data-v-eb36d0bb><a href="/posts/test" class="lm-post-nav__item" data-v-eb36d0bb><span class="lm-post-nav__label" data-v-eb36d0bb>上一篇</span><span class="lm-post-nav__title" data-v-eb36d0bb>Valaxy Test 文章内容测试</span></a><!----></footer><section class="lm-comment comment" aria-label="评论区" data-v-3489c726 data-v-64c6ddb0><div class="lm-comment__content" data-v-64c6ddb0><div class="lm-comment__body" data-v-64c6ddb0><div class="lm-waline" data-v-64c6ddb0 data-v-507b9c94><!----></div></div></div></section></div><div class="lm-article__toc-shell" data-v-3489c726><!----></div></div></article></div><!--]--></main><!-- 浮层与正文、页脚同级，避免被正文的层叠上下文限制。 --><!--[--><!--[--><!-- 独立持有 Valaxy 大纲的更新钩子，不包裹 Markdown 内容。 --><!--[--><!--]--><!--]--><!----><!--]--><div class="lm-helper-stage" data-v-b27cd233 data-v-6d4efede><!----></div><footer class="lm-footer" data-v-b27cd233 data-v-31cf4360><div class="lm-footer__glow" aria-hidden="true" data-v-31cf4360></div><div class="lm-footer__inner" data-v-31cf4360><div class="lm-footer__copyright" data-v-31cf4360><span class="lm-footer__year" data-v-31cf4360> Copyright © <!--[-->2023 - <!--]--> 2026</span><a class="lm-footer__icon" title="" style="color:var(--lm-c-primary-base);" rel="noopener" data-v-31cf4360><span class="i-ri-heart-fill" data-v-31cf4360></span></a><span class="lm-footer__author" data-v-31cf4360>Yoyo</span></div><div class="lm-footer__powered" data-v-31cf4360><span data-v-31cf4360>由 <span data-v-31cf4360><a href="https://valaxy.site" target="_blank" rel="noopener noreferrer" data-v-31cf4360>Valaxy</a> v1.1.0</span> 驱动</span><span class="lm-footer__dot" aria-hidden="true" data-v-31cf4360></span><span data-v-31cf4360>主题 <a href="https://github.com/Yoyo-514/valaxy-theme-lolimeow" title="valaxy-theme-lolimeow" target="_blank" rel="noopener" data-v-31cf4360>Lolimeow</a> v1.2.1</span></div><!----><!--[--><!--]--></div></footer></div><!--]--></div><script>window.__INITIAL_STATE__='{"pinia":{"app":{"showLoading":true},"site":{},"routerStore":{}}}'</script><script type="application/ld+json" data-hid="schema-org-graph">{"@context":"https://schema.org","@graph":[{"@id":"https://lolimeow.yoyo514.top/#identity","@type":"Person","name":"Yoyo","url":"https://lolimeow.yoyo514.top/","image":{"@id":"https://lolimeow.yoyo514.top/#/schema/image/1"},"sameAs":["/atom.xml","https://im.qq.com","https://github.com/yourname","https://weibo.com","https://www.douban.com","https://music.163.com","https://www.zhihu.com","https://space.bilibili.com","https://weixin.qq.com/","https://twitter.com","https://web.telegram.org/",null]},{"@id":"https://lolimeow.yoyo514.top/#website","@type":"WebSite","dateModified":"2022-03-23","datePublished":"2022-03-22","inLanguage":"zh-CN","name":"Hello, Valaxy!","url":"https://lolimeow.yoyo514.top/","publisher":{"@id":"https://lolimeow.yoyo514.top/#identity"}},{"@id":"https://lolimeow.yoyo514.top/posts/hello-valaxy#webpage","@type":"WebPage","description":"Valaxy Theme Lolimeow.","name":"Hello, Valaxy!","url":"https://lolimeow.yoyo514.top/posts/hello-valaxy","isPartOf":{"@id":"https://lolimeow.yoyo514.top/#website"},"potentialAction":[{"@type":"ReadAction","target":["https://lolimeow.yoyo514.top/posts/hello-valaxy"]}]},{"@id":"https://lolimeow.yoyo514.top/#/schema/image/1","@type":"ImageObject","contentUrl":"https://lolimeow.yoyo514.top/images/avatar.jpg","inLanguage":"zh-CN","url":"https://lolimeow.yoyo514.top/images/avatar.jpg"}]}</script>
+  <div id="valaxy-teleports"></div>
+  
+</body>
+</html>
