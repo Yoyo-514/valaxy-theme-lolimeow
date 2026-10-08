@@ -19,6 +19,8 @@ const props = withDefaults(defineProps<{
 const {
   title,
   currentCover: cover,
+  coverComponent,
+  postCover,
   dateLabel,
   displayDate,
   excerpt,
@@ -36,7 +38,7 @@ const shouldReverse = computed(() => {
   return isReversed.value
 })
 
-// 封面统一由 LmImage 渲染；这里透过组件实例同步内部 img 元素引用，
+// 普通图片封面由 LmImage 渲染；这里透过组件实例同步内部 img 元素引用，
 // 供 usePostCardMediaState 读取加载完成状态与观察视口邻近性。
 // 组件实例上暴露的 ref 会自动解包，因此 el 直接是元素或 null。
 const imageWrapper = useTemplateRef<InstanceType<typeof LmImage>>('imageWrapper')
@@ -52,7 +54,7 @@ const {
   handleImageError,
   handleImageLoad,
 } = usePostCardMediaState({
-  hasMedia,
+  hasMedia: computed(() => !coverComponent.value && !!cover.value),
   cover,
   imageElement,
   onCoverFailure: handleCoverError,
@@ -60,8 +62,7 @@ const {
 </script>
 
 <template>
-  <RouterLink
-    :to="post.path || ''"
+  <article
     class="lm-post-card"
     :class="{
       'lm-post-card--reversed': shouldReverse,
@@ -70,6 +71,16 @@ const {
   >
     <div v-if="hasMedia" class="lm-post-card__media">
       <div class="lm-post-card__media-shape">
+        <ValaxyCover
+          v-if="coverComponent"
+          class="lm-post-card__component-cover"
+          :src="postCover"
+          :component="coverComponent"
+          :component-props="post.coverProps"
+          context="card"
+          inert
+          aria-hidden="true"
+        />
         <div
           v-if="showLoadingPlaceholder"
           class="lm-post-card__loading-placeholder"
@@ -77,7 +88,7 @@ const {
         />
 
         <LmImage
-          v-if="cover"
+          v-if="!coverComponent && cover"
           :key="cover"
           ref="imageWrapper"
           :src="cover"
@@ -93,7 +104,9 @@ const {
     <div class="lm-post-card__content">
       <LmDate :date="displayDate" :label="dateLabel" />
       <h2 class="lm-post-card__title">
-        {{ title }}
+        <RouterLink :to="post.path || ''" class="lm-post-card__link">
+          {{ title }}
+        </RouterLink>
       </h2>
 
       <div v-if="tags.length" class="lm-post-card__tags">
@@ -110,7 +123,7 @@ const {
         {{ excerpt }}
       </p>
     </div>
-  </RouterLink>
+  </article>
 </template>
 
 <style lang="scss" scoped>
@@ -171,6 +184,32 @@ const {
     border-color: var(--lm-c-primary-border);
     transform: translateY(-2px);
   }
+}
+
+.lm-post-card__link {
+  color: inherit;
+  text-decoration: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.lm-post-card:has(.lm-post-card__link:focus-visible) {
+  outline: 2px solid var(--lm-c-primary-focus-ring);
+  outline-offset: 3px;
+}
+
+.lm-post-card__component-cover {
+  height: 100%;
+  aspect-ratio: auto;
 }
 
 .lm-post-card--text-only {

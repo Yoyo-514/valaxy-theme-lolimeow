@@ -60,9 +60,15 @@ export function usePostCardViewModel(
 
   const seed = computed(() => resolvedPost.value.path || `${resolvedPost.value.title || 'post'}-${resolvedIndex.value}`)
 
+  /**
+   * 文章自身 Frontmatter 中设置的封面。
+   *
+   * 主题按配置补充的随机与回退封面属于占位内容，不作为组件封面的底层图片。
+   */
+  const postCover = computed(() => (resolvedPost.value as Post & { cover?: string }).cover ?? '')
+
   const coverCandidates = computed(() => {
     // 每组候选从稳定种子命中的位置轮转，保证同一文章顺序稳定且可尝试池内其余地址。
-    const postCover = (resolvedPost.value as Post & { cover?: string }).cover
     const { coverRandom, coverApiUrls = [], coverFallback = [] } = postListConfig.value
     const apiCandidates = coverRandom
       ? orderBySeed(coverApiUrls, seed.value).map(url => ({
@@ -76,7 +82,7 @@ export function usePostCardViewModel(
     }))
 
     return compactCoverCandidates([
-      ...(postCover ? [{ source: 'post', url: postCover } as const] : []),
+      ...(postCover.value ? [{ source: 'post', url: postCover.value } as const] : []),
       ...apiCandidates,
       ...fallbackCandidates,
     ])
@@ -127,7 +133,8 @@ export function usePostCardViewModel(
     advanceCoverCandidate()
   }
 
-  const hasMedia = computed(() => !!currentCover.value)
+  const coverComponent = computed(() => resolvedPost.value.coverComponent)
+  const hasMedia = computed(() => !!coverComponent.value || !!currentCover.value)
   const isTextOnly = computed(() => !hasMedia.value)
 
   const title = computed(() => normalizePostTitle(resolvedPost.value.title))
@@ -158,6 +165,8 @@ export function usePostCardViewModel(
 
   return {
     currentCover,
+    coverComponent,
+    postCover,
     dateLabel,
     displayDate,
     excerpt,

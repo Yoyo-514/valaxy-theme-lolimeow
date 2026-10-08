@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useArticleHeaderMeta } from '../../features/article'
 
 const {
+  frontmatter,
   title,
   cover,
   categories,
@@ -9,14 +11,24 @@ const {
   publishedDate,
   infoItems,
 } = useArticleHeaderMeta()
+
+const hasImageCover = computed(() => !!cover.value && !frontmatter.value.coverComponent)
 </script>
 
 <template>
   <header
     class="lm-article-header"
-    :class="{ 'lm-article-header--plain': !cover }"
+    :class="{ 'lm-article-header--plain': !hasImageCover }"
   >
-    <div v-if="cover" class="lm-article-header__cover">
+    <ValaxyCover
+      v-if="frontmatter.coverComponent"
+      class="lm-article-header__component-cover"
+      :src="cover"
+      :component="frontmatter.coverComponent"
+      :component-props="frontmatter.coverProps"
+      context="page"
+    />
+    <div v-else-if="cover" class="lm-article-header__cover">
       <LmImage
         :src="cover"
         alt=""
@@ -45,14 +57,14 @@ const {
 
     <div
       class="lm-article-header__content"
-      :class="{ 'lm-article-header__content--plain': !cover }"
+      :class="{ 'lm-article-header__content--plain': !hasImageCover }"
     >
-      <h1 v-if="!cover" class="lm-article-header__title">
+      <h1 v-if="!hasImageCover" class="lm-article-header__title">
         {{ title }}
       </h1>
 
       <LmArticleMeta
-        v-if="!cover"
+        v-if="!hasImageCover"
         :published-date="publishedDate"
         :info-items="infoItems"
         :categories="categories"
@@ -69,6 +81,10 @@ const {
 
 .lm-article-header--plain {
   @apply md:pt-24 pt-22;
+}
+
+.lm-article-header__component-cover {
+  @apply mx-auto mb-6 max-w-3xl;
 }
 
 .lm-article-header__cover {
