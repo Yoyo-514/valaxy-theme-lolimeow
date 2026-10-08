@@ -30,3 +30,49 @@
     scroll-margin-top: 45vh;
   }
 }
+
+// Reka 将预览传送到正文外，使用独立选择器并保留框架的碰撞检测与高度限制。
+.va-footnote-popover.markdown-body {
+  padding: 0.75rem 1rem;
+  border-color: var(--lm-surface-modal-border);
+  background: var(--lm-surface-reading-bg);
+  color: var(--lm-c-text-primary);
+  box-shadow: var(--lm-shadow-elevated);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+
+  > p:first-of-type {
+    margin-top: 0;
+  }
+
+  > p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .va-footnote-close {
+    color: var(--lm-c-text-secondary);
+  }
+
+  .va-footnote-arrow {
+    fill: var(--lm-surface-reading-bg);
+  }
+}
+
+.markdown-body .va-footnote-preview {
+  color: var(--lm-c-primary-text);
+  border-radius: 0.25rem;
+}
+
+.markdown-body .va-footnote-preview,
+.va-footnote-popover .va-footnote-close {
+  &:hover {
+    color: var(--lm-c-primary-text-hover);
+    background: var(--lm-c-primary-soft);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--lm-c-primary-focus-ring);
+    outline-offset: 2px;
+  }
+}
