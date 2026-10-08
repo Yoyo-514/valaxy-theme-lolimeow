@@ -37,9 +37,12 @@ test('mobile TOC restores focus and releases scrolling before heading navigation
   await page.keyboard.press('Escape')
   await expect(trigger).toBeFocused()
   await trigger.click()
-  await page.locator('.lm-toc-mobile__link').last().click()
+  const lastLink = page.locator('.lm-toc-mobile__link').last()
+  const lastHref = (await lastLink.getAttribute('href')) ?? ''
+  await lastLink.click()
   await expect(page.locator('.lm-toc-mobile__panel')).toHaveCount(0)
-  await expectScrollable(page)
+  // 锁在导航前释放：页面确实滚到了目标标题，而不是被锁在原地。
+  await expect(page.locator(`[id="${decodeURIComponent(lastHref.slice(1))}"]`)).toBeInViewport()
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
 })
 

@@ -15,6 +15,9 @@ export async function expectScrollLocked(page: Page) {
 
 /** 页面此刻可以滚动：锁释放后滚动立即生效。 */
 export async function expectScrollable(page: Page) {
-  await page.evaluate(() => window.scrollTo(0, 120))
-  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(120)
+  // 页面可能还在做平滑滚动，重试到本次滚动真的落定。
+  await expect.poll(async () => {
+    await page.evaluate(() => window.scrollTo(0, 120))
+    return page.evaluate(() => window.scrollY)
+  }).toBe(120)
 }
