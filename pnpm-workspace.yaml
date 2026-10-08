@@ -28,6 +28,11 @@ packages:
   - demo
   - docs
 
+# UnoCSS 66.10.5 的 directives 与 magic-string 1.4.3 不兼容；上游修复发布后移除。
+# https://github.com/unocss/unocss/pull/5375
+overrides:
+  magic-string@1.4.3: 1.4.2
+
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
@@ -35,25 +40,25 @@ allowBuilds:
 catalog:
   '@antfu/eslint-config': ^9.5.1
   '@iconify-json/ri': ^1.2.10
-  '@playwright/test': ^1.63.0
+  '@playwright/test': ^1.64.0
   '@types/d3-cloud': 1.2.9
   '@unhead/vue': ^3.4.2
   '@unocss/eslint-plugin': ^66.10.5
   '@vueuse/core': ^15.0.0
-  '@waline/client': 3.4.1
+  '@waline/client': 3.16.0
   bumpp: ^12.3.0
   d3-cloud: 1.2.9
-  eslint: ^10.11.0
+  eslint: ^10.12.0
   eslint-plugin-format: ^2.0.1
-  knip: ^6.38.0
+  knip: ^6.40.0
   tabbable: ^6.5.0
   typescript: ^6.0.3
   unocss: 66.10.5
-  valaxy: 1.0.0-rc.16
-  valaxy-addon-mermaid: 0.1.0
+  valaxy: 1.1.0
+  valaxy-addon-mermaid: 0.1.1
   valaxy-addon-waline: ^0.2.1
-  vite: 8.3.1
+  vite: 8.3.3
   vitepress: 2.0.0-alpha.17
-  vitest: ^5.0.2
+  vitest: ^5.0.3
   vue: 3.5.43
-  vue-tsc: ^3.3.11
+  vue-tsc: ^3.3.12
