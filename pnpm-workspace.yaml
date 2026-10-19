@@ -28,10 +28,9 @@ packages:
   - demo
   - docs
 
-# UnoCSS 66.10.5 的 directives 与 magic-string 1.4.3 不兼容；上游修复发布后移除。
-# https://github.com/unocss/unocss/pull/5375
+# Valaxy 内部 UnoCSS 与根项目保持一致，复用 catalog 中的版本。
 overrides:
-  magic-string@1.4.3: 1.4.2
+  valaxy>unocss: 'catalog:'
 
 allowBuilds:
   '@parcel/watcher': true
@@ -40,25 +39,25 @@ allowBuilds:
 catalog:
   '@antfu/eslint-config': ^9.5.1
   '@iconify-json/ri': ^1.2.10
-  '@playwright/test': ^1.64.0
+  '@playwright/test': ^1.64.1
   '@types/d3-cloud': 1.2.9
-  '@unhead/vue': ^3.4.2
-  '@unocss/eslint-plugin': ^66.10.5
+  '@unhead/vue': ^3.4.3
+  '@unocss/eslint-plugin': ^66.11.0
   '@vueuse/core': ^15.0.0
-  '@waline/client': 3.16.0
+  '@waline/client': 3.16.1
   bumpp: ^12.3.0
   d3-cloud: 1.2.9
-  eslint: ^10.12.0
+  eslint: ^10.13.0
   eslint-plugin-format: ^2.0.1
-  knip: ^6.40.0
+  knip: ^6.42.0
   tabbable: ^6.5.0
   typescript: ^6.0.3
-  unocss: 66.10.5
+  unocss: 66.11.0
   valaxy: 1.1.0
   valaxy-addon-mermaid: 0.1.1
   valaxy-addon-waline: ^0.2.1
-  vite: 8.3.3
+  vite: 8.3.4
   vitepress: 2.0.0-alpha.17
-  vitest: ^5.0.3
-  vue: 3.5.43
-  vue-tsc: ^3.3.12
+  vitest: ^5.0.5
+  vue: 3.5.44
+  vue-tsc: ^3.3.13

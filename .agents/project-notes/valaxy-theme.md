@@ -52,8 +52,7 @@
 
 ## 依赖升级后的工程注意事项
 
-- UnoCSS `66.10.5` 与 `magic-string@1.4.3` 曾造成 `@apply` 输出重复并阻断 CSS 构建。当前 workspace 对该精确版本覆盖为 `1.4.2`。重新升级时核对 UnoCSS issue `5373` / PR `5375` 及实际依赖解析结果，确认问题已修复再考虑移除，不能永久锁死后续版本。
-- `eslint.config.mjs` 通过 composer 的 `override('antfu/typescript/parser', ...)` 将 `scripts/**/*.mjs` 纳入解析范围，解决升级后的 unused 误报；没有关闭检查规则。不要添加该版本不支持的顶层 `typescript.files` 配置。
+- UnoCSS `66.11.0` 已包含 PR `5375`，修复 `@apply` 输出重复问题。Valaxy `1.1.0` 仍精确依赖 `66.10.5`，workspace 通过 `valaxy>unocss: 'catalog:'` 定向复用 catalog 的版本；`magic-string` 按依赖正常解析。升级 Valaxy 时重新核对其依赖声明，再决定是否移除定向覆盖。
 - 仓库类型检查使用 `scripts/typecheck.mjs`。先生成 Valaxy 声明，再检查仓库自身诊断；不要把依赖源码的独立类型检查扩成当前任务阻断。
 - CI 的 pnpm 版本与本机可能不同；Valaxy 使用 Git 日期时也依赖 checkout 历史深度。涉及工具链时单独核查，不在无关 UI 修改中顺带重写工作流。
 
