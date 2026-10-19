@@ -23,6 +23,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "catalog:",
     "@playwright/test": "catalog:",
+    "@types/node": "catalog:",
     "@unocss/eslint-plugin": "catalog:",
     "bumpp": "catalog:",
     "eslint": "catalog:",
