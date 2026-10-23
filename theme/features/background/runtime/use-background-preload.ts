@@ -82,16 +82,22 @@ export function useBackgroundPreload(scope: BackgroundScope = 'app') {
       urlToMediaQueries.set(preloadUrl, mediaQueries)
     }
 
-    return [...urlToMediaQueries.entries()].map(([url, mediaQueries]) => ({
+    return [
+      ...urlToMediaQueries.entries(),
+    ].map(([url, mediaQueries]) => ({
       key: `lm-bg-preload:${url}`,
       rel: 'preload' as const,
       as: 'image' as const,
       href: url,
       // Hero 作用域是首屏主视觉，值得抢占带宽；
       // 内页的全局背景属于装饰层，保持默认优先级，避免挤占正文资源。
-      ...(scope === 'hero' ? { fetchpriority: 'high' as const } : {}),
+      ...(scope === 'hero'
+        ? { fetchpriority: 'high' as const }
+        : {}),
       ...(mediaQueries.length < PRELOAD_VARIANTS.length
-        ? { media: mediaQueries.join(', ') }
+        ? {
+            media: mediaQueries.join(', '),
+          }
         : {}),
     }))
   })

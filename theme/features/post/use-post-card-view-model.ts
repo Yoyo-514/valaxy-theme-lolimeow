@@ -82,7 +82,11 @@ export function usePostCardViewModel(
     }))
 
     return compactCoverCandidates([
-      ...(postCover.value ? [{ source: 'post', url: postCover.value } as const] : []),
+      ...(postCover.value
+        ? [
+            { source: 'post', url: postCover.value } as const,
+          ]
+        : []),
       ...apiCandidates,
       ...fallbackCandidates,
     ])
@@ -141,7 +145,9 @@ export function usePostCardViewModel(
 
   const displayDate = computed(() => resolvedPost.value.updated ?? resolvedPost.value.date)
 
-  const dateLabel = computed(() => resolvedPost.value.updated ? t('article.updatedLabel') : t('article.publishedOn'))
+  const dateLabel = computed(() => resolvedPost.value.updated
+    ? t('article.updatedLabel')
+    : t('article.publishedOn'))
 
   const tags = computed(() => resolvedPost.value.tags ?? [])
 

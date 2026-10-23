@@ -29,7 +29,9 @@ export function useLayoutShell() {
   // 因此直接用配置值生成内联样式，让 SSR 产物与水合后完全一致。
   // 相比运行时测量 Hero bounding 再写 CSS 变量，这里没有首帧跳变，也不产生布局偏移。
   const pageSurfaceStyle = computed<CSSProperties>(() => ({
-    top: isHomeLayout.value ? (themeConfig.value.hero.height || '100vh') : '0px',
+    top: isHomeLayout.value
+      ? (themeConfig.value.hero.height || '100vh')
+      : '0px',
   }))
 
   const showGlobalNotice = computed(() => {

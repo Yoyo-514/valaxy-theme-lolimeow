@@ -28,14 +28,21 @@ watch(viewportHeight, measureDocument)
 const showBackToTop = computed(() => y.value > 120)
 const scrollProgress = computed(() => {
   const maxScroll = documentHeight.value - viewportHeight.value
-  return maxScroll > 0 ? Math.min(1, Math.max(0, y.value / maxScroll)) : 0
+  return maxScroll > 0
+    ? Math.min(1, Math.max(0, y.value / maxScroll))
+    : 0
 })
 const fillHeight = computed(() => 50 * scrollProgress.value)
 const buttonTitle = computed(() => `${t('button.backToTop')} · ${Math.round(scrollProgress.value * 100)}%`)
 
 /** 按用户动态效果偏好返回顶部。 */
 function backToTop() {
-  getWindow()?.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'instant' : 'smooth' })
+  getWindow()?.scrollTo({
+    top: 0,
+    behavior: prefersReducedMotion()
+      ? 'instant'
+      : 'smooth',
+  })
 }
 </script>
 

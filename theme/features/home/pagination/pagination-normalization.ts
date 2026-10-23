@@ -22,5 +22,7 @@ export function normalizePageNumber(value: unknown) {
 export function normalizePageSize(value: unknown): number | undefined {
   const pageSize = Math.floor(Number(value))
 
-  return Number.isFinite(pageSize) && pageSize >= 1 ? pageSize : undefined
+  return Number.isFinite(pageSize) && pageSize >= 1
+    ? pageSize
+    : undefined
 }

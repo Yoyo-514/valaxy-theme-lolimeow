@@ -44,7 +44,9 @@ export function resolveLengthToPx(
   fallback = DEFAULT_LENGTH_PX,
   rootFontSize = DEFAULT_ROOT_FONT_SIZE_PX,
 ) {
-  const safeFallback = Number.isFinite(fallback) && fallback > 0 ? fallback : DEFAULT_LENGTH_PX
+  const safeFallback = Number.isFinite(fallback) && fallback > 0
+    ? fallback
+    : DEFAULT_LENGTH_PX
   const safeRootFontSize = Number.isFinite(rootFontSize) && rootFontSize > 0
     ? rootFontSize
     : DEFAULT_ROOT_FONT_SIZE_PX
@@ -60,9 +62,13 @@ export function resolveLengthToPx(
 
   const amount = Number(match[1])
   const unit = (match[2] ?? 'px').toLowerCase()
-  const pixels = unit === 'rem' ? amount * safeRootFontSize : amount
+  const pixels = unit === 'rem'
+    ? amount * safeRootFontSize
+    : amount
 
-  return Number.isFinite(pixels) && pixels > 0 ? pixels : safeFallback
+  return Number.isFinite(pixels) && pixels > 0
+    ? pixels
+    : safeFallback
 }
 
 /**
@@ -90,11 +96,16 @@ export function resolveGridColumnCount(
   }
 
   const safeMaxColumns = clampColumnCount(maxColumns)
-  const safeGapPx = Number.isFinite(gapPx) && gapPx >= 0 ? gapPx : 0
+  const safeGapPx = Number.isFinite(gapPx) && gapPx >= 0
+    ? gapPx
+    : 0
   const fittedColumns = Math.floor((containerWidth + safeGapPx) / (minCardWidthPx + safeGapPx))
 
-  if (!Number.isFinite(fittedColumns))
-    return fittedColumns === Number.POSITIVE_INFINITY ? safeMaxColumns : MIN_GRID_COLUMNS
+  if (!Number.isFinite(fittedColumns)) {
+    return fittedColumns === Number.POSITIVE_INFINITY
+      ? safeMaxColumns
+      : MIN_GRID_COLUMNS
+  }
 
   return Math.min(safeMaxColumns, Math.max(MIN_GRID_COLUMNS, fittedColumns))
 }

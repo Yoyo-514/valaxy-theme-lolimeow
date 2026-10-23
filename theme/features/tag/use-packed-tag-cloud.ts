@@ -111,17 +111,22 @@ export function usePackedTagCloud(
         const right = Math.max(...rectangles.map(rect => rect.left + rect.width))
         const top = Math.min(...rectangles.map(rect => rect.top))
         const bottom = Math.max(...rectangles.map(rect => rect.top + rect.height))
-        const packedHeight = Math.max(items.value.length <= 3 ? 120 : 192, flowHeight, bottom - top + 24)
+        const packedHeight = Math.max(items.value.length <= 3
+          ? 120
+          : 192, flowHeight, bottom - top + 24)
 
         // 按钮始终留在文档流中占位；transform 只改变视觉位置。
         packed.value = {
           height: packedHeight,
           positions: Object.fromEntries(rectangles.map((rect) => {
             const button = buttons.get(rect.id)!
-            return [rect.id, {
-              x: rect.left - left + (width - (right - left)) / 2 - button.offsetLeft,
-              y: rect.top - top + (packedHeight - (bottom - top)) / 2 - button.offsetTop,
-            }]
+            return [
+              rect.id,
+              {
+                x: rect.left - left + (width - (right - left)) / 2 - button.offsetLeft,
+                y: rect.top - top + (packedHeight - (bottom - top)) / 2 - button.offsetTop,
+              },
+            ]
           })),
         }
       })

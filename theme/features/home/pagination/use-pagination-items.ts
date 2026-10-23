@@ -121,10 +121,14 @@ export function usePaginationItems(options: UsePaginationItemsOptions) {
     const windowStart = Math.max(2, currentPage.value - SIBLING_COUNT)
     const windowEnd = Math.min(totalPages.value - 1, currentPage.value + SIBLING_COUNT)
     const leadingItems = windowStart > 2
-      ? [createEllipsisItem('ellipsis-left')]
+      ? [
+          createEllipsisItem('ellipsis-left'),
+        ]
       : createPageRange(2, windowStart - 1).map(createPageItem)
     const trailingItems = windowEnd < totalPages.value - 1
-      ? [createEllipsisItem('ellipsis-right')]
+      ? [
+          createEllipsisItem('ellipsis-right'),
+        ]
       : createPageRange(windowEnd + 1, totalPages.value - 1).map(createPageItem)
 
     return [

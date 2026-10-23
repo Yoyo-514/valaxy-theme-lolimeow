@@ -25,7 +25,14 @@ const COLOR_ROLES = {
   focusRing: 'focus-ring',
 } satisfies Record<keyof ThemeColorTokens, string>
 
-const OPAQUE_ROLES = new Set(['solid', 'solidHover', 'onSolid', 'text', 'textHover', 'focusRing'])
+const OPAQUE_ROLES = new Set([
+  'solid',
+  'solidHover',
+  'onSolid',
+  'text',
+  'textHover',
+  'focusRing',
+])
 
 function invalid(path: string, reason: string): never {
   throw new TypeError(`[lolimeow] themeConfig.${path}: ${reason}`)
@@ -51,7 +58,11 @@ function colorLiteral(value: unknown, path: string, opaque: boolean): string {
 
   const raw = value.trim()
   if (/^#(?:[\da-f]{3}|[\da-f]{4}|[\da-f]{6}|[\da-f]{8})$/i.test(raw)) {
-    const alpha = raw.length === 5 ? raw.slice(-1).repeat(2) : raw.length === 9 ? raw.slice(-2) : 'ff'
+    const alpha = raw.length === 5
+      ? raw.slice(-1).repeat(2)
+      : raw.length === 9
+        ? raw.slice(-2)
+        : 'ff'
     if (opaque && alpha.toLowerCase() !== 'ff')
       invalid(path, 'this color must be opaque')
     return raw
@@ -66,14 +77,26 @@ function colorLiteral(value: unknown, path: string, opaque: boolean): string {
   const comma = body.includes(',')
   if (comma && body.includes('/'))
     return invalid(path, 'do not mix comma and slash color syntax')
-  const parts = comma ? body.split(',').map(v => v.trim()) : body.split('/').map(v => v.trim())
-  const channels = comma ? parts.slice(0, 3) : parts[0]!.split(/\s+/)
+  const parts = comma
+    ? body.split(',').map(v => v.trim())
+    : body.split('/').map(v => v.trim())
+  const channels = comma
+    ? parts.slice(0, 3)
+    : parts[0]!.split(/\s+/)
   const alpha = comma ? parts[3] : parts[1]
-  if (channels.length !== 3 || (comma ? parts.length < 3 || parts.length > 4 : parts.length > 2))
+  if (channels.length !== 3 || (comma
+    ? parts.length < 3 || parts.length > 4
+    : parts.length > 2)) {
     return invalid(path, 'expected three color channels and an optional alpha')
+  }
 
   const number = /^[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:%|deg)?$/
-  const values = [...channels, ...(alpha === undefined ? [] : [alpha])]
+  const values = [
+    ...channels,
+    ...(alpha === undefined
+      ? []
+      : [alpha]),
+  ]
   if (values.some(v => !number.test(v)))
     return invalid(path, 'color channels must be numeric literals')
 
@@ -82,9 +105,13 @@ function colorLiteral(value: unknown, path: string, opaque: boolean): string {
     const numeric = Number.parseFloat(channel)
     const hue = isHsl && index === 0
     const percent = channel.endsWith('%')
-    if (!Number.isFinite(numeric) || (hue ? percent : channel.endsWith('deg'))
-      || (!hue && (numeric < 0 || numeric > (percent || isHsl ? 100 : 255)))
-      || (isHsl && index > 0 && !percent)) {
+    if (!Number.isFinite(numeric) || (hue
+      ? percent
+      : channel.endsWith('deg'))
+    || (!hue && (numeric < 0 || numeric > (percent || isHsl
+      ? 100
+      : 255)))
+    || (isHsl && index > 0 && !percent)) {
       invalid(path, 'invalid channel unit or range')
     }
   })
@@ -92,17 +119,23 @@ function colorLiteral(value: unknown, path: string, opaque: boolean): string {
     invalid(path, 'comma-separated RGB channels must use the same unit')
 
   if (alpha !== undefined) {
-    const opacity = Number.parseFloat(alpha) / (alpha.endsWith('%') ? 100 : 1)
+    const opacity = Number.parseFloat(alpha) / (alpha.endsWith('%')
+      ? 100
+      : 1)
     if (alpha.endsWith('deg') || !Number.isFinite(opacity) || opacity < 0 || opacity > 1 || (opaque && opacity !== 1))
       invalid(path, opaque ? 'this color must be opaque' : 'alpha must be between 0 and 1 (or 0% and 100%)')
   }
 
   // 统一序列化为 Sass 支持的现代语法；不把用户字符串直接当成 Sass 程序。
-  return `${isHsl ? 'hsl' : 'rgb'}(${channels.join(' ')}${alpha === undefined ? '' : ` / ${alpha}`})`
+  return `${isHsl ? 'hsl' : 'rgb'}(${channels.join(' ')}${alpha === undefined
+    ? ''
+    : ` / ${alpha}`})`
 }
 
 function scssMap(entries: string[]): string {
-  return `(${entries.join(', ')}${entries.length === 1 ? ',' : ''})`
+  return `(${entries.join(', ')}${entries.length === 1
+    ? ','
+    : ''})`
 }
 
 /** 常用色配置与高级覆盖分开注入，明暗映射由 SCSS 在同一次编译中生成。 */
@@ -112,13 +145,19 @@ export function resolveThemeColorsScss(ui: UI = {}): string {
     invalid('ui.primary', 'removed; use ui.colors.primary instead')
   assertKeys(config, ['colors', 'tokens', 'toggleDarkBtn'], 'ui')
 
-  const colors = config.colors === undefined ? {} : record(config.colors, 'ui.colors')
+  const colors = config.colors === undefined
+    ? {}
+    : record(config.colors, 'ui.colors')
   assertKeys(colors, Object.keys(DEFAULT_COLORS), 'ui.colors')
   const colorEntries = Object.entries(DEFAULT_COLORS).map(([name, fallback]) =>
-    `'${name}': ${colorLiteral(colors[name] === undefined ? fallback : colors[name], `ui.colors.${name}`, true)}`,
+    `'${name}': ${colorLiteral(colors[name] === undefined
+      ? fallback
+      : colors[name], `ui.colors.${name}`, true)}`,
   )
 
-  const tokens = config.tokens === undefined ? {} : record(config.tokens, 'ui.tokens')
+  const tokens = config.tokens === undefined
+    ? {}
+    : record(config.tokens, 'ui.tokens')
   assertKeys(tokens, ['light', 'dark'], 'ui.tokens')
   const modeEntries = Object.entries(tokens).filter(([, mode]) => mode !== undefined).map(([mode, value]) => {
     const modePath = `ui.tokens.${mode}`

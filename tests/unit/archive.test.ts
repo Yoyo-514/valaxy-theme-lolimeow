@@ -14,9 +14,24 @@ describe('archive calendar', () => {
     ]
     const original = structuredClone(posts)
     const groups = buildArchiveGroups(posts, 'Asia/Shanghai')
-    expect(groups.map(group => [group.year, group.count])).toEqual([['2026', 3], ['2025', 1]])
-    expect(buildArchiveMonths(groups[0].entries).map(group => [group.month, group.entries.map(entry => entry.path)]))
-      .toEqual([['2026-04', ['/newer', '/april']], ['2026-03', ['/march']]])
+    expect(groups.map(group => [group.year, group.count])).toEqual([
+      ['2026', 3],
+      ['2025', 1],
+    ])
+    expect(buildArchiveMonths(groups[0].entries).map(group => [
+      group.month,
+      group.entries.map(entry => entry.path),
+    ]))
+      .toEqual([
+        [
+          '2026-04',
+          ['/newer', '/april'],
+        ],
+        [
+          '2026-03',
+          ['/march'],
+        ],
+      ])
     expect(posts).toEqual(original)
   })
 
@@ -46,12 +61,19 @@ describe('archive calendar', () => {
   it('handles empty input and invalid dates', () => {
     expect(buildArchiveGroups([])).toEqual([])
     expect(buildArchiveMonths([])).toEqual([])
-    for (const value of [undefined, '', 'invalid', new Date(Number.NaN)])
+    for (const value of [
+      undefined,
+      '',
+      'invalid',
+      new Date(Number.NaN),
+    ])
       expect(resolveArchiveDate(value)).toBeUndefined()
   })
 
   it('uses UTC when the site leaves its timezone empty', () => {
-    const groups = buildArchiveGroups([{ path: '/boundary', date: '2025-12-31T23:30:00Z' }], '')
+    const groups = buildArchiveGroups([
+      { path: '/boundary', date: '2025-12-31T23:30:00Z' },
+    ], '')
     expect(groups[0].year).toBe('2025')
     expect(groups[0].entries[0].calendarDate).toBe('2025-12-31')
     expect(buildArchiveMonths(groups[0].entries, '')[0].month).toBe('2025-12')

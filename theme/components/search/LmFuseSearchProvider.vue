@@ -98,7 +98,9 @@ function onKeydown(event: KeyboardEvent) {
       event.preventDefault()
       if (!results.value.length)
         return
-      selectedIndex.value = selectedIndex.value <= 0 ? -1 : selectedIndex.value - 1
+      selectedIndex.value = selectedIndex.value <= 0
+        ? -1
+        : selectedIndex.value - 1
       break
     case 'Enter':
       event.preventDefault()

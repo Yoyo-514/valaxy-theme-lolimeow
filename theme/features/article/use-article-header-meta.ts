@@ -44,12 +44,20 @@ export function useArticleHeaderMeta() {
 
   const categories = computed(() => {
     const value = frontmatter.value.categories
-    return Array.isArray(value) ? value : value ? [value] : []
+    return Array.isArray(value)
+      ? value
+      : value
+        ? [value]
+        : []
   })
 
   const tags = computed(() => {
     const value = frontmatter.value.tags
-    return Array.isArray(value) ? value : value ? [value] : []
+    return Array.isArray(value)
+      ? value
+      : value
+        ? [value]
+        : []
   })
 
   const publishedDate = computed(() => {
@@ -63,7 +71,9 @@ export function useArticleHeaderMeta() {
 
     const nextUpdatedText = formatDate(updated)
     const publishedText = formatDate(publishedDate.value)
-    return publishedText !== nextUpdatedText ? nextUpdatedText : ''
+    return publishedText !== nextUpdatedText
+      ? nextUpdatedText
+      : ''
   })
 
   const wordCount = computed(() => {
@@ -72,7 +82,9 @@ export function useArticleHeaderMeta() {
 
   const readingTime = computed(() => {
     const value = frontmatter.value.readingTime
-    return typeof value === 'number' && value > 0 ? value : 0
+    return typeof value === 'number' && value > 0
+      ? value
+      : 0
   })
 
   const infoItems = computed<ArticleInfoItem[]>(() => {

@@ -42,7 +42,9 @@ function isCountableCategoryNode(node: CategoryNode) {
  */
 function getCategorySortBucket(node: CategoryNode) {
   // 未分类只是兜底分组，不参与真实分类竞争，排序时固定放到最后。
-  return isCountableCategoryNode(node) ? 0 : 1
+  return isCountableCategoryNode(node)
+    ? 0
+    : 1
 }
 
 /**
@@ -58,7 +60,9 @@ export function normalizeCategorySegments(categories: Post['categories']) {
       .map(category => String(category).trim())
       .filter(Boolean)
 
-    return segments.length ? segments : ['Uncategorized']
+    return segments.length
+      ? segments
+      : ['Uncategorized']
   }
 
   if (typeof categories === 'string' && categories.trim()) {
@@ -67,7 +71,9 @@ export function normalizeCategorySegments(categories: Post['categories']) {
       .map(category => category.trim())
       .filter(Boolean)
 
-    return segments.length ? segments : ['Uncategorized']
+    return segments.length
+      ? segments
+      : ['Uncategorized']
   }
 
   return ['Uncategorized']
@@ -187,7 +193,9 @@ function finalizeCategoryNode(node: MutableCategoryNode): CategoryNode {
  */
 export function countCategoryNodes(nodes: CategoryNode[]): number {
   return nodes.reduce((total, node) => {
-    const currentCount = isCountableCategoryNode(node) ? 1 : 0
+    const currentCount = isCountableCategoryNode(node)
+      ? 1
+      : 0
     return total + currentCount + countCategoryNodes(node.children)
   }, 0)
 }

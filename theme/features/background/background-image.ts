@@ -85,7 +85,9 @@ function withCacheBust(url: string) {
   if (!url)
     return ''
 
-  const separator = url.includes('?') ? '&' : '?'
+  const separator = url.includes('?')
+    ? '&'
+    : '?'
   return `${url}${separator}_ts=${Date.now()}`
 }
 

@@ -54,7 +54,15 @@ export function useMottoPlayback(
     })
   }
 
-  watch([source.mottos, source.pending, source.remote, mounted, () => hero.value.typewriter, typingSpeed, rotationDelay], () => {
+  watch([
+    source.mottos,
+    source.pending,
+    source.remote,
+    mounted,
+    () => hero.value.typewriter,
+    typingSpeed,
+    rotationDelay,
+  ], () => {
     index.value = 0
     play()
   }, { immediate: true, deep: true })

@@ -115,7 +115,10 @@ export function usePostCardMediaState(options: UsePostCardMediaStateOptions) {
   })
 
   watch(
-    [() => cover.value, () => hasMedia.value],
+    [
+      () => cover.value,
+      () => hasMedia.value,
+    ],
     () => {
       clearLoadTimeout()
       imageLoaded.value = false

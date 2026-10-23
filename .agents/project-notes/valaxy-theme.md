@@ -1,6 +1,6 @@
 # Lolimeow：Valaxy theme skill 本地补充
 
-本文件补充 `.agents/skills/valaxy-theme/` 的通用约定，不替代上游 skill。以下版本差异以 Valaxy `1.1.0`、`valaxy-addon-waline` `0.2.1` 和主题直接依赖的 `@waline/client` `3.16.0` 为依据。后续升级必须重新核对安装包的实现与导出，不能把临时限制当成永久框架契约。
+本文件补充 `.agents/skills/valaxy-theme/` 的通用约定。当前安装版本为 Valaxy `1.2.0`、`valaxy-addon-waline` `0.2.1` 和主题直接依赖的 `@waline/client` `3.16.1`。升级后按实际安装包的实现、依赖声明与导出核对相关约束。
 
 ## 源码分发与入口
 
@@ -9,7 +9,7 @@
 - 保留 `ValaxyMd` 的渲染链路。大纲继续在独立子组件中使用 `useOutline()`，不要在 Markdown 父组件里重复订阅内容更新。
 - `styles/index.ts` 是样式入口，避免从多个 setup 文件重复引入同一份样式。
 
-## Valaxy 1.1 的组件封面
+## 组件封面
 
 - 框架扫描 `components/covers/*.vue` 及其子目录，通过 `coverComponent` 和 `coverProps` 选择组件并传递参数。组件名称来自文件名，同一组件目录下不能重名。
 - 主题通过 `ValaxyCover` 传递 `component`、`componentProps`、`src` 和 `context`，不自行维护另一份组件注册表。
@@ -50,9 +50,9 @@
 - 外壳 accent 用 `--lm-c-primary-text`。插件按钮底色是 accent 混合 8%，直接拿 `-primary-base` 当强调色，浅色模式下对比只有 1.76:1（卡片底）/ 1.68:1（按钮底），过不了 WCAG。
 - 图表调色做过又撤了：套主题色板反而更难认，固定 `theme` 还会让 `appearance` 失效。若重做：`color-mix()` 值在浏览器里是 `color(srgb … / a)`，Mermaid 解析不了，要先探针读 `color` 归一成 `rgb()`；setup 里访问 `document` 前加 SSR 守卫；不要从插件导入 helper 或类型，插件可选，会让未启用的站点构建失败。
 
-## 依赖升级后的工程注意事项
+## 依赖与工程检查
 
-- UnoCSS `66.11.0` 已包含 PR `5375`，修复 `@apply` 输出重复问题。Valaxy `1.1.0` 仍精确依赖 `66.10.5`，workspace 通过 `valaxy>unocss: 'catalog:'` 定向复用 catalog 的版本；`magic-string` 按依赖正常解析。升级 Valaxy 时重新核对其依赖声明，再决定是否移除定向覆盖。
+- Valaxy `1.2.0` 声明 `unocss: ^66.11.0` 和 `magic-string: ^1.4.3`，当前安装的 UnoCSS 与 workspace catalog 均为 `66.11.0`，使用常规依赖解析。
 - 仓库类型检查使用 `scripts/typecheck.mjs`。先生成 Valaxy 声明，再检查仓库自身诊断；不要把依赖源码的独立类型检查扩成当前任务阻断。
 - CI 的 pnpm 版本与本机可能不同；Valaxy 使用 Git 日期时也依赖 checkout 历史深度。涉及工具链时单独核查，不在无关 UI 修改中顺带重写工作流。
 

@@ -58,7 +58,9 @@ export function createDebouncedFunction<T extends AnyFunction>(
 ): RateLimitedFunction<T> {
   const { leading = false, trailing = true, signal } = options
   const delay = Math.max(0, wait)
-  const maxWait = typeof options.maxWait === 'number' ? Math.max(0, options.maxWait) : undefined
+  const maxWait = typeof options.maxWait === 'number'
+    ? Math.max(0, options.maxWait)
+    : undefined
 
   let timer: BrowserTimeout | undefined
   let maxTimer: BrowserTimeout | undefined

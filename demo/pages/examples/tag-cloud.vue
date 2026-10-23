@@ -3,14 +3,35 @@ import { computed, ref } from 'vue'
 
 const selected = ref('7 个标签')
 const activeId = ref('')
-const labels = ['Valaxy', 'Vue', 'TypeScript', 'Markdown', '设计', '生活', '随笔']
-const scenarios = ['1 个标签', '3 个标签', '7 个标签', '50 个标签', '长标签', '空词云']
+const labels = [
+  'Valaxy',
+  'Vue',
+  'TypeScript',
+  'Markdown',
+  '设计',
+  '生活',
+  '随笔',
+]
+const scenarios = [
+  '1 个标签',
+  '3 个标签',
+  '7 个标签',
+  '50 个标签',
+  '长标签',
+  '空词云',
+]
 const items = computed(() => {
   const count = Number.parseInt(selected.value) || 0
   const names = selected.value === '长标签'
     ? ['一个用于验证超长标签换行和完整显示的词云示例', 'a-very-long-tag-without-spaces-for-responsive-layout', 'Vue']
-    : Array.from({ length: count }, (_, index) => index < labels.length ? labels[index] : `示例 ${index + 1}`)
-  return names.map((name, index) => ({ id: `example-${index}`, name, count: Math.max(1, 8 - index) }))
+    : Array.from({ length: count }, (_, index) => index < labels.length
+        ? labels[index]
+        : `示例 ${index + 1}`)
+  return names.map((name, index) => ({
+    id: `example-${index}`,
+    name,
+    count: Math.max(1, 8 - index),
+  }))
 })
 </script>
 

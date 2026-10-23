@@ -6,7 +6,10 @@ export default defineConfig({
   description: '一个轻二次元风格的 Valaxy 博客主题',
   lang: 'zh-CN',
   head: [
-    ['link', { rel: 'icon', href: '/docs/favicon.ico' }],
+    [
+      'link',
+      { rel: 'icon', href: '/docs/favicon.ico' },
+    ],
   ],
   cleanUrls: true,
   lastUpdated: true,

@@ -57,7 +57,13 @@ export default defineSiteConfig({
   },
   fuse: {
     options: {
-      keys: ['title', 'tags', 'categories', 'excerpt', 'content'],
+      keys: [
+        'title',
+        'tags',
+        'categories',
+        'excerpt',
+        'content'
+      ],
       threshold: 0.35,
       ignoreLocation: true,
     },

@@ -11,11 +11,18 @@ export function buildTagCloudItems(source: readonly TagCloudSourceItem[]): TagCl
   const range = Math.max(...counts) - min
 
   return source.map((item) => {
-    const ratio = range > 0 ? clamp((item.count - min) / range, 0, 1) : 0.55
+    const ratio = range > 0
+      ? clamp((item.count - min) / range, 0, 1)
+      : 0.55
     const level = Math.round(ratio * 3)
     return {
       ...item,
-      fontSize: ['1.25rem', '1.5rem', '1.875rem', '2.5rem'][level],
+      fontSize: [
+        '1.25rem',
+        '1.5rem',
+        '1.875rem',
+        '2.5rem',
+      ][level],
       fontWeight: [600, 700, 800, 900][level],
     }
   })

@@ -97,7 +97,10 @@ export function collectQueryRanges(text: string, search: string) {
 export function mergeRanges(ranges: readonly (readonly [number, number])[], maxLength: number) {
   // 重叠或相邻的命中区间合并后再渲染，避免连续 mark 被拆成碎片。
   const normalizedRanges = ranges
-    .map(([start, end]) => [Math.max(0, start), Math.min(maxLength - 1, end)] as const)
+    .map(([start, end]) => [
+      Math.max(0, start),
+      Math.min(maxLength - 1, end),
+    ] as const)
     .filter(([start, end]) => start <= end)
     .sort((a, b) => a[0] - b[0])
 
@@ -127,18 +130,32 @@ export function createHighlightParts(
     return []
 
   const mergedRanges = mergeRanges(ranges, text.length)
-  if (!mergedRanges.length)
-    return [{ text, highlighted: false }]
+  if (!mergedRanges.length) {
+    return [
+      { text, highlighted: false },
+    ]
+  }
 
   let cursor = 0
   const parts: LmSearchHighlightPart[] = []
   for (const [start, end] of mergedRanges) {
-    if (cursor < start)
-      parts.push({ text: text.slice(cursor, start), highlighted: false })
-    parts.push({ text: text.slice(start, end + 1), highlighted: true })
+    if (cursor < start) {
+      parts.push({
+        text: text.slice(cursor, start),
+        highlighted: false,
+      })
+    }
+    parts.push({
+      text: text.slice(start, end + 1),
+      highlighted: true,
+    })
     cursor = end + 1
   }
-  if (cursor < text.length)
-    parts.push({ text: text.slice(cursor), highlighted: false })
+  if (cursor < text.length) {
+    parts.push({
+      text: text.slice(cursor),
+      highlighted: false,
+    })
+  }
   return parts
 }

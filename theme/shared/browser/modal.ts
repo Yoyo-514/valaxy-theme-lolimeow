@@ -55,7 +55,9 @@ let keydownDocument: Document | undefined
  */
 function resolveHtmlElement(element: Element | null, currentDocument: Document) {
   const HtmlElement = currentDocument.defaultView?.HTMLElement
-  return HtmlElement && element instanceof HtmlElement ? element as HTMLElement : null
+  return HtmlElement && element instanceof HtmlElement
+    ? element as HTMLElement
+    : null
 }
 
 /** 获取焦点域当前或最近一次挂载的容器元素。 */
@@ -81,7 +83,9 @@ function focusScope(scope: ModalFocusScope) {
   const target = preferredTarget && isFocusable(preferredTarget)
     ? preferredTarget
     : tabbable(container)[0]
-      ?? (isFocusable(container) ? container : undefined)
+      ?? (isFocusable(container)
+        ? container
+        : undefined)
 
   target?.focus({ preventScroll: true })
 }
@@ -140,11 +144,17 @@ function handleModalKeydown(event: KeyboardEvent) {
   }
 
   const activeElement = resolveHtmlElement(scope.document.activeElement, scope.document)
-  const activeIndex = activeElement ? focusableElements.indexOf(activeElement) : -1
+  const activeIndex = activeElement
+    ? focusableElements.indexOf(activeElement)
+    : -1
   const lastIndex = focusableElements.length - 1
   const nextIndex = event.shiftKey
-    ? (activeIndex > 0 ? activeIndex - 1 : lastIndex)
-    : (activeIndex >= 0 && activeIndex < lastIndex ? activeIndex + 1 : 0)
+    ? (activeIndex > 0
+        ? activeIndex - 1
+        : lastIndex)
+    : (activeIndex >= 0 && activeIndex < lastIndex
+        ? activeIndex + 1
+        : 0)
 
   event.preventDefault()
   focusableElements[nextIndex].focus({ preventScroll: true })

@@ -44,7 +44,14 @@ test('tag cloud keeps all labels usable through content and viewport changes', a
   const cloud = page.locator('.lm-tag-cloud')
   for (const width of [1350, 412, 320]) {
     await page.setViewportSize({ width, height: 940 })
-    for (const [scenario, count] of [['1 个标签', 1], ['3 个标签', 3], ['7 个标签', 7], ['50 个标签', 50], ['长标签', 3], ['空词云', 0]] as const) {
+    for (const [scenario, count] of [
+      ['1 个标签', 1],
+      ['3 个标签', 3],
+      ['7 个标签', 7],
+      ['50 个标签', 50],
+      ['长标签', 3],
+      ['空词云', 0],
+    ] as const) {
       await page.getByRole('button', { name: scenario, exact: true }).click()
       await expect(cloud.getByRole('button')).toHaveCount(count)
       if (count && scenario !== '长标签') {

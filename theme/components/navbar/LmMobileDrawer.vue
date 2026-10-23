@@ -27,7 +27,10 @@ useModalFocusTrap({
   open: toRef(props, 'open'),
 })
 
-watch([isDesktop, () => props.open], ([desktop, open]) => {
+watch([
+  isDesktop,
+  () => props.open,
+], ([desktop, open]) => {
   if (desktop && open)
     closeDrawerByUser()
 }, { immediate: true })

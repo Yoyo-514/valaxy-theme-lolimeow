@@ -10,9 +10,15 @@ import { hashString } from '../../shared/utils'
  */
 function appendQueryParameter(url: string, key: string, value: string | number) {
   const hashIndex = url.indexOf('#')
-  const baseUrl = hashIndex >= 0 ? url.slice(0, hashIndex) : url
-  const hash = hashIndex >= 0 ? url.slice(hashIndex) : ''
-  const joiner = baseUrl.includes('?') ? '&' : '?'
+  const baseUrl = hashIndex >= 0
+    ? url.slice(0, hashIndex)
+    : url
+  const hash = hashIndex >= 0
+    ? url.slice(hashIndex)
+    : ''
+  const joiner = baseUrl.includes('?')
+    ? '&'
+    : '?'
 
   return `${baseUrl}${joiner}${encodeURIComponent(key)}=${encodeURIComponent(value)}${hash}`
 }
@@ -29,7 +35,10 @@ export function orderBySeed<T>(list: readonly T[], seed: string) {
     return []
 
   const startIndex = hashString(seed) % list.length
-  return [...list.slice(startIndex), ...list.slice(0, startIndex)]
+  return [
+    ...list.slice(startIndex),
+    ...list.slice(0, startIndex),
+  ]
 }
 
 /**

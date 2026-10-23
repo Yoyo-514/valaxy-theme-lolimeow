@@ -17,7 +17,9 @@ const emit = defineEmits<{
 
 /** 将缺失年份的内部占位值转换为本地化展示文本。 */
 function displayYear(year: string, unknownYearLabel: string) {
-  return year === 'Unknown' ? unknownYearLabel : year
+  return year === 'Unknown'
+    ? unknownYearLabel
+    : year
 }
 
 /** 获取当前时间线实例内稳定且唯一的年份面板 ID。 */

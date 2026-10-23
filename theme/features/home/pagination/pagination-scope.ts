@@ -39,7 +39,9 @@ export function resolvePageSize(...candidates: unknown[]) {
 export function normalizeTotalPages(value: unknown) {
   const totalPages = Math.floor(Number(value))
 
-  return Number.isFinite(totalPages) && totalPages >= 1 ? totalPages : 0
+  return Number.isFinite(totalPages) && totalPages >= 1
+    ? totalPages
+    : 0
 }
 
 /**

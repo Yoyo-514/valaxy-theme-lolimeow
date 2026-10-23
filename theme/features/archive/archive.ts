@@ -12,8 +12,11 @@ export function normalizeArchiveCategories(categories: Post['categories']) {
   if (Array.isArray(categories))
     return categories.filter(Boolean).map(category => String(category).trim()).filter(Boolean)
 
-  if (typeof categories === 'string' && categories.trim())
-    return [categories.trim()]
+  if (typeof categories === 'string' && categories.trim()) {
+    return [
+      categories.trim(),
+    ]
+  }
 
   return []
 }
@@ -98,7 +101,9 @@ function appendArchiveGroup(mapped: Map<string, ArchiveGroup>, post: Post, timez
   else {
     mapped.set(year, {
       year,
-      sortKey: year === 'Unknown' ? Number.NEGATIVE_INFINITY : Number(year),
+      sortKey: year === 'Unknown'
+        ? Number.NEGATIVE_INFINITY
+        : Number(year),
       count: 1,
       entries: [entry],
     })

@@ -60,7 +60,9 @@ const actualColumns = computed(() => {
 })
 
 const cardLayout = computed(() => {
-  return actualColumns.value === 1 ? 'alternating' : 'text-first'
+  return actualColumns.value === 1
+    ? 'alternating'
+    : 'text-first'
 })
 
 const gridStyle = computed(() => {

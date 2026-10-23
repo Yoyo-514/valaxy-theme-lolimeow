@@ -30,7 +30,9 @@ export function useArchiveTimelineState(getGroups: () => ArchiveGroup[]) {
    * @returns 年份仍可用时返回原值，否则返回 `null`。
    */
   function resolveAvailableYear(year: string | null) {
-    return groups.value.some(group => group.year === year) ? year : null
+    return groups.value.some(group => group.year === year)
+      ? year
+      : null
   }
 
   /** 当前所选的归档分组；完全折叠或年份失效时为 `null`。 */
@@ -91,7 +93,9 @@ export function useArchiveTimelineState(getGroups: () => ArchiveGroup[]) {
    * @param year - 待切换的年份。
    */
   function selectGroup(year: string) {
-    const nextYear = selectedYear.value === year ? null : resolveAvailableYear(year)
+    const nextYear = selectedYear.value === year
+      ? null
+      : resolveAvailableYear(year)
     updateSelection(nextYear)
   }
 

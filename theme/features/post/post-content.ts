@@ -49,5 +49,7 @@ export function normalizePostTitle(title: Post['title']) {
  */
 export function resolvePostTimestamp(post: Pick<Post, 'date' | 'updated'>) {
   const timestamp = new Date(post.date ?? post.updated ?? 0).getTime()
-  return Number.isFinite(timestamp) ? timestamp : 0
+  return Number.isFinite(timestamp)
+    ? timestamp
+    : 0
 }

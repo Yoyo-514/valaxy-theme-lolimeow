@@ -26,8 +26,11 @@ export function normalizeTags(tags: unknown) {
   if (Array.isArray(tags))
     return Array.from(new Set(tags.map(tag => String(tag).trim()).filter(Boolean)))
 
-  if (typeof tags === 'string' && tags.trim())
-    return [tags.trim()]
+  if (typeof tags === 'string' && tags.trim()) {
+    return [
+      tags.trim(),
+    ]
+  }
 
   return []
 }
@@ -95,10 +98,16 @@ function createTaggedEntries(post: Post): TaggedEntry[] {
 function appendTaggedEntry(mapped: Map<string, MutableTagGroup>, taggedEntry: TaggedEntry) {
   const { tag, entry } = taggedEntry
   const existing = mapped.get(tag)
-  if (existing)
+  if (existing) {
     existing.entries.push(entry)
-  else
-    mapped.set(tag, { id: createTagId(tag), name: tag, entries: [entry] })
+  }
+  else {
+    mapped.set(tag, {
+      id: createTagId(tag),
+      name: tag,
+      entries: [entry],
+    })
+  }
   return mapped
 }
 

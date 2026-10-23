@@ -22,7 +22,10 @@ export function useMottoSource(hero: Readonly<Ref<Hero>>, mounted: Readonly<Ref<
     cancel()
     const controller = new AbortController()
     request = controller
-    const options = { ...hero.value.hitokoto, sentenceTypes: hero.value.hitokoto.sentenceTypes?.slice() }
+    const options = {
+      ...hero.value.hitokoto,
+      sentenceTypes: hero.value.hitokoto.sentenceTypes?.slice(),
+    }
     pending.value = true
     try {
       const data = await fetchHitokoto(options, controller.signal)
@@ -50,17 +53,27 @@ export function useMottoSource(hero: Readonly<Ref<Hero>>, mounted: Readonly<Ref<
 
   const configMottos = computed(() => {
     const motto = hero.value.motto
-    return Array.isArray(motto) ? motto.filter(Boolean) : motto ? [motto] : []
+    return Array.isArray(motto)
+      ? motto.filter(Boolean)
+      : motto
+        ? [motto]
+        : []
   })
   const mottos = computed(() => {
     if (!remote.value)
       return configMottos.value
     if (pending.value)
       return []
-    return text.value ? [text.value] : configMottos.value
+    return text.value
+      ? [text.value]
+      : configMottos.value
   })
 
-  watch([mounted, remote, () => hero.value.hitokoto], () => {
+  watch([
+    mounted,
+    remote,
+    () => hero.value.hitokoto,
+  ], () => {
     cancel()
     text.value = ''
     pending.value = false

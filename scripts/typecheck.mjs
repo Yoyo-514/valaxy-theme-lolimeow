@@ -28,14 +28,22 @@ function filterTypecheckOutput(output, exitCode) {
     if (match) {
       blocks.push(current)
       diagnosticCount += 1
-      current = { dependency: /(?:^|[\\/])node_modules[\\/]/.test(match[1]), lines: [] }
+      current = {
+        dependency: /(?:^|[\\/])node_modules[\\/]/.test(match[1]),
+        lines: [],
+      }
     }
     current.lines.push(line)
   }
   blocks.push(current)
 
   const text = blocks.filter(block => !block.dependency).flatMap(block => block.lines).join('\n').trim()
-  return { text, exitCode: !text && diagnosticCount > 0 ? 0 : exitCode }
+  return {
+    text,
+    exitCode: !text && diagnosticCount > 0
+      ? 0
+      : exitCode,
+  }
 }
 
 const result = filterTypecheckOutput(output, exitCode)

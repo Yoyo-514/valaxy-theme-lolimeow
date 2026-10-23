@@ -27,7 +27,15 @@ export default defineConfig({
     },
     breakpoints: Object.fromEntries(
       [640, 768, 1024, 1280, 1536, 1920, 2560].map((size, index) => [
-        ['sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'][index],
+        [
+          'sm',
+          'md',
+          'lg',
+          'xl',
+          '2xl',
+          '3xl',
+          '4xl',
+        ][index],
         `${size}px`,
       ]),
     ),

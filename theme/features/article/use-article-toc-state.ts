@@ -39,7 +39,11 @@ function getActiveScrollOffset() {
 
   const rawOffset = currentWindow.getComputedStyle(root).getPropertyValue('--lm-navbar-offset').trim()
   const parsed = Number.parseFloat(rawOffset)
-  const navbarOffset = Number.isFinite(parsed) ? parsed * (rawOffset.endsWith('rem') ? getRootFontSize() : 1) : 72
+  const navbarOffset = Number.isFinite(parsed)
+    ? parsed * (rawOffset.endsWith('rem')
+      ? getRootFontSize()
+      : 1)
+    : 72
   // 激活线放在视口上方阅读区域内，比单纯贴着导航栏更符合阅读进度感知。
   const readingLineOffset = clamp(currentWindow.innerHeight * 0.18, ACTIVE_LINE_MIN, ACTIVE_LINE_MAX)
 
@@ -56,13 +60,18 @@ function getActiveScrollOffset() {
 function flattenTocItems(nodes: MenuItem[], depth = 0): TocItem[] {
   return nodes.flatMap((node) => {
     const currentItem = node.link && node.title
-      ? [{ title: node.title, link: node.link, depth }]
+      ? [
+          { title: node.title, link: node.link, depth },
+        ]
       : []
     const childItems = Array.isArray(node.children) && node.children.length
       ? flattenTocItems(node.children, depth + 1)
       : []
 
-    return [...currentItem, ...childItems]
+    return [
+      ...currentItem,
+      ...childItems,
+    ]
   })
 }
 
@@ -84,7 +93,9 @@ function resolveActiveLink(items: TocItem[], scrollTop: number, currentDocument:
       return activeLink
 
     const headingTop = heading.getBoundingClientRect().top + currentWindow.scrollY
-    return headingTop <= scrollTop ? item.link : activeLink
+    return headingTop <= scrollTop
+      ? item.link
+      : activeLink
   }, items[0]?.link || '')
 }
 

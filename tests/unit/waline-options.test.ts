@@ -11,7 +11,11 @@ describe('waline emoji options', () => {
   })
 
   it('combines a custom CDN, groups and emoji directories in order', () => {
-    const options = { cdn: 'https://cdn.example/', types: ['qq'], emoji: ['https://emoji.example/custom'] }
+    const options = {
+      cdn: 'https://cdn.example/',
+      types: ['qq'],
+      emoji: ['https://emoji.example/custom'],
+    }
     expect(resolveWalineEmoji(options)).toEqual([
       'https://cdn.example/@waline/emojis/qq/',
       'https://emoji.example/custom/',
@@ -24,14 +28,22 @@ describe('waline emoji options', () => {
   })
 
   it('keeps custom-only groups and default groups with an empty custom list', () => {
-    expect(resolveWalineEmoji({ types: [], emoji: ['https://emoji.example/custom'] })).toEqual(['https://emoji.example/custom/'])
+    expect(resolveWalineEmoji({
+      types: [],
+      emoji: ['https://emoji.example/custom'],
+    })).toEqual(['https://emoji.example/custom/'])
     expect(resolveWalineEmoji({ emoji: [] })).toEqual(resolveWalineEmoji({}))
   })
 })
 
 describe('waline client options', () => {
   it('strips the addon-only fields before binding them to the component', () => {
-    const options = { serverURL: 'https://waline.example', path: '/posts/demo', cdn: 'https://cdn.example/', types: ['qq'] }
+    const options = {
+      serverURL: 'https://waline.example',
+      path: '/posts/demo',
+      cdn: 'https://cdn.example/',
+      types: ['qq'],
+    }
     expect(resolveWalineClientOptions(options)).toEqual({ serverURL: 'https://waline.example', path: '/posts/demo' })
     expect(options.cdn).toBe('https://cdn.example/')
   })

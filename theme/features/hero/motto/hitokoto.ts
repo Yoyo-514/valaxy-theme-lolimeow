@@ -54,7 +54,9 @@ function createHitokotoUrl(options: FetchHitokotoOptions = {}) {
   appendNumberParam(searchParams, 'max_length', options.maxLength)
 
   const queryString = searchParams.toString()
-  return queryString ? `${HITOKOTO_API_URL}?${queryString}` : HITOKOTO_API_URL
+  return queryString
+    ? `${HITOKOTO_API_URL}?${queryString}`
+    : HITOKOTO_API_URL
 }
 
 /**

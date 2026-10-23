@@ -21,7 +21,9 @@ export function normalizePath(path: string) {
   if (!pathname)
     return '/'
 
-  return pathname !== '/' ? pathname.replace(TRAILING_SLASH_REGEX, '') : '/'
+  return pathname !== '/'
+    ? pathname.replace(TRAILING_SLASH_REGEX, '')
+    : '/'
 }
 
 /**

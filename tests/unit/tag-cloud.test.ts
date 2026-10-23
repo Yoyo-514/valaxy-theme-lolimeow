@@ -19,9 +19,14 @@ describe('tag cloud weights', () => {
 
   it('handles empty, singleton and equal-weight collections', () => {
     expect(buildTagCloudItems([])).toEqual([])
-    const items = [{ id: 'a', name: 'Only tag', count: 0 }]
+    const items = [
+      { id: 'a', name: 'Only tag', count: 0 },
+    ]
     const single = buildTagCloudItems(items)[0]
-    const equal = buildTagCloudItems([...items, { id: 'b', name: 'Another', count: 0 }])
+    const equal = buildTagCloudItems([
+      ...items,
+      { id: 'b', name: 'Another', count: 0 },
+    ])
     expect(equal.every(item => item.fontSize === single.fontSize && item.fontWeight === single.fontWeight)).toBe(true)
   })
 })

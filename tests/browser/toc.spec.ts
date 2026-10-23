@@ -48,7 +48,9 @@ for (const width of [1280, 390]) {
           ;(window as any).__tocSamples = samples
           const started = performance.now()
           const sample = () => {
-            const y = document.body.style.position === 'fixed' ? -Number.parseFloat(document.body.style.top) : window.scrollY
+            const y = document.body.style.position === 'fixed'
+              ? -Number.parseFloat(document.body.style.top)
+              : window.scrollY
             samples.push({ time: performance.now() - started, y })
             if (performance.now() - started < 650)
               requestAnimationFrame(sample)
@@ -63,7 +65,12 @@ for (const width of [1280, 390]) {
         const heading = document.getElementById(decodeURIComponent(hash!.slice(1)))!
         const margin = Number.parseFloat(getComputedStyle(heading).scrollMarginTop)
         const target = Math.min(scrollY + heading.getBoundingClientRect().top - margin, document.documentElement.scrollHeight - innerHeight)
-        return { samples: (window as any).__tocSamples as { time: number, y: number }[], target, y: scrollY, hash: location.hash }
+        return {
+          samples: (window as any).__tocSamples as { time: number, y: number }[],
+          target,
+          y: scrollY,
+          hash: location.hash,
+        }
       }, hash)
       const start = result.samples[0].y
       expect(result.target - start).toBeGreaterThan(1000)

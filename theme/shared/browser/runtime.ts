@@ -75,7 +75,9 @@ export function getRootFontSize(fallback = 16) {
     return fallback
 
   const parsed = Number.parseFloat(currentWindow.getComputedStyle(root).fontSize)
-  return Number.isFinite(parsed) ? parsed : fallback
+  return Number.isFinite(parsed)
+    ? parsed
+    : fallback
 }
 
 /**

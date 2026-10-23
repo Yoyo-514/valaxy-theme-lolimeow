@@ -60,7 +60,9 @@ import { addonMermaid } from 'valaxy-addon-mermaid'
 
 export default defineValaxyConfig({
   theme: 'lolimeow',
-  addons: [addonMermaid()],
+  addons: [
+    addonMermaid()
+  ],
 })
 ```
 
@@ -73,7 +75,11 @@ export default defineValaxyConfig({
 图表本身的配色由插件决定：`appearance: 'default'` 使用 Mermaid 自带的明暗主题，`'soft'` 使用圆角节点和蓝色主题。要改色就在 `config` 里传 Mermaid 配置，或按插件文档写站点的 `setup/mermaid.ts`：
 
 ```ts
-addonMermaid({ config: { themeVariables: { primaryColor: '#ffb3d9' } } })
+addonMermaid({
+  config: {
+    themeVariables: { primaryColor: '#ffb3d9' }
+  }
+})
 ```
 
 图表卡片与查看器的外观取自主题 Design Token：主题把它们接到插件的 `--va-mermaid-*` 变量（`bg`、`panel`、`text`、`muted`、`accent`、`border`、`grid`、`radius`）。要调整就在站点样式里覆盖同名变量；自定义选择器请用插件的类名，根元素是 `figure.diagram-card`。

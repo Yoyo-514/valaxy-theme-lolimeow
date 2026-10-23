@@ -15,7 +15,9 @@ const props = withDefaults(defineProps<{
 
 /** 将未分类节点的内部名称转换为本地化展示文本。 */
 function displayName(name: string) {
-  return name === 'Uncategorized' ? props.uncategorizedLabel : name
+  return name === 'Uncategorized'
+    ? props.uncategorizedLabel
+    : name
 }
 </script>
 

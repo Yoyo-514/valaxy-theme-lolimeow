@@ -68,16 +68,20 @@ createApp({
 
     return () => h('main', [
       h(OverlayFixture),
-      h('button', { onClick: () => scheduler.schedule(background, 1) }, 'Start rotation'),
+      h('button', {
+        onClick: () => scheduler.schedule(background, 1),
+      }, 'Start rotation'),
       h('button', { onClick: scheduler.stop }, 'Stop rotation'),
       h('output', { id: 'commits' }, String(commits.value)),
       h('button', { onClick: abortImage }, 'Abort image'),
       h('output', { id: 'abort-result' }, abortResult.value),
       h('output', { id: 'motto' }, playback.renderedMotto.value),
-      h('button', { onClick: () => {
-        hero.value.motto = ['Replacement text has no stale rotation']
-        hero.value.typewriter = true
-      } }, 'Replace motto'),
+      h('button', {
+        onClick: () => {
+          hero.value.motto = ['Replacement text has no stale rotation']
+          hero.value.typewriter = true
+        },
+      }, 'Replace motto'),
     ])
   },
 }).mount('#app')

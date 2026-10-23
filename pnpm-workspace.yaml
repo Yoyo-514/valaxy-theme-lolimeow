@@ -28,10 +28,6 @@ packages:
   - demo
   - docs
 
-# Valaxy 内部 UnoCSS 与根项目保持一致，复用 catalog 中的版本。
-# overrides:
-#   valaxy>unocss: 'catalog:'
-
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true

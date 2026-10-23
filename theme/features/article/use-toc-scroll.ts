@@ -5,7 +5,15 @@ import { cancelBrowserAnimationFrame, getDocument, getWindow, requestBrowserAnim
 import { lockNavbarScrollReaction } from '../navigation'
 
 const SCROLL_DURATION = 320
-const SCROLL_KEYS = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '])
+const SCROLL_KEYS = new Set([
+  'ArrowUp',
+  'ArrowDown',
+  'PageUp',
+  'PageDown',
+  'Home',
+  'End',
+  ' ',
+])
 
 /** 目录使用固定时长滚动；新选择、手动滚动和离开文章都会取消旧动画。 */
 export function useTocScroll() {

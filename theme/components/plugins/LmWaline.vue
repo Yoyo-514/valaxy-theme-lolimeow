@@ -29,14 +29,18 @@ onMounted(() => {
     abortCounts.push(pageviewCount({
       serverURL: config.serverURL,
       path,
-      selector: typeof config.pageview === 'string' ? config.pageview : undefined,
+      selector: typeof config.pageview === 'string'
+        ? config.pageview
+        : undefined,
     }))
   }
   if (config.comment) {
     abortCounts.push(commentCount({
       serverURL: config.serverURL,
       path,
-      selector: typeof config.comment === 'string' ? config.comment : undefined,
+      selector: typeof config.comment === 'string'
+        ? config.comment
+        : undefined,
     }))
   }
 })

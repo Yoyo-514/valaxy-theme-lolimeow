@@ -90,7 +90,9 @@ export function useHeroStage(heroSection: Readonly<ShallowRef<HTMLElement | null
 
     if (nextSection) {
       nextSection.scrollIntoView({
-        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+        behavior: prefersReducedMotion()
+          ? 'auto'
+          : 'smooth',
         block: 'start',
       })
       return
@@ -98,7 +100,9 @@ export function useHeroStage(heroSection: Readonly<ShallowRef<HTMLElement | null
 
     currentWindow.scrollTo({
       top: currentSection.offsetTop + currentSection.offsetHeight,
-      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+      behavior: prefersReducedMotion()
+        ? 'auto'
+        : 'smooth',
     })
   }
 
