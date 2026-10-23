@@ -29,19 +29,19 @@ packages:
   - docs
 
 # Valaxy 内部 UnoCSS 与根项目保持一致，复用 catalog 中的版本。
-overrides:
-  valaxy>unocss: 'catalog:'
+# overrides:
+#   valaxy>unocss: 'catalog:'
 
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
 
 catalog:
-  '@antfu/eslint-config': ^9.5.1
+  '@antfu/eslint-config': ^10.0.0
   '@iconify-json/ri': ^1.2.10
   '@playwright/test': ^1.64.1
   '@types/d3-cloud': 1.2.9
-  '@types/node': ^24.0.0
+  '@types/node': ^26.6.5
   '@unhead/vue': ^3.4.3
   '@unocss/eslint-plugin': ^66.11.0
   '@vueuse/core': ^15.0.0
@@ -50,14 +50,14 @@ catalog:
   d3-cloud: 1.2.9
   eslint: ^10.13.0
   eslint-plugin-format: ^2.0.1
-  knip: ^6.42.0
+  knip: ^6.42.1
   tabbable: ^6.5.0
   typescript: ^6.0.3
   unocss: 66.11.0
-  valaxy: 1.1.0
+  valaxy: 1.2.0
   valaxy-addon-mermaid: 0.1.1
   valaxy-addon-waline: ^0.2.1
-  vite: 8.3.4
+  vite: 8.3.5
   vitepress: 2.0.0-alpha.17
   vitest: ^5.0.5
   vue: 3.5.44
